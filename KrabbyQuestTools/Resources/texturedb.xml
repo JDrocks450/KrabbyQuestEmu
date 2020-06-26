@@ -1,561 +1,567 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <A896478>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000006.jpg</FilePath>
+    <FilePath>res2_dat-0000000006.jpg</FilePath>
     <Name>Floating Raft</Name>
     <AssetType>Texture</AssetType>
     <References>O542113</References>
   </A896478>
   <A330020>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000012.bmp</FilePath>
+    <FilePath>res2_dat-0000000012.bmp</FilePath>
     <Name>Background Flower</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A330020>
   <A752825>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000015.jpg</FilePath>
+    <FilePath>res2_dat-0000000015.jpg</FilePath>
     <Name>Background Flower Static</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A752825>
   <A593719>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000016.jpg</FilePath>
+    <FilePath>res2_dat-0000000016.jpg</FilePath>
     <Name>Sand Ground</Name>
     <AssetType>Texture</AssetType>
     <References>O704805</References>
   </A593719>
   <A999260>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000017.jpg</FilePath>
+    <FilePath>res2_dat-0000000017.jpg</FilePath>
     <Name>Sand Ground GooLagoon V1</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A999260>
   <A538238>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000018.jpg</FilePath>
+    <FilePath>res2_dat-0000000018.jpg</FilePath>
     <Name>Sand Ground GooLagoon V2</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A538238>
   <A701663>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000019.jpg</FilePath>
+    <FilePath>res2_dat-0000000019.jpg</FilePath>
     <Name>Cave Ground</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A701663>
   <A750559>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000020.jpg</FilePath>
+    <FilePath>res2_dat-0000000020.jpg</FilePath>
     <Name>Cave Ground Lit</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A750559>
   <A669343>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000021.jpg</FilePath>
+    <FilePath>res2_dat-0000000021.jpg</FilePath>
     <Name>Cave Ground Grate</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A669343>
   <A112472>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000022.jpg</FilePath>
+    <FilePath>res2_dat-0000000022.jpg</FilePath>
     <Name>Cave Ground Icy </Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A112472>
   <A748531>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000023.jpg</FilePath>
+    <FilePath>res2_dat-0000000023.jpg</FilePath>
     <Name>Jellyfish Fields Ground</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A748531>
   <A37587>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000024.jpg</FilePath>
+    <FilePath>res2_dat-0000000024.jpg</FilePath>
     <Name>Jellyfish Fields Ground Dark</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A37587>
   <A675689>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000030.jpg</FilePath>
+    <FilePath>res2_dat-0000000030.jpg</FilePath>
     <Name>Road Bikini Regular</Name>
     <AssetType>Texture</AssetType>
     <References>O107917</References>
   </A675689>
   <A210531>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000031.jpg</FilePath>
+    <FilePath>res2_dat-0000000031.jpg</FilePath>
     <Name>Road Bikini Rocks</Name>
     <AssetType>Texture</AssetType>
     <References>O586289</References>
   </A210531>
   <A95637>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000033.jpg</FilePath>
+    <FilePath>res2_dat-0000000033.jpg</FilePath>
     <Name>Sand Ground Rocky</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A95637>
   <A575909>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000032.jpg</FilePath>
+    <FilePath>res2_dat-0000000032.jpg</FilePath>
     <Name>Sand Ground Bikini</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A575909>
   <A167742>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000034.jpg</FilePath>
+    <FilePath>res2_dat-0000000034.jpg</FilePath>
     <Name>Road Square Sand</Name>
     <AssetType>Texture</AssetType>
     <References>O866812</References>
   </A167742>
   <A545206>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000035.bmp</FilePath>
+    <FilePath>res2_dat-0000000035.bmp</FilePath>
     <Name>Fontsheet Special Chars</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A545206>
   <A691771>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000036.bmp</FilePath>
+    <FilePath>res2_dat-0000000036.bmp</FilePath>
     <Name>Fontsheet Numbers</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A691771>
   <A430107>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000037.bmp</FilePath>
+    <FilePath>res2_dat-0000000037.bmp</FilePath>
     <Name>Fontsheet Letters A-O</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A430107>
   <A297332>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000038.bmp</FilePath>
+    <FilePath>res2_dat-0000000038.bmp</FilePath>
     <Name>Fontsheet Letters P-Z + Special Chars</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A297332>
   <A392842>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000039.bmp</FilePath>
+    <FilePath>res2_dat-0000000039.bmp</FilePath>
     <Name>Fontsheet Lowercase Letters a-o</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A392842>
   <A155948>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000040.bmp</FilePath>
+    <FilePath>res2_dat-0000000040.bmp</FilePath>
     <Name>Fontsheet Lowercase Letters p-z</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A155948>
   <A76188>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000041.jpg</FilePath>
+    <FilePath>res2_dat-0000000041.jpg</FilePath>
     <Name>Developer Easteregg 1</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A76188>
   <A495718>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000042.jpg</FilePath>
+    <FilePath>res2_dat-0000000042.jpg</FilePath>
     <Name>Developer Easteregg 2</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A495718>
   <A298897>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000043.jpg</FilePath>
+    <FilePath>res2_dat-0000000043.jpg</FilePath>
     <Name>Developer Easteregg 3</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A298897>
   <A509898>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000055.jpg</FilePath>
+    <FilePath>res2_dat-0000000055.jpg</FilePath>
     <Name>Jellyfish</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A509898>
   <A610358>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000061.bmp</FilePath>
+    <FilePath>res2_dat-0000000061.bmp</FilePath>
     <Name>Mapscreen Icons</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A610358>
   <A143516>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000062.bmp</FilePath>
+    <FilePath>res2_dat-0000000062.bmp</FilePath>
     <Name>Mapscreen Indicator</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A143516>
   <A993030>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000063.bmp</FilePath>
+    <FilePath>res2_dat-0000000063.bmp</FilePath>
     <Name>Mapscreen Bg 1</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A993030>
   <A43814>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000064.bmp</FilePath>
+    <FilePath>res2_dat-0000000064.bmp</FilePath>
     <Name>Mapscreen Bg 2</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A43814>
   <A58787>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000065.bmp</FilePath>
+    <FilePath>res2_dat-0000000065.bmp</FilePath>
     <Name>Mapscreen Bg 3</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A58787>
   <A239236>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000066.bmp</FilePath>
+    <FilePath>res2_dat-0000000066.bmp</FilePath>
     <Name>Mapscreen Bg 4</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A239236>
   <A1529>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000070.bmp</FilePath>
+    <FilePath>res2_dat-0000000070.bmp</FilePath>
     <Name>Particles</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A1529>
   <A600172>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000077.bmp</FilePath>
+    <FilePath>res2_dat-0000000077.bmp</FilePath>
     <Name>Sign Texture</Name>
     <AssetType>Texture</AssetType>
     <References>O497772</References>
   </A600172>
   <A614533>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000080.bmp</FilePath>
+    <FilePath>res2_dat-0000000080.bmp</FilePath>
     <Name>Controls Hint</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A614533>
   <A749375>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000081.jpg</FilePath>
+    <FilePath>res2_dat-0000000081.jpg</FilePath>
     <Name>Controls Hint Beta</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A749375>
   <A579954>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000082.bmp</FilePath>
+    <FilePath>res2_dat-0000000082.bmp</FilePath>
     <Name>Mapscreen Hint</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A579954>
   <A696547>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000083.bmp</FilePath>
+    <FilePath>res2_dat-0000000083.bmp</FilePath>
     <Name>Steelbox Texture</Name>
     <AssetType>Texture</AssetType>
     <References>O985647</References>
   </A696547>
   <A907803>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000086.bmp</FilePath>
+    <FilePath>res2_dat-0000000086.bmp</FilePath>
     <Name>Game Logo</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A907803>
   <A465828>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000087.bmp</FilePath>
+    <FilePath>res2_dat-0000000087.bmp</FilePath>
     <Name>Game Logo Beta 1</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A465828>
   <A467378>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000088.bmp</FilePath>
+    <FilePath>res2_dat-0000000088.bmp</FilePath>
     <Name>Game Logo Beta 2</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A467378>
   <A35487>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000091.jpg</FilePath>
+    <FilePath>res2_dat-0000000091.jpg</FilePath>
     <Name>Umbrella Textures</Name>
     <AssetType>Texture</AssetType>
     <References>O901770</References>
   </A35487>
   <A386915>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000092.jpg</FilePath>
+    <FilePath>res2_dat-0000000092.jpg</FilePath>
     <Name>GooLagoon Wall</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A386915>
   <A246272>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000093.jpg</FilePath>
+    <FilePath>res2_dat-0000000093.jpg</FilePath>
     <Name>GooLagoon Wall Bright</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A246272>
   <A726843>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000094.jpg</FilePath>
+    <FilePath>res2_dat-0000000094.jpg</FilePath>
     <Name>GooLagoon Wall Top</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A726843>
   <A443550>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000095.jpg</FilePath>
+    <FilePath>res2_dat-0000000095.jpg</FilePath>
     <Name>Cave Wall</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A443550>
   <A468634>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000096.jpg</FilePath>
+    <FilePath>res2_dat-0000000096.jpg</FilePath>
     <Name>Cave Wall Bright</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A468634>
   <A270072>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000097.jpg</FilePath>
+    <FilePath>res2_dat-0000000097.jpg</FilePath>
     <Name>Cave Wall Top</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A270072>
   <A893038>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000098.jpg</FilePath>
+    <FilePath>res2_dat-0000000098.jpg</FilePath>
     <Name>KelpForest Wall</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A893038>
   <A826610>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000099.jpg</FilePath>
+    <FilePath>res2_dat-0000000099.jpg</FilePath>
     <Name>KelpForest Wall Bright</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A826610>
   <A520225>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000100.jpg</FilePath>
+    <FilePath>res2_dat-0000000100.jpg</FilePath>
     <Name>KelpForest Wall Top</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A520225>
   <A292860>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000101.jpg</FilePath>
+    <FilePath>res2_dat-0000000101.jpg</FilePath>
     <Name>Bricks?</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A292860>
   <A757349>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000102.jpg</FilePath>
+    <FilePath>res2_dat-0000000102.jpg</FilePath>
     <Name>Water Rocky</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A757349>
   <A741499>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000104.jpg</FilePath>
+    <FilePath>res2_dat-0000000104.jpg</FilePath>
     <Name>Water Rocky Bright</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A741499>
   <A663766>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000105.jpg</FilePath>
+    <FilePath>res2_dat-0000000105.jpg</FilePath>
     <Name>Jellyfish Fields Wall Top</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A663766>
   <A719025>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000109.jpg</FilePath>
+    <FilePath>res2_dat-0000000109.jpg</FilePath>
     <Name>JellyFish Fields Wall</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A719025>
   <A816410>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000110.jpg</FilePath>
+    <FilePath>res2_dat-0000000110.jpg</FilePath>
     <Name>JellyFish Fields Wall Bright</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A816410>
   <A1064>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000111.jpg</FilePath>
+    <FilePath>res2_dat-0000000111.jpg</FilePath>
     <Name>Bikini Wall Top</Name>
     <AssetType>Texture</AssetType>
     <References>O106005,O285390,O219432</References>
   </A1064>
   <A363854>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000112.jpg</FilePath>
+    <FilePath>res2_dat-0000000112.jpg</FilePath>
     <Name>Water?</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A363854>
   <A292470>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000114.bmp</FilePath>
+    <FilePath>res2_dat-0000000114.bmp</FilePath>
     <Name>Wooden Box</Name>
     <AssetType>Texture</AssetType>
     <References>O161677</References>
   </A292470>
   <A985342>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000133.bmp</FilePath>
+    <FilePath>res2_dat-0000000133.bmp</FilePath>
     <Name>Hint Last Patty</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A985342>
   <A697926>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000135.bmp</FilePath>
+    <FilePath>res2_dat-0000000135.bmp</FilePath>
     <Name>Mapscreen Icons</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A697926>
   <A268230>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000009.bmp</FilePath>
+    <FilePath>res2_dat-0000000009.bmp</FilePath>
     <Name>Buttons Deactivated</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A268230>
   <A203018>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000010.bmp</FilePath>
+    <FilePath>res2_dat-0000000010.bmp</FilePath>
     <Name>Buttons Activated</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A203018>
   <A470379>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000014.bmp</FilePath>
+    <FilePath>res2_dat-0000000014.bmp</FilePath>
     <Name>Jetstream</Name>
     <AssetType>Texture</AssetType>
     <References>O418897,O307691,O492444,O424919</References>
   </A470379>
   <A784305>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000136.wav</FilePath>
+    <FilePath>res2_dat-0000000136.wav</FilePath>
     <Name>Shatter Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A784305>
   <A680068>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000139.wav</FilePath>
+    <FilePath>res2_dat-0000000139.wav</FilePath>
     <Name>Box Break Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A680068>
   <A278549>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000138.wav</FilePath>
+    <FilePath>res2_dat-0000000138.wav</FilePath>
     <Name>Bubbles Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A278549>
   <A875381>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000137.wav</FilePath>
+    <FilePath>res2_dat-0000000137.wav</FilePath>
     <Name>Phone Ring Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A875381>
   <A537825>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000140.wav</FilePath>
+    <FilePath>res2_dat-0000000140.wav</FilePath>
     <Name>Box Push Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A537825>
   <A201805>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000141.wav</FilePath>
+    <FilePath>res2_dat-0000000141.wav</FilePath>
     <Name>Raft Disappear Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A201805>
   <A699427>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000142.wav</FilePath>
+    <FilePath>res2_dat-0000000142.wav</FilePath>
     <Name>Bully Hey Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A699427>
   <A588263>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000145.wav</FilePath>
+    <FilePath>res2_dat-0000000145.wav</FilePath>
     <Name>Woosh Noise Beta?</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A588263>
   <A480129>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000146.wav</FilePath>
+    <FilePath>res2_dat-0000000146.wav</FilePath>
     <Name>Click Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A480129>
   <A973581>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000147.wav</FilePath>
+    <FilePath>res2_dat-0000000147.wav</FilePath>
     <Name>Stream Woosh Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O307691,O492444,O424919,O418897</References>
   </A973581>
   <A270681>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000144.wav</FilePath>
+    <FilePath>res2_dat-0000000144.wav</FilePath>
     <Name>Gate Open Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O931189,O753210,O788048,O42421,O326900,O722153,O89268,O521016,O555624,O521016,O910101,O159161,O283463,O42421</References>
   </A270681>
   <A799169>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000143.wav</FilePath>
+    <FilePath>res2_dat-0000000143.wav</FilePath>
     <Name>Bully Stomp Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O881279,O302390,O427502,O744745,O441458</References>
   </A799169>
   <A719208>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000149.wav</FilePath>
+    <FilePath>res2_dat-0000000149.wav</FilePath>
     <Name>Level Open Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A719208>
   <A480749>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000151.wav</FilePath>
+    <FilePath>res2_dat-0000000151.wav</FilePath>
     <Name>Death Sound 1</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A480749>
   <A347580>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000152.wav</FilePath>
+    <FilePath>res2_dat-0000000152.wav</FilePath>
     <Name>Death Sound 2</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A347580>
   <A846649>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000153.wav</FilePath>
+    <FilePath>res2_dat-0000000153.wav</FilePath>
     <Name>Death Sound 3</Name>
     <AssetType>Texture</AssetType>
     <References></References>
   </A846649>
   <A65306>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000154.wav</FilePath>
+    <FilePath>res2_dat-0000000154.wav</FilePath>
     <Name>Ice Slip Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O254939</References>
   </A65306>
   <A35805>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000156.wav</FilePath>
+    <FilePath>res2_dat-0000000156.wav</FilePath>
     <Name>Box Water Splash Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O161677</References>
   </A35805>
   <A451872>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000157.wav</FilePath>
+    <FilePath>res2_dat-0000000157.wav</FilePath>
     <Name>Beach Ball Bounce Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O632353</References>
   </A451872>
   <A932810>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000158.wav</FilePath>
+    <FilePath>res2_dat-0000000158.wav</FilePath>
     <Name>Krabby Patty Collect</Name>
     <AssetType>Sound</AssetType>
     <References>O301686</References>
   </A932810>
   <A115354>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000159.wav</FilePath>
+    <FilePath>res2_dat-0000000159.wav</FilePath>
     <Name>Beach Ball Explode</Name>
     <AssetType>Sound</AssetType>
     <References>O632353</References>
   </A115354>
   <A89390>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000160.wav</FilePath>
+    <FilePath>res2_dat-0000000160.wav</FilePath>
     <Name>Steel Box Water Splash Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O985647</References>
   </A89390>
   <A844032>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000162.wav</FilePath>
+    <FilePath>res2_dat-0000000162.wav</FilePath>
     <Name>Box Ice Push Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O985647,O161677</References>
   </A844032>
   <A63542>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000165.wav</FilePath>
+    <FilePath>res2_dat-0000000165.wav</FilePath>
     <Name>Click Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A63542>
   <A702550>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000166.wav</FilePath>
+    <FilePath>res2_dat-0000000166.wav</FilePath>
     <Name>Pop Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A702550>
   <A211520>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000167.wav</FilePath>
+    <FilePath>res2_dat-0000000167.wav</FilePath>
     <Name>Level Complete Sound</Name>
     <AssetType>Sound</AssetType>
     <References></References>
   </A211520>
   <A533201>
-    <FilePath>D:\Projects\Krabby Quest\FileDump\res2_dat-0000000168.wav</FilePath>
+    <FilePath>res2_dat-0000000168.wav</FilePath>
     <Name>Icicle Destroy Sound</Name>
     <AssetType>Sound</AssetType>
     <References>O353994</References>
   </A533201>
+  <A996643>
+    <FilePath>res2_dat-0000000004.bmp</FilePath>
+    <Name>Blue Circle</Name>
+    <AssetType>Texture</AssetType>
+    <References></References>
+  </A996643>
 </root>

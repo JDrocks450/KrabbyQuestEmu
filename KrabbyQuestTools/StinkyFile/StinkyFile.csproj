@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockDBRepair.cs" />
+    <Compile Include="DBRepair.cs" />
     <Compile Include="GuidMaker.cs" />
     <Compile Include="LevelDataBlock.cs" />
     <Compile Include="Parser.cs" />

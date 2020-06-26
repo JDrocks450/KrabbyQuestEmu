@@ -126,7 +126,7 @@ namespace KrabbyQuestTools.Pages
                             }
                             cell.Child = new Image()
                             {
-                                Source = new BitmapImage(new Uri(texture.FilePath)),
+                                Source = new BitmapImage(new Uri(texture.FileName)),
                                 RenderTransform = transform,
                                 RenderTransformOrigin = new Point(.5,.5)
                             };

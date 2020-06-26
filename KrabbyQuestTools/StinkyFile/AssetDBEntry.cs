@@ -14,9 +14,9 @@ namespace StinkyFile
     }
     public class AssetDBEntry
     {
-        private const string ASSET_DB_PATH = "Resources/texturedb.xml";
+        internal const string ASSET_DB_PATH = "Resources/texturedb.xml";
         private string _guid;
-        public string FilePath { get; private set; }
+        public string FileName { get; private set; }
         public string DBName { get; set; } = "Untitled";
         public string GUID { get => _guid; 
             private set
@@ -59,11 +59,11 @@ namespace StinkyFile
             database.Save(ASSET_DB_PATH + ".bak");
             database.Root.Element(GUID)?.Remove();
             database.Root.Add(new XElement(GUID,
-                new XElement("FilePath", FilePath),
+                new XElement("FilePath", FileName),
                 new XElement("Name", DBName),
                 new XElement("AssetType", Enum.GetName(typeof(AssetType),Type)),
                 new XElement("References", string.Join(",", ReferencedDataBlockGuids.Select(x => x.GUID)))));
-            database.Save("texturedb.xml");
+            database.Save(ASSET_DB_PATH);
             foreach (var block in ReferencedDataBlockGuids)
             {
                 block.AssetReferences.Add((GUID, Type));
@@ -71,17 +71,17 @@ namespace StinkyFile
             }
         }
 
-        public static AssetDBEntry LoadFromFilePath(string FilePath)
+        public static AssetDBEntry LoadFromFileName(string Filename)
         {
             var database = XDocument.Load(ASSET_DB_PATH);
             var element = database.Root.Elements().Where(
-                x => x.Element("FilePath").Value == FilePath).FirstOrDefault()?.Name.LocalName;
+                x => x.Element("FilePath").Value == Filename).FirstOrDefault()?.Name.LocalName;
             if (element != null)
                 return Load(element);
             else
                 return new AssetDBEntry()
                 {
-                    FilePath = FilePath
+                    FileName = Filename
                 };
         }
 
@@ -93,7 +93,7 @@ namespace StinkyFile
             {
                 var dbe = new AssetDBEntry(Guid)
                 {
-                    FilePath = element.Element("FilePath").Value,
+                    FileName = element.Element("FilePath").Value,
                     DBName = element.Element("Name").Value,    
                     Type = (AssetType)Enum.Parse(typeof(AssetType), element.Element("AssetType").Value)
                 };

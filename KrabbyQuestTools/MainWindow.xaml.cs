@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StinkyFile;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace KrabbyQuestTools
         public MainWindow()
         {
             InitializeComponent();
+            DBRepair.AssetDB_FixFilePaths();
         }
     }
 }

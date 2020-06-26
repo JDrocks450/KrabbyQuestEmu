@@ -21,7 +21,7 @@ namespace StinkyFile
     }
     public class LevelDataBlock
     {
-        private const string BLOCK_DB_PATH = "Resources/blockdb.xml";
+        internal const string BLOCK_DB_PATH = "Resources/blockdb.xml";
         private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();
        
         private static Random rand = new Random();
@@ -87,7 +87,7 @@ namespace StinkyFile
             element.Add(assetNode);
             foreach (var asset in AssetReferences)
                 assetNode.Add(new XElement(asset.guid, Enum.GetName(typeof(AssetType), asset.type)));                                
-            database.Save("blockdb.xml");
+            database.Save(BLOCK_DB_PATH);
             return true;
         }
 
