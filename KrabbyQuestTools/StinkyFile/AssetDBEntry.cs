@@ -14,6 +14,7 @@ namespace StinkyFile
     }
     public class AssetDBEntry
     {
+        private const string ASSET_DB_PATH = "Resources/texturedb.xml";
         private string _guid;
         public string FilePath { get; private set; }
         public string DBName { get; set; } = "Untitled";
@@ -43,7 +44,7 @@ namespace StinkyFile
 
         public static string GetDBNameFromFileName(string FileName)
         {
-            var database = XDocument.Load("texturedb.xml");
+            var database = XDocument.Load(ASSET_DB_PATH);
             var element = database.Root.Elements().Where(
                 x => x.Element("FilePath").Value == FileName).FirstOrDefault();
             if (element != null)
@@ -54,8 +55,8 @@ namespace StinkyFile
 
         public void Save()
         {
-            var database = XDocument.Load("texturedb.xml");
-            database.Save("texturedb.xml.bak");
+            var database = XDocument.Load(ASSET_DB_PATH);
+            database.Save(ASSET_DB_PATH + ".bak");
             database.Root.Element(GUID)?.Remove();
             database.Root.Add(new XElement(GUID,
                 new XElement("FilePath", FilePath),
@@ -72,7 +73,7 @@ namespace StinkyFile
 
         public static AssetDBEntry LoadFromFilePath(string FilePath)
         {
-            var database = XDocument.Load("texturedb.xml");
+            var database = XDocument.Load(ASSET_DB_PATH);
             var element = database.Root.Elements().Where(
                 x => x.Element("FilePath").Value == FilePath).FirstOrDefault()?.Name.LocalName;
             if (element != null)
@@ -86,7 +87,7 @@ namespace StinkyFile
 
         public static AssetDBEntry Load(string Guid, bool LoadReferences = true)
         {            
-            var database = XDocument.Load("texturedb.xml");
+            var database = XDocument.Load(ASSET_DB_PATH);
             var element = database.Root.Element(Guid);
             if (element != null)
             {

@@ -20,7 +20,8 @@ namespace StinkyFile
         Decoration
     }
     public class LevelDataBlock
-    {        
+    {
+        private const string BLOCK_DB_PATH = "Resources/blockdb.xml";
         private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();
        
         private static Random rand = new Random();
@@ -70,8 +71,8 @@ namespace StinkyFile
 
         public bool SaveToDatabase()
         {
-            var database = XDocument.Load("blockdb.xml");
-            database.Save("blockdb.xml.bak");
+            var database = XDocument.Load(BLOCK_DB_PATH);
+            database.Save(BLOCK_DB_PATH + ".bak");
             database.Root.Element(GUID)?.Remove();
             var element = new XElement(GUID,
                 new XElement("Name", Name),
@@ -117,7 +118,7 @@ namespace StinkyFile
         /// <returns></returns>
         public static LevelDataBlock LoadFromDatabase(string Guid, out bool success)
         {
-            var database = XDocument.Load("blockdb.xml");
+            var database = XDocument.Load(BLOCK_DB_PATH);
             var element = database.Root.Element(Guid);
             if (element == null)
             {
@@ -149,7 +150,7 @@ namespace StinkyFile
 
         public static LevelDataBlock[] LoadAllFromDB()
         {
-            var database = XDocument.Load("blockdb.xml");
+            var database = XDocument.Load(BLOCK_DB_PATH);
             List<LevelDataBlock> blocks = new List<LevelDataBlock>();
             foreach(var element in database.Root.Elements())
             {
@@ -161,7 +162,7 @@ namespace StinkyFile
         public static LevelDataBlock LoadFromDatabase(byte[] RawData, BlockLayers Layer, out bool success)
         {
             success = false;
-            var database = XDocument.Load("blockdb.xml");
+            var database = XDocument.Load(BLOCK_DB_PATH);
             foreach (var element in database.Root.Elements())
             {
                 switch (Layer)
