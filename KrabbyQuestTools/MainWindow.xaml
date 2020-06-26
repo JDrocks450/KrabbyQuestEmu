@@ -1,0 +1,17 @@
+﻿<Window x:Class="KrabbyQuestTools.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KrabbyQuestTools"
+        xmlns:pages="clr-namespace:KrabbyQuestTools.Pages"
+        mc:Ignorable="d"
+        Title="{Binding ElementName=WindowContent, Path=Content/WindowTitle}" Height="450" Width="800" Background="#FF272727">
+    <Grid>
+        <Frame x:Name="WindowContent">
+            <Frame.Content>
+                <pages:LevelSelect/>
+            </Frame.Content>
+        </Frame>
+    </Grid>
+</Window>

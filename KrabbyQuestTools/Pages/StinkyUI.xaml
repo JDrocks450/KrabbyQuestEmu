@@ -1,0 +1,95 @@
+﻿<Page x:Class="KrabbyQuestTools.Pages.StinkyUI"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StinkyUI">
+    <Page.Resources>
+
+    </Page.Resources>
+
+    <Grid>
+        <DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Width="200" Background="#FF1B1B1B">
+                    <StackPanel Margin="10">
+                        <Button x:Name="RefreshEditorButton" Height="30" Click="RefreshEditorButton_Click">Refresh Editor</Button>
+                        <Button Margin="0,5,0,0" Click="Button_Click">Save All</Button>
+                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold">Map</TextBlock>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left">Rows:</TextBlock>
+                                    <TextBox x:Name="RowsSelectionBox" Margin="5,0,0,0" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" KeyDown="RowsSelectionBox_KeyDown"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,5,0,0">
+                                    <TextBlock DockPanel.Dock="Left">Columns:</TextBlock>
+                                    <TextBox x:Name="ColumnsSelectionBox" Margin="5,0,0,0" HorizontalContentAlignment="Right" KeyDown="ColumnsSelectionBox_KeyDown"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,5,0,0">
+                                    <TextBlock DockPanel.Dock="Left">Bit Read:</TextBlock>
+                                    <TextBox x:Name="BitSkipSelection" Margin="5,0,0,0" HorizontalContentAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalAlignment="Right"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,5,0,0">
+                                    <TextBlock DockPanel.Dock="Left">Total:</TextBlock>
+                                    <TextBox x:Name="TotalCellsDisplay" Margin="5,0,0,0" HorizontalAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalContentAlignment="Right" IsEnabled="False"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block Editor"/>
+                                <DockPanel Margin="0,10,0,0">
+                                    <!--<TextBlock DockPanel.Dock="Left">Data:</TextBlock>-->
+                                    <StackPanel x:Name="RawDataField" Height="20" Orientation="Horizontal" Margin="5,0,0,0">
+
+                                    </StackPanel>
+                                </DockPanel>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Name:</TextBlock>
+                                    <TextBox x:Name="NameSelectionField" Margin="5,0,0,0"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Color:</TextBlock>
+                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="119" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Texture:</TextBlock>
+                                    <Border x:Name="TextureSelectionField" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="25" Height="25" BorderBrush="#FF636363" BorderThickness="1"/>
+                                </DockPanel>
+                                <TextBlock x:Name="BlockLayerDisplay" FontStyle="Italic">Integral</TextBlock>
+                                <Button x:Name="BlockSaveButton" Margin="0,10,0,0" Height="25" Click="BlockSaveButton_Click">Save</Button>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <TextBlock FontWeight="Bold">To-Do List</TextBlock>
+                                <StackPanel x:Name="ToDoListContent" Margin="10"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+            <Grid Background="Black">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="IntegralModeButton" Margin="0,0,5,0" Padding="10,5" Width="80" Click="IntegralModeButton_Click">Integral</Button>
+                        <Button x:Name="DecorModeButton" Margin="5,0,0,0" Padding="10,5" Click="DecorModeButton_Click">Decoration</Button>
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Border Background="#FF2C2C2C" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" BorderBrush="#FF5F5F5F" BorderThickness="1">
+                            <Grid>
+                                <Grid x:Name="LevelGrid" MinHeight="20" MinWidth="20" />
+                                <Grid x:Name="DecorGrid" MinHeight="20" MinWidth="20" />
+                            </Grid>
+                        </Border>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Page>
