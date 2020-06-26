@@ -124,12 +124,12 @@ namespace KrabbyQuestTools.Pages
                             {
                                 transform = new RotateTransform(-90);
                             }
-                            cell.Child = new Image()
+                            /* cell.Child = new Image()
                             {
                                 Source = new BitmapImage(new Uri(texture.FileName)),
                                 RenderTransform = transform,
                                 RenderTransformOrigin = new Point(.5,.5)
-                            };
+                            }; */
                         }
                         cell.MouseLeftButtonDown += LevelBlock_Click;
                         cell.Tag = data;
