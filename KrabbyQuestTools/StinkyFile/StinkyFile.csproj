@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayEqualityComparer.cs" />
+    <Compile Include="BlockParameter.cs" />
+    <Compile Include="SRotation.cs" />
     <Compile Include="DBRepair.cs" />
     <Compile Include="GuidMaker.cs" />
     <Compile Include="LevelDataBlock.cs" />

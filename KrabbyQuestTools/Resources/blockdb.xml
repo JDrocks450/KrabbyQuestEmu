@@ -8,6 +8,7 @@
     <Dat2>0</Dat2>
     <Color>196,220,36,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O471850>
   <O201429>
     <Name>BUTTON_SQUARE_GREEN</Name>
@@ -17,6 +18,7 @@
     <Dat2>0</Dat2>
     <Color>60,179,113,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O201429>
   <O62616>
     <Name>RESERVED</Name>
@@ -26,6 +28,7 @@
     <Dat2>0</Dat2>
     <Color>49,100,184,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O62616>
   <O557999>
     <Name>MSG!!</Name>
@@ -35,6 +38,7 @@
     <Dat2>0</Dat2>
     <Color>244,209,63,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O557999>
   <O159337>
     <Name>MSG!!</Name>
@@ -44,6 +48,7 @@
     <Dat2>0</Dat2>
     <Color>106,196,181,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O159337>
   <O170254>
     <Name>SPROUT_1</Name>
@@ -53,6 +58,7 @@
     <Dat2>0</Dat2>
     <Color>161,120,154,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O170254>
   <O245554>
     <Name>SPROUT_2</Name>
@@ -62,6 +68,7 @@
     <Dat2>0</Dat2>
     <Color>153,50,204,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O245554>
   <O714060>
     <Name>SPROUT_3</Name>
@@ -71,6 +78,7 @@
     <Dat2>0</Dat2>
     <Color>223,63,181,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O714060>
   <O844664>
     <Name>SPROUT_4</Name>
@@ -80,6 +88,7 @@
     <Dat2>0</Dat2>
     <Color>223,63,181,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O844664>
   <O990960>
     <Name>CIRCLE_BUTTON_YELLOW</Name>
@@ -89,6 +98,7 @@
     <Dat2>0</Dat2>
     <Color>255,215,0,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O990960>
   <O339486>
     <Name>CIRCLE_BUTTON_PINK</Name>
@@ -98,6 +108,7 @@
     <Dat2>0</Dat2>
     <Color>151,73,178,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O339486>
   <O472611>
     <Name>CIRCLE_BUTTON_AQUA</Name>
@@ -107,6 +118,7 @@
     <Dat2>0</Dat2>
     <Color>0,255,255,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O472611>
   <O536395>
     <Name>CIRCLE_BUTTON_RED</Name>
@@ -116,6 +128,7 @@
     <Dat2>0</Dat2>
     <Color>165,42,42,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O536395>
   <O571112>
     <Name>GATE_RED</Name>
@@ -125,6 +138,7 @@
     <Dat2>0</Dat2>
     <Color>255,0,0,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O571112>
   <O828136>
     <Name>CIRCLE_BUTTON_BLUE</Name>
@@ -134,6 +148,7 @@
     <Dat2>0</Dat2>
     <Color>0,0,255,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O828136>
   <O466855>
     <Name>MSG!!</Name>
@@ -143,6 +158,7 @@
     <Dat2>0</Dat2>
     <Color>84,186,3,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O466855>
   <O68021>
     <Name>MSG!!</Name>
@@ -152,6 +168,7 @@
     <Dat2>0</Dat2>
     <Color>221,223,156,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O68021>
   <O842172>
     <Name>BIKINI_WATER</Name>
@@ -161,6 +178,7 @@
     <Dat2>0</Dat2>
     <Color>107,169,110,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O842172>
   <O126312>
     <Name>MSG!!</Name>
@@ -170,6 +188,7 @@
     <Dat2>0</Dat2>
     <Color>15,133,146,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O126312>
   <O927556>
     <Name>BUTTON_SQUARE_RED</Name>
@@ -179,6 +198,7 @@
     <Dat2>0</Dat2>
     <Color>165,42,42,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O927556>
   <O356167>
     <Name>CIRCLE_BUTTON_GREEN</Name>
@@ -188,6 +208,7 @@
     <Dat2>0</Dat2>
     <Color>60,179,113,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O356167>
   <O319375>
     <Name>CIRCLE_BUTTON_WHITE</Name>
@@ -197,6 +218,7 @@
     <Dat2>0</Dat2>
     <Color>169,169,169,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O319375>
   <O535007>
     <Name>THROWER_S</Name>
@@ -206,6 +228,7 @@
     <Dat2>0</Dat2>
     <Color>84,66,172,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O535007>
   <O626792>
     <Name>THROWER_E</Name>
@@ -215,6 +238,7 @@
     <Dat2>0</Dat2>
     <Color>84,66,172,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>EAST</Rotation>
   </O626792>
   <O765532>
     <Name>THROWER_N</Name>
@@ -224,6 +248,7 @@
     <Dat2>0</Dat2>
     <Color>215,53,233,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>NORTH</Rotation>
   </O765532>
   <O503264>
     <Name>BIG_THROWER_E</Name>
@@ -233,6 +258,7 @@
     <Dat2>0</Dat2>
     <Color>196,105,191,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>EAST</Rotation>
   </O503264>
   <O614014>
     <Name>BIG_THROWER_W</Name>
@@ -242,6 +268,7 @@
     <Dat2>0</Dat2>
     <Color>196,105,191,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O614014>
   <O83202>
     <Name>WATER_GOO_LAGOON</Name>
@@ -251,6 +278,7 @@
     <Dat2>0</Dat2>
     <Color>36,172,99,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O83202>
   <O382225>
     <Name>MSG!!</Name>
@@ -260,6 +288,7 @@
     <Dat2>0</Dat2>
     <Color>95,158,160,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O382225>
   <O191464>
     <Name>THROWER_S</Name>
@@ -269,6 +298,7 @@
     <Dat2>0</Dat2>
     <Color>61,112,234,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O191464>
   <O576020>
     <Name>THROWER_N</Name>
@@ -278,6 +308,7 @@
     <Dat2>0</Dat2>
     <Color>93,101,120,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>NORTH</Rotation>
   </O576020>
   <O505340>
     <Name>THROWER_S</Name>
@@ -287,6 +318,7 @@
     <Dat2>0</Dat2>
     <Color>60,179,113,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O505340>
   <O569598>
     <Name>THROWER_W</Name>
@@ -296,6 +328,7 @@
     <Dat2>0</Dat2>
     <Color>60,179,113,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O569598>
   <O313190>
     <Name>THROWER_E</Name>
@@ -305,6 +338,7 @@
     <Dat2>0</Dat2>
     <Color>220,151,166,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>EAST</Rotation>
   </O313190>
   <O42472>
     <Name>KRUSTY_KRAB?</Name>
@@ -315,6 +349,7 @@
     <Color>37,235,245,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O42472>
   <O777235>
     <Name>KK_SIGNPOST</Name>
@@ -325,6 +360,7 @@
     <Color>211,119,249,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O777235>
   <O279038>
     <Name>ROCK</Name>
@@ -335,6 +371,7 @@
     <Color>204,178,36,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O279038>
   <O890634>
     <Name>KELP_VINE</Name>
@@ -345,6 +382,7 @@
     <Color>218,205,250,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O890634>
   <O31249>
     <Name>FLOWER</Name>
@@ -355,6 +393,7 @@
     <Color>0,255,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O31249>
   <O662324>
     <Name>PINEAPPLE?</Name>
@@ -365,6 +404,7 @@
     <Color>160,82,45,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O662324>
   <O524495>
     <Name>BONUS_ITEM</Name>
@@ -375,6 +415,7 @@
     <Color>45,33,220,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O524495>
   <O204570>
     <Name>CORAL</Name>
@@ -385,6 +426,7 @@
     <Color>104,165,174,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O204570>
   <O642030>
     <Name>PATRICK_SPAWN</Name>
@@ -395,6 +437,7 @@
     <Color>255,20,147,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O642030>
   <O965789>
     <Name>SPONGEBOB_SPAWN</Name>
@@ -405,6 +448,7 @@
     <Color>255,255,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O965789>
   <O124554>
     <Name>FENCE</Name>
@@ -415,6 +459,7 @@
     <Color>135,32,32,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O124554>
   <O885792>
     <Name>TOWNHOUSE_GRAY</Name>
@@ -425,6 +470,7 @@
     <Color>112,128,144,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O885792>
   <O11037>
     <Name>TOWNHOUSE_YELLOW</Name>
@@ -435,6 +481,7 @@
     <Color>255,255,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O11037>
   <O790415>
     <Name>TOWNHOUSE_RED</Name>
@@ -445,6 +492,7 @@
     <Color>255,0,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O790415>
   <O359038>
     <Name>CONSTRUCTION_SIGN_S</Name>
@@ -455,6 +503,7 @@
     <Color>146,52,223,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O359038>
   <O621798>
     <Name>CONSTRUCTION_SIGN_E</Name>
@@ -465,6 +514,7 @@
     <Color>211,119,249,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O621798>
   <O852143>
     <Name>MSG!!</Name>
@@ -474,6 +524,7 @@
     <Dat2>0</Dat2>
     <Color>85,107,47,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O852143>
   <O123245>
     <Name>GATE_AQUA</Name>
@@ -483,6 +534,7 @@
     <Dat2>0</Dat2>
     <Color>0,206,209,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>WEST</Rotation>
   </O123245>
   <O395001>
     <Name>BUTTON_SQUARE_PINK</Name>
@@ -492,6 +544,7 @@
     <Dat2>0</Dat2>
     <Color>153,50,204,255</Color>
     <Texture>Hello World</Texture>
+    <Rotation>SOUTH</Rotation>
   </O395001>
   <O119303>
     <Name>SPONGEBOB_FROGFISH</Name>
@@ -502,6 +555,7 @@
     <Color>255,165,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O119303>
   <O952656>
     <Name>PATRICK_FROGFISH</Name>
@@ -512,6 +566,7 @@
     <Color>240,128,128,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O952656>
   <O556221>
     <Name>JELLYFISH</Name>
@@ -522,6 +577,7 @@
     <Color>186,85,211,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O556221>
   <O967963>
     <Name>TOWNHOUSE_SHORT</Name>
@@ -532,6 +588,7 @@
     <Color>186,85,211,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O967963>
   <O140872>
     <Name>TOWNHOUSE_TALL</Name>
@@ -542,6 +599,7 @@
     <Color>144,231,117,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O140872>
   <O971367>
     <Name>TOWNHOUSE_TALL2</Name>
@@ -552,6 +610,7 @@
     <Color>10,78,36,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O971367>
   <O841627>
     <Name>TOWNHOUSE_SHORT</Name>
@@ -562,6 +621,7 @@
     <Color>5,1,34,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>SOUTH</Rotation>
   </O841627>
   <O304277>
     <Name>PATRICK_ROCK</Name>
@@ -572,6 +632,7 @@
     <Color>235,18,40,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
+    <Rotation>WEST</Rotation>
   </O304277>
   <O542113>
     <Name>RAFTED_WATER</Name>
@@ -584,6 +645,7 @@
     <AssetReferences>
       <A896478>Texture</A896478>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O542113>
   <O704805>
     <Name>SAND</Name>
@@ -596,6 +658,7 @@
     <AssetReferences>
       <A593719>Texture</A593719>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O704805>
   <O107917>
     <Name>ROAD_REG</Name>
@@ -608,6 +671,7 @@
     <AssetReferences>
       <A675689>Texture</A675689>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O107917>
   <O586289>
     <Name>ROAD_ROCKS</Name>
@@ -620,6 +684,7 @@
     <AssetReferences>
       <A210531>Texture</A210531>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O586289>
   <O866812>
     <Name>ROAD_SQUARE</Name>
@@ -632,6 +697,7 @@
     <AssetReferences>
       <A167742>Texture</A167742>
     </AssetReferences>
+    <Rotation>SOUTH</Rotation>
   </O866812>
   <O497772>
     <Name>SIGN</Name>
@@ -644,6 +710,7 @@
     <AssetReferences>
       <A600172>Texture</A600172>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O497772>
   <O901770>
     <Name>UMBRELLA</Name>
@@ -656,43 +723,8 @@
     <AssetReferences>
       <A35487>Texture</A35487>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O901770>
-  <O106005>
-    <Name>BIKINI_WALL_MID</Name>
-    <Package>202</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>30,144,255,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A1064>Texture</A1064>
-    </AssetReferences>
-  </O106005>
-  <O285390>
-    <Name>WALL_HIGH</Name>
-    <Package>203</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>55,131,188,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A1064>Texture</A1064>
-    </AssetReferences>
-  </O285390>
-  <O219432>
-    <Name>WALL_LOW</Name>
-    <Package>200</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>100,149,237,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A1064>Texture</A1064>
-    </AssetReferences>
-  </O219432>
   <O492444>
     <Name>STREAM_N</Name>
     <Package>244</Package>
@@ -705,6 +737,7 @@
       <A470379>Texture</A470379>
       <A973581>Sound</A973581>
     </AssetReferences>
+    <Rotation>NORTH</Rotation>
   </O492444>
   <O424919>
     <Name>STREAM_W</Name>
@@ -718,6 +751,7 @@
       <A470379>Texture</A470379>
       <A973581>Sound</A973581>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O424919>
   <O418897>
     <Name>STREAM_S</Name>
@@ -731,6 +765,7 @@
       <A470379>Texture</A470379>
       <A973581>Sound</A973581>
     </AssetReferences>
+    <Rotation>SOUTH</Rotation>
   </O418897>
   <O307691>
     <Name>STREAM_E</Name>
@@ -744,6 +779,7 @@
       <A470379>Texture</A470379>
       <A973581>Sound</A973581>
     </AssetReferences>
+    <Rotation>EAST</Rotation>
   </O307691>
   <O931189>
     <Name>GATE_GREEN</Name>
@@ -756,6 +792,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O931189>
   <O753210>
     <Name>GATE_GREEN</Name>
@@ -768,6 +805,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O753210>
   <O788048>
     <Name>GATE_YELLOW</Name>
@@ -780,6 +818,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O788048>
   <O326900>
     <Name>GATE_RED</Name>
@@ -792,6 +831,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O326900>
   <O722153>
     <Name>GATE_WHITE</Name>
@@ -804,6 +844,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O722153>
   <O89268>
     <Name>GATE_WHITE</Name>
@@ -816,6 +857,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O89268>
   <O555624>
     <Name>GATE_YELLOW</Name>
@@ -828,6 +870,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O555624>
   <O521016>
     <Name>GATE_PURPLE</Name>
@@ -840,6 +883,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O521016>
   <O910101>
     <Name>GATE_AQUA</Name>
@@ -852,6 +896,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O910101>
   <O159161>
     <Name>GATE_BLUE</Name>
@@ -864,6 +909,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O159161>
   <O283463>
     <Name>GATE_BLUE</Name>
@@ -876,6 +922,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O283463>
   <O42421>
     <Name>GATE_PINK</Name>
@@ -888,6 +935,7 @@
     <AssetReferences>
       <A270681>Sound</A270681>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O42421>
   <O881279>
     <Name>BULLY_W</Name>
@@ -900,6 +948,7 @@
     <AssetReferences>
       <A799169>Sound</A799169>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O881279>
   <O302390>
     <Name>BULLY_S</Name>
@@ -912,6 +961,7 @@
     <AssetReferences>
       <A799169>Sound</A799169>
     </AssetReferences>
+    <Rotation>SOUTH</Rotation>
   </O302390>
   <O427502>
     <Name>BULLY_E</Name>
@@ -924,6 +974,7 @@
     <AssetReferences>
       <A799169>Sound</A799169>
     </AssetReferences>
+    <Rotation>EAST</Rotation>
   </O427502>
   <O744745>
     <Name>BULLY_E?</Name>
@@ -936,6 +987,7 @@
     <AssetReferences>
       <A799169>Sound</A799169>
     </AssetReferences>
+    <Rotation>EAST</Rotation>
   </O744745>
   <O441458>
     <Name>BULLY</Name>
@@ -948,6 +1000,7 @@
     <AssetReferences>
       <A799169>Sound</A799169>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O441458>
   <O254939>
     <Name>ICE</Name>
@@ -960,6 +1013,7 @@
     <AssetReferences>
       <A65306>Sound</A65306>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O254939>
   <O301686>
     <Name>KRABBY_PATTY</Name>
@@ -972,6 +1026,7 @@
     <AssetReferences>
       <A932810>Sound</A932810>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O301686>
   <O632353>
     <Name>BEACH_BALL</Name>
@@ -985,6 +1040,7 @@
       <A451872>Sound</A451872>
       <A115354>Sound</A115354>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O632353>
   <O985647>
     <Name>STEEL_BOX</Name>
@@ -999,6 +1055,7 @@
       <A89390>Sound</A89390>
       <A844032>Sound</A844032>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O985647>
   <O161677>
     <Name>WOODEN_BOX</Name>
@@ -1013,6 +1070,7 @@
       <A35805>Sound</A35805>
       <A844032>Sound</A844032>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O161677>
   <O353994>
     <Name>ICICLE</Name>
@@ -1025,5 +1083,48 @@
     <AssetReferences>
       <A533201>Sound</A533201>
     </AssetReferences>
+    <Rotation>WEST</Rotation>
   </O353994>
+  <O285390>
+    <Name>WALL_HIGH</Name>
+    <Package>203</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>55,131,188,255</Color>
+    <Level>Integral</Level>
+    <AssetReferences>
+      <A1064>Texture</A1064>
+      <A295227>Texture</A295227>
+    </AssetReferences>
+    <Rotation>WEST</Rotation>
+  </O285390>
+  <O219432>
+    <Name>WALL_LOW</Name>
+    <Package>200</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>100,149,237,255</Color>
+    <Level>Integral</Level>
+    <AssetReferences>
+      <A1064>Texture</A1064>
+      <A295227>Texture</A295227>
+    </AssetReferences>
+    <Rotation>WEST</Rotation>
+  </O219432>
+  <O106005>
+    <Name>WALL_MID</Name>
+    <Package>202</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>30,144,255,255</Color>
+    <Level>Integral</Level>
+    <AssetReferences>
+      <A1064>Texture</A1064>
+      <A295227>Texture</A295227>
+    </AssetReferences>
+    <Rotation>WEST</Rotation>
+  </O106005>
 </root>

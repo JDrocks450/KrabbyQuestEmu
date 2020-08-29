@@ -21,7 +21,7 @@ namespace StinkyFile
     }
     public class LevelDataBlock
     {
-        internal const string BLOCK_DB_PATH = "Resources/blockdb.xml";
+        public static string BlockDatabasePath { get; set; } = "Resources/blockdb.xml";
         private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();
        
         private static Random rand = new Random();
@@ -49,6 +49,11 @@ namespace StinkyFile
         public string Name { get; set; }
         public S_Color Color { get; set; }
         public HashSet<(string guid, AssetType type)> AssetReferences = new HashSet<(string guid, AssetType type)>();
+        public SRotation Rotation { get; set; }
+        public IEnumerable<BlockParameter> Parameters
+        {
+            get; set;
+        } = new List<BlockParameter>();
 
         public LevelDataBlock(byte[] RawData, BlockLayers Layer = BlockLayers.Integral)
         {
@@ -71,8 +76,8 @@ namespace StinkyFile
 
         public bool SaveToDatabase()
         {
-            var database = XDocument.Load(BLOCK_DB_PATH);
-            database.Save(BLOCK_DB_PATH + ".bak");
+            var database = XDocument.Load(BlockDatabasePath);
+            database.Save(BlockDatabasePath + ".bak");
             database.Root.Element(GUID)?.Remove();
             var element = new XElement(GUID,
                 new XElement("Name", Name),
@@ -81,25 +86,33 @@ namespace StinkyFile
                 new XElement("ItemId", RawData[0]),
                 new XElement("Dat2", RawData[3]),
                 new XElement("Color", Color.ToString()),
+                new XElement("Rotation", Enum.GetName(typeof(SRotation), Rotation)),
                 new XElement("Level", Enum.GetName(typeof(BlockLayers), BlockLayer)));
+            foreach (var param in Parameters)
+                param.Save(element);
             database.Root.Add(element);
             var assetNode = new XElement("AssetReferences");
             element.Add(assetNode);
             foreach (var asset in AssetReferences)
                 assetNode.Add(new XElement(asset.guid, Enum.GetName(typeof(AssetType), asset.type)));                                
-            database.Save(BLOCK_DB_PATH);
+            database.Save(BlockDatabasePath);
             return true;
         }
 
-        public void RefreshFromDatabase()
+        public LevelDataBlock RefreshFromDatabase(StinkyParser Parser)
         {
-            var data = LoadFromDatabase(RawData, BlockLayer, out bool success);
-            if (success)
-            {
-                Name = data.Name;
-                Color = data.Color;
-                GUID = data.GUID;
-            }
+            var dbVersion = Parser.CacheRefresh(GUID);
+            if (dbVersion == null) //doesnt exist yet!
+                return this;
+            return dbVersion;
+        }
+
+        public bool GetParameterByName(string Name, out BlockParameter Data)
+        {
+            var value = Parameters.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
+            Data = value;
+            if (value != default) return true;
+                return false;
         }
 
         public AssetDBEntry GetFirstTextureAsset() => GetReference(AssetReferences.FirstOrDefault(x => x.type == AssetType.Texture).guid);
@@ -110,6 +123,14 @@ namespace StinkyFile
             return AssetDBEntry.Load(guid, false);
         }
 
+        public IEnumerable<AssetDBEntry> GetReferences(AssetType Constraint)
+        {
+            List<AssetDBEntry> list = new List<AssetDBEntry>();
+            foreach (var guid in AssetReferences.Where(x => x.type == Constraint))
+                list.Add(GetReference(guid.guid));
+            return list;
+        }
+
         /// <summary>
         /// Loads the LevelDataBlock from the Database file with the specified GUID
         /// </summary>
@@ -118,7 +139,7 @@ namespace StinkyFile
         /// <returns></returns>
         public static LevelDataBlock LoadFromDatabase(string Guid, out bool success)
         {
-            var database = XDocument.Load(BLOCK_DB_PATH);
+            var database = XDocument.Load(BlockDatabasePath);
             var element = database.Root.Element(Guid);
             if (element == null)
             {
@@ -132,8 +153,9 @@ namespace StinkyFile
             var package = byte.Parse(element.Element("Package").Value);
             var packId = byte.Parse(element.Element("PackId").Value);
             var dat2 = byte.Parse(element.Element("Dat2").Value);
+            var rotate = element.Element("Rotation")?.Value ?? "NORTH";            
             HashSet<(string guid, AssetType type)> assets = new HashSet<(string guid, AssetType type)>();
-            var assetNode = element.Element("AssetReferences");
+            var assetNode = element.Element("AssetReferences");            
             if (assetNode != null)
                 foreach (var asset in assetNode.Elements())
                     assets.Add((asset.Name.LocalName, (AssetType)Enum.Parse(typeof(AssetType), asset.Value)));            
@@ -144,13 +166,15 @@ namespace StinkyFile
                 GUID = element.Name.LocalName,
                 Color = S_Color.Parse(element.Element("Color").Value),
                 BlockLayer = element.Element("Level")?.Value == "Decoration" ? BlockLayers.Decoration : BlockLayers.Integral,
-                AssetReferences = assets
+                AssetReferences = assets,
+                Rotation = (SRotation)Enum.Parse(typeof(SRotation), rotate),
+                Parameters = BlockParameter.LoadParams(element)
             };
         }
 
         public static LevelDataBlock[] LoadAllFromDB()
         {
-            var database = XDocument.Load(BLOCK_DB_PATH);
+            var database = XDocument.Load(BlockDatabasePath);
             List<LevelDataBlock> blocks = new List<LevelDataBlock>();
             foreach(var element in database.Root.Elements())
             {
@@ -162,7 +186,7 @@ namespace StinkyFile
         public static LevelDataBlock LoadFromDatabase(byte[] RawData, BlockLayers Layer, out bool success)
         {
             success = false;
-            var database = XDocument.Load(BLOCK_DB_PATH);
+            var database = XDocument.Load(BlockDatabasePath);
             foreach (var element in database.Root.Elements())
             {
                 switch (Layer)
@@ -186,7 +210,7 @@ namespace StinkyFile
                         break;
                 }
                 
-            }
+            }            
             return new LevelDataBlock(RawData, Layer);
         }
     }

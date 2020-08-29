@@ -27,7 +27,7 @@ namespace KrabbyQuestTools.Pages
             InitializeComponent();
             AppResources.Parser = new StinkyParser(@"D:\Projects\Krabby Quest\res2.dat");
             GetLevels();
-            WindowTitle = "Krabby Quest Tools - Level Select";
+            Title = "Editor Homepage";
         }
 
         private void GetLevels(string searchTerm = "")
@@ -83,6 +83,15 @@ namespace KrabbyQuestTools.Pages
         private void AssetEditorButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new TextureToolPage(FilePathBox.Text));
+        }
+
+        private void DatabaseOptions_Click(object sender, RoutedEventArgs e)
+        {
+            KQTDialog dialog = new KQTDialog()
+            {
+                Content = new DatabaseOptions()
+            };
+            dialog.ShowDialog();
         }
     }
 }

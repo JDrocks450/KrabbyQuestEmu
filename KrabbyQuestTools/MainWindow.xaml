@@ -6,12 +6,31 @@
         xmlns:local="clr-namespace:KrabbyQuestTools"
         xmlns:pages="clr-namespace:KrabbyQuestTools.Pages"
         mc:Ignorable="d"
-        Title="{Binding ElementName=WindowContent, Path=Content/WindowTitle}" Height="450" Width="800" Background="#FF272727">
+        Height="450" Width="800" Background="#FF1D1D1D" Loaded="Window_Loaded">
     <Grid>
-        <Frame x:Name="WindowContent">
-            <Frame.Content>
-                <pages:LevelSelect/>
-            </Frame.Content>
-        </Frame>
+        <TabControl BorderThickness="0,1,0,0" Background="#FF323232" BorderBrush="#FF3E3E3E" Name="TabSwitcher" SelectionChanged="TabSwitcher_SelectionChanged">
+            <TabItem Padding="0" BorderThickness="0">
+                <TabItem.Header>
+                    <Border Margin="-2,-2,-2,-2" BorderThickness="0,0,1,0" Background="#FF323232" BorderBrush="#FF3E3E3E">
+                        <DockPanel Width="185">
+                            <Button DockPanel.Dock="Right" Margin="0,3,5,3" FontFamily="Segoe MDL2 Assets" Content="&#59153;" Width="24" BorderThickness="0" Background="Transparent" Click="CloseButtonClick"/>
+                            <TextBlock Margin="10,7,5,7">Tab Content</TextBlock>
+                        </DockPanel>
+                    </Border>
+                </TabItem.Header>
+                <Frame NavigationUIVisibility="Hidden">
+                    <Frame.Content>
+                        <pages:LevelSelect/>
+                    </Frame.Content>
+                </Frame>
+            </TabItem>
+            <TabItem x:Name="CreateTab" Padding="0" BorderThickness="0" Selector.Selected="CreateTab_Selected">
+                <TabItem.Header>
+                    <Border Margin="-2,-2" BorderThickness="0,0,1,0" Background="#FF323232" BorderBrush="#FF3E3E3E">
+                        <TextBlock Margin="10,9" FontFamily="Segoe MDL2 Assets" Text="&#59152;"/>
+                    </Border>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

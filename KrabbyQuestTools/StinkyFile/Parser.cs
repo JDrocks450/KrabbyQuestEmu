@@ -63,14 +63,7 @@ namespace StinkyFile
 
         public void SaveAll()
         {
-            List<string> savedIds = new List<string>();
-            foreach (var block in IntegralData)
-                if (block != null)
-                    if (!savedIds.Contains(block.GUID))
-                    {
-                        block?.SaveToDatabase();
-                        savedIds.Add(block.GUID);
-                    }
+            Parent.CacheSaveAll();
         }
     }
     public class StinkyParser
@@ -95,10 +88,14 @@ namespace StinkyFile
                 _bitRead = value;
             }
         }
+        
         private bool bitSkipChanged = true;
         private bool pathChanged = true;
         private string _filePath;
         private int _bitRead = 4;
+
+        private Dictionary<byte[], LevelDataBlock> DataCache = new Dictionary<byte[], LevelDataBlock>(new ArrayEqualityComparer<byte>());
+        private Dictionary<string, byte[]> IDCache = new Dictionary<string, byte[]>();
 
         public string FilePath
         {
@@ -150,20 +147,79 @@ namespace StinkyFile
         /// <param name="index"></param>
         /// <returns></returns>
         public StinkyLevel LevelRead(int index) => OpenLevel = GetLevelByIndex(index);
+        /// <summary>
+        /// Reads a level with the specified Name in a DAT file -- Sets the level as <see cref="OpenLevel"/> See: <see cref="LevelIndices"/>
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public StinkyLevel LevelRead(string Name) => LevelRead(LevelIndices.First(x => x.Value == Name).Key);
 
         /// <summary>
         /// Returns the level data for the level at the specified index
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public StinkyLevel GetLevelByIndex(int index) => new StinkyLevel(this, fileData, index);
+        public StinkyLevel GetLevelByIndex(int index) => new StinkyLevel(this, fileData, index)
+        {
+            Name = LevelIndices[index]
+        };
 
         /// <summary>
         /// Refreshes the parser
         /// </summary>
-        public void Refresh()
+        public void Refresh() => RefreshLevel(OpenLevel);
+
+        /// <summary>
+        /// Loads a <see cref="LevelDataBlock"/> if it's already cached, or loads it from DB if it's not
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public LevelDataBlock CachedLoad(string ID, BlockLayers Layer, out bool success)
         {
-            RefreshLevel(OpenLevel);
+            success = true;
+            if (IDCache.ContainsKey(ID))
+                return CachedLoad(IDCache[ID], Layer, out success);
+            else
+            {
+                var block = LevelDataBlock.LoadFromDatabase(ID, out success);
+                IDCache.Add(block.GUID, block.RawData);
+                DataCache.Add(block.RawData, block);
+                return block;
+            }
+        }
+
+        /// <summary>
+        /// Loads a <see cref="LevelDataBlock"/> if it's already cached, or loads it from DB if it's not
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public LevelDataBlock CachedLoad(byte[] data, BlockLayers Layer, out bool success)
+        {
+            success = true;
+            if (DataCache.ContainsKey(data))
+                return DataCache[data];
+            else
+            {
+                var block = LevelDataBlock.LoadFromDatabase(data, Layer, out success);
+                IDCache.Add(block.GUID, block.RawData);
+                DataCache.Add(data, block);
+                return block;
+            }
+        }
+
+        public LevelDataBlock CacheRefresh(string ID)
+        {
+            var block = LevelDataBlock.LoadFromDatabase(ID, out bool success);
+            if (block == null) return block;
+            DataCache.Remove(block.RawData);
+            DataCache.Add(block.RawData, block);
+            return block;
+        }
+
+        public void CacheSaveAll()
+        {
+            foreach (var block in DataCache.Values)
+                block.SaveToDatabase();
         }
 
         internal void RefreshLevel(StinkyLevel level)
@@ -172,6 +228,8 @@ namespace StinkyFile
             var data = fileData.Skip(level.LevelContentIndex).ToArray();
             List<LevelDataBlock> blocks = new List<LevelDataBlock>();
             List<LevelDataBlock> decor = new List<LevelDataBlock>();
+            DataCache.Clear();
+            IDCache.Clear();
             UnknownBlocks.Clear();
             byte[] current = new byte[4]; // the current data block bytes
             int count = 0, amount = 0, index = -1;
@@ -185,7 +243,7 @@ namespace StinkyFile
                     case BlockLayers.Integral:
                         if (count == skip)
                         {
-                            var block = LevelDataBlock.LoadFromDatabase(current, BlockLayers.Integral, out bool success);
+                            var block = CachedLoad(current, BlockLayers.Integral, out bool success);
                             blocks.Add(block);
                             if (!success && !UnknownBlocks.ContainsKey(block.Group + block.GroupId.ToString()))
                                 UnknownBlocks.Add(block.Group + block.GroupId.ToString(), block);
@@ -205,7 +263,7 @@ namespace StinkyFile
                     case BlockLayers.Decoration:
                         if (count == skip)
                         {                            
-                            var block = LevelDataBlock.LoadFromDatabase(current, BlockLayers.Decoration, out bool success);
+                            var block = CachedLoad(current, BlockLayers.Decoration, out bool success);
                             decor.Add(block);
                             //if (!success && !UnknownBlocks.ContainsKey(block.Group + block.GroupId.ToString()))
                               //  UnknownBlocks.Add(block.Group + block.GroupId.ToString(), block);
@@ -226,7 +284,7 @@ namespace StinkyFile
             }
             level.IntegralData = blocks.ToArray();
             level.DecorationData = decor.ToArray();
-            using (var stream = File.OpenWrite("leveldump.dat"))
+            using (var stream = File.OpenWrite("leveldump.dat")) 
                 stream.Write(fileData, level.LevelHeaderIndex, level.LevelHeaderIndex + index);
             bitSkipChanged = false;
             pathChanged = false;

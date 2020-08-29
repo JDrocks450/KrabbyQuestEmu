@@ -24,5 +24,8 @@
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>
+        <Button x:Name="DatabaseOptions" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="30" Width="115" Click="DatabaseOptions_Click">
+            Database Options           
+        </Button>
     </Grid>
 </Page>

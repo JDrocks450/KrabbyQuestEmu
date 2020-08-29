@@ -30,7 +30,7 @@ namespace KrabbyQuestTools.Pages
         public TextureToolPage()
         {
             InitializeComponent();
-            WindowTitle = "Asset Database Editor";
+            Title = "Asset Database Editor";
         }
         public TextureToolPage(string FilePath) : this()
         {
@@ -104,8 +104,7 @@ namespace KrabbyQuestTools.Pages
             DBNameBox.Text = dbe.DBName;
             AssetTypeSwitcher.SelectedItem = Enum.GetName(typeof(AssetType), dbe.Type);
             RefreshReferences(dbe);    
-            WindowTitle = "Asset Database Editor - " + AssetDBEntry.GetDBNameFromFileName(filePath);
-            
+            Title = AssetDBEntry.GetDBNameFromFileName(filePath);            
         }
 
         private void RefreshReferences(AssetDBEntry dbe)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,8 @@ namespace KrabbyQuestTools.Pages
         private StinkyParser Parser => AppResources.Parser;
         private LevelDataBlock OpenDataBlock;
         private BlockLayers _mode;
+        private string AssetDir = @"D:\Projects\Krabby Quest\FileDump";
+        bool askSave = false;
 
         private BlockLayers Mode
         {
@@ -38,20 +41,20 @@ namespace KrabbyQuestTools.Pages
                         IntegralModeButton.Background = Brushes.Silver;
                         DecorModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
                         break;
-                    case BlockLayers.Integral:
+                    case BlockLayers.Integral:                        
                         DecorModeButton.Background = Brushes.Silver;
                         IntegralModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
                         break;
                 }
                 _mode = value;
-            }
+            }            
         }
         
         public StinkyUI()
         {            
             InitializeComponent();
-            PrepareMapScreen(Parser.OpenLevel);
-            WindowTitle = "Krabby Quest Level Viewer - " + Parser.OpenLevel.Name;
+            PrepareMapScreen(Parser.OpenLevel);           
+            Title = Parser.OpenLevel.Name;
         }                
 
         private void Refresh()
@@ -65,7 +68,7 @@ namespace KrabbyQuestTools.Pages
             catch(Exception)
             {
                 //!
-            }
+            }            
             Parser.Refresh();
             PrepareMapScreen(Parser.OpenLevel);
             PrepareMapScreen(Parser.OpenLevel, BlockLayers.Decoration);
@@ -88,14 +91,16 @@ namespace KrabbyQuestTools.Pages
                 destination.RowDefinitions.Add(new RowDefinition()
                 {
                     Height = new GridLength(1, GridUnitType.Star),
-                    MinHeight = 20
+                    MinHeight = 25,
+                    MaxHeight = 30
                 });
                 for (int c = 0; c < columns; c++)
                 {
                     destination.ColumnDefinitions.Add(new ColumnDefinition()
                     {
                         Width = new GridLength(1, GridUnitType.Star),
-                        MinWidth = 20
+                        MinWidth = 25,
+                        MaxWidth = 30
                     });
                     var data = ((Viewing == BlockLayers.Integral) ? parser.IntegralData : parser.DecorationData)[r * columns + c];
                     if (data != null)
@@ -124,12 +129,12 @@ namespace KrabbyQuestTools.Pages
                             {
                                 transform = new RotateTransform(-90);
                             }
-                            /* cell.Child = new Image()
+                            cell.Child = new Image()
                             {
-                                Source = new BitmapImage(new Uri(texture.FileName)),
+                                Source = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName))),
                                 RenderTransform = transform,
-                                RenderTransformOrigin = new Point(.5,.5)
-                            }; */
+                                RenderTransformOrigin = new Point(.5, .5)
+                            };
                         }
                         cell.MouseLeftButtonDown += LevelBlock_Click;
                         cell.Tag = data;
@@ -180,23 +185,45 @@ namespace KrabbyQuestTools.Pages
         {
             if (SelectedItem is LevelDataBlock)
             {
-                var dataBlock = SelectedItem as LevelDataBlock;
-                dataBlock.RefreshFromDatabase();
+                askSave = true;
+                var dataBlock = SelectedItem as LevelDataBlock;                
+                dataBlock = dataBlock.RefreshFromDatabase(Parser);
                 RawDataField.Children.Clear();
+                BlockSaveButton.IsEnabled = false;
+                if (dataBlock == null)
+                {
+                    NameSelectionField.Text = "EMPTY SPACE";
+                    BlockSaveButton.IsEnabled = false;
+                    return;
+                }
                 for(int i = 0; i < LevelDataBlock.RAW_DATA_SIZE; i++)
                 {
-                    RawDataField.Children.Add(new TextBox()
+                    var box = new TextBox()
                     {
                         Text = dataBlock.RawData[i].ToString(),
                         IsEnabled = false,
-                        Margin = new Thickness(0, 0, 5, 0),
-                        Width = 31
-                    });
+                        Margin = new Thickness(i == 0 ? 0 : 2, 0, i == 3 ? 0 : 2, 0),
+                    };
+                    RawDataField.Children.Add(box);
+                    Grid.SetColumn(box, i);
                 }
                 NameSelectionField.Text = dataBlock.Name;
-                BlockLayerDisplay.Text = Enum.GetName(typeof(BlockLayers), dataBlock.BlockLayer);
+                BlockLayerDisplay.Text = Enum.GetName(typeof(BlockLayers), dataBlock.BlockLayer) + " - " + dataBlock.GUID;
                 BlockColorPicker.SelectedColor = AppResources.S_ColorConvert(dataBlock.Color);
+                var textureRef = dataBlock.GetFirstTextureAsset();
+                try
+                {
+                    TextureSelectionField.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, textureRef.FileName))));
+                    TextureNameBox.Text = textureRef.DBName;
+                }
+                catch 
+                {
+                    TextureSelectionField.Background = null;
+                    TextureNameBox.Text = "No Texture";
+                }
+                RotationField.SelectedIndex = Array.IndexOf(Enum.GetNames(typeof(SRotation)), Enum.GetName(typeof(SRotation), dataBlock.Rotation));
                 OpenDataBlock = dataBlock;
+                BlockSaveButton.IsEnabled = true;                
             }
         }        
 
@@ -218,11 +245,14 @@ namespace KrabbyQuestTools.Pages
         {
             OpenDataBlock.Name = NameSelectionField.Text;
             OpenDataBlock.SaveToDatabase();
+            Parser.CacheRefresh(OpenDataBlock.GUID);
+            askSave = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Parser.OpenLevel.SaveAll();
+            askSave = false;
         }
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -252,6 +282,34 @@ namespace KrabbyQuestTools.Pages
                 DecorGrid.Visibility = Visibility.Visible;
                 LevelGrid.Opacity = .15;
             }
+        }
+
+        private void RotationField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (OpenDataBlock != null)
+                OpenDataBlock.Rotation = (SRotation)Enum.Parse(typeof(SRotation), (RotationField.SelectedItem as ComboBoxItem).Content.ToString());
+        }
+
+        private void ParameterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (OpenDataBlock != null)
+            {
+                var paramDialog = new ParameterDialog(OpenDataBlock);
+                paramDialog.ShowDialog();
+            }
+        }
+
+        public bool OnClosing()
+        {
+            if (askSave)
+            {
+                var result = MessageBox.Show("Do you want to save before closing?", "Unsaved Changes!", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                    Parser.CacheSaveAll();
+                else if (result == MessageBoxResult.Cancel)
+                    return false;
+            }
+            return true;
         }
     }
 }
