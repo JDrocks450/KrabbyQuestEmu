@@ -15,9 +15,9 @@ Some aspects have to be hard-coded such as player movement, button behavior, gat
 - *BlockDB*: Levels are stored in blocks, each block represents an object in-game. The BlockDB is a way for developers to tie textures, parameters, names, etc.
 to these blocks since all this information was hardcoded in the original game. 
 
-  - You can edit this by loading a level in the Krabby Quest Tools program.
+  > You can edit this by loading a level in the Krabby Quest Tools program.
 - *AssetDB*: This ties Assets/Sounds to the *BlockDB entries* so that the game can load these assets and apply them in accordance to the parameters set in the *BlockDB*
-  - You can edit this by clicking: "Edit AssetDB for Selected Directory" in the Krabby Quest Tools program.
+  > You can edit this by clicking: "Edit AssetDB for Selected Directory" in the Krabby Quest Tools program.
 
 ## Why is this important?
 Because media preservation is something that is important in my eyes. Under no circumstances is this project ever intended to be profitable.
@@ -37,6 +37,8 @@ Below is a roadmap:
   - Manifest Viewer
     > Handles the extraction of Assets to a directory *Vital*
 #### Under Development:
+- Setup Procedure
+  - Make automated setup procedure
 - Game
   - Opening Levels
   - Reimplementing Objects (~50% complete)
@@ -45,6 +47,23 @@ Below is a roadmap:
   - Highscores
   - UI
   - New Features?
+
+## How Do I Play?
+Right now, the setup is difficult as this project is still incomplete. However, it is possible.
+
+*You must have Blender installed!*
+ 
+ 1. Extract an original copy of the game to a directory.
+ 2. Build and Run *KrabbyQuestTools*
+ 3. Open the ManifestViewer tool.
+ 4. Drag and Drop *res1.dat* into the *Manifest Path Box*, *res2.dat* into the *Data Path Box*, and Input a Directory where it all should go. (Remember this directory!)
+ 5. Click Open, numerous file paths should appear on the left. If they have, press "Extract All" at the top.
+ 6. Create a new tab and click "Export Models"
+ 7. The workspace you have open should be in the box. Input where you have blender installed into the box.
+ 8. Click Export and be patient!
+ 9. Create another new tab, now the *AssetDB Directory* box should be filled with your directory. Click *Open AssetDB Editor*
+ 10. Finally, Create one more new tab, click *Database Options* and PUSH all the changes you made to where Krabby Quest Game is installed on your pc.
+ 11. Build and Run Krabby Quest Game
 
 ## Is this legal?
 I am not distributing any copyrighted content, this is only a tool to read the game files that were distributed from another source. 
