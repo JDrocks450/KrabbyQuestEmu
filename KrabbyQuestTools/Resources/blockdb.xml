@@ -1,55 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <O471850>
-    <Name>MSG!!</Name>
-    <Package>23</Package>
-    <PackId>5</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>196,220,36,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O471850>
-  <O201429>
-    <Name>BUTTON_SQUARE_GREEN</Name>
-    <Package>88</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>60,179,113,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>SOUTH</Rotation>
-  </O201429>
-  <O62616>
-    <Name>RESERVED</Name>
-    <Package>104</Package>
-    <PackId>0</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>49,100,184,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O62616>
-  <O557999>
-    <Name>MSG!!</Name>
-    <Package>21</Package>
-    <PackId>5</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>244,209,63,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O557999>
-  <O159337>
-    <Name>MSG!!</Name>
-    <Package>22</Package>
-    <PackId>5</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>106,196,181,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O159337>
   <O170254>
     <Name>SPROUT_1</Name>
     <Package>121</Package>
@@ -58,7 +8,7 @@
     <Dat2>0</Dat2>
     <Color>161,120,154,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O170254>
   <O245554>
     <Name>SPROUT_2</Name>
@@ -68,7 +18,7 @@
     <Dat2>0</Dat2>
     <Color>153,50,204,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O245554>
   <O714060>
     <Name>SPROUT_3</Name>
@@ -78,7 +28,7 @@
     <Dat2>0</Dat2>
     <Color>223,63,181,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O714060>
   <O844664>
     <Name>SPROUT_4</Name>
@@ -88,88 +38,8 @@
     <Dat2>0</Dat2>
     <Color>223,63,181,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O844664>
-  <O990960>
-    <Name>CIRCLE_BUTTON_YELLOW</Name>
-    <Package>86</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>255,215,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O990960>
-  <O339486>
-    <Name>CIRCLE_BUTTON_PINK</Name>
-    <Package>83</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>151,73,178,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O339486>
-  <O472611>
-    <Name>CIRCLE_BUTTON_AQUA</Name>
-    <Package>92</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>0,255,255,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O472611>
-  <O536395>
-    <Name>CIRCLE_BUTTON_RED</Name>
-    <Package>95</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>165,42,42,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O536395>
-  <O571112>
-    <Name>GATE_RED</Name>
-    <Package>243</Package>
-    <PackId>3</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>255,0,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O571112>
-  <O828136>
-    <Name>CIRCLE_BUTTON_BLUE</Name>
-    <Package>98</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>0,0,255,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O828136>
-  <O466855>
-    <Name>MSG!!</Name>
-    <Package>20</Package>
-    <PackId>5</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>84,186,3,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O466855>
-  <O68021>
-    <Name>MSG!!</Name>
-    <Package>25</Package>
-    <PackId>5</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>221,223,156,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O68021>
   <O842172>
     <Name>BIKINI_WATER</Name>
     <Package>45</Package>
@@ -178,7 +48,7 @@
     <Dat2>0</Dat2>
     <Color>107,169,110,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O842172>
   <O126312>
     <Name>MSG!!</Name>
@@ -188,28 +58,8 @@
     <Dat2>0</Dat2>
     <Color>15,133,146,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O126312>
-  <O927556>
-    <Name>BUTTON_SQUARE_RED</Name>
-    <Package>94</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>165,42,42,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>SOUTH</Rotation>
-  </O927556>
-  <O356167>
-    <Name>CIRCLE_BUTTON_GREEN</Name>
-    <Package>89</Package>
-    <PackId>4</PackId>
-    <Dat1>0</Dat1>
-    <Dat2>0</Dat2>
-    <Color>60,179,113,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O356167>
   <O319375>
     <Name>CIRCLE_BUTTON_WHITE</Name>
     <Package>101</Package>
@@ -218,7 +68,7 @@
     <Dat2>0</Dat2>
     <Color>169,169,169,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O319375>
   <O535007>
     <Name>THROWER_S</Name>
@@ -278,7 +128,7 @@
     <Dat2>0</Dat2>
     <Color>36,172,99,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O83202>
   <O382225>
     <Name>MSG!!</Name>
@@ -288,7 +138,7 @@
     <Dat2>0</Dat2>
     <Color>95,158,160,255</Color>
     <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O382225>
   <O191464>
     <Name>THROWER_S</Name>
@@ -340,116 +190,6 @@
     <Texture>Hello World</Texture>
     <Rotation>EAST</Rotation>
   </O313190>
-  <O42472>
-    <Name>KRUSTY_KRAB?</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>53</ItemId>
-    <Dat2>0</Dat2>
-    <Color>37,235,245,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O42472>
-  <O777235>
-    <Name>KK_SIGNPOST</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>54</ItemId>
-    <Dat2>0</Dat2>
-    <Color>211,119,249,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
-  </O777235>
-  <O279038>
-    <Name>ROCK</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>51</ItemId>
-    <Dat2>0</Dat2>
-    <Color>204,178,36,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O279038>
-  <O890634>
-    <Name>KELP_VINE</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>55</ItemId>
-    <Dat2>0</Dat2>
-    <Color>218,205,250,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O890634>
-  <O31249>
-    <Name>FLOWER</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>66</ItemId>
-    <Dat2>0</Dat2>
-    <Color>0,255,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O31249>
-  <O662324>
-    <Name>PINEAPPLE?</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>50</ItemId>
-    <Dat2>0</Dat2>
-    <Color>160,82,45,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O662324>
-  <O524495>
-    <Name>BONUS_ITEM</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>8</ItemId>
-    <Dat2>0</Dat2>
-    <Color>45,33,220,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O524495>
-  <O204570>
-    <Name>CORAL</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>67</ItemId>
-    <Dat2>0</Dat2>
-    <Color>104,165,174,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O204570>
-  <O642030>
-    <Name>PATRICK_SPAWN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>2</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,20,147,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
-  </O642030>
-  <O965789>
-    <Name>SPONGEBOB_SPAWN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>1</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,255,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
-  </O965789>
   <O124554>
     <Name>FENCE</Name>
     <Package>0</Package>
@@ -459,7 +199,7 @@
     <Color>135,32,32,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O124554>
   <O885792>
     <Name>TOWNHOUSE_GRAY</Name>
@@ -470,7 +210,7 @@
     <Color>112,128,144,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O885792>
   <O11037>
     <Name>TOWNHOUSE_YELLOW</Name>
@@ -481,7 +221,7 @@
     <Color>255,255,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O11037>
   <O790415>
     <Name>TOWNHOUSE_RED</Name>
@@ -492,60 +232,8 @@
     <Color>255,0,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O790415>
-  <O359038>
-    <Name>CONSTRUCTION_SIGN_S</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>56</ItemId>
-    <Dat2>0</Dat2>
-    <Color>146,52,223,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
-  </O359038>
-  <O621798>
-    <Name>CONSTRUCTION_SIGN_E</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>57</ItemId>
-    <Dat2>0</Dat2>
-    <Color>211,119,249,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
-  </O621798>
-  <O852143>
-    <Name>MSG!!</Name>
-    <Package>24</Package>
-    <PackId>5</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>85,107,47,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O852143>
-  <O123245>
-    <Name>GATE_AQUA</Name>
-    <Package>240</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>0,206,209,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>WEST</Rotation>
-  </O123245>
-  <O395001>
-    <Name>BUTTON_SQUARE_PINK</Name>
-    <Package>82</Package>
-    <PackId>4</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>153,50,204,255</Color>
-    <Texture>Hello World</Texture>
-    <Rotation>SOUTH</Rotation>
-  </O395001>
   <O119303>
     <Name>SPONGEBOB_FROGFISH</Name>
     <Package>0</Package>
@@ -555,7 +243,7 @@
     <Color>255,165,0,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O119303>
   <O952656>
     <Name>PATRICK_FROGFISH</Name>
@@ -566,7 +254,7 @@
     <Color>240,128,128,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O952656>
   <O556221>
     <Name>JELLYFISH</Name>
@@ -577,7 +265,7 @@
     <Color>186,85,211,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O556221>
   <O967963>
     <Name>TOWNHOUSE_SHORT</Name>
@@ -588,7 +276,7 @@
     <Color>186,85,211,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
+    <Rotation>NORTH</Rotation>
   </O967963>
   <O140872>
     <Name>TOWNHOUSE_TALL</Name>
@@ -599,7 +287,7 @@
     <Color>144,231,117,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O140872>
   <O971367>
     <Name>TOWNHOUSE_TALL2</Name>
@@ -610,7 +298,7 @@
     <Color>10,78,36,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
+    <Rotation>NORTH</Rotation>
   </O971367>
   <O841627>
     <Name>TOWNHOUSE_SHORT</Name>
@@ -621,19 +309,8 @@
     <Color>5,1,34,255</Color>
     <Texture>Hello World</Texture>
     <Level>Decoration</Level>
-    <Rotation>SOUTH</Rotation>
+    <Rotation>NORTH</Rotation>
   </O841627>
-  <O304277>
-    <Name>PATRICK_ROCK</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>68</ItemId>
-    <Dat2>0</Dat2>
-    <Color>235,18,40,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>WEST</Rotation>
-  </O304277>
   <O542113>
     <Name>RAFTED_WATER</Name>
     <Package>88</Package>
@@ -642,76 +319,9 @@
     <Dat2>0</Dat2>
     <Color>139,69,19,255</Color>
     <Level>Integral</Level>
-    <AssetReferences>
-      <A896478>Texture</A896478>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O542113>
-  <O704805>
-    <Name>SAND</Name>
-    <Package>100</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>222,184,135,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A593719>Texture</A593719>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O704805>
-  <O107917>
-    <Name>ROAD_REG</Name>
-    <Package>102</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>112,128,144,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A675689>Texture</A675689>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O107917>
-  <O586289>
-    <Name>ROAD_ROCKS</Name>
-    <Package>103</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>112,39,137,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A210531>Texture</A210531>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O586289>
-  <O866812>
-    <Name>ROAD_SQUARE</Name>
-    <Package>101</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>37,30,43,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A167742>Texture</A167742>
-    </AssetReferences>
-    <Rotation>SOUTH</Rotation>
-  </O866812>
-  <O497772>
-    <Name>SIGN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>52</ItemId>
-    <Dat2>0</Dat2>
-    <Color>160,82,45,255</Color>
-    <Level>Decoration</Level>
-    <AssetReferences>
-      <A600172>Texture</A600172>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O497772>
   <O901770>
     <Name>UMBRELLA</Name>
     <Package>0</Package>
@@ -720,223 +330,9 @@
     <Dat2>0</Dat2>
     <Color>224,68,254,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A35487>Texture</A35487>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O901770>
-  <O492444>
-    <Name>STREAM_N</Name>
-    <Package>244</Package>
-    <PackId>1</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>46,139,87,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A470379>Texture</A470379>
-      <A973581>Sound</A973581>
-    </AssetReferences>
+    <AssetReferences />
     <Rotation>NORTH</Rotation>
-  </O492444>
-  <O424919>
-    <Name>STREAM_W</Name>
-    <Package>247</Package>
-    <PackId>1</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>205,48,252,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A470379>Texture</A470379>
-      <A973581>Sound</A973581>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O424919>
-  <O418897>
-    <Name>STREAM_S</Name>
-    <Package>246</Package>
-    <PackId>1</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>179,208,204,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A470379>Texture</A470379>
-      <A973581>Sound</A973581>
-    </AssetReferences>
-    <Rotation>SOUTH</Rotation>
-  </O418897>
-  <O307691>
-    <Name>STREAM_E</Name>
-    <Package>245</Package>
-    <PackId>1</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>182,144,243,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A470379>Texture</A470379>
-      <A973581>Sound</A973581>
-    </AssetReferences>
-    <Rotation>EAST</Rotation>
-  </O307691>
-  <O931189>
-    <Name>GATE_GREEN</Name>
-    <Package>239</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>84,186,3,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O931189>
-  <O753210>
-    <Name>GATE_GREEN</Name>
-    <Package>238</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>34,139,34,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O753210>
-  <O788048>
-    <Name>GATE_YELLOW</Name>
-    <Package>236</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>218,165,32,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O788048>
-  <O326900>
-    <Name>GATE_RED</Name>
-    <Package>242</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>220,20,60,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O326900>
-  <O722153>
-    <Name>GATE_WHITE</Name>
-    <Package>247</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>240,248,255,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O722153>
-  <O89268>
-    <Name>GATE_WHITE</Name>
-    <Package>246</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>240,248,255,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O89268>
-  <O555624>
-    <Name>GATE_YELLOW</Name>
-    <Package>237</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>106,225,180,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O555624>
-  <O521016>
-    <Name>GATE_PURPLE</Name>
-    <Package>235</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>153,50,204,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O521016>
-  <O910101>
-    <Name>GATE_AQUA</Name>
-    <Package>241</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>127,255,212,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O910101>
-  <O159161>
-    <Name>GATE_BLUE</Name>
-    <Package>245</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>0,0,205,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O159161>
-  <O283463>
-    <Name>GATE_BLUE</Name>
-    <Package>244</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>0,0,255,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O283463>
-  <O42421>
-    <Name>GATE_PINK</Name>
-    <Package>234</Package>
-    <PackId>3</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>70,175,164,255</Color>
-    <Level>Integral</Level>
-    <AssetReferences>
-      <A270681>Sound</A270681>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O42421>
+  </O901770>
   <O881279>
     <Name>BULLY_W</Name>
     <Package>0</Package>
@@ -945,9 +341,7 @@
     <Dat2>0</Dat2>
     <Color>31,196,61,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A799169>Sound</A799169>
-    </AssetReferences>
+    <AssetReferences />
     <Rotation>WEST</Rotation>
   </O881279>
   <O302390>
@@ -958,9 +352,7 @@
     <Dat2>0</Dat2>
     <Color>128,126,250,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A799169>Sound</A799169>
-    </AssetReferences>
+    <AssetReferences />
     <Rotation>SOUTH</Rotation>
   </O302390>
   <O427502>
@@ -971,9 +363,7 @@
     <Dat2>0</Dat2>
     <Color>184,19,37,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A799169>Sound</A799169>
-    </AssetReferences>
+    <AssetReferences />
     <Rotation>EAST</Rotation>
   </O427502>
   <O744745>
@@ -984,10 +374,8 @@
     <Dat2>0</Dat2>
     <Color>61,224,241,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A799169>Sound</A799169>
-    </AssetReferences>
-    <Rotation>EAST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O744745>
   <O441458>
     <Name>BULLY</Name>
@@ -997,10 +385,8 @@
     <Dat2>0</Dat2>
     <Color>142,58,3,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A799169>Sound</A799169>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O441458>
   <O254939>
     <Name>ICE</Name>
@@ -1010,24 +396,9 @@
     <Dat2>0</Dat2>
     <Color>30,144,255,255</Color>
     <Level>Integral</Level>
-    <AssetReferences>
-      <A65306>Sound</A65306>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O254939>
-  <O301686>
-    <Name>KRABBY_PATTY</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>5</ItemId>
-    <Dat2>0</Dat2>
-    <Color>32,178,170,255</Color>
-    <Level>Decoration</Level>
-    <AssetReferences>
-      <A932810>Sound</A932810>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O301686>
   <O632353>
     <Name>BEACH_BALL</Name>
     <Package>0</Package>
@@ -1036,11 +407,8 @@
     <Dat2>0</Dat2>
     <Color>64,224,208,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A451872>Sound</A451872>
-      <A115354>Sound</A115354>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O632353>
   <O985647>
     <Name>STEEL_BOX</Name>
@@ -1050,28 +418,9 @@
     <Dat2>0</Dat2>
     <Color>146,52,223,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A696547>Texture</A696547>
-      <A89390>Sound</A89390>
-      <A844032>Sound</A844032>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O985647>
-  <O161677>
-    <Name>WOODEN_BOX</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>9</ItemId>
-    <Dat2>0</Dat2>
-    <Color>139,69,19,255</Color>
-    <Level>Decoration</Level>
-    <AssetReferences>
-      <A292470>Texture</A292470>
-      <A35805>Sound</A35805>
-      <A844032>Sound</A844032>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O161677>
   <O353994>
     <Name>ICICLE</Name>
     <Package>0</Package>
@@ -1080,25 +429,72 @@
     <Dat2>0</Dat2>
     <Color>0,191,255,255</Color>
     <Level>Decoration</Level>
-    <AssetReferences>
-      <A533201>Sound</A533201>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
+    <AssetReferences />
+    <Rotation>NORTH</Rotation>
   </O353994>
-  <O285390>
-    <Name>WALL_HIGH</Name>
-    <Package>203</Package>
+  <O642030>
+    <Name>PATRICK_SPAWN</Name>
+    <Package>0</Package>
     <PackId>0</PackId>
+    <ItemId>2</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,20,147,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Spawnpoint</Name>
+        <Value>Patrick</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O642030>
+  <O965789>
+    <Name>SPONGEBOB_SPAWN</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>1</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,255,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Spawnpoint</Name>
+        <Value>Spongebob</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Script</Name>
+        <Value>Spawnpoint</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O965789>
+  <O201429>
+    <Name>BUTTON_SQUARE_GREEN</Name>
+    <Package>88</Package>
+    <PackId>4</PackId>
     <ItemId>0</ItemId>
     <Dat2>0</Dat2>
-    <Color>55,131,188,255</Color>
+    <Color>60,179,113,255</Color>
+    <Rotation>NORTH</Rotation>
     <Level>Integral</Level>
-    <AssetReferences>
-      <A1064>Texture</A1064>
-      <A295227>Texture</A295227>
-    </AssetReferences>
-    <Rotation>WEST</Rotation>
-  </O285390>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>GREEN</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O201429>
   <O219432>
     <Name>WALL_LOW</Name>
     <Package>200</Package>
@@ -1106,12 +502,18 @@
     <ItemId>0</ItemId>
     <Dat2>0</Dat2>
     <Color>100,149,237,255</Color>
+    <Rotation>NORTH</Rotation>
     <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>WALL</Name>
+        <Value>Low</Value>
+      </Parameter>
+    </Parameters>
     <AssetReferences>
-      <A1064>Texture</A1064>
-      <A295227>Texture</A295227>
+      <A180541>Texture</A180541>
+      <A304393>Texture</A304393>
     </AssetReferences>
-    <Rotation>WEST</Rotation>
   </O219432>
   <O106005>
     <Name>WALL_MID</Name>
@@ -1120,11 +522,1301 @@
     <ItemId>0</ItemId>
     <Dat2>0</Dat2>
     <Color>30,144,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>WALL</Name>
+        <Value>Medium</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A180541>Texture</A180541>
+      <A304393>Texture</A304393>
+    </AssetReferences>
+  </O106005>
+  <O285390>
+    <Name>WALL_HIGH</Name>
+    <Package>203</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>55,131,188,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>WALL</Name>
+        <Value>High</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A180541>Texture</A180541>
+      <A304393>Texture</A304393>
+    </AssetReferences>
+  </O285390>
+  <O418897>
+    <Name>STREAM_S</Name>
+    <Package>246</Package>
+    <PackId>1</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>179,208,204,255</Color>
+    <Rotation>SOUTH</Rotation>
     <Level>Integral</Level>
     <AssetReferences>
-      <A1064>Texture</A1064>
-      <A295227>Texture</A295227>
+      <A368615>Texture</A368615>
     </AssetReferences>
+  </O418897>
+  <O492444>
+    <Name>STREAM_N</Name>
+    <Package>244</Package>
+    <PackId>1</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>46,139,87,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Jetstream</Value>
+      </Parameter>
+      <Parameter>
+        <Name>FillTexture</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Material</Name>
+        <Value>JetstreamMaterial</Value>
+      </Parameter>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A368615>Texture</A368615>
+    </AssetReferences>
+  </O492444>
+  <O424919>
+    <Name>STREAM_W</Name>
+    <Package>247</Package>
+    <PackId>1</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,20,147,255</Color>
     <Rotation>WEST</Rotation>
-  </O106005>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Jetstream</Value>
+      </Parameter>
+      <Parameter>
+        <Name>FillTexture</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Material</Name>
+        <Value>JetstreamMaterial</Value>
+      </Parameter>
+      <Parameter>
+        <Name>MakeTransparent</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A368615>Texture</A368615>
+    </AssetReferences>
+  </O424919>
+  <O301686>
+    <Name>KRABBY_PATTY</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>5</ItemId>
+    <Dat2>0</Dat2>
+    <Color>32,178,170,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>KrabbyPattyObject</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Script</Name>
+        <Value>Pickup</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Major Item</Name>
+        <Value>PATTY</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A188045>Model</A188045>
+      <A18691>Texture</A18691>
+    </AssetReferences>
+  </O301686>
+  <O161677>
+    <Name>WOODEN_BOX</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>9</ItemId>
+    <Dat2>0</Dat2>
+    <Color>139,69,19,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Pushable</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>MoveableBox</Value>
+      </Parameter>
+      <Parameter>
+        <Name>FillTexture</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Script</Name>
+        <Value>PushableScript</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A816019>Texture</A816019>
+    </AssetReferences>
+  </O161677>
+  <O466855>
+    <Name>Message #1</Name>
+    <Package>20</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>84,186,3,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O466855>
+  <O557999>
+    <Name>Message #2</Name>
+    <Package>21</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>244,209,63,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O557999>
+  <O471850>
+    <Name>Message #4</Name>
+    <Package>23</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>196,220,36,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O471850>
+  <O159337>
+    <Name>Message #3</Name>
+    <Package>22</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>106,196,181,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O159337>
+  <O68021>
+    <Name>Message #5</Name>
+    <Package>25</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>221,223,156,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O68021>
+  <O497772>
+    <Name>SIGN</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>52</ItemId>
+    <Dat2>0</Dat2>
+    <Color>160,82,45,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Animation</Name>
+        <Value>SignIdle</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A59585>Model</A59585>
+      <A138204>Texture</A138204>
+    </AssetReferences>
+  </O497772>
+  <O31249>
+    <Name>FLOWER</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>66</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,255,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.5</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A273556>Texture</A273556>
+      <A690845>Model</A690845>
+    </AssetReferences>
+  </O31249>
+  <O279038>
+    <Name>ROCK</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>51</ItemId>
+    <Dat2>0</Dat2>
+    <Color>204,178,36,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>.15</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A167974>Model</A167974>
+      <A140613>Texture</A140613>
+    </AssetReferences>
+  </O279038>
+  <O777235>
+    <Name>KK_SIGNPOST</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>54</ItemId>
+    <Dat2>0</Dat2>
+    <Color>211,119,249,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ScaleX</Name>
+        <Value>-0.1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleY</Name>
+        <Value>0.1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleZ</Name>
+        <Value>0.1</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A718991>Model</A718991>
+      <A585809>Texture</A585809>
+    </AssetReferences>
+  </O777235>
+  <O890634>
+    <Name>KELP_VINE</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>55</ItemId>
+    <Dat2>0</Dat2>
+    <Color>218,205,250,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>0.2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A450690>Model</A450690>
+      <A562661>Texture</A562661>
+    </AssetReferences>
+  </O890634>
+  <O359038>
+    <Name>CONSTRUCTION_SIGN_S</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>56</ItemId>
+    <Dat2>0</Dat2>
+    <Color>146,52,223,255</Color>
+    <Rotation>SOUTH</Rotation>
+    <Level>Decoration</Level>
+    <AssetReferences>
+      <A644606>Model</A644606>
+      <A344421>Texture</A344421>
+    </AssetReferences>
+  </O359038>
+  <O621798>
+    <Name>CONSTRUCTION_SIGN_E</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>57</ItemId>
+    <Dat2>0</Dat2>
+    <Color>211,119,249,255</Color>
+    <Rotation>EAST</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.5</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A644606>Model</A644606>
+      <A344421>Texture</A344421>
+    </AssetReferences>
+  </O621798>
+  <O42472>
+    <Name>KRUSTY_KRAB?</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>53</ItemId>
+    <Dat2>0</Dat2>
+    <Color>37,235,245,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>0.3</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleY</Name>
+        <Value>0.235</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A810060>Model</A810060>
+      <A93494>Texture</A93494>
+    </AssetReferences>
+  </O42472>
+  <O107917>
+    <Name>ROAD_REG</Name>
+    <Package>102</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>112,128,144,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A79802>Texture</A79802>
+    </AssetReferences>
+  </O107917>
+  <O62616>
+    <Name>RESERVED</Name>
+    <Package>104</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>49,100,184,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A79802>Texture</A79802>
+    </AssetReferences>
+  </O62616>
+  <O586289>
+    <Name>ROAD_ROCKS</Name>
+    <Package>103</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>112,39,137,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>FLOOR</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A891861>Texture</A891861>
+    </AssetReferences>
+  </O586289>
+  <O555624>
+    <Name>GATE_YELLOW</Name>
+    <Package>237</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>106,225,180,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A787057>Texture</A787057>
+    </AssetReferences>
+  </O555624>
+  <O89268>
+    <Name>GATE_WHITE</Name>
+    <Package>246</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>240,248,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A814012>Texture</A814012>
+    </AssetReferences>
+  </O89268>
+  <O753210>
+    <Name>GATE_GREEN</Name>
+    <Package>238</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>34,139,34,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>GREEN</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A985720>Texture</A985720>
+    </AssetReferences>
+  </O753210>
+  <O123245>
+    <Name>GATE_AQUA</Name>
+    <Package>240</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,206,209,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>AQUA</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A265537>Texture</A265537>
+    </AssetReferences>
+  </O123245>
+  <O788048>
+    <Name>GATE_YELLOW</Name>
+    <Package>236</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>218,165,32,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>YELLOW</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A787057>Texture</A787057>
+    </AssetReferences>
+  </O788048>
+  <O283463>
+    <Name>GATE_BLUE</Name>
+    <Package>244</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,0,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>BLUE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A477914>Texture</A477914>
+    </AssetReferences>
+  </O283463>
+  <O374697>
+    <Name>BUTTON_SQUARE_YELLOW</Name>
+    <Package>85</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,255,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>YELLOW</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O374697>
+  <O395001>
+    <Name>BUTTON_SQUARE_PURPLE</Name>
+    <Package>82</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>153,50,204,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>PURPLE</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O395001>
+  <O775265>
+    <Name>BUTTON_SQUARE_AQUA</Name>
+    <Package>91</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,255,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>AQUA</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O775265>
+  <O866812>
+    <Name>ROAD_SQUARE</Name>
+    <Package>101</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>37,30,43,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A670315>Texture</A670315>
+    </AssetReferences>
+  </O866812>
+  <O704805>
+    <Name>SAND</Name>
+    <Package>100</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>222,184,135,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A63238>Texture</A63238>
+    </AssetReferences>
+  </O704805>
+  <O326900>
+    <Name>GATE_RED</Name>
+    <Package>242</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>220,20,60,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>RED</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A703745>Texture</A703745>
+    </AssetReferences>
+  </O326900>
+  <O824671>
+    <Name>BUTTON_SQUARE_BLUE</Name>
+    <Package>97</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,0,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>BLUE</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O824671>
+  <O159161>
+    <Name>GATE_BLUE</Name>
+    <Package>245</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,0,205,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>BLUE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A477914>Texture</A477914>
+    </AssetReferences>
+  </O159161>
+  <O910101>
+    <Name>GATE_AQUA</Name>
+    <Package>241</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>127,255,212,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>AQUA</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A265537>Texture</A265537>
+    </AssetReferences>
+  </O910101>
+  <O931189>
+    <Name>GATE_GREEN</Name>
+    <Package>239</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>84,186,3,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>GREEN</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A985720>Texture</A985720>
+    </AssetReferences>
+  </O931189>
+  <O42421>
+    <Name>GATE_PINK</Name>
+    <Package>234</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,20,147,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>PURPLE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A396071>Texture</A396071>
+    </AssetReferences>
+  </O42421>
+  <O722153>
+    <Name>GATE_WHITE</Name>
+    <Package>247</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>240,248,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>WHITE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A814012>Texture</A814012>
+    </AssetReferences>
+  </O722153>
+  <O649974>
+    <Name>BUTTON_SQUARE_WHITE</Name>
+    <Package>100</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>240,248,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>WHITE</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O649974>
+  <O927556>
+    <Name>BUTTON_SQUARE_RED</Name>
+    <Package>94</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>165,42,42,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Square Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>RED</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O927556>
+  <O356167>
+    <Name>CIRCLE_BUTTON_GREEN</Name>
+    <Package>89</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>60,179,113,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>GREEN</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O356167>
+  <O472611>
+    <Name>CIRCLE_BUTTON_AQUA</Name>
+    <Package>92</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,255,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>AQUA</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O472611>
+  <O852143>
+    <Name>Message #5</Name>
+    <Package>24</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>85,107,47,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O852143>
+  <O348228>
+    <Name>Message #6</Name>
+    <Package>26</Package>
+    <PackId>5</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>22,66,199,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O348228>
+  <O307691>
+    <Name>STREAM_E</Name>
+    <Package>245</Package>
+    <PackId>1</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>182,144,243,255</Color>
+    <Rotation>EAST</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Jetstream</Value>
+      </Parameter>
+      <Parameter>
+        <Name>FillTexture</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A368615>Texture</A368615>
+    </AssetReferences>
+  </O307691>
+  <O662324>
+    <Name>PINEAPPLE?</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>50</ItemId>
+    <Dat2>0</Dat2>
+    <Color>160,82,45,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>0.25</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleX</Name>
+        <Value>-0.25</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A976564>Model</A976564>
+      <A984841>Texture</A984841>
+    </AssetReferences>
+  </O662324>
+  <O304277>
+    <Name>PATRICK_ROCK</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>68</ItemId>
+    <Dat2>0</Dat2>
+    <Color>235,18,40,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>8</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A190480>Model</A190480>
+      <A293760>Texture</A293760>
+    </AssetReferences>
+  </O304277>
+  <O990960>
+    <Name>CIRCLE_BUTTON_YELLOW</Name>
+    <Package>86</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,215,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>YELLOW</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O990960>
+  <O536395>
+    <Name>CIRCLE_BUTTON_RED</Name>
+    <Package>95</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>165,42,42,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>RED</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O536395>
+  <O828136>
+    <Name>CIRCLE_BUTTON_BLUE</Name>
+    <Package>98</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>0,0,255,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>BLUE</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O828136>
+  <O571112>
+    <Name>GATE_RED</Name>
+    <Package>243</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,0,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>RED</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A703745>Texture</A703745>
+    </AssetReferences>
+  </O571112>
+  <O521016>
+    <Name>GATE_PURPLE</Name>
+    <Package>235</Package>
+    <PackId>3</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>153,50,204,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Gate</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Color</Name>
+        <Value>PURPLE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>1.7</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A537039>Model</A537039>
+      <A396071>Texture</A396071>
+    </AssetReferences>
+  </O521016>
+  <O524495>
+    <Name>BONUS_ITEM</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>8</ItemId>
+    <Dat2>0</Dat2>
+    <Color>45,33,220,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Major Item</Name>
+        <Value>BONUS</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>KrabbyPattyObject</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Primitive</Name>
+        <Value>Ellipse</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>4</Value>
+      </Parameter>
+      <Parameter>
+        <Name>PosY</Name>
+        <Value>0.6</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A372507>Texture</A372507>
+    </AssetReferences>
+  </O524495>
+  <O204570>
+    <Name>CORAL</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>67</ItemId>
+    <Dat2>0</Dat2>
+    <Color>104,165,174,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A197336>Model</A197336>
+      <A720273>Texture</A720273>
+    </AssetReferences>
+  </O204570>
+  <O339486>
+    <Name>CIRCLE_BUTTON_PURPLE</Name>
+    <Package>83</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>151,73,178,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Circle Button</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Button Color</Name>
+        <Value>PURPLE</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O339486>
 </root>

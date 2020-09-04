@@ -1,6 +1,7 @@
 ﻿using StinkyFile;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,13 @@ namespace KrabbyQuestTools.Pages
             InitializeComponent();
             var DATpath = Properties.Settings.Default.DataPath;
             var Workspace = Properties.Settings.Default.DestinationDir;
+            if (!File.Exists(LevelDataBlock.BlockDatabasePath))
+            {
+                MessageBox.Show("The BlockDB (blockdb.xml) and AssetDB (texturedb.xml) are expected here: "
+                    + System.IO.Path.Combine(Environment.CurrentDirectory, LevelDataBlock.BlockDatabasePath) +
+                    ", make sure to move them from <SolutionFolder>/Resources to this path on first run!");
+                Environment.Exit(0);
+            }
             if (!string.IsNullOrWhiteSpace(DATpath))
             {
                 FilePathBox.Text = DATpath;
