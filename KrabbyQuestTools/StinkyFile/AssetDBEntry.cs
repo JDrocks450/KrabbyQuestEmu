@@ -46,7 +46,7 @@ namespace StinkyFile
         {
             var database = XDocument.Load(AssetDatabasePath);
             var element = database.Root.Elements().Where(
-                x => x.Element("FilePath").Value == FileName).FirstOrDefault();
+                x => x?.Element("FilePath")?.Value == FileName).FirstOrDefault();
             if (element != null)
                 return element.Element("Name").Value;
             else
