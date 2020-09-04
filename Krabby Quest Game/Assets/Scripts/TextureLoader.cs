@@ -14,7 +14,10 @@ public class TextureLoader : MonoBehaviour
     LevelDataBlock Data;
     DataBlockComponent TileComponent;
     private static LevelDataBlock _floor;
-    public const string AssetDirectory = "D:\\Projects\\Krabby Quest\\Workspace";
+    public static string AssetDirectory    
+    {
+        get; set;
+    }
     public bool LookIntoParent = false;
     // Start is called before the first frame update
     void Start()

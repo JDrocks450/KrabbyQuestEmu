@@ -25,7 +25,7 @@ namespace KrabbyQuestTools.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Projects\\Krabby Quest\\res1.dat")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ManifestPath {
             get {
                 return ((string)(this["ManifestPath"]));
@@ -37,7 +37,7 @@ namespace KrabbyQuestTools.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Projects\\Krabby Quest\\res2.dat")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DataPath {
             get {
                 return ((string)(this["DataPath"]));
@@ -49,13 +49,25 @@ namespace KrabbyQuestTools.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Projects\\Krabby Quest\\Workspace")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DestinationDir {
             get {
                 return ((string)(this["DestinationDir"]));
             }
             set {
                 this["DestinationDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameResourcesPath {
+            get {
+                return ((string)(this["GameResourcesPath"]));
+            }
+            set {
+                this["GameResourcesPath"] = value;
             }
         }
     }

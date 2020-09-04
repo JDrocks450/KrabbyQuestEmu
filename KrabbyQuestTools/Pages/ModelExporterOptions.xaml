@@ -1,0 +1,19 @@
+﻿<Page x:Class="KrabbyQuestTools.Pages.ModelExporterOptions"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Model Export Options" Background="#FF1F1F1F" >
+
+    <StackPanel Margin="10">
+        <TextBlock Margin="0,10,0,0" Text="Workspace Directory:"/>
+        <TextBox x:Name="GamePathBox"/>
+        <TextBlock Margin="0,10,0,0" Text="Blender Filepath: "/>
+        <TextBox x:Name="BlenderPathBox"/>
+        <Button x:Name="PushButton" Margin="0,10,0,0" Height="30" Click="PushButton_Click" Content="Export"/>
+        <Button x:Name="CancelButton" Margin="0,5,0,0" Height="25" Click="CancelButton_Click" Content="Cancel"/>
+    </StackPanel>
+</Page>

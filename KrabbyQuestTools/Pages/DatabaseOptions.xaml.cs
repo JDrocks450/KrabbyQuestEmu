@@ -27,6 +27,7 @@ namespace KrabbyQuestTools.Pages
         public DatabaseOptions()
         {
             InitializeComponent();
+            GamePathBox.Text = Properties.Settings.Default.GameResourcesPath;
         }
 
         private void PushButton_Click(object sender, RoutedEventArgs e)
@@ -49,6 +50,8 @@ namespace KrabbyQuestTools.Pages
             //Process.Start("Resources//push.bat");
             File.Copy(AssetDBEntry.AssetDatabasePath, System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml"), true);
             File.Copy(LevelDataBlock.BlockDatabasePath, System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml"), true);
+            Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
+            Properties.Settings.Default.Save();
             (Parent as Window).Close();
         }
 

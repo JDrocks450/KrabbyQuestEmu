@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace KrabbyQuestTools.Pages
 {
@@ -44,6 +45,11 @@ namespace KrabbyQuestTools.Pages
                 RefreshReferences(OpenEntry);
                 unsavedChanges = true;
             };
+            var database = XDocument.Load(AssetDBEntry.AssetDatabasePath);
+            if (database.Root.Element("WorkspaceDirectory") != null)
+                database.Root.Element("WorkspaceDirectory").Remove();
+            database.Root.Add(new XElement("WorkspaceDirectory", FilePath));
+            database.Save(AssetDBEntry.AssetDatabasePath);
         }
 
         private void PopulateFileBrowser()

@@ -38,7 +38,7 @@ namespace KrabbyQuestTools.Pages
         {
             InitializeComponent();
             Parser = new ManifestParser();
-            LoadingCover.Visibility = Visibility.Collapsed;
+            LoadingCover.Visibility = Visibility.Collapsed;            
         }
 
         private void ManifestBox_KeyDown(object sender, KeyEventArgs e)
@@ -121,6 +121,7 @@ namespace KrabbyQuestTools.Pages
             Properties.Settings.Default.ManifestPath = ManifestPath;
             Properties.Settings.Default.DataPath = DataPath;
             Properties.Settings.Default.DestinationDir = DestinationBox.Text;
+            Properties.Settings.Default.Save();
             Destination = DestinationBox.Text;
             FileMap.Children.Clear();
             FileMap.ColumnDefinitions.Clear();

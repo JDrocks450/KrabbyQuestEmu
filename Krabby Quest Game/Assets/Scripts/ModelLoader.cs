@@ -9,7 +9,7 @@ public class ModelLoader : MonoBehaviour
 {
     static Dictionary<string, Mesh> LoadedContent = new Dictionary<string, Mesh>();
     static Dictionary<string, LevelDataBlock> TemplatedItems = new Dictionary<string, LevelDataBlock>();
-    const string AssetDirectory = TextureLoader.AssetDirectory;
+    static string AssetDirectory => TextureLoader.AssetDirectory;
     IEnumerable<AssetDBEntry> models;
     LevelDataBlock Data;
     DataBlockComponent TileComponent;

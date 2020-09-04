@@ -25,9 +25,14 @@ namespace KrabbyQuestTools.Pages
         public LevelSelect()
         {
             InitializeComponent();
-            if (AppResources.Parser == null)
-                AppResources.Parser = new StinkyParser(@"D:\Projects\Krabby Quest\res2.dat");            
-            GetLevels();
+            var DATpath = Properties.Settings.Default.DataPath;
+            var Workspace = Properties.Settings.Default.DestinationDir;
+            if (!string.IsNullOrWhiteSpace(DATpath))
+            {
+                FilePathBox.Text = DATpath;
+                GetLevels();
+            }
+            WorkspacePath.Text = Workspace;
             Title = "Editor Homepage";
         }
 
@@ -37,6 +42,15 @@ namespace KrabbyQuestTools.Pages
             LevelButtons.Children.Add(LevelsLabel);
             LevelButtons.Children.Add(SearchLabel);
             LevelButtons.Children.Add(SearchBox);
+            try
+            {
+                if (AppResources.Parser == null)
+                    AppResources.Parser = new StinkyParser(FilePathBox.Text);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("There was an error loading from that directory. " + e);
+            }
             var source = (searchTerm != "") ? Parser.LevelIndices.Where(x => x.Value.Contains(SearchBox.Text)) : Parser.LevelIndices;
             int number = 0;
             foreach(var level in source)
@@ -83,7 +97,7 @@ namespace KrabbyQuestTools.Pages
 
         private void AssetEditorButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new TextureToolPage(FilePathBox.Text));
+            NavigationService.Navigate(new TextureToolPage(WorkspacePath.Text));
         }
 
         private void DatabaseOptions_Click(object sender, RoutedEventArgs e)
@@ -107,8 +121,11 @@ namespace KrabbyQuestTools.Pages
 
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(() => new ModelExporter(@"C:\Program Files\Blender Foundation\Blender\blender.exe",
-                @"D:/Projects/Krabby Quest/Workspace/Graphics/", @"D:/Projects/Krabby Quest/Workspace/Export").ExportAll());
+            KQTDialog dialog = new KQTDialog()
+            {
+                Content = new ModelExporterOptions()
+            };
+            dialog.ShowDialog();
         }
     }
 }

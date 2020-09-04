@@ -24,7 +24,7 @@
                 <TextBox x:Name="DataBox" AllowDrop="True" Grid.Column="3" TextWrapping="Wrap" PreviewDragOver="ManifestBox_PreviewDragOver"  Margin="10,0" KeyDown="ManifestBox_KeyDown" LostFocus="ManifestBox_LostFocus" Height="23" Drop="ManifestBox_Drop" VerticalContentAlignment="Center"/>
             </Grid>
             <DockPanel DockPanel.Dock="Top" Background="#FF1F1F1F">
-                <TextBlock VerticalAlignment="Center" Margin="10,0">Destination Directory:</TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="10,0">Workspace Directory:</TextBlock>
                 <Button x:Name="OpenButton" VerticalAlignment="Center" Padding="10,0" Height="23" DockPanel.Dock="Right" Margin="0,0,10,0" Click="OpenButton_Click">Open</Button>
                 <Button x:Name="ExtractButton" VerticalAlignment="Center" Padding="10,0" Height="23" DockPanel.Dock="Right" Margin="0,0,10,0" Click="ExtractButton_Click" Content="Extract All"/>
                 <CheckBox x:Name="TGACheckBox" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" Margin="0,0,5,0" IsChecked="True">TGA Convert</CheckBox>

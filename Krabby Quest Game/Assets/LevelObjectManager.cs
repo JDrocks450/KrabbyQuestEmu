@@ -8,12 +8,13 @@ using System.IO;
 using System;
 using Assets;
 using B83.Image.BMP;
+using System.Xml.Linq;
 
 public class LevelObjectManager : MonoBehaviour    
 {
     public static Vector2 Grid_Size = new Vector2(2,2);
     IEnumerable<AssetDBEntry> textures;
-    string AssetDirectory = TextureLoader.AssetDirectory;  
+    string AssetDirectory => TextureLoader.AssetDirectory;  
     
     /// <summary>
     /// The current <see cref="StinkyParser"/> instance -- do not use this unless necessary!!
@@ -31,7 +32,10 @@ public class LevelObjectManager : MonoBehaviour
     {
         LevelDataBlock.BlockDatabasePath = "Assets/Resources/blockdb.xml";
         AssetDBEntry.AssetDatabasePath = "Assets/Resources/texturedb.xml";
-        StinkyParser.LoadLevelFile(Path.Combine(AssetDirectory, "levels", "5.lv5"), out Parser);
+        XDocument doc = XDocument.Load(AssetDBEntry.AssetDatabasePath);
+        TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;
+        var path = Path.Combine(AssetDirectory, "levels", "5.lv5");
+        StinkyParser.LoadLevelFile(path, out Parser);
         LoadNext();
     }
 

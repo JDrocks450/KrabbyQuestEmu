@@ -11,6 +11,8 @@ namespace StinkyFile
 {
     public class ModelExporter
     {
+        public Exception ExceptionObject { get; private set; }
+
         public const string DefaultBlenderPath = @"C:\Program Files\Blender Foundation\Blender\blender.exe";
         public string BlenderPath { get; }
         public string B3DContentDirectory { get; }
@@ -24,22 +26,31 @@ namespace StinkyFile
 
         public void ExportAll()
         {
-            var files = Directory.GetFiles(B3DContentDirectory, "*.b3d");
-            foreach (var file in files)
+            ExceptionObject = null;
+            try
             {
-                var python = File.ReadAllText("BlenderBackgroundConverter.py");
-                int index = python.IndexOf("filepath=", 0) + 10;
-                int endIndex = python.IndexOf("\"", index);
-                python = python.Remove(index, endIndex - index);
-                python = python.Insert(index, file.Replace("\\", "/"));
-                index = python.IndexOf("filepath=", index + file.Length + 5) + 10;
-                endIndex = python.IndexOf("\"", index);
-                python = python.Remove(index, endIndex - index);
-                var name = Path.GetFileNameWithoutExtension(file);
-                python = python.Insert(index, Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/"));
-                File.WriteAllText("BlenderBackgroundConverter.py", python);
-                var processInfo = Process.Start(BlenderPath, "--background --python " + Path.Combine(Environment.CurrentDirectory, "BlenderBackgroundConverter.py"));
-                processInfo.WaitForExit();
+                Directory.CreateDirectory(ExportDirectory);
+                var files = Directory.GetFiles(B3DContentDirectory, "*.b3d");
+                foreach (var file in files)
+                {
+                    var python = File.ReadAllText("BlenderBackgroundConverter.py");
+                    int index = python.IndexOf("filepath=", 0) + 10;
+                    int endIndex = python.IndexOf("\"", index);
+                    python = python.Remove(index, endIndex - index);
+                    python = python.Insert(index, file.Replace("\\", "/"));
+                    index = python.IndexOf("filepath=", index + file.Length + 5) + 10;
+                    endIndex = python.IndexOf("\"", index);
+                    python = python.Remove(index, endIndex - index);
+                    var name = Path.GetFileNameWithoutExtension(file);
+                    python = python.Insert(index, Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/"));
+                    File.WriteAllText("BlenderBackgroundConverter.py", python);
+                    var processInfo = Process.Start(BlenderPath, "--background --python " + Path.Combine(Environment.CurrentDirectory, "BlenderBackgroundConverter.py"));
+                    processInfo.WaitForExit();
+                }
+            }
+            catch(Exception e)
+            {
+                ExceptionObject = e;
             }
         }
     }

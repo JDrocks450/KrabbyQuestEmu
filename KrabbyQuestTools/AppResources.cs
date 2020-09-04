@@ -15,7 +15,6 @@ namespace KrabbyQuestTools
 {
     public static class AppResources
     {
-        [Obsolete]
         public static StinkyParser Parser { get; set; }
         public static Random Random { get; } = new Random();
 
