@@ -1,579 +1,243 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <A896478>
-    <FilePath>res2_dat-0000000006.jpg</FilePath>
-    <Name>Floating Raft</Name>
-    <AssetType>Texture</AssetType>
-    <References>O542113</References>
-  </A896478>
-  <A330020>
-    <FilePath>res2_dat-0000000012.bmp</FilePath>
-    <Name>Background Flower</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A330020>
-  <A752825>
-    <FilePath>res2_dat-0000000015.jpg</FilePath>
-    <Name>Background Flower Static</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A752825>
-  <A593719>
-    <FilePath>res2_dat-0000000016.jpg</FilePath>
-    <Name>Sand Ground</Name>
-    <AssetType>Texture</AssetType>
-    <References>O704805</References>
-  </A593719>
-  <A999260>
-    <FilePath>res2_dat-0000000017.jpg</FilePath>
-    <Name>Sand Ground GooLagoon V1</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A999260>
-  <A538238>
-    <FilePath>res2_dat-0000000018.jpg</FilePath>
-    <Name>Sand Ground GooLagoon V2</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A538238>
-  <A701663>
-    <FilePath>res2_dat-0000000019.jpg</FilePath>
-    <Name>Cave Ground</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A701663>
-  <A750559>
-    <FilePath>res2_dat-0000000020.jpg</FilePath>
-    <Name>Cave Ground Lit</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A750559>
-  <A669343>
-    <FilePath>res2_dat-0000000021.jpg</FilePath>
-    <Name>Cave Ground Grate</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A669343>
-  <A112472>
-    <FilePath>res2_dat-0000000022.jpg</FilePath>
-    <Name>Cave Ground Icy </Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A112472>
-  <A748531>
-    <FilePath>res2_dat-0000000023.jpg</FilePath>
-    <Name>Jellyfish Fields Ground</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A748531>
-  <A37587>
-    <FilePath>res2_dat-0000000024.jpg</FilePath>
-    <Name>Jellyfish Fields Ground Dark</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A37587>
-  <A675689>
-    <FilePath>res2_dat-0000000030.jpg</FilePath>
-    <Name>Road Bikini Regular</Name>
-    <AssetType>Texture</AssetType>
-    <References>O107917</References>
-  </A675689>
-  <A210531>
-    <FilePath>res2_dat-0000000031.jpg</FilePath>
-    <Name>Road Bikini Rocks</Name>
+  <A891861>
+    <FilePath>Graphics\floorroadrock.jpg</FilePath>
+    <Name>floorroadrock</Name>
     <AssetType>Texture</AssetType>
     <References>O586289</References>
-  </A210531>
-  <A95637>
-    <FilePath>res2_dat-0000000033.jpg</FilePath>
-    <Name>Sand Ground Rocky</Name>
+  </A891861>
+  <A180541>
+    <FilePath>Graphics\wallsandtop.jpg</FilePath>
+    <Name>wallsandtop</Name>
     <AssetType>Texture</AssetType>
-    <References></References>
-  </A95637>
-  <A575909>
-    <FilePath>res2_dat-0000000032.jpg</FilePath>
-    <Name>Sand Ground Bikini</Name>
+    <References>O219432,O106005,O285390</References>
+  </A180541>
+  <A304393>
+    <FilePath>Graphics\wallsanddark.jpg</FilePath>
+    <Name>wallsanddark</Name>
     <AssetType>Texture</AssetType>
-    <References></References>
-  </A575909>
-  <A167742>
-    <FilePath>res2_dat-0000000034.jpg</FilePath>
-    <Name>Road Square Sand</Name>
-    <AssetType>Texture</AssetType>
-    <References>O866812</References>
-  </A167742>
-  <A545206>
-    <FilePath>res2_dat-0000000035.bmp</FilePath>
-    <Name>Fontsheet Special Chars</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A545206>
-  <A691771>
-    <FilePath>res2_dat-0000000036.bmp</FilePath>
-    <Name>Fontsheet Numbers</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A691771>
-  <A430107>
-    <FilePath>res2_dat-0000000037.bmp</FilePath>
-    <Name>Fontsheet Letters A-O</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A430107>
-  <A297332>
-    <FilePath>res2_dat-0000000038.bmp</FilePath>
-    <Name>Fontsheet Letters P-Z + Special Chars</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A297332>
-  <A392842>
-    <FilePath>res2_dat-0000000039.bmp</FilePath>
-    <Name>Fontsheet Lowercase Letters a-o</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A392842>
-  <A155948>
-    <FilePath>res2_dat-0000000040.bmp</FilePath>
-    <Name>Fontsheet Lowercase Letters p-z</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A155948>
-  <A76188>
-    <FilePath>res2_dat-0000000041.jpg</FilePath>
-    <Name>Developer Easteregg 1</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A76188>
-  <A495718>
-    <FilePath>res2_dat-0000000042.jpg</FilePath>
-    <Name>Developer Easteregg 2</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A495718>
-  <A298897>
-    <FilePath>res2_dat-0000000043.jpg</FilePath>
-    <Name>Developer Easteregg 3</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A298897>
-  <A509898>
-    <FilePath>res2_dat-0000000055.jpg</FilePath>
-    <Name>Jellyfish</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A509898>
-  <A610358>
-    <FilePath>res2_dat-0000000061.bmp</FilePath>
-    <Name>Mapscreen Icons</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A610358>
-  <A143516>
-    <FilePath>res2_dat-0000000062.bmp</FilePath>
-    <Name>Mapscreen Indicator</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A143516>
-  <A993030>
-    <FilePath>res2_dat-0000000063.bmp</FilePath>
-    <Name>Mapscreen Bg 1</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A993030>
-  <A43814>
-    <FilePath>res2_dat-0000000064.bmp</FilePath>
-    <Name>Mapscreen Bg 2</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A43814>
-  <A58787>
-    <FilePath>res2_dat-0000000065.bmp</FilePath>
-    <Name>Mapscreen Bg 3</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A58787>
-  <A239236>
-    <FilePath>res2_dat-0000000066.bmp</FilePath>
-    <Name>Mapscreen Bg 4</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A239236>
-  <A1529>
-    <FilePath>res2_dat-0000000070.bmp</FilePath>
-    <Name>Particles</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A1529>
-  <A600172>
-    <FilePath>res2_dat-0000000077.bmp</FilePath>
-    <Name>Sign Texture</Name>
-    <AssetType>Texture</AssetType>
-    <References>O497772</References>
-  </A600172>
-  <A614533>
-    <FilePath>res2_dat-0000000080.bmp</FilePath>
-    <Name>Controls Hint</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A614533>
-  <A749375>
-    <FilePath>res2_dat-0000000081.jpg</FilePath>
-    <Name>Controls Hint Beta</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A749375>
-  <A579954>
-    <FilePath>res2_dat-0000000082.bmp</FilePath>
-    <Name>Mapscreen Hint</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A579954>
-  <A696547>
-    <FilePath>res2_dat-0000000083.bmp</FilePath>
-    <Name>Steelbox Texture</Name>
-    <AssetType>Texture</AssetType>
-    <References>O985647</References>
-  </A696547>
-  <A907803>
-    <FilePath>res2_dat-0000000086.bmp</FilePath>
-    <Name>Game Logo</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A907803>
-  <A465828>
-    <FilePath>res2_dat-0000000087.bmp</FilePath>
-    <Name>Game Logo Beta 1</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A465828>
-  <A467378>
-    <FilePath>res2_dat-0000000088.bmp</FilePath>
-    <Name>Game Logo Beta 2</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A467378>
-  <A35487>
-    <FilePath>res2_dat-0000000091.jpg</FilePath>
-    <Name>Umbrella Textures</Name>
-    <AssetType>Texture</AssetType>
-    <References>O901770</References>
-  </A35487>
-  <A386915>
-    <FilePath>res2_dat-0000000092.jpg</FilePath>
-    <Name>GooLagoon Wall</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A386915>
-  <A246272>
-    <FilePath>res2_dat-0000000093.jpg</FilePath>
-    <Name>GooLagoon Wall Bright</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A246272>
-  <A726843>
-    <FilePath>res2_dat-0000000094.jpg</FilePath>
-    <Name>GooLagoon Wall Top</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A726843>
-  <A443550>
-    <FilePath>res2_dat-0000000095.jpg</FilePath>
-    <Name>Cave Wall</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A443550>
-  <A468634>
-    <FilePath>res2_dat-0000000096.jpg</FilePath>
-    <Name>Cave Wall Bright</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A468634>
-  <A270072>
-    <FilePath>res2_dat-0000000097.jpg</FilePath>
-    <Name>Cave Wall Top</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A270072>
-  <A893038>
-    <FilePath>res2_dat-0000000098.jpg</FilePath>
-    <Name>KelpForest Wall</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A893038>
-  <A826610>
-    <FilePath>res2_dat-0000000099.jpg</FilePath>
-    <Name>KelpForest Wall Bright</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A826610>
-  <A520225>
-    <FilePath>res2_dat-0000000100.jpg</FilePath>
-    <Name>KelpForest Wall Top</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A520225>
-  <A292860>
-    <FilePath>res2_dat-0000000101.jpg</FilePath>
-    <Name>Bricks?</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A292860>
-  <A757349>
-    <FilePath>res2_dat-0000000102.jpg</FilePath>
-    <Name>Water Rocky</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A757349>
-  <A741499>
-    <FilePath>res2_dat-0000000104.jpg</FilePath>
-    <Name>Water Rocky Bright</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A741499>
-  <A663766>
-    <FilePath>res2_dat-0000000105.jpg</FilePath>
-    <Name>Jellyfish Fields Wall Top</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A663766>
-  <A719025>
-    <FilePath>res2_dat-0000000109.jpg</FilePath>
-    <Name>JellyFish Fields Wall</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A719025>
-  <A816410>
-    <FilePath>res2_dat-0000000110.jpg</FilePath>
-    <Name>JellyFish Fields Wall Bright</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A816410>
-  <A1064>
-    <FilePath>res2_dat-0000000111.jpg</FilePath>
-    <Name>Bikini Wall Top</Name>
-    <AssetType>Texture</AssetType>
-    <References>O106005,O285390,O219432</References>
-  </A1064>
-  <A363854>
-    <FilePath>res2_dat-0000000112.jpg</FilePath>
-    <Name>Water?</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A363854>
-  <A292470>
-    <FilePath>res2_dat-0000000114.bmp</FilePath>
-    <Name>Wooden Box</Name>
-    <AssetType>Texture</AssetType>
-    <References>O161677</References>
-  </A292470>
-  <A985342>
-    <FilePath>res2_dat-0000000133.bmp</FilePath>
-    <Name>Hint Last Patty</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A985342>
-  <A697926>
-    <FilePath>res2_dat-0000000135.bmp</FilePath>
-    <Name>Mapscreen Icons</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A697926>
-  <A268230>
-    <FilePath>res2_dat-0000000009.bmp</FilePath>
-    <Name>Buttons Deactivated</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A268230>
-  <A203018>
-    <FilePath>res2_dat-0000000010.bmp</FilePath>
-    <Name>Buttons Activated</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A203018>
-  <A470379>
-    <FilePath>res2_dat-0000000014.bmp</FilePath>
-    <Name>Jetstream</Name>
+    <References>O219432,O106005,O285390</References>
+  </A304393>
+  <A368615>
+    <FilePath>Graphics\conveyor.bmp</FilePath>
+    <Name>conveyor</Name>
     <AssetType>Texture</AssetType>
     <References>O418897,O307691,O492444,O424919</References>
-  </A470379>
-  <A784305>
-    <FilePath>res2_dat-0000000136.wav</FilePath>
-    <Name>Shatter Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A784305>
-  <A680068>
-    <FilePath>res2_dat-0000000139.wav</FilePath>
-    <Name>Box Break Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A680068>
-  <A278549>
-    <FilePath>res2_dat-0000000138.wav</FilePath>
-    <Name>Bubbles Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A278549>
-  <A875381>
-    <FilePath>res2_dat-0000000137.wav</FilePath>
-    <Name>Phone Ring Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A875381>
-  <A537825>
-    <FilePath>res2_dat-0000000140.wav</FilePath>
-    <Name>Box Push Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A537825>
-  <A201805>
-    <FilePath>res2_dat-0000000141.wav</FilePath>
-    <Name>Raft Disappear Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A201805>
-  <A699427>
-    <FilePath>res2_dat-0000000142.wav</FilePath>
-    <Name>Bully Hey Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A699427>
-  <A588263>
-    <FilePath>res2_dat-0000000145.wav</FilePath>
-    <Name>Woosh Noise Beta?</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A588263>
-  <A480129>
-    <FilePath>res2_dat-0000000146.wav</FilePath>
-    <Name>Click Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A480129>
-  <A973581>
-    <FilePath>res2_dat-0000000147.wav</FilePath>
-    <Name>Stream Woosh Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O307691,O492444,O424919,O418897</References>
-  </A973581>
-  <A270681>
-    <FilePath>res2_dat-0000000144.wav</FilePath>
-    <Name>Gate Open Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O931189,O753210,O788048,O42421,O326900,O722153,O89268,O521016,O555624,O521016,O910101,O159161,O283463,O42421</References>
-  </A270681>
-  <A799169>
-    <FilePath>res2_dat-0000000143.wav</FilePath>
-    <Name>Bully Stomp Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O881279,O302390,O427502,O744745,O441458</References>
-  </A799169>
-  <A719208>
-    <FilePath>res2_dat-0000000149.wav</FilePath>
-    <Name>Level Open Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A719208>
-  <A480749>
-    <FilePath>res2_dat-0000000151.wav</FilePath>
-    <Name>Death Sound 1</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A480749>
-  <A347580>
-    <FilePath>res2_dat-0000000152.wav</FilePath>
-    <Name>Death Sound 2</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A347580>
-  <A846649>
-    <FilePath>res2_dat-0000000153.wav</FilePath>
-    <Name>Death Sound 3</Name>
-    <AssetType>Texture</AssetType>
-    <References></References>
-  </A846649>
-  <A65306>
-    <FilePath>res2_dat-0000000154.wav</FilePath>
-    <Name>Ice Slip Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O254939</References>
-  </A65306>
-  <A35805>
-    <FilePath>res2_dat-0000000156.wav</FilePath>
-    <Name>Box Water Splash Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O161677</References>
-  </A35805>
-  <A451872>
-    <FilePath>res2_dat-0000000157.wav</FilePath>
-    <Name>Beach Ball Bounce Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O632353</References>
-  </A451872>
-  <A932810>
-    <FilePath>res2_dat-0000000158.wav</FilePath>
-    <Name>Krabby Patty Collect</Name>
-    <AssetType>Sound</AssetType>
+  </A368615>
+  <A188045>
+    <FilePath>Export\krabbypattie01.obj</FilePath>
+    <Name>Krabby Patty Model</Name>
+    <AssetType>Model</AssetType>
     <References>O301686</References>
-  </A932810>
-  <A115354>
-    <FilePath>res2_dat-0000000159.wav</FilePath>
-    <Name>Beach Ball Explode</Name>
-    <AssetType>Sound</AssetType>
-    <References>O632353</References>
-  </A115354>
-  <A89390>
-    <FilePath>res2_dat-0000000160.wav</FilePath>
-    <Name>Steel Box Water Splash Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O985647</References>
-  </A89390>
-  <A844032>
-    <FilePath>res2_dat-0000000162.wav</FilePath>
-    <Name>Box Ice Push Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O985647,O161677</References>
-  </A844032>
-  <A63542>
-    <FilePath>res2_dat-0000000165.wav</FilePath>
-    <Name>Click Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A63542>
-  <A702550>
-    <FilePath>res2_dat-0000000166.wav</FilePath>
-    <Name>Pop Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A702550>
-  <A211520>
-    <FilePath>res2_dat-0000000167.wav</FilePath>
-    <Name>Level Complete Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References></References>
-  </A211520>
-  <A533201>
-    <FilePath>res2_dat-0000000168.wav</FilePath>
-    <Name>Icicle Destroy Sound</Name>
-    <AssetType>Sound</AssetType>
-    <References>O353994</References>
-  </A533201>
-  <A996643>
-    <FilePath>res2_dat-0000000004.bmp</FilePath>
-    <Name>Blue Circle</Name>
+  </A188045>
+  <A18691>
+    <FilePath>Graphics\krabbypattie01.png</FilePath>
+    <Name>krabbypattie01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O301686</References>
+  </A18691>
+  <A273556>
+    <FilePath>Graphics\flower.bmp</FilePath>
+    <Name>flower</Name>
+    <AssetType>Texture</AssetType>
+    <References>O31249</References>
+  </A273556>
+  <A690845>
+    <FilePath>Export\flower.obj</FilePath>
+    <Name>Flower Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O31249</References>
+  </A690845>
+  <A816019>
+    <FilePath>Graphics\woodbox.bmp</FilePath>
+    <Name>woodbox</Name>
+    <AssetType>Texture</AssetType>
+    <References>O161677</References>
+  </A816019>
+  <A450690>
+    <FilePath>Export\kelptree01.obj</FilePath>
+    <Name>KelpTree Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O890634</References>
+  </A450690>
+  <A562661>
+    <FilePath>Graphics\kelptree01.png</FilePath>
+    <Name>kelptree01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O890634</References>
+  </A562661>
+  <A59585>
+    <FilePath>Export\sign.obj</FilePath>
+    <Name>Sign Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O497772</References>
+  </A59585>
+  <A138204>
+    <FilePath>Graphics\sign.bmp</FilePath>
+    <Name>sign</Name>
+    <AssetType>Texture</AssetType>
+    <References>O497772</References>
+  </A138204>
+  <A167974>
+    <FilePath>Export\rock.obj</FilePath>
+    <Name>Rock Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O279038</References>
+  </A167974>
+  <A140613>
+    <FilePath>Graphics\rock.jpg</FilePath>
+    <Name>rock</Name>
+    <AssetType>Texture</AssetType>
+    <References>O279038</References>
+  </A140613>
+  <A718991>
+    <FilePath>Export\krustykrab_sign01.obj</FilePath>
+    <Name>KKSign Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O777235</References>
+  </A718991>
+  <A585809>
+    <FilePath>Graphics\krustykrab_sign01.png</FilePath>
+    <Name>krustykrab_sign01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O777235</References>
+  </A585809>
+  <A644606>
+    <FilePath>Export\roadblock.obj</FilePath>
+    <Name>Roadblock Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O359038,O621798</References>
+  </A644606>
+  <A344421>
+    <FilePath>Graphics\roadblock.jpg</FilePath>
+    <Name>roadblock</Name>
+    <AssetType>Texture</AssetType>
+    <References>O359038,O621798</References>
+  </A344421>
+  <A810060>
+    <FilePath>Export\krustykrab01.obj</FilePath>
+    <Name>KK Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O42472</References>
+  </A810060>
+  <A93494>
+    <FilePath>Graphics\krustykrab01.png</FilePath>
+    <Name>krustykrab01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O42472</References>
+  </A93494>
+  <A79802>
+    <FilePath>Graphics\floorroad.jpg</FilePath>
+    <Name>floorroad</Name>
+    <AssetType>Texture</AssetType>
+    <References>O107917,O62616</References>
+  </A79802>
+  <A537039>
+    <FilePath>Export\seaweedgate.obj</FilePath>
+    <Name>Gate Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O753210,O42421,O283463,O159161,O910101,O521016,O555624,O571112,O123245,O931189,O788048,O326900,O722153,O89268</References>
+  </A537039>
+  <A985720>
+    <FilePath>Graphics\gate3.jpg</FilePath>
+    <Name>gate3</Name>
+    <AssetType>Texture</AssetType>
+    <References>O753210,O931189</References>
+  </A985720>
+  <A265537>
+    <FilePath>Graphics\gate4.jpg</FilePath>
+    <Name>gate4</Name>
+    <AssetType>Texture</AssetType>
+    <References>O123245,O910101</References>
+  </A265537>
+  <A787057>
+    <FilePath>Graphics\gate2.jpg</FilePath>
+    <Name>gate2</Name>
+    <AssetType>Texture</AssetType>
+    <References>O788048,O555624</References>
+  </A787057>
+  <A703745>
+    <FilePath>Graphics\gate5.jpg</FilePath>
+    <Name>gate5</Name>
+    <AssetType>Texture</AssetType>
+    <References>O571112,O326900</References>
+  </A703745>
+  <A477914>
+    <FilePath>Graphics\gate6.jpg</FilePath>
+    <Name>gate6</Name>
+    <AssetType>Texture</AssetType>
+    <References>O159161,O283463</References>
+  </A477914>
+  <A814012>
+    <FilePath>Graphics\gate7.jpg</FilePath>
+    <Name>gate7</Name>
+    <AssetType>Texture</AssetType>
+    <References>O722153,O89268</References>
+  </A814012>
+  <A396071>
+    <FilePath>Graphics\gate1.jpg</FilePath>
+    <Name>Purple Gate</Name>
+    <AssetType>Texture</AssetType>
+    <References>O521016,O42421</References>
+  </A396071>
+  <A670315>
+    <FilePath>Graphics\floorsandstep.jpg</FilePath>
+    <Name>floorsandstep</Name>
+    <AssetType>Texture</AssetType>
+    <References>O866812</References>
+  </A670315>
+  <A675322>
+    <FilePath>Graphics\floorsand.jpg</FilePath>
+    <Name>floorsand</Name>
+    <AssetType>Texture</AssetType>
+    <References>O704805</References>
+  </A675322>
+  <A63238>
+    <FilePath>Graphics\floorbeach.jpg</FilePath>
+    <Name>floorbeach</Name>
     <AssetType>Texture</AssetType>
     <References></References>
-  </A996643>
-  <A295227>
-    <FilePath>res2_dat-0000000106.jpg</FilePath>
-    <Name>Bikini Bottom Wall</Name>
+  </A63238>
+  <A976564>
+    <FilePath>Export\building_pineapple01.obj</FilePath>
+    <Name>Pineapple Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O662324</References>
+  </A976564>
+  <A984841>
+    <FilePath>Graphics\building_pineapple01.png</FilePath>
+    <Name>building_pineapple01</Name>
     <AssetType>Texture</AssetType>
-    <References>O285390,O219432,O106005</References>
-  </A295227>
-  <A272835>
-    <FilePath>res2_dat-0000000107.jpg</FilePath>
-    <Name>Bikini Wall Bright</Name>
+    <References>O662324</References>
+  </A984841>
+  <A190480>
+    <FilePath>Export\patricksrock.obj</FilePath>
+    <Name>Patrick House Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O304277</References>
+  </A190480>
+  <A293760>
+    <FilePath>Graphics\patricksrock.jpg</FilePath>
+    <Name>patricksrock</Name>
     <AssetType>Texture</AssetType>
-    <References></References>
-  </A272835>
+    <References>O304277</References>
+  </A293760>
+  <A720273>
+    <FilePath>Graphics\cactus.jpg</FilePath>
+    <Name>cactus</Name>
+    <AssetType>Texture</AssetType>
+    <References>O204570</References>
+  </A720273>
+  <A372507>
+    <FilePath>Graphics\rainbow.jpg</FilePath>
+    <Name>rainbow</Name>
+    <AssetType>Texture</AssetType>
+    <References>O524495</References>
+  </A372507>
+  <A197336>
+    <FilePath>Export\cactus.obj</FilePath>
+    <Name>Coral Model</Name>
+    <AssetType>Model</AssetType>
+    <References>O204570</References>
+  </A197336>
 </root>

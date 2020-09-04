@@ -27,7 +27,7 @@ namespace KrabbyQuestTools.Pages
         private StinkyParser Parser => AppResources.Parser;
         private LevelDataBlock OpenDataBlock;
         private BlockLayers _mode;
-        private string AssetDir = @"D:\Projects\Krabby Quest\FileDump";
+        private string AssetDir = @"D:\Projects\Krabby Quest\Workspace";
         bool askSave = false;
 
         private BlockLayers Mode
@@ -38,12 +38,12 @@ namespace KrabbyQuestTools.Pages
                 switch (value)
                 {
                     case BlockLayers.Decoration:
-                        IntegralModeButton.Background = Brushes.Silver;
-                        DecorModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
+                        IntegralModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
+                        DecorModeButton.Background = Brushes.DarkCyan;
                         break;
                     case BlockLayers.Integral:                        
-                        DecorModeButton.Background = Brushes.Silver;
-                        IntegralModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
+                        DecorModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
+                        IntegralModeButton.Background = Brushes.DarkCyan;
                         break;
                 }
                 _mode = value;
@@ -55,6 +55,7 @@ namespace KrabbyQuestTools.Pages
             InitializeComponent();
             PrepareMapScreen(Parser.OpenLevel);           
             Title = Parser.OpenLevel.Name;
+            Mode = BlockLayers.Integral;
         }                
 
         private void Refresh()
@@ -86,6 +87,7 @@ namespace KrabbyQuestTools.Pages
             destination.Children.Clear();
             destination.RowDefinitions.Clear();
             destination.ColumnDefinitions.Clear();
+            GridBorder.MaxWidth = columns * 25;
             for (int r = 0; r < rows; r++)
             {
                 destination.RowDefinitions.Add(new RowDefinition()
@@ -129,12 +131,19 @@ namespace KrabbyQuestTools.Pages
                             {
                                 transform = new RotateTransform(-90);
                             }
-                            cell.Child = new Image()
+                            try
                             {
-                                Source = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName))),
-                                RenderTransform = transform,
-                                RenderTransformOrigin = new Point(.5, .5)
-                            };
+                                cell.Child = new Image()
+                                {
+                                    Source = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName))),
+                                    RenderTransform = transform,
+                                    RenderTransformOrigin = new Point(.5, .5)
+                                };
+                            }
+                            catch
+                            {
+
+                            }
                         }
                         cell.MouseLeftButtonDown += LevelBlock_Click;
                         cell.Tag = data;

@@ -21,15 +21,17 @@ namespace StinkyFile
         public int Rows { get; set; }
         public int Columns { get; set; }
         public int Total => IntegralData?.Length ?? 0;
+        public byte[] FileContent { get; private set; }
         public StinkyLevel(StinkyParser parent, byte[] FileData, int index)
         {
             Parent = parent;
-            LevelHeaderIndex = index;
+            LevelHeaderIndex = index;            
             LoadFromDat(FileData, index);
         }
 
         internal void LoadFromDat(byte[] data, int index)
-        {            
+        {          
+            FileContent = data;
             var name = data.Skip(index + 0x28).Take(0x1E).ToArray();
             var text = Encoding.ASCII.GetString(name).Trim(); // get level name    
             HashSet<byte> secretBytes = new HashSet<byte>();
@@ -110,9 +112,26 @@ namespace StinkyFile
                 _filePath = value;
             }
         }
-        public StinkyParser(string FilePath)
+
+        public static StinkyLevel LoadLevelFile(string FilePath, out StinkyParser parser)
         {
-            this.FilePath = FilePath;
+            parser = new StinkyParser();
+            return LoadLevel(parser, FilePath);
+        }
+
+        public static StinkyLevel LoadLevel(StinkyParser parser, string FilePath)
+        {
+            return parser.LevelRead(FilePath);
+        }
+
+        public StinkyParser()
+        {
+
+        }
+
+        public StinkyParser(string ResDatFilePath)
+        {
+            this.FilePath = ResDatFilePath;
             FindAllLevels();
             //Refresh(true);
         }
@@ -142,6 +161,17 @@ namespace StinkyFile
         }
 
         /// <summary>
+        /// Load level from the specified filepath
+        /// </summary>
+        /// <param name="FilePath"></param>
+        /// <returns></returns>
+        public StinkyLevel LevelRead(string FilePath)
+        {
+            var content = File.ReadAllBytes(FilePath);
+            return OpenLevel = new StinkyLevel(this, content, 0);
+        }
+
+        /// <summary>
         /// Reads a level at the specified index in a DAT file -- Sets the level as <see cref="OpenLevel"/> See: <see cref="LevelIndices"/>
         /// </summary>
         /// <param name="index"></param>
@@ -152,7 +182,7 @@ namespace StinkyFile
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public StinkyLevel LevelRead(string Name) => LevelRead(LevelIndices.First(x => x.Value == Name).Key);
+        //public StinkyLevel LevelRead(string Name) => LevelRead(LevelIndices.First(x => x.Value == Name).Key);
 
         /// <summary>
         /// Returns the level data for the level at the specified index
@@ -221,11 +251,11 @@ namespace StinkyFile
             foreach (var block in DataCache.Values)
                 block.SaveToDatabase();
         }
-
+            
         internal void RefreshLevel(StinkyLevel level)
         {
             int skip = BitRead;
-            var data = fileData.Skip(level.LevelContentIndex).ToArray();
+            var data = level.FileContent.Skip(level.LevelContentIndex).ToArray();
             List<LevelDataBlock> blocks = new List<LevelDataBlock>();
             List<LevelDataBlock> decor = new List<LevelDataBlock>();
             DataCache.Clear();
@@ -284,8 +314,8 @@ namespace StinkyFile
             }
             level.IntegralData = blocks.ToArray();
             level.DecorationData = decor.ToArray();
-            using (var stream = File.OpenWrite("leveldump.dat")) 
-                stream.Write(fileData, level.LevelHeaderIndex, level.LevelHeaderIndex + index);
+            //using (var stream = File.OpenWrite("leveldump.dat")) 
+              //  stream.Write(fileData, level.LevelHeaderIndex, level.LevelHeaderIndex + index);
             bitSkipChanged = false;
             pathChanged = false;
         }

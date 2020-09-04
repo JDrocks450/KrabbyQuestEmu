@@ -22,6 +22,8 @@ namespace StinkyFile
     public class LevelDataBlock
     {
         public static string BlockDatabasePath { get; set; } = "Resources/blockdb.xml";
+        public static string ParameterDatabasePath { get; set; } = "Resources/parameterdb.xml";
+
         private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();
        
         private static Random rand = new Random();
@@ -48,12 +50,17 @@ namespace StinkyFile
         }
         public string Name { get; set; }
         public S_Color Color { get; set; }
+
         public HashSet<(string guid, AssetType type)> AssetReferences = new HashSet<(string guid, AssetType type)>();
+
+        public bool HasTexture => AssetReferences.FirstOrDefault(x => x.type == AssetType.Texture) != default;
+        public bool HasModel => AssetReferences.FirstOrDefault(x => x.type == AssetType.Model) != default;
+        public bool HasSound => AssetReferences.FirstOrDefault(x => x.type == AssetType.Sound) != default;
         public SRotation Rotation { get; set; }
         public IEnumerable<BlockParameter> Parameters
         {
             get; set;
-        } = new List<BlockParameter>();
+        } = new List<BlockParameter>();        
 
         public LevelDataBlock(byte[] RawData, BlockLayers Layer = BlockLayers.Integral)
         {

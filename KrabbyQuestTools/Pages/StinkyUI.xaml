@@ -90,7 +90,7 @@
                 </Grid>
             </ScrollViewer>
             <Grid Background="Black">
-                <Border Background="{Binding Background, ElementName=IntegralModeButton}" HorizontalAlignment="Left" Margin="10,36,10,0" VerticalAlignment="Top" BorderBrush="#FF5F5F5F" BorderThickness="1">
+                <Border x:Name="GridBorder" HorizontalAlignment="Left" Margin="10,36,10,0" VerticalAlignment="Top" BorderBrush="#FF5F5F5F" BorderThickness="1" Background="#FF343434">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <Grid>
                             <Grid x:Name="LevelGrid" MinHeight="20" MinWidth="20" />
@@ -99,8 +99,8 @@
                     </ScrollViewer>
                 </Border>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
-                    <Button x:Name="IntegralModeButton" Margin="0,0,5,0" Padding="10,5" Width="80" BorderThickness="1,1,1,0" Click="IntegralModeButton_Click">Integral</Button>
-                    <Button x:Name="DecorModeButton" BorderThickness="1,1,1,0" Margin="5,0,0,0" Padding="10,5" Click="DecorModeButton_Click">Decoration</Button>
+                    <Button x:Name="IntegralModeButton" Margin="0,0,0,0" Padding="10,5" Width="80" BorderThickness="1,1,1,0" Click="IntegralModeButton_Click">Integral</Button>
+                    <Button x:Name="DecorModeButton" BorderThickness="0,1,1,0" Margin="0,0,0,0" Padding="10,5" Click="DecorModeButton_Click">Decoration</Button>
                 </StackPanel>
             </Grid>
         </DockPanel>

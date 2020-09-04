@@ -10,14 +10,14 @@ namespace StinkyFile
 {
     public enum AssetType
     {
-        Texture, Sound
+        Texture, Sound, Model
     }
     public class AssetDBEntry
     {
         public static string AssetDatabasePath { get; set; } = "Resources/texturedb.xml";
         private string _guid;
         public string FileName { get; private set; }
-        public string DBName { get; set; } = "Untitled";
+        public string DBName { get; set; } = null;
         public string GUID { get => _guid; 
             private set
             {

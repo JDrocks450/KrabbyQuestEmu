@@ -1,4 +1,5 @@
-﻿using StinkyFile;
+﻿using KrabbyQuestTools.Controls;
+using StinkyFile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,10 @@ namespace KrabbyQuestTools.Pages
                 DockPanel.SetDock(textbox, Dock.Right);
                 ParameterStack.Children.Add(dock);
             }
+            BlockParameter.LoadParameterDB();
+            namebox.AutoSuggestionList.Clear();
+            foreach (var name in BlockParameter.ParameterDBDescriptions.Keys)
+                namebox.AutoSuggestionList.Add(name);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -68,9 +73,9 @@ namespace KrabbyQuestTools.Pages
 
         private void Save(string value)
         {
-            var duplicates = Source.FindAll(x => x.Name == namebox.Text);
+            var duplicates = Source.FindAll(x => x.Name == namebox.autoTextBox.Text);
             if (duplicates.Any()) foreach (var dup in duplicates) Source.Remove(dup);
-            Source.Add(new BlockParameter() { Name = namebox.Text, Value = value });            
+            Source.Add(new BlockParameter() { Name = namebox.autoTextBox.Text, Value = value });            
             askSave = false;
         }
 
@@ -78,14 +83,16 @@ namespace KrabbyQuestTools.Pages
 
         private void Textbox_KeyDown(object sender, KeyEventArgs e)
         {
-            editing = sender as TextBox;
-            if (editing == namebox)
-                editing = textbox;
+            editing = (sender as SuggestionTextbox)?.autoTextBox;
+            if (sender is TextBox)
+                editing = sender as TextBox;
+            if (editing == namebox.autoTextBox)
+                return;
             if (e.Key == Key.Enter)
             {
-                string value = (sender as TextBox).Text;
+                string value = editing.Text;
                 if (sender == namebox)
-                    value = textbox.Text;
+                    value = textbox.autoTextBox.Text;
                 Save(value);
                 Load();
             }

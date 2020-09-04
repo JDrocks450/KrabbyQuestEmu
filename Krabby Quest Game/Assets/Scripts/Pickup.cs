@@ -7,6 +7,7 @@ public class Pickup : MonoBehaviour
 {
     DataBlockComponent BlockComponent;
     Player Spongebob;
+    bool Collected = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,9 @@ public class Pickup : MonoBehaviour
 
     private void PlayerEnteredTile()
     {
-        GameObject.Destroy(BlockComponent.gameObject);
+        if (Collected) return;
+        Destroy(BlockComponent.gameObject);
+        Collected = true;
     }
 
     // Update is called once per frame

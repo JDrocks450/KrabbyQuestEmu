@@ -15,7 +15,24 @@ namespace KrabbyQuestTools
 {
     public static class AppResources
     {
+        [Obsolete]
         public static StinkyParser Parser { get; set; }
+        public static Random Random { get; } = new Random();
+
+        public static Color[] BatchRandomColor(int amount, byte A = 255)
+        {
+            Color[] data = new Color[amount];
+            for (int i = 0; i < amount; i++)
+            {
+                Color color = new Color();
+                color.R = (byte)Random.Next(0, 255);
+                color.G = (byte)Random.Next(0, 255);
+                color.B = (byte)Random.Next(0, 255);
+                color.A = A;
+                data[i] = color;
+            }
+            return data;
+        }
 
         public static Color S_ColorConvert(S_Color color) => Color.FromArgb(color.A, color.R, color.G, color.B);
 

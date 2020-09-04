@@ -12,11 +12,14 @@ using B83.Image.BMP;
 public class LevelObjectManager : MonoBehaviour    
 {
     public static Vector2 Grid_Size = new Vector2(2,2);
-
-    string AssetDirectory = "D:\\Projects\\Krabby Quest\\FileDump";
     IEnumerable<AssetDBEntry> textures;
-    StinkyParser Parser;
-    StinkyLevel Level => Parser.OpenLevel;
+    string AssetDirectory = TextureLoader.AssetDirectory;  
+    
+    /// <summary>
+    /// The current <see cref="StinkyParser"/> instance -- do not use this unless necessary!!
+    /// </summary>
+    public static StinkyParser Parser;
+    public static StinkyLevel Level => Parser.OpenLevel;
 
     StinkyFile.BlockLayers CurrentLoadingLayer;
 
@@ -26,10 +29,9 @@ public class LevelObjectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Parser = new StinkyParser("D:\\Projects\\Krabby Quest\\res2.dat");
         LevelDataBlock.BlockDatabasePath = "Assets/Resources/blockdb.xml";
         AssetDBEntry.AssetDatabasePath = "Assets/Resources/texturedb.xml";
-        Parser.LevelRead(Parser.LevelIndices[Parser.LevelIndices.Keys.ElementAt(1)]);
+        StinkyParser.LoadLevelFile(Path.Combine(AssetDirectory, "levels", "5.lv5"), out Parser);
         LoadNext();
     }
 
@@ -92,78 +94,14 @@ public class LevelObjectManager : MonoBehaviour
         if (TryGetByParameter(block, out var byParameter))
             return byParameter; // try getting by parameter
         return default;
-    }    
-
-    private Texture2D RequestTexture(string path)
-    {
-        if (path.ToLower().EndsWith("bmp"))
-        {
-            var bmp = new BMPLoader().LoadBMP(path);
-            return bmp.ToTexture2D();
-        }
-        else
-        {
-            var request = new WWW("file:///" + path);
-            while (!request.isDone) { }
-            return request.texture;
-        }
-    }
-
-    private void ApplyTextureMaterial(Renderer Object, int TextureIndex)
-    {
-        var material = (Material)Instantiate(Resources.Load("Materials/Object Material"));
-        string path = Path.Combine(AssetDirectory, textures.ElementAt(TextureIndex).FileName);        
-        material.mainTexture = RequestTexture(path);
-        Object.material = material;
-    }
-    private void ApplyTextureMaterial(Renderer Object, string TextureName)
-    {
-        var material = (Material)Instantiate(Resources.Load("Materials/Object Material"));
-        string path = Path.Combine(AssetDirectory, TextureName);        
-        material.mainTexture = RequestTexture(path);
-        Object.material = material;
-    }
-
-    void CreateWall(GameObject wallObject, string ObjName)
-    {
-        ApplyTextureMaterial(wallObject.GetComponent<Renderer>(), 1);
-        ApplyTextureMaterial(wallObject.transform.GetChild(0).GetComponent<Renderer>(), 0);
-    }
-
-    private GameObject CreateFloor(LevelDataBlock Data)
-    {
-        var gobject = (GameObject)Instantiate(Resources.Load("Objects/GroundTileObject"));
-        ApplyTextureMaterial(gobject.GetComponent<Renderer>(), 0);
-        return gobject;
-    }
+    }             
 
     GameObject GetObject(LevelDataBlock Data)
     {
-        GameObject wallObject = null;
-        textures = Data.GetReferences(AssetType.Texture);
+        GameObject wallObject = null;        
         if (TryGetByParameter(Data, out var byParameter))
             return byParameter; // try getting by parameter
-        switch (Data.Name)
-        {
-            case "WALL_LOW":                
-                wallObject = (GameObject)Instantiate(Resources.Load("Objects/LowWallObject"));
-                CreateWall(wallObject, Data.Name);
-                return wallObject;
-            case "WALL_MID":
-                wallObject = (GameObject)Instantiate(Resources.Load("Objects/MidWallObject"));
-                CreateWall(wallObject, Data.Name);
-                return wallObject;
-            case "WALL_HIGH":
-                wallObject = (GameObject)Instantiate(Resources.Load("Objects/HighWallObject"));
-                CreateWall(wallObject, Data.Name);
-                return wallObject;
-            default:
-                {
-                    return (GameObject)Instantiate(Resources.Load("Objects/UnknownObject"));
-                }
-                break;
-        }
-        return default;
+        return (GameObject)Instantiate(Resources.Load("Objects/UnknownObject"));
     }
 
     GameObject GetObjectByParameter(LevelDataBlock block)
@@ -171,17 +109,48 @@ public class LevelObjectManager : MonoBehaviour
         BlockParameter parameter = default;
         GameObject returnVal = default; // the object being created
         if (block.GetParameterByName("FLOOR", out parameter))
-            returnVal = CreateFloor(block); // create a floor
+            returnVal = (GameObject)Instantiate(Resources.Load("Objects/GroundTileObject")); // create a floor
+        else if (block.GetParameterByName("WALL", out parameter))
+            switch (parameter.Value)
+            {
+                case "Low":
+                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/LowWallObject"));
+                    break;
+                case "Medium":
+                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/MidWallObject"));
+                    break;
+                case "High":
+                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/HighWallObject"));
+                    break;
+            }
         else if (block.GetParameterByName("Prefab", out parameter) && parameter.Value != "WoodenSign")
             returnVal = (GameObject)Instantiate(Resources.Load("Objects/" + parameter.Value));
         else if (block.GetParameterByName("ServiceObject", out _))
-            returnVal = (GameObject)Instantiate(Resources.Load("Objects/AnonymousObject"));
+            switch (block.BlockLayer)
+            {
+                case BlockLayers.Decoration:
+                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/AnonymousObject"));
+                    break;
+                case BlockLayers.Integral:
+                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/AnonymousIntegralObject"));
+                    break;
+            }
+            
+        else if (block.HasModel)
+        {
+            returnVal = (GameObject)Instantiate(Resources.Load("Objects/EmptyObject"));
+            returnVal.AddComponent<ModelLoader>();
+        }
         if (returnVal == null)
             return returnVal;
-        if (block.GetParameterByName("FillTexture", out parameter))
-            ApplyTextureMaterial(returnVal.GetComponent<Renderer>(), int.Parse(parameter.Value));
+        
         if (block.GetParameterByName("Script", out parameter))
             returnVal.AddComponent(Type.GetType(parameter.Value, true));
+        if (block.GetParameterByName("PosY", out parameter))
+        {
+            var pos = returnVal.transform.position;
+            returnVal.transform.position = new Vector3(pos.x, float.Parse(parameter.Value), pos.z);
+        }
         var blockComponent = returnVal.AddComponent<DataBlockComponent>();
         blockComponent.DataBlock = block;
         blockComponent.WorldTileX = X;

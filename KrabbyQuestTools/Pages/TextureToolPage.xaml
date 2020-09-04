@@ -10,9 +10,14 @@
       Title="TextureToolPage" >
 
     <DockPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FF212121" DockPanel.Dock="Left" Width="230">
-            <StackPanel x:Name="FileBrowser"/>
-        </ScrollViewer>
+        <DockPanel>
+            <Border DockPanel.Dock="Top">
+                <TextBox x:Name="SearchBox" Margin="10,10" TextChanged="SearchBox_TextChanged"/>
+            </Border>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FF212121" DockPanel.Dock="Left" Width="230">
+                <StackPanel x:Name="FileBrowser"/>
+            </ScrollViewer>
+        </DockPanel>
         <Grid Background="Black">
             <Button x:Name="SaveFileButton" Margin="10,10,0,0" Height="25" HorizontalAlignment="Left" Width="100" Click="SaveFileButton_Click" VerticalAlignment="Top">Save</Button>
             <Button x:Name="OpenFileButton" Margin="115,10,0,0" Height="25" HorizontalAlignment="Left" Width="100" Click="OpenFileButton_Click" VerticalAlignment="Top">Open</Button>

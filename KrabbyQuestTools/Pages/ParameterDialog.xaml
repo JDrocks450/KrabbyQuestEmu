@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+        xmlns:controls="clr-namespace:KrabbyQuestTools.Controls"
         mc:Ignorable="d"
         Title="Edit Parameters" Height="239.143" Width="393.714" Background="#FF2C2C2C">
     <DockPanel>
@@ -21,8 +22,8 @@
         <ScrollViewer x:Name="ScrollView" DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="10" x:Name="ParameterStack">
                 <DockPanel Name="AddNewDock">
-                    <TextBox x:Name="textbox" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" KeyDown="Textbox_KeyDown"/>
-                    <TextBox x:Name="namebox" DockPanel.Dock="Left" Margin="0,0,10,0" KeyDown="Textbox_KeyDown"/>
+                    <controls:SuggestionTextbox x:Name="textbox" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" KeyDown="Textbox_KeyDown" Background="#FF363636"/>
+                    <controls:SuggestionTextbox x:Name="namebox" DockPanel.Dock="Left" Margin="0,0,10,0" KeyDown="Textbox_KeyDown" Background="#FF363636" />
                 </DockPanel>
             </StackPanel>
         </ScrollViewer>

@@ -11,11 +11,23 @@ namespace StinkyFile
 {    
     public class BlockParameter
     {
-        public const String ParameterDBPath = "Resources/paramdb.xml";
+        public static String ParameterDBPath => LevelDataBlock.ParameterDatabasePath;
+        public static Dictionary<string, string> ParameterDBDescriptions = new Dictionary<string, string>(); 
+        public static void LoadParameterDB()
+        {
+            if (!ParameterDBDescriptions.Any())
+            {
+                var database = XDocument.Load(LevelDataBlock.ParameterDatabasePath);
+                foreach (var name in database.Root.Elements())
+                {
+                    ParameterDBDescriptions.Add(name.Element("Name").Value, name.Element("Summary").Value ?? "None given");
+                }
+            }
+        }
 
         public BlockParameter()
         {
-
+            
         }
 
         public string Value { get; set; }

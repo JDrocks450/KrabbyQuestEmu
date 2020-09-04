@@ -10,6 +10,10 @@ namespace StinkyFile
 {
     public class DBRepair
     {
+        [Obsolete]
+        /// <summary>
+        /// An Obsolete fix that has little usage anymore -- Don't use it.
+        /// </summary>
         public static void BlockDB_FixBlockLevel()
         {
             var database = XDocument.Load(LevelDataBlock.BlockDatabasePath);
@@ -26,6 +30,54 @@ namespace StinkyFile
             database.Save(LevelDataBlock.BlockDatabasePath);
         }
 
+        /// <summary>
+        /// Populates the Parameter Database with all applied parameters in the BlockDB -- Clears existing elements!
+        /// </summary>
+        public static void ParameterDB_Populate()
+        {
+            HashSet<string> ParamNames = new HashSet<string>();
+            var database = XDocument.Load(LevelDataBlock.BlockDatabasePath);
+            foreach(var element in database.Root.Elements())
+            {
+                var thisElement = element.Element("Parameters");
+                if (thisElement == null) continue;
+                foreach(var param in thisElement.Elements())
+                {
+                    var paramName = param.Element("Name").Value;
+                    if (!ParamNames.Contains(paramName))
+                        ParamNames.Add(paramName);
+                }
+            }
+            database = XDocument.Load(LevelDataBlock.ParameterDatabasePath);
+            database.Root.RemoveAll();
+            foreach(var name in ParamNames)
+            {
+                database.Root.Add(new XElement("Parameter",
+                    new XElement("Name", name),
+                    new XElement("Summary", null)));
+            }
+            database.Save(LevelDataBlock.ParameterDatabasePath);
+        }
+
+        /// <summary>
+        /// Deletes all AssetReferences from the BlockDB
+        /// </summary>
+        public static void BlockDB_ClearReferences()
+        {
+            var database = XDocument.Load(LevelDataBlock.BlockDatabasePath);
+            database.Save("Resources/blockdb_fix.xml.bak");
+            foreach (var element in database.Root.Elements())
+            {
+                foreach (var duplicate in element.Elements().Where(x => x.Name == "AssetReferences"))
+                    duplicate.RemoveAll();
+            }
+            database.Save(LevelDataBlock.BlockDatabasePath);
+        }
+
+        [Obsolete]
+        /// <summary>
+        /// An Obsolete fix that trims AssetDB filepath variables to just the FileName -- Don't use it.
+        /// </summary>
         public static void AssetDB_FixFilePaths()
         {
             var database = XDocument.Load(AssetDBEntry.AssetDatabasePath);
@@ -37,6 +89,10 @@ namespace StinkyFile
             database.Save(AssetDBEntry.AssetDatabasePath);
         }
 
+        /// <summary>
+        /// Applies Rotation = NORTH to all BlockDB entries if they have no preset Rotation
+        /// </summary>
+        /// <param name="force"></param>
         public static void BlockDB_FixRotations(bool force = false)
         {
             var database = XDocument.Load(LevelDataBlock.BlockDatabasePath);
@@ -74,6 +130,10 @@ namespace StinkyFile
             }
             database.Save(LevelDataBlock.BlockDatabasePath);
         }
-        public static void BlockDB_ForceFixRotations() => BlockDB_FixRotations(true);
+        
+        /// <summary>
+        /// Forces all BlockDB entries to have Rotation = NORTH -- Dangerous!
+        /// </summary>
+        public static void BlockDB_ForceFixRotations() => BlockDB_FixRotations(true);        
     }
 }

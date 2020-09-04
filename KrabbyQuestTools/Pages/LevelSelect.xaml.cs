@@ -25,7 +25,8 @@ namespace KrabbyQuestTools.Pages
         public LevelSelect()
         {
             InitializeComponent();
-            AppResources.Parser = new StinkyParser(@"D:\Projects\Krabby Quest\res2.dat");
+            if (AppResources.Parser == null)
+                AppResources.Parser = new StinkyParser(@"D:\Projects\Krabby Quest\res2.dat");            
             GetLevels();
             Title = "Editor Homepage";
         }
@@ -92,6 +93,22 @@ namespace KrabbyQuestTools.Pages
                 Content = new DatabaseOptions()
             };
             dialog.ShowDialog();
+        }
+
+        private void GalleryViewerButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new GalleryPage());
+        }
+
+        private void ManifestViewerButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ManifestViewer());
+        }
+
+        private void ExportModels_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => new ModelExporter(@"C:\Program Files\Blender Foundation\Blender\blender.exe",
+                @"D:/Projects/Krabby Quest/Workspace/Graphics/", @"D:/Projects/Krabby Quest/Workspace/Export").ExportAll());
         }
     }
 }

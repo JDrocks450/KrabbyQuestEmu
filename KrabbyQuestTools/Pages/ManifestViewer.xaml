@@ -1,0 +1,90 @@
+﻿<Page x:Class="KrabbyQuestTools.Pages.ManifestViewer"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+      xmlns:wpfhexaeditor="clr-namespace:WpfHexaEditor;assembly=WPFHexaEditor"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManifestViewer" Loaded="Page_Loaded">
+
+    <Grid>
+        <DockPanel>
+            <Grid Height="40" DockPanel.Dock="Top" Background="#FF1F1F1F">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="67*"/>
+                    <ColumnDefinition Width="133*"/>
+                    <ColumnDefinition Width="54*"/>
+                    <ColumnDefinition Width="146*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock TextWrapping="Wrap" Text="Manifest Path (.DAT):" VerticalAlignment="Center" Margin="10,0,0,0" Height="16"/>
+                <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="Data Path (.DAT):" VerticalAlignment="Center" Margin="10,0,0,0" Height="16"/>
+                <TextBox x:Name="ManifestBox" PreviewDragOver="ManifestBox_PreviewDragOver" AllowDrop="True" Grid.Column="1" TextWrapping="Wrap" Margin="10,0" KeyDown="ManifestBox_KeyDown" LostFocus="ManifestBox_LostFocus" Height="23" Drop="ManifestBox_Drop" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="DataBox" AllowDrop="True" Grid.Column="3" TextWrapping="Wrap" PreviewDragOver="ManifestBox_PreviewDragOver"  Margin="10,0" KeyDown="ManifestBox_KeyDown" LostFocus="ManifestBox_LostFocus" Height="23" Drop="ManifestBox_Drop" VerticalContentAlignment="Center"/>
+            </Grid>
+            <DockPanel DockPanel.Dock="Top" Background="#FF1F1F1F">
+                <TextBlock VerticalAlignment="Center" Margin="10,0">Destination Directory:</TextBlock>
+                <Button x:Name="OpenButton" VerticalAlignment="Center" Padding="10,0" Height="23" DockPanel.Dock="Right" Margin="0,0,10,0" Click="OpenButton_Click">Open</Button>
+                <Button x:Name="ExtractButton" VerticalAlignment="Center" Padding="10,0" Height="23" DockPanel.Dock="Right" Margin="0,0,10,0" Click="ExtractButton_Click" Content="Extract All"/>
+                <CheckBox x:Name="TGACheckBox" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" Margin="0,0,5,0" IsChecked="True">TGA Convert</CheckBox>
+                <TextBox x:Name="DestinationBox" Margin="10,5" Height="23" VerticalContentAlignment="Center"/>
+            </DockPanel>
+            <DockPanel  Background="Black">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PathViewer" Width="225" DockPanel.Dock="Left" Background="#FF1F1F1F">
+                        <Button Height="25" Margin="10,10,10,0">Sample</Button>
+                    </StackPanel>
+                </ScrollViewer>
+                <DockPanel>
+                    <Grid x:Name="FileMap" DockPanel.Dock="Top" Margin="10,10,10,0" Height="40" Background="#FF2E2E2E">
+
+                    </Grid>
+                    <Border BorderThickness="0,0,0,1" BorderBrush="#FF6A6A6A" DockPanel.Dock="Top" Margin="10,0,10,0" Background="#FF2E2E2E">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="ColorDisplay" Margin="5,5,0,5" Width="25" Height="25"/>
+                            <TextBlock x:Name="NameLabel" Margin="5,0,10,0" VerticalAlignment="Center">Name Label</TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                        <StackPanel Margin="0,0,0,0">
+                            <TextBlock>Offset Begin:</TextBlock>
+                            <TextBox x:Name="ByteStartOffsetBox" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,0">
+                            <TextBlock>Offset End:</TextBlock>
+                            <TextBox x:Name="ByteEndOffsetBox" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,0">
+                            <TextBlock>Size [Bytes]:</TextBlock>
+                            <TextBox x:Name="ByteSizeBox" Width="100"/>
+                        </StackPanel>
+                        <Rectangle/>
+                        <StackPanel Margin="10,0,0,0">
+                            <TextBlock>Extra:</TextBlock>
+                            <TextBox x:Name="AnonByteBox" Width="100"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="ExtractFileButton" Height="25" Margin="10,0,5,10" Click="ExtractFileButton_Click">Extract File</Button>
+                        <Button x:Name="OpenFileButton" Grid.Column="1" Margin="5,0,10,10" Content="Open File" Click="OpenFileButton_Click"/>
+                    </Grid>
+                    <wpfhexaeditor:HexEditor x:Name="HexEditor" Margin="10,0,10,10" DockPanel.Dock="Bottom" Background="{x:Null}" ForegroundContrast="White" ForegroundSecondColor="#FF5DBDFF" TbldteColor="#FFFF8B00" ForegroundHighLightOffSetHeaderColor="White" TblDefaultColor="White" Foreground="White" BorderBrush="#FF919191"/>
+                </DockPanel>
+            </DockPanel>
+        </DockPanel>
+        <Border x:Name="LoadingCover" Background="#7F000000">
+            <Border Background="#FF191919" BorderBrush="#FF5F5F5F" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1">
+                <StackPanel Margin="10" Width="378">
+                    <TextBlock x:Name="LoadingTitle" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center">Extracting...</TextBlock>
+                    <TextBlock Margin="10,2,10,10" x:Name="LoadingBody" HorizontalAlignment="Center">Path</TextBlock>
+                    <ProgressBar x:Name="LoadingProgress" Height="25" Background="#FF272727" BorderBrush="#FF747474" Value="50" Foreground="#FF0663B0"/>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</Page>

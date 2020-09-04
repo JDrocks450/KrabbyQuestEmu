@@ -16,6 +16,7 @@ public class PushableScript : MonoBehaviour
         MovementScript = BlockComponent.Parent.AddComponent<TileMovingObjectScript>();
         MovementScript.TileX = BlockComponent.WorldTileX;
         MovementScript.TileY = BlockComponent.WorldTileY;
+        BlockComponent.gameObject.AddComponent<TextureLoader>();
         Spongebob = GameObject.Find("Spongebob").GetComponent<Player>();
         Spongebob.PlayerPositionChanging += Jetstream_SpongebobPlayerPositionChanging;
     }

@@ -27,7 +27,7 @@
             <TabItem x:Name="CreateTab" Padding="0" BorderThickness="0" Selector.Selected="CreateTab_Selected">
                 <TabItem.Header>
                     <Border Margin="-2,-2" BorderThickness="0,0,1,0" Background="#FF323232" BorderBrush="#FF3E3E3E">
-                        <TextBlock Margin="10,9" FontFamily="Segoe MDL2 Assets" Text="&#59152;"/>
+                        <TextBlock Margin="13,9,8,9" FontFamily="Segoe MDL2 Assets" Text="&#59152;"/>
                     </Border>
                 </TabItem.Header>
             </TabItem>

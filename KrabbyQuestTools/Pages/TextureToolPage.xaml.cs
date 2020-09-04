@@ -25,8 +25,9 @@ namespace KrabbyQuestTools.Pages
     {
         private string DirPath;
         private AssetDBEntry OpenEntry;
-        private string[] DirFiles;
+        private List<string> DirFiles = new List<string>();
         private bool unsavedChanges = false;
+        Dictionary<string, Button> FileBrowserSource = new Dictionary<string, Button>();
         public TextureToolPage()
         {
             InitializeComponent();
@@ -49,19 +50,24 @@ namespace KrabbyQuestTools.Pages
         {
             try
             {
-                DirFiles = Directory.GetFiles(DirPath);
-                foreach (var file in DirFiles)
+                foreach (var directory in Directory.GetDirectories(DirPath))
                 {
-                    var fileName = System.IO.Path.GetFileName(file);
-                    var button = new Button()
+                    var files = Directory.GetFiles(directory);
+                    foreach (var file in files)
                     {
-                        Content = AssetDBEntry.GetDBNameFromFileName(fileName),
-                        Margin = new Thickness(10),
-                        Height = 25,
-                        Tag = file
-                    };
-                    button.Click += FileSelected_Click;
-                    FileBrowser.Children.Add(button);
+                        var fileName = System.IO.Path.Combine(System.IO.Path.GetFileName(directory), System.IO.Path.GetFileName(file));
+                        var button = new Button()
+                        {
+                            Content = AssetDBEntry.GetDBNameFromFileName(fileName),
+                            Margin = new Thickness(10),
+                            Height = 25,
+                            Tag = fileName
+                        };
+                        button.Click += FileSelected_Click;
+                        FileBrowser.Children.Add(button);
+                        DirFiles.Add(fileName);
+                        FileBrowserSource.Add(fileName, button);
+                    }                    
                 }
             }
             catch (Exception e)
@@ -87,10 +93,10 @@ namespace KrabbyQuestTools.Pages
                     Save();    
                 unsavedChanges = false;            
             }
-            var file = new FileInfo(filePath);
+            var file = new FileInfo(System.IO.Path.Combine(DirPath, filePath));
             try
             {
-                FilePreview.Source = new BitmapImage(new Uri(filePath));
+                FilePreview.Source = new BitmapImage(new Uri(System.IO.Path.Combine(DirPath, filePath)));
                 FileCorruptBlock.Visibility = Visibility.Collapsed;
             }
             catch
@@ -98,10 +104,10 @@ namespace KrabbyQuestTools.Pages
                 FilePreview.Source = null;
                 FileCorruptBlock.Visibility = Visibility.Visible;
             }
-            var dbe = AssetDBEntry.LoadFromFileName(System.IO.Path.GetFileName(filePath));
+            var dbe = AssetDBEntry.LoadFromFileName(filePath);
             OpenEntry = dbe;
             FileNameBox.Text = filePath;
-            DBNameBox.Text = dbe.DBName;
+            DBNameBox.Text = dbe.DBName ?? System.IO.Path.GetFileNameWithoutExtension(filePath);
             AssetTypeSwitcher.SelectedItem = Enum.GetName(typeof(AssetType), dbe.Type);
             RefreshReferences(dbe);    
             Title = AssetDBEntry.GetDBNameFromFileName(filePath);            
@@ -145,15 +151,15 @@ namespace KrabbyQuestTools.Pages
 
         private void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(OpenEntry.FileName);
+            Process.Start(System.IO.Path.Combine(DirPath, OpenEntry.FileName));
         }
 
         private void NextFileButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int newIndex = Array.IndexOf(DirFiles, System.IO.Path.Combine(DirPath, OpenEntry.FileName)) + 1;
-                if (DirFiles.Length != newIndex)
+                int newIndex = DirFiles.IndexOf(System.IO.Path.Combine(DirPath, OpenEntry.FileName)) + 1;
+                if (DirFiles.Count != newIndex)
                     PopulateFileInfo(DirFiles[newIndex]);
             }
             catch { }
@@ -163,7 +169,7 @@ namespace KrabbyQuestTools.Pages
         {
             try
             {
-                int newIndex = Array.IndexOf(DirFiles, System.IO.Path.Combine(DirPath, OpenEntry.FileName)) - 1;
+                int newIndex = DirFiles.IndexOf(System.IO.Path.Combine(DirPath, OpenEntry.FileName)) + 1;
                 if (newIndex >= 0)
                     PopulateFileInfo(DirFiles[newIndex]);
             }
@@ -182,6 +188,18 @@ namespace KrabbyQuestTools.Pages
             if (OpenEntry == null) return;
             if ((string)AssetTypeSwitcher.SelectedItem != Enum.GetName(typeof(AssetType), OpenEntry.Type))
                 unsavedChanges = true;
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FileBrowser.Children.Clear();
+            if (string.IsNullOrWhiteSpace(SearchBox.Text)) {
+                foreach (var button in FileBrowserSource.Values)
+                    FileBrowser.Children.Add(button);
+                return;
+            }
+            foreach(var button in FileBrowserSource.Where(x => x.Key.Contains(SearchBox.Text)))
+                FileBrowser.Children.Add(button.Value);
         }
     }
 }
