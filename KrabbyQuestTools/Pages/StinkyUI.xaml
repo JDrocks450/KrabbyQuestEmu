@@ -15,10 +15,17 @@
     <Grid>
         <DockPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid Width="200" Background="#FF1B1B1B">
+                <Grid Width="225" Background="#FF1B1B1B">
                     <StackPanel Margin="10">
                         <Button x:Name="RefreshEditorButton" Height="30" Click="RefreshEditorButton_Click">Refresh Editor</Button>
                         <Button Margin="0,5,0,0" Click="Button_Click">Save All</Button>
+                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                            <StackPanel  Margin="10">
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Message Text Editor"/>
+                                <StackPanel x:Name="MessageButtons" Margin="0,10"/>
+                                <TextBox x:Name="MessageTextEditor" IsReadOnly="True" TextWrapping="Wrap" Text="&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;"/>
+                            </StackPanel>
+                        </Border>
                         <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
                             <StackPanel Margin="10">
                                 <TextBlock HorizontalAlignment="Left" FontWeight="Bold">Map</TextBlock>
@@ -32,7 +39,7 @@
                                 </DockPanel>
                                 <DockPanel Margin="0,5,0,0">
                                     <TextBlock DockPanel.Dock="Left">Bit Read:</TextBlock>
-                                    <TextBox x:Name="BitSkipSelection" Margin="5,0,0,0" HorizontalContentAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalAlignment="Right"/>
+                                    <TextBox x:Name="BitSkipSelection" IsReadOnly="True" Margin="5,0,0,0" HorizontalContentAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalAlignment="Right" Text="4"/>
                                 </DockPanel>
                                 <DockPanel Margin="0,5,0,0">
                                     <TextBlock DockPanel.Dock="Left">Total:</TextBlock>

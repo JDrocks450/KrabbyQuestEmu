@@ -11,13 +11,12 @@
     <Grid x:Name="FilePathScreen" Background="#FF212121" Margin="0,0,0,0" Visibility="Visible" Drop="FilePathScreen_Drop" AllowDrop="True" Grid.ColumnSpan="2">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10" >
             <StackPanel Width="300" Margin="0,0,5,0">
-                <TextBlock HorizontalAlignment="Center" FontWeight="Bold"><Run Text="DAT Path:"/></TextBlock>
-                <TextBox x:Name="FilePathBox" Margin="0,5,0,0" Height="25"/>
-                <Button x:Name="FilePathSubmit" Click="FilePathSubmit_Click" Content="Find Saved Levels" Margin="0,5,0,0" Height="28"/>
-                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold"><Run Text="Workspace Path:"/></TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold"><Run Text="Workspace Path:"/></TextBlock>
                 <TextBox x:Name="WorkspacePath" Margin="0,5,0,0" Height="25"/>
+                <Button x:Name="FilePathSubmit" Click="FilePathSubmit_Click" Content="Find Saved Levels" Margin="0,5,0,0" Height="28"/>
                 <Button x:Name="AssetEditorButton" Content="Edit Asset Database" Margin="0,5,0,0" Height="28" Click="AssetEditorButton_Click"/>
-                <Button x:Name="GalleryViewerButton" Content="View BlockDB Entires" Margin="0,20,0,0" Height="28" Click="GalleryViewerButton_Click"/>
+                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,5" FontWeight="Bold" Text="Other Tools:"/>
+                <Button x:Name="GalleryViewerButton" Content="View BlockDB Entires"  Height="28" Click="GalleryViewerButton_Click"/>
                 <Button x:Name="ManifestViewerButton" Margin="0,10,0,0" Height="28" Click="ManifestViewerButton_Click">Manifest Viewer</Button>
                 <Button x:Name="ExportModels" Margin="0,10,0,0" Height="28" Click="ExportModels_Click">Export Models</Button>
             </StackPanel>

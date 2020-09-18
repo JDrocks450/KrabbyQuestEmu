@@ -46,6 +46,7 @@ namespace KrabbyQuestTools.Pages
                 var textbox = new TextBox() { Width = 200, HorizontalAlignment = HorizontalAlignment.Right, Text = param.Value };
                 dock.Children.Add(textbox);
                 textbox.KeyDown += Textbox_KeyDown;
+                textbox.Tag = param.Name;
                 var nameBox = new TextBlock() { Margin = new Thickness(0, 0, 10, 0), Text = param.Name + ":" };
                 dock.Children.Add(nameBox);
                 DockPanel.SetDock(nameBox, Dock.Left);
@@ -71,9 +72,9 @@ namespace KrabbyQuestTools.Pages
             askSave = true;
         }
 
-        private void Save(string value)
+        private void Save(string name, string value)
         {
-            var duplicates = Source.FindAll(x => x.Name == namebox.autoTextBox.Text);
+            var duplicates = Source.FindAll(x => x.Name == name);
             if (duplicates.Any()) foreach (var dup in duplicates) Source.Remove(dup);
             Source.Add(new BlockParameter() { Name = namebox.autoTextBox.Text, Value = value });            
             askSave = false;
@@ -91,9 +92,13 @@ namespace KrabbyQuestTools.Pages
             if (e.Key == Key.Enter)
             {
                 string value = editing.Text;
+                string name = editing.Tag as string;
                 if (sender == namebox)
+                {
+                    name = namebox.autoTextBox.Text;
                     value = textbox.autoTextBox.Text;
-                Save(value);
+                }
+                Save(name, value);
                 Load();
             }
             else
@@ -103,7 +108,7 @@ namespace KrabbyQuestTools.Pages
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (askSave)
-                Save(editing.Text);
+                Save(namebox.autoTextBox.Text, editing.Text);
             Subject.Parameters = Source;
             Close();
         }

@@ -23,11 +23,15 @@ namespace KrabbyQuestTools.Pages
     public partial class LevelSelect : Page
     {
         private StinkyParser Parser => AppResources.Parser;
+        string Workspace, DATpath;
+
         public LevelSelect()
         {
             InitializeComponent();
-            var DATpath = Properties.Settings.Default.DataPath;
-            var Workspace = Properties.Settings.Default.DestinationDir;
+            DATpath = Properties.Settings.Default.DataPath;
+            Workspace = Properties.Settings.Default.DestinationDir;
+            if (AppResources.Parser == null)
+                AppResources.Parser = new StinkyParser();
             if (!File.Exists(LevelDataBlock.BlockDatabasePath))
             {
                 MessageBox.Show("The BlockDB (blockdb.xml) and AssetDB (texturedb.xml) are expected here: "
@@ -35,12 +39,11 @@ namespace KrabbyQuestTools.Pages
                     ", make sure to move them from <SolutionFolder>/Resources to this path on first run!");
                 Environment.Exit(0);
             }
-            if (!string.IsNullOrWhiteSpace(DATpath))
+            if (!string.IsNullOrWhiteSpace(Workspace))
             {
-                FilePathBox.Text = DATpath;
                 GetLevels();
+                WorkspacePath.Text = Workspace;
             }
-            WorkspacePath.Text = Workspace;
             Title = "Editor Homepage";
         }
 
@@ -50,25 +53,24 @@ namespace KrabbyQuestTools.Pages
             LevelButtons.Children.Add(LevelsLabel);
             LevelButtons.Children.Add(SearchLabel);
             LevelButtons.Children.Add(SearchBox);
-            try
-            {
-                if (AppResources.Parser == null)
-                    AppResources.Parser = new StinkyParser(FilePathBox.Text);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("There was an error loading from that directory. " + e);
-            }
-            var source = (searchTerm != "") ? Parser.LevelIndices.Where(x => x.Value.Contains(SearchBox.Text)) : Parser.LevelIndices;
             int number = 0;
-            foreach(var level in source)
+            string levelDir = System.IO.Path.Combine(Workspace, "levels");
+            DirectoryInfo dir = new DirectoryInfo(levelDir);
+            if (!dir.Exists)
+            {
+                MessageBox.Show("That directory does not exist. The levels must be extracted to: " + levelDir);
+                return;
+            }
+            Parser.FindAllLevels(dir.FullName);
+            foreach(var level in Parser.LevelInfo)
             {
                 var button = new Button() 
                 {
                     Height = 25,
                     Margin = new Thickness(0,5,0,5),
-                    Content = $"({number}) [{level.Key}]: " + level.Value,
-                    Tag = level.Key 
+                    Content = $"({System.IO.Path.GetFileName(level.LevelFilePath)})" +
+                        $": " + level.Name,
+                    Tag = level
                 };
                 button.Click += Level_Click;
                 LevelButtons.Children.Add(button);
@@ -78,9 +80,9 @@ namespace KrabbyQuestTools.Pages
 
         private void Level_Click(object sender, RoutedEventArgs e)
         {
-            int index = (int)(sender as Button).Tag;
-            Parser.LevelRead(index);
-            NavigationService.Navigate(new StinkyUI());
+            StinkyLevel level = (StinkyLevel)(sender as Button).Tag;
+            Parser.RefreshLevel(level);
+            NavigationService.Navigate(new StinkyUI(level));
         }
 
         private void FilePathScreen_Drop(object sender, DragEventArgs e)
@@ -88,13 +90,19 @@ namespace KrabbyQuestTools.Pages
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
-                FilePathBox.Text = file[0];
+                if (file[0].EndsWith(".lv5")) // directly open level
+                {
+                    var level = Parser.LevelRead(file[0]);
+                    NavigationService.Navigate(new StinkyUI(level));
+                    return;
+                }                
+                WorkspacePath.Text = file[0];
             }
         }
 
         private void FilePathSubmit_Click(object sender, RoutedEventArgs e)
         {
-            AppResources.Parser = new StinkyParser(FilePathBox.Text);
+            Workspace = WorkspacePath.Text;
             GetLevels();
         }
 

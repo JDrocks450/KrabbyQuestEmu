@@ -19,13 +19,13 @@ namespace StinkyFile
         /// </summary>
         Decoration
     }
+
     public class LevelDataBlock
     {
         public static string BlockDatabasePath { get; set; } = "Resources/blockdb.xml";
         public static string ParameterDatabasePath { get; set; } = "Resources/parameterdb.xml";
 
-        private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();
-       
+        private static Dictionary<byte, S_Color> KnownColors = new Dictionary<byte, S_Color>();              
         private static Random rand = new Random();
 
         public const int RAW_DATA_SIZE = 4;
@@ -34,12 +34,16 @@ namespace StinkyFile
         /// </summary>
         public byte[] RawData;
         private string _guid;
-        public BlockLayers BlockLayer { get; 
-            set; }
+        public BlockLayers BlockLayer 
+        { 
+            get; set;           
+        }
         public byte ItemId => RawData[0];
         public byte Group => RawData[1];
         public byte GroupId => RawData[2];
-        public string GUID { get => _guid; 
+        public string GUID 
+        { 
+            get => _guid; 
             private set
             {
                 if (GUID != value)
@@ -60,7 +64,7 @@ namespace StinkyFile
         public IEnumerable<BlockParameter> Parameters
         {
             get; set;
-        } = new List<BlockParameter>();        
+        } = new List<BlockParameter>(); 
 
         public LevelDataBlock(byte[] RawData, BlockLayers Layer = BlockLayers.Integral)
         {
@@ -139,6 +143,20 @@ namespace StinkyFile
         }
 
         /// <summary>
+        /// Loads a <see cref="LevelDataBlock"/> based on its name. Duplicates will always take the first occurance
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public static LevelDataBlock LoadFromDatabase(string Name)
+        {
+            var database = XDocument.Load(BlockDatabasePath);
+            var element = database.Root.Elements().FirstOrDefault(x => x.Element("Name").Value == Name);
+            if (element != default)            
+                return LoadFromDatabase(element.Name.LocalName, out _);            
+            return null;
+        }
+
+        /// <summary>
         /// Loads the LevelDataBlock from the Database file with the specified GUID
         /// </summary>
         /// <param name="Guid">The GUID to search for</param>
@@ -200,7 +218,8 @@ namespace StinkyFile
                 {
                     case BlockLayers.Integral:
                         if (element.Element("Package").Value == RawData[1].ToString()
-                            && element.Element("PackId").Value == RawData[2].ToString())
+                            && element.Element("PackId").Value == RawData[2].ToString()
+                            && element.Element("Level")?.Value == "Integral")
                         {
                             success = true;
                             var block = LevelDataBlock.LoadFromDatabase(element.Name.LocalName, out _);

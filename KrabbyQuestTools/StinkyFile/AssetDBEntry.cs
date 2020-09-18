@@ -71,18 +71,22 @@ namespace StinkyFile
             }
         }
 
-        public static AssetDBEntry LoadFromFileName(string Filename)
+        public static AssetDBEntry LoadFromFileName(string Filename, out bool Created)
         {
             var database = XDocument.Load(AssetDatabasePath);
             var element = database.Root.Elements().Where(
-                x => x.Element("FilePath").Value == Filename).FirstOrDefault()?.Name.LocalName;
+                x => x?.Element("FilePath")?.Value == Filename).FirstOrDefault()?.Name.LocalName;
+            Created = false;
             if (element != null)
                 return Load(element);
             else
+            {
                 return new AssetDBEntry()
                 {
                     FileName = Filename
                 };
+                Created = true;
+            }
         }
 
         public static AssetDBEntry Load(string Guid, bool LoadReferences = true)

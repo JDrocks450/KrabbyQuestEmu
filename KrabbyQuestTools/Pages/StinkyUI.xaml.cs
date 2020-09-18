@@ -25,10 +25,11 @@ namespace KrabbyQuestTools.Pages
     public partial class StinkyUI : Page
     {
         private StinkyParser Parser => AppResources.Parser;
+        private StinkyLevel OpenLevel;
         private LevelDataBlock OpenDataBlock;
         private BlockLayers _mode;
         private string AssetDir = @"D:\Projects\Krabby Quest\Workspace";
-        bool askSave = false;
+        bool askSave = false;       
 
         private BlockLayers Mode
         {
@@ -50,38 +51,67 @@ namespace KrabbyQuestTools.Pages
             }            
         }
         
-        public StinkyUI()
+        public StinkyUI(StinkyLevel Level)
         {            
             InitializeComponent();
-            PrepareMapScreen(Parser.OpenLevel);           
-            Title = Parser.OpenLevel.Name;
+            OpenLevel = Level;
+            PrepareMapScreen(Level);           
+            Title = Level.Name;
             Mode = BlockLayers.Integral;
+            GetMessages();
         }                
 
         private void Refresh()
         {
             try
             {
-                Parser.OpenLevel.Columns = int.Parse(ColumnsSelectionBox.Text);
-                Parser.OpenLevel.Rows = int.Parse(RowsSelectionBox.Text);
+                OpenLevel.Columns = int.Parse(ColumnsSelectionBox.Text);
+                OpenLevel.Rows = int.Parse(RowsSelectionBox.Text);
                 Parser.BitRead = int.Parse(BitSkipSelection.Text);
             }
             catch(Exception)
             {
                 //!
             }            
-            Parser.Refresh();
-            PrepareMapScreen(Parser.OpenLevel);
-            PrepareMapScreen(Parser.OpenLevel, BlockLayers.Decoration);
+            Parser.RefreshLevel(OpenLevel);
+            PrepareMapScreen(OpenLevel);
+            PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
         }
 
-        private void PrepareMapScreen(StinkyLevel parser, BlockLayers Viewing = BlockLayers.Integral)
+        private void GetMessages()
+        {
+            int index = 0;
+            foreach(var message in OpenLevel.Messages)
+            {
+                var name = "Message #" + (index + 1);
+                var block = LevelDataBlock.LoadFromDatabase(name);
+                var button = new Button()
+                {
+                    Content = name,
+                    Padding = new Thickness(10,5,10,5),
+                    Margin = new Thickness(0,0,0,5),
+                    Tag = index
+                };
+                button.Click += delegate
+                {
+                    MessageTextEditor.Text = message;
+                };
+                if (block != null) {
+                    button.Background = new SolidColorBrush(AppResources.S_ColorConvert(block.Color));
+                    button.Content = block.GUID + " " + block.Name;
+                }
+                MessageButtons.Children.Add(button);
+                index++;
+            }
+        }
+
+        private void PrepareMapScreen(StinkyLevel level, BlockLayers Viewing = BlockLayers.Integral)
         {            
-            int columns = parser.Columns;
-            int rows = parser.Rows;
+            int columns = level.Columns;
+            int rows = level.Rows;
             RowsSelectionBox.Text = rows.ToString();
             ColumnsSelectionBox.Text = columns.ToString();
-            TotalCellsDisplay.Text = parser.Total.ToString();
+            TotalCellsDisplay.Text = level.Total.ToString();
             //BitSkipSelection.Text = parser.BitRead.ToString();
             var destination = Viewing == BlockLayers.Integral ? LevelGrid : DecorGrid;
             destination.Children.Clear();
@@ -104,7 +134,7 @@ namespace KrabbyQuestTools.Pages
                         MinWidth = 25,
                         MaxWidth = 30
                     });
-                    var data = ((Viewing == BlockLayers.Integral) ? parser.IntegralData : parser.DecorationData)[r * columns + c];
+                    var data = ((Viewing == BlockLayers.Integral) ? level.IntegralData : level.DecorationData)[r * columns + c];
                     if (data != null)
                     {
                         var cell = new Border()
@@ -241,13 +271,13 @@ namespace KrabbyQuestTools.Pages
         private void ColumnsSelectionBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)            
-                RowsSelectionBox.Text = (Parser.OpenLevel.Total / int.Parse(ColumnsSelectionBox.Text)).ToString();            
+                RowsSelectionBox.Text = (OpenLevel.Total / int.Parse(ColumnsSelectionBox.Text)).ToString();            
         }
 
         private void RowsSelectionBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)            
-                ColumnsSelectionBox.Text = (Parser.OpenLevel.Total / int.Parse(RowsSelectionBox.Text)).ToString();            
+                ColumnsSelectionBox.Text = (OpenLevel.Total / int.Parse(RowsSelectionBox.Text)).ToString();            
         }
 
         private void BlockSaveButton_Click(object sender, RoutedEventArgs e)
@@ -260,7 +290,7 @@ namespace KrabbyQuestTools.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Parser.OpenLevel.SaveAll();
+            OpenLevel.SaveAll();
             askSave = false;
         }
 
@@ -275,7 +305,7 @@ namespace KrabbyQuestTools.Pages
         {
             if (Mode != BlockLayers.Integral)
             {
-                PrepareMapScreen(Parser.OpenLevel);
+                PrepareMapScreen(OpenLevel);
                 Mode = BlockLayers.Integral;
                 DecorGrid.Visibility = Visibility.Hidden;
                 LevelGrid.Opacity = 1;
@@ -286,7 +316,7 @@ namespace KrabbyQuestTools.Pages
         {
             if (Mode != BlockLayers.Decoration)
             {
-                PrepareMapScreen(Parser.OpenLevel, BlockLayers.Decoration);
+                PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
                 Mode = BlockLayers.Decoration;
                 DecorGrid.Visibility = Visibility.Visible;
                 LevelGrid.Opacity = .15;

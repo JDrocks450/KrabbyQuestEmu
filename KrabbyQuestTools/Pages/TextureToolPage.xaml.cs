@@ -110,11 +110,21 @@ namespace KrabbyQuestTools.Pages
                 FilePreview.Source = null;
                 FileCorruptBlock.Visibility = Visibility.Visible;
             }
-            var dbe = AssetDBEntry.LoadFromFileName(filePath);
+            var dbe = AssetDBEntry.LoadFromFileName(filePath, out bool created);
             OpenEntry = dbe;
             FileNameBox.Text = filePath;
             DBNameBox.Text = dbe.DBName ?? System.IO.Path.GetFileNameWithoutExtension(filePath);
-            AssetTypeSwitcher.SelectedItem = Enum.GetName(typeof(AssetType), dbe.Type);
+            AssetGuidBox.Text = dbe.GUID;
+            if (!created)
+                AssetTypeSwitcher.SelectedItem = Enum.GetName(typeof(AssetType), dbe.Type);
+            else
+            {
+                AssetTypeSwitcher.SelectedItem = "Texture";
+                if (dbe.FileName.EndsWith(".wav"))
+                    AssetTypeSwitcher.SelectedItem = "Sound";
+                if (dbe.FileName.EndsWith(".obj"))
+                    AssetTypeSwitcher.SelectedItem = "Model";
+            }
             RefreshReferences(dbe);    
             Title = AssetDBEntry.GetDBNameFromFileName(filePath);            
         }

@@ -9,42 +9,130 @@ using System;
 using Assets;
 using B83.Image.BMP;
 using System.Xml.Linq;
+using System.Threading.Tasks;
+using UnityEngine.Audio;
+
+public enum LevelContext
+{
+    BIKINI,
+    BEACH,
+    FIELDS,
+    CAVES
+}
 
 public class LevelObjectManager : MonoBehaviour    
 {
     public static Vector2 Grid_Size = new Vector2(2,2);
     IEnumerable<AssetDBEntry> textures;
-    string AssetDirectory => TextureLoader.AssetDirectory;  
+    static string AssetDirectory => TextureLoader.AssetDirectory;
+    static Dictionary<string, GameObject> LoadedPrefabs = new Dictionary<string, GameObject>();
     
     /// <summary>
     /// The current <see cref="StinkyParser"/> instance -- do not use this unless necessary!!
     /// </summary>
-    public static StinkyParser Parser;
-    public static StinkyLevel Level => Parser.OpenLevel;
+    public static StinkyParser Parser = new StinkyParser();
+    /// <summary>
+    /// The current open level
+    /// </summary>
+    public static StinkyLevel Level;
+
+    /// <summary>
+    /// The current level context
+    /// </summary>
+    public static LevelContext Context
+    {
+        get; set;
+    }
 
     StinkyFile.BlockLayers CurrentLoadingLayer;
-
     int X, Y;
-    bool levelLoadingComplete = false;
+    bool levelLoadingComplete = false, isLoadingLevel = false;
+    public static string LoadLevelName = null;
+    static bool sceneUnloading = false;
 
+    public static bool IsDone
+    {
+        get; private set;
+    } = false;
+
+    static LevelObjectManager CurrentObjectManager;
+    static AudioSource LevelMusic;
     // Start is called before the first frame update
     void Start()
     {
         LevelDataBlock.BlockDatabasePath = "Assets/Resources/blockdb.xml";
         AssetDBEntry.AssetDatabasePath = "Assets/Resources/texturedb.xml";
         XDocument doc = XDocument.Load(AssetDBEntry.AssetDatabasePath);
-        TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;
-        var path = Path.Combine(AssetDirectory, "levels", "5.lv5");
-        StinkyParser.LoadLevelFile(path, out Parser);
-        LoadNext();
+        TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;   
+        LevelMusic = GameObject.Find("Level Music Provider").GetComponent<AudioSource>();
+        IsDone = false;
+        if (LoadLevelName != null)        
+            LoadLevel();        
+    }
+
+    public static void ChangeLevel(string levelName)
+    {                        
+        LoadLevelName = levelName;
+        var operation = SceneManager.LoadSceneAsync("Game");
+        operation.completed += delegate
+        {
+            //sceneUnloading = true;
+            //var unloadOp = SceneManager.UnloadSceneAsync(0);
+            //unloadOp.completed += delegate { sceneUnloading = false; };
+        };               
+    }
+
+    void LoadLevel()
+    {
+        if (!IsDone)
+        {
+            CurrentObjectManager = this;
+            PlayMusic(Context);
+            var path = Path.Combine(AssetDirectory, "levels", LoadLevelName + ".lv5");
+            Level = Parser.LevelRead(path);
+            Parser.RefreshLevel(Level);
+            isLoadingLevel = true;
+            LoadNext();
+        }
+    }
+
+    static void PlayMusic(LevelContext Context)
+    {
+        var source = LevelMusic;
+        LevelMusic.Stop();
+        string file = "res4.ogg";
+        switch (Context)
+        {
+            case LevelContext.BEACH:
+                file = "res5.ogg";
+                break;
+            case LevelContext.FIELDS:
+                file = "res4.ogg";
+                break;
+            case LevelContext.CAVES:
+                file = "res6.ogg";
+                break;
+
+        }
+        string fileName = Path.Combine(AssetDirectory, "music", file);
+        WWW data = new WWW(fileName);
+        while (!data.isDone) { }
+        AudioClip ac = data.GetAudioClipCompressed(false, AudioType.OGGVORBIS) as AudioClip;
+        ac.name = Enum.GetName(typeof(LevelContext), Context) + " Level Music";
+        source.clip = ac;
+        source.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!levelLoadingComplete)
-            for(int i = 0; i < 10; i++)
-            LoadNext();
+        if (isLoadingLevel && !sceneUnloading)
+        {
+            if (!levelLoadingComplete)
+                for (int i = 0; i < Level.Columns; i++)
+                    LoadNext();
+            else IsDone = true;
+        }
     }
 
     bool LoadNext()
@@ -55,8 +143,9 @@ public class LevelObjectManager : MonoBehaviour
         var GObject = CurrentLoadingLayer == BlockLayers.Integral ? GetObject(block) : GetDecoration(block);
         if (GObject != null)
         {
-            GObject.transform.position = new Vector3(-X * Grid_Size.x, GObject.transform.position.y, Y * Grid_Size.y);
-            GObject.transform.rotation = Quaternion.identity;
+            var transform = GObject.transform;
+            transform.position = new Vector3(-X * Grid_Size.x, transform.position.y, Y * Grid_Size.y);
+            transform.rotation = Quaternion.identity;
             float angle = 0;
             switch (block.Rotation)
             {
@@ -65,7 +154,7 @@ public class LevelObjectManager : MonoBehaviour
                 case SRotation.WEST: angle = -90; break;
                 case SRotation.SOUTH: angle = 180; break;                    
             }
-            GObject.transform.RotateAround(GObject.transform.position, Vector3.up, angle);
+            transform.RotateAround(transform.position, Vector3.up, angle);
             GObject.name = block.Name;
         }
         if (X >= Level.Columns-1)
@@ -105,7 +194,15 @@ public class LevelObjectManager : MonoBehaviour
         GameObject wallObject = null;        
         if (TryGetByParameter(Data, out var byParameter))
             return byParameter; // try getting by parameter
-        return (GameObject)Instantiate(Resources.Load("Objects/UnknownObject"));
+        return (GameObject)Instantiate(ResourceLoad("Objects/UnknownObject"));
+    }
+
+    GameObject ResourceLoad(string Name)
+    {
+        if (LoadedPrefabs.TryGetValue(Name, out var resource))
+            return resource;
+        LoadedPrefabs.Add(Name, Resources.Load(Name) as GameObject);
+        return LoadedPrefabs[Name];
     }
 
     GameObject GetObjectByParameter(LevelDataBlock block)
@@ -113,43 +210,53 @@ public class LevelObjectManager : MonoBehaviour
         BlockParameter parameter = default;
         GameObject returnVal = default; // the object being created
         if (block.GetParameterByName("FLOOR", out parameter))
-            returnVal = (GameObject)Instantiate(Resources.Load("Objects/GroundTileObject")); // create a floor
+            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/GroundTileObject")); // create a floor
         else if (block.GetParameterByName("WALL", out parameter))
             switch (parameter.Value)
             {
                 case "Low":
-                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/LowWallObject"));
+                    returnVal = Instantiate(ResourceLoad("Objects/LowWallObject"));
                     break;
                 case "Medium":
-                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/MidWallObject"));
+                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/MidWallObject"));
                     break;
                 case "High":
-                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/HighWallObject"));
+                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/HighWallObject"));
                     break;
             }
-        else if (block.GetParameterByName("Prefab", out parameter) && parameter.Value != "WoodenSign")
-            returnVal = (GameObject)Instantiate(Resources.Load("Objects/" + parameter.Value));
+        else if (block.GetParameterByName("Prefab", out parameter))
+            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/" + parameter.Value));
         else if (block.GetParameterByName("ServiceObject", out _))
             switch (block.BlockLayer)
             {
                 case BlockLayers.Decoration:
-                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/AnonymousObject"));
+                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/AnonymousObject"));
                     break;
                 case BlockLayers.Integral:
-                    returnVal = (GameObject)Instantiate(Resources.Load("Objects/AnonymousIntegralObject"));
+                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
                     break;
             }
-            
+        else if (block.Name?.Contains("THROWER") ?? false)
+            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/TentacleCannon"));
+        else if (block.Name?.StartsWith("SPROUT") ?? false)
+            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/TentacleSpike"));
         else if (block.HasModel)
         {
-            returnVal = (GameObject)Instantiate(Resources.Load("Objects/EmptyObject"));
+            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/EmptyObject"));
             returnVal.AddComponent<ModelLoader>();
-        }
+        }        
         if (returnVal == null)
             return returnVal;
-        
+        if (block.HasSound && !returnVal.TryGetComponent<AudioSource>(out _))
+        {
+            returnVal.AddComponent<SoundLoader>().LoadAll(block); // load all sound effects related to the object
+        }
+        if (!returnVal.TryGetComponent<AllowTileMovement>(out _))
+            returnVal.AddComponent<AllowTileMovement>();
         if (block.GetParameterByName("Script", out parameter))
             returnVal.AddComponent(Type.GetType(parameter.Value, true));
+        if (block.Name.StartsWith("Message"))
+            returnVal.AddComponent<MessageBehavior>();
         if (block.GetParameterByName("PosY", out parameter))
         {
             var pos = returnVal.transform.position;

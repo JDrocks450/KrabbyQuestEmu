@@ -1,4 +1,5 @@
-﻿using StinkyFile;
+﻿using Assets.Scripts.Game;
+using StinkyFile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// The EventArgs for <see cref="TileMovingObjectScript"/> events
+/// </summary>
 public class MoveEventArgs
 {
+    /// <summary>
+    /// Cancel the motion
+    /// </summary>
+    public bool BlockMotion = false;
+    /// <summary>
+    /// The name of the object that blocked the current motion
+    /// </summary>
+    public string BlockMotionSender;
     public Vector2Int FromTile, ToTile;
-    public int Player = 0;
+    /// <summary>
+    /// If one of the other players is pushing it
+    /// </summary>
+    public PlayerEnum Player = PlayerEnum.SPONGEBOB;
+    /// <summary>
+    /// The speed of the other object
+    /// </summary>
+    public float MotionSpeed = 0f;
+    /// <summary>
+    /// The direction of the current motion
+    /// </summary>
     public SRotation Direction
     {
         get

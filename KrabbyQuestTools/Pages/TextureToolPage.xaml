@@ -34,7 +34,7 @@
                     </DockPanel>
                     <DockPanel Margin="0,0,0,10">
                         <TextBlock Margin="0,0,5,0">Database Name:</TextBlock>
-                        <TextBox IsEnabled="True" x:Name="DBNameBox" TextChanged="DBNameBox_TextChanged"></TextBox>
+                        <TextBox IsEnabled="True" x:Name="DBNameBox" TextChanged="DBNameBox_TextChanged" Width="431"></TextBox>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,10">
                         <TextBlock Margin="0,0,5,0" Text="Asset GUID:"/>
@@ -42,14 +42,13 @@
                     </DockPanel>
                     <DockPanel Margin="0,0,0,10">
                         <TextBlock Margin="0,0,5,0" VerticalAlignment="Center"><Run Text="Asset Type:"/></TextBlock>
-                        <ComboBox IsEnabled="True" x:Name="AssetTypeSwitcher" Width="431" HorizontalAlignment="Right" Foreground="Black" SelectionChanged="AssetTypeSwitcher_SelectionChanged">
-                            <ComboBox.Background>
-                                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                                    <GradientStop Color="#FF1F1F1F" Offset="1"/>
-                                </LinearGradientBrush>
-                            </ComboBox.Background>
+                        <ComboBox DockPanel.Dock="Right" IsEnabled="True" x:Name="AssetTypeSwitcher" Width="19" HorizontalAlignment="Right" Foreground="White" SelectionChanged="AssetTypeSwitcher_SelectionChanged" Background="#FF232323" BorderBrush="#FF424242">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF232323" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
+                            </ComboBox.Resources>
                         </ComboBox>
+                        <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right" Text="{Binding SelectedValue, ElementName=AssetTypeSwitcher}"/>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,10">
                         <TextBlock Margin="0,0,5,0" VerticalAlignment="Center" Text="References"/>
