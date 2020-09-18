@@ -2022,6 +2022,79 @@
       <A909642>Texture</A909642>
     </AssetReferences>
   </O901770>
+  <O586289>
+    <Name>ROAD_ROCKS</Name>
+    <Package>103</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>112,39,137,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>FLOOR</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A891861>Texture</A891861>
+      <A582872>Texture</A582872>
+    </AssetReferences>
+  </O586289>
+  <O556221>
+    <Name>JELLYFISH</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>46</ItemId>
+    <Dat2>0</Dat2>
+    <Color>186,85,211,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A736809>Model</A736809>
+      <A861361>Texture</A861361>
+    </AssetReferences>
+  </O556221>
+  <O704805>
+    <Name>SAND</Name>
+    <Package>100</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>222,184,135,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_1</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_2</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_3</Name>
+        <Value>2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A63238>Texture</A63238>
+      <A188410>Texture</A188410>
+      <A79677>Texture</A79677>
+    </AssetReferences>
+  </O704805>
   <O219432>
     <Name>WALL_LOW</Name>
     <Package>200</Package>
@@ -2044,6 +2117,10 @@
       <A269924>Texture</A269924>
       <A84407>Texture</A84407>
       <A548980>Texture</A548980>
+      <A617411>Texture</A617411>
+      <A772976>Texture</A772976>
+      <A923829>Texture</A923829>
+      <A49051>Texture</A49051>
     </AssetReferences>
   </O219432>
   <O106005>
@@ -2068,6 +2145,10 @@
       <A269924>Texture</A269924>
       <A84407>Texture</A84407>
       <A548980>Texture</A548980>
+      <A617411>Texture</A617411>
+      <A772976>Texture</A772976>
+      <A923829>Texture</A923829>
+      <A49051>Texture</A49051>
     </AssetReferences>
   </O106005>
   <O285390>
@@ -2092,74 +2173,10 @@
       <A269924>Texture</A269924>
       <A84407>Texture</A84407>
       <A548980>Texture</A548980>
+      <A617411>Texture</A617411>
+      <A772976>Texture</A772976>
+      <A923829>Texture</A923829>
+      <A49051>Texture</A49051>
     </AssetReferences>
   </O285390>
-  <O586289>
-    <Name>ROAD_ROCKS</Name>
-    <Package>103</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>112,39,137,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>FLOOR</Name>
-        <Value>FLOOR</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A891861>Texture</A891861>
-      <A582872>Texture</A582872>
-    </AssetReferences>
-  </O586289>
-  <O704805>
-    <Name>SAND</Name>
-    <Package>100</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>222,184,135,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>FLOOR</Name>
-        <Value>true</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_1</Name>
-        <Value>0</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_2</Name>
-        <Value>1</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A63238>Texture</A63238>
-      <A188410>Texture</A188410>
-    </AssetReferences>
-  </O704805>
-  <O556221>
-    <Name>JELLYFISH</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>46</ItemId>
-    <Dat2>0</Dat2>
-    <Color>186,85,211,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>TransparentColor</Name>
-        <Value>0,0,0</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A736809>Model</A736809>
-      <A861361>Texture</A861361>
-    </AssetReferences>
-  </O556221>
 </root>

@@ -126,6 +126,42 @@ namespace StinkyFile
                 return false;
         }
 
+        public AssetDBEntry GetEditorPreview(LevelContext Context)
+        {
+            var textures = GetReferences(AssetType.Texture);
+            if (GetParameterByName("WALL", out _))
+            {
+                int TopIndex = 0;
+                switch (Context)
+                {
+                    case LevelContext.BEACH:
+                        TopIndex = 2;
+                        break;
+                    case LevelContext.FIELDS:
+                        TopIndex = 5;
+                        break;
+                    case LevelContext.KELP:
+                        TopIndex = 7;
+                        break;
+                    case LevelContext.CAVES:
+                        TopIndex = 9;
+                        break;
+                }
+                return textures.ElementAt(TopIndex);
+            }
+            else if (GetParameterByName("FLOOR", out _))
+            {
+                int index = (int)Context - 2;
+                var value = Parameters.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
+                if (value != null)
+                    index = int.Parse(value);
+                if (index > textures.Count() - 1)
+                    index = 0;
+                return textures.ElementAt(index);
+            }
+            return GetFirstTextureAsset();
+        }
+
         public AssetDBEntry GetFirstTextureAsset() => GetReference(AssetReferences.FirstOrDefault(x => x.type == AssetType.Texture).guid);
 
         public AssetDBEntry GetReference(string guid)

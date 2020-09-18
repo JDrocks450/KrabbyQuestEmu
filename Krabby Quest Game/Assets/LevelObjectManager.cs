@@ -12,14 +12,6 @@ using System.Xml.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Audio;
 
-public enum LevelContext
-{
-    BIKINI,
-    BEACH,
-    FIELDS,
-    CAVES
-}
-
 public class LevelObjectManager : MonoBehaviour    
 {
     public static Vector2 Grid_Size = new Vector2(2,2);
@@ -54,7 +46,8 @@ public class LevelObjectManager : MonoBehaviour
     {
         get; private set;
     } = false;
-
+    bool showingTitleCard = false, canShowTitleCard = true;
+    float titleCardTimer = 0f;
     static LevelObjectManager CurrentObjectManager;
     static AudioSource LevelMusic;
     // Start is called before the first frame update
@@ -90,6 +83,7 @@ public class LevelObjectManager : MonoBehaviour
             PlayMusic(Context);
             var path = Path.Combine(AssetDirectory, "levels", LoadLevelName + ".lv5");
             Level = Parser.LevelRead(path);
+            Context = Level.Context;
             Parser.RefreshLevel(Level);
             isLoadingLevel = true;
             LoadNext();
@@ -132,7 +126,20 @@ public class LevelObjectManager : MonoBehaviour
                 for (int i = 0; i < Level.Columns; i++)
                     LoadNext();
             else IsDone = true;
+        }      
+        if (!showingTitleCard && IsDone && canShowTitleCard)
+        {
+            showingTitleCard = true;
+            canShowTitleCard = false;
+            titleCardTimer = 0f;
+            MessagePromptBehavior.ShowMessage(Level.Name);
         }
+        if (showingTitleCard && titleCardTimer > 5.0f)
+        {
+            showingTitleCard = false;
+            MessagePromptBehavior.HideMessage();
+        }
+        else if (showingTitleCard) titleCardTimer += Time.deltaTime;
     }
 
     bool LoadNext()
@@ -149,9 +156,9 @@ public class LevelObjectManager : MonoBehaviour
             float angle = 0;
             switch (block.Rotation)
             {
-                case SRotation.NORTH: angle = 0; break;
-                case SRotation.EAST: angle = 90; break;
-                case SRotation.WEST: angle = -90; break;
+                case SRotation.NORTH: angle = 0;   break;
+                case SRotation.EAST: angle = 90;   break;
+                case SRotation.WEST: angle = -90;  break;
                 case SRotation.SOUTH: angle = 180; break;                    
             }
             transform.RotateAround(transform.position, Vector3.up, angle);

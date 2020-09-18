@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="ArrayEqualityComparer.cs" />
     <Compile Include="BlockParameter.cs" />
+    <Compile Include="LevelContext.cs" />
     <Compile Include="ManifestParser.cs" />
     <Compile Include="ModelExporter.cs" />
+    <Compile Include="ParameterDefinitions.cs" />
     <Compile Include="SRotation.cs" />
     <Compile Include="DBRepair.cs" />
     <Compile Include="GuidMaker.cs" />

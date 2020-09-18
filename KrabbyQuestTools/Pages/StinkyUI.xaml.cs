@@ -59,6 +59,7 @@ namespace KrabbyQuestTools.Pages
             Title = Level.Name;
             Mode = BlockLayers.Integral;
             GetMessages();
+            GetHeaderData();
         }                
 
         private void Refresh()
@@ -76,6 +77,46 @@ namespace KrabbyQuestTools.Pages
             Parser.RefreshLevel(OpenLevel);
             PrepareMapScreen(OpenLevel);
             PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
+        }
+
+        private void GetHeaderData()
+        {
+            int index = 0;
+            foreach(var param in OpenLevel.LevelParameters)
+            {
+                var dock = new DockPanel()
+                {
+                    Margin = new Thickness(0,0,0,5)
+                };
+                string name = "Param #" + (index + 1),
+                    value = param?.ToString() ?? "null";
+                if (index == (int)ParameterDefinitions.CONTEXT)
+                {
+                    name = "Context";
+                    value = Enum.GetName(typeof(LevelContext), OpenLevel.Context);
+                }
+                else if (index == (int)ParameterDefinitions.LEVEL_WORLD_NAME)
+                {
+                    name = "Level Codename";
+                    value = OpenLevel.LevelWorldName;
+                }
+                var textBlock = new TextBlock()
+                {
+                    Text = name
+                };
+                var textbox = new TextBox()
+                {
+                    Text = value,
+                    IsReadOnly = true,
+                    Margin = new Thickness(10,0,0,0),
+                    Height = 18
+                };
+                DockPanel.SetDock(textbox, Dock.Right);
+                dock.Children.Add(textBlock);
+                dock.Children.Add(textbox);
+                HeaderData.Children.Add(dock);
+                index++;
+            }
         }
 
         private void GetMessages()
@@ -141,7 +182,7 @@ namespace KrabbyQuestTools.Pages
                         {
                             Background = new SolidColorBrush(AppResources.S_ColorConvert(data.Color))
                         };
-                        var texture = data.GetFirstTextureAsset();
+                        var texture = data.GetEditorPreview(OpenLevel.Context);
                         if (texture != null)
                         {
                             RotateTransform transform = new RotateTransform(0);
@@ -249,7 +290,8 @@ namespace KrabbyQuestTools.Pages
                 NameSelectionField.Text = dataBlock.Name;
                 BlockLayerDisplay.Text = Enum.GetName(typeof(BlockLayers), dataBlock.BlockLayer) + " - " + dataBlock.GUID;
                 BlockColorPicker.SelectedColor = AppResources.S_ColorConvert(dataBlock.Color);
-                var textureRef = dataBlock.GetFirstTextureAsset();
+                ContextWarningLabel.Text = "Affected by Context: " + Enum.GetName(typeof(LevelContext), OpenLevel.Context);
+                var textureRef = dataBlock.GetEditorPreview(OpenLevel.Context);
                 try
                 {
                     TextureSelectionField.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, textureRef.FileName))));

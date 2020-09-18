@@ -27,6 +27,11 @@ public class Jetstream : MonoBehaviour
             PlayerEnteredTile(sender as TileMovingObjectScript);        
     }
 
+    private void OnDestroy()
+    {
+        TileMovingObjectScript.MoveableMoved -= Jetstream_SpongebobPlayerPositionChanged;
+    }
+
     void PlayerEnteredTile(TileMovingObjectScript Spongebob)
     {
         var rotator = Spongebob.GetComponentInChildren<AngleRotator>();

@@ -1,10 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpikeBehavior : MonoBehaviour
 {
-    const float SPIKE_TIME_UP = 1f, SPIKE_TIME_DOWN = 2f;
+    const float SPIKE_TIME_UP = 1f;
+
+    float[] SpikeTimes =
+    {
+        2f,
+        2f,
+        2f,
+        7f
+    };
+    int sproutType = 0;
     float currentTime;
     public bool Up
     {
@@ -15,6 +25,9 @@ public class SpikeBehavior : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        var block = GetComponentInParent<DataBlockComponent>().DataBlock;
+        var number = block.Name.Last().ToString();
+        sproutType = int.Parse(number);
     }
 
     // Update is called once per frame
@@ -32,7 +45,7 @@ public class SpikeBehavior : MonoBehaviour
         }
         else
         {
-            if (currentTime > SPIKE_TIME_DOWN)
+            if (currentTime > SpikeTimes[sproutType - 1]) 
             {
                 animator.Play("SpikeUp");
                 //GetComponent<SoundLoader>().Play(0);

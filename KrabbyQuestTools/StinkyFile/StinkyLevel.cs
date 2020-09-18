@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StinkyFile
 {
-    public class StinkyLevel
+    public partial class StinkyLevel
     {
         public int ByteSize => Rows * Columns * 4;
         public string Header { get; private set; }
@@ -34,6 +34,7 @@ namespace StinkyFile
         public int Rows { get; set; }
         public int Columns { get; set; }        
         public int Total => IntegralData?.Length ?? 0;
+        public LevelContext Context { get; private set; }
 
         /// <summary>
         /// Is this level currently loaded
@@ -46,7 +47,7 @@ namespace StinkyFile
         /// <summary>
         /// Level parameters stored in the header information
         /// </summary>
-        public int[] LevelParameters = new int[15];
+        public object[] LevelParameters = new object[9];
 
         /// <summary>
         /// Loads a <see cref="StinkyLevel"/> from the file data provided
@@ -82,6 +83,7 @@ namespace StinkyFile
             int LevelIndexLength = BitConverter.ToInt32(data, Position);
             Position += 4;
             LevelWorldName = Encoding.ASCII.GetString(data, Position, LevelIndexLength);
+            LevelParameters[8] = LevelWorldName; // enables the editor to display this data field
             Position += LevelIndexLength;
             LevelParameters[1] = BitConverter.ToInt32(data, Position);
             Position += 4;
@@ -107,6 +109,7 @@ namespace StinkyFile
             Rows = BitConverter.ToInt32(data, Position);
             Position += 4;
             LevelContentIndex = Position;
+            Context = (LevelContext)LevelParameters[(int)ParameterDefinitions.CONTEXT];
             Position += (ByteSize * 2); // jump to file footer data where messages are stored
             var messages = new List<string>();
             while (true)

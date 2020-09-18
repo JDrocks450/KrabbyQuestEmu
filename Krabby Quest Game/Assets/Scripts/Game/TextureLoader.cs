@@ -119,13 +119,21 @@ public class TextureLoader : MonoBehaviour
                 TopIndex = 5;
                 WallIndex = 4;
                 break;
+            case LevelContext.KELP:
+                TopIndex = 7;
+                WallIndex = 6;
+                break;
+            case LevelContext.CAVES:
+                TopIndex = 9;
+                WallIndex = 8;
+                break;
         }
         ApplyTextureMaterial(GetComponent<Renderer>(), WallIndex);
         ApplyTextureMaterial(transform.GetChild(0).GetComponent<Renderer>(), TopIndex);
     }
     private void CreateFloor()
     {
-        int index = (int)LevelObjectManager.Context;
+        int index = (int)LevelObjectManager.Context - 2;
         var value = Data.Parameters.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
         if (value != null)        
             index = int.Parse(value);        

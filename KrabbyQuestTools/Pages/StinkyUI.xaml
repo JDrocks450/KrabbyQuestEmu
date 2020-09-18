@@ -20,6 +20,49 @@
                         <Button x:Name="RefreshEditorButton" Height="30" Click="RefreshEditorButton_Click">Refresh Editor</Button>
                         <Button Margin="0,5,0,0" Click="Button_Click">Save All</Button>
                         <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block Editor"/>
+                                <Grid x:Name="RawDataField" Height="20" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Name:</TextBlock>
+                                    <TextBox x:Name="NameSelectionField" Margin="5,0,0,0"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Color:</TextBlock>
+                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="119" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+                                </DockPanel>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Texture:</TextBlock>
+                                    <Border DockPanel.Dock="Right" x:Name="TextureSelectionField" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="25" Height="25" BorderBrush="#FF636363" BorderThickness="1"/>
+                                    <TextBox x:Name="TextureNameBox" Margin="10,0,0,0"></TextBox>
+                                </DockPanel>
+                                <Border Margin="0,2,0,0">
+                                    <TextBlock x:Name="ContextWarningLabel" Padding="10,3" Background="#FFFFF4AE" Foreground="Black">Affected by Context: </TextBlock>
+                                </Border>
+                                <DockPanel Margin="0,10,0,0">
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Rotation:</TextBlock>
+                                    <ComboBox x:Name="RotationField" Margin="5,0,0,0" HorizontalAlignment="Right" SelectedIndex="0" VerticalAlignment="Top" Width="105" Height="25" BorderBrush="#FF636363" SelectionChanged="RotationField_SelectionChanged">
+                                        <ComboBoxItem Content="NORTH"/>
+                                        <ComboBoxItem Content="SOUTH"/>
+                                        <ComboBoxItem Content="EAST"/>
+                                        <ComboBoxItem Content="WEST"/>
+                                    </ComboBox>
+                                </DockPanel>
+                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="24" Click="ParameterButton_Click">
+                                    Manage Parameters
+                                </Button>
+                                <TextBlock x:Name="BlockLayerDisplay" FontStyle="Italic" Margin="0,5,0,0">Integral</TextBlock>
+                                <Button x:Name="BlockSaveButton" Margin="0,10,0,0" Height="25" Click="BlockSaveButton_Click">Save</Button>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
                             <StackPanel  Margin="10">
                                 <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Message Text Editor"/>
                                 <StackPanel x:Name="MessageButtons" Margin="0,10"/>
@@ -45,46 +88,8 @@
                                     <TextBlock DockPanel.Dock="Left">Total:</TextBlock>
                                     <TextBox x:Name="TotalCellsDisplay" Margin="5,0,0,0" HorizontalAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalContentAlignment="Right" IsEnabled="False"/>
                                 </DockPanel>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
-                            <StackPanel Margin="10">
-                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block Editor"/>
-                                <Grid x:Name="RawDataField" Height="20" Margin="0,10,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                                <DockPanel Margin="0,10,0,0">
-                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Name:</TextBlock>
-                                    <TextBox x:Name="NameSelectionField" Margin="5,0,0,0"/>
-                                </DockPanel>
-                                <DockPanel Margin="0,10,0,0">
-                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Color:</TextBlock>
-                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="119" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
-                                </DockPanel>
-                                <DockPanel Margin="0,10,0,0">
-                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Texture:</TextBlock>
-                                    <Border DockPanel.Dock="Right" x:Name="TextureSelectionField" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="25" Height="25" BorderBrush="#FF636363" BorderThickness="1"/>
-                                    <TextBox x:Name="TextureNameBox" Margin="10,0,0,0"></TextBox>
-                                </DockPanel>
-                                <DockPanel Margin="0,10,0,0">
-                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Rotation:</TextBlock>
-                                    <ComboBox x:Name="RotationField" Margin="5,0,0,0" HorizontalAlignment="Right" SelectedIndex="0" VerticalAlignment="Top" Width="105" Height="25" BorderBrush="#FF636363" SelectionChanged="RotationField_SelectionChanged">
-                                        <ComboBoxItem Content="NORTH"/>
-                                        <ComboBoxItem Content="SOUTH"/>
-                                        <ComboBoxItem Content="EAST"/>
-                                        <ComboBoxItem Content="WEST"/>
-                                    </ComboBox>
-                                </DockPanel>
-                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="24" Click="ParameterButton_Click">
-                                    Manage Parameters
-                                </Button>
-                                <TextBlock x:Name="BlockLayerDisplay" FontStyle="Italic" Margin="0,5,0,0">Integral</TextBlock>
-                                <Button x:Name="BlockSaveButton" Margin="0,10,0,0" Height="25" Click="BlockSaveButton_Click">Save</Button>
+                                <TextBlock Margin="0,10,5,0">Header Data</TextBlock>
+                                <StackPanel x:Name="HeaderData"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">

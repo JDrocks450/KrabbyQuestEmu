@@ -456,7 +456,6 @@
     <AssetType>Texture</AssetType>
     <References>O586289</References>
   </A582872>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
   <A736809>
     <FilePath>Export\jellyfish01.obj</FilePath>
     <Name>jellyfish model</Name>
@@ -469,4 +468,35 @@
     <AssetType>Texture</AssetType>
     <References>O556221</References>
   </A861361>
+  <A79677>
+    <FilePath>Graphics\floorgreendarkest.jpg</FilePath>
+    <Name>floorgreendarkest</Name>
+    <AssetType>Texture</AssetType>
+    <References>O704805</References>
+  </A79677>
+  <A617411>
+    <FilePath>Graphics\wallgreenlight.jpg</FilePath>
+    <Name>wallgreenlight</Name>
+    <AssetType>Texture</AssetType>
+    <References>O219432,O106005,O285390</References>
+  </A617411>
+  <A772976>
+    <FilePath>Graphics\wallgreentop.jpg</FilePath>
+    <Name>wallgreentop</Name>
+    <AssetType>Texture</AssetType>
+    <References>O219432,O106005,O285390</References>
+  </A772976>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
+  <A923829>
+    <FilePath>Graphics\wallbluelight.jpg</FilePath>
+    <Name>wallbluelight</Name>
+    <AssetType>Texture</AssetType>
+    <References>O219432,O106005,O285390</References>
+  </A923829>
+  <A49051>
+    <FilePath>Graphics\wallbluetop.jpg</FilePath>
+    <Name>wallbluetop</Name>
+    <AssetType>Texture</AssetType>
+    <References>O219432,O106005,O285390</References>
+  </A49051>
 </root>
