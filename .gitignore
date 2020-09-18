@@ -338,7 +338,7 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/Krabby Quest Game/Assets/Models
-/Krabby Quest Game/Library
 /Krabby Quest Game/Temp
 /Krabby Quest Game/UserSettings
+/Krabby Quest Game/Library
+/Krabby Quest Game/Assets/Models/Textures

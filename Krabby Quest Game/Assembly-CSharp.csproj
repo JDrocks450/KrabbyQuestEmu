@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{CE779F38-47EA-29E7-2D27-D2A5E87E5A14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -90,12 +91,92 @@
     <Compile Include="Assets\Scripts\UIPickupText.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\HolyShift\Shaders\FXWaterLowpoly.shader" />
-     <None Include="Assets\Resources\blockdb.xml" />
-     <None Include="Assets\Resources\texturedb.xml" />
-     <None Include="Assets\HolyShift\readme.txt" />
-     <None Include="Assets\HolyShift\Shaders\WaterInclude.cginc" />
-     <None Include="Assets\StinkyFile.dll" />
+    <None Include="Assets\HolyShift\Shaders\FXWaterLowpoly.shader" />
+    <None Include="Assets\Models\Animations.meta" />
+    <None Include="Assets\Models\Animations\Ball.meta" />
+    <None Include="Assets\Models\Animations\Ball\BallBounce.anim" />
+    <None Include="Assets\Models\Animations\Ball\BallBounce.anim.meta" />
+    <None Include="Assets\Models\Animations\Ball\BallController.controller" />
+    <None Include="Assets\Models\Animations\Ball\BallController.controller.meta" />
+    <None Include="Assets\Models\Animations\Ball\BallFall.anim" />
+    <None Include="Assets\Models\Animations\Ball\BallFall.anim.meta" />
+    <None Include="Assets\Models\Animations\Ball\BallFloat.anim" />
+    <None Include="Assets\Models\Animations\Ball\BallFloat.anim.meta" />
+    <None Include="Assets\Models\Animations\Box.meta" />
+    <None Include="Assets\Models\Animations\Box\BoxController.controller" />
+    <None Include="Assets\Models\Animations\Box\BoxController.controller.meta" />
+    <None Include="Assets\Models\Animations\Box\BoxWaterFloat.anim" />
+    <None Include="Assets\Models\Animations\Box\BoxWaterFloat.anim.meta" />
+    <None Include="Assets\Models\Animations\Box\BoxWaterSink.anim" />
+    <None Include="Assets\Models\Animations\Box\BoxWaterSink.anim.meta" />
+    <None Include="Assets\Models\Animations\Box\FloatingIdle.anim" />
+    <None Include="Assets\Models\Animations\Box\FloatingIdle.anim.meta" />
+    <None Include="Assets\Models\Animations\Box\SunkenIdle.anim" />
+    <None Include="Assets\Models\Animations\Box\SunkenIdle.anim.meta" />
+    <None Include="Assets\Models\Animations\Button.meta" />
+    <None Include="Assets\Models\Animations\Button\Button Animator.controller" />
+    <None Include="Assets\Models\Animations\Button\Button Animator.controller.meta" />
+    <None Include="Assets\Models\Animations\Button\ButtonDown.anim" />
+    <None Include="Assets\Models\Animations\Button\ButtonDown.anim.meta" />
+    <None Include="Assets\Models\Animations\Button\ButtonUp.anim" />
+    <None Include="Assets\Models\Animations\Button\ButtonUp.anim.meta" />
+    <None Include="Assets\Models\Animations\Gate.meta" />
+    <None Include="Assets\Models\Animations\Gate\GateClose.anim" />
+    <None Include="Assets\Models\Animations\Gate\GateClose.anim.meta" />
+    <None Include="Assets\Models\Animations\Gate\GateController.controller" />
+    <None Include="Assets\Models\Animations\Gate\GateController.controller.meta" />
+    <None Include="Assets\Models\Animations\Gate\GateOpen.anim" />
+    <None Include="Assets\Models\Animations\Gate\GateOpen.anim.meta" />
+    <None Include="Assets\Models\Animations\Jetstream.meta" />
+    <None Include="Assets\Models\Animations\Jetstream\JetstreamController.controller" />
+    <None Include="Assets\Models\Animations\Jetstream\JetstreamController.controller.meta" />
+    <None Include="Assets\Models\Animations\Jetstream\Loop.anim" />
+    <None Include="Assets\Models\Animations\Jetstream\Loop.anim.meta" />
+    <None Include="Assets\Models\Animations\Krabby Patty Idle.anim" />
+    <None Include="Assets\Models\Animations\Krabby Patty Idle.anim.meta" />
+    <None Include="Assets\Models\Animations\KrabbyPattyPickup.controller" />
+    <None Include="Assets\Models\Animations\KrabbyPattyPickup.controller.meta" />
+    <None Include="Assets\Models\Animations\Spike.meta" />
+    <None Include="Assets\Models\Animations\Spike\SpikeController.controller" />
+    <None Include="Assets\Models\Animations\Spike\SpikeController.controller.meta" />
+    <None Include="Assets\Models\Animations\Spike\SpikeDown.anim" />
+    <None Include="Assets\Models\Animations\Spike\SpikeDown.anim.meta" />
+    <None Include="Assets\Models\Animations\Spike\SpikeUp.anim" />
+    <None Include="Assets\Models\Animations\Spike\SpikeUp.anim.meta" />
+    <None Include="Assets\Models\Animations\Spongebob.meta" />
+    <None Include="Assets\Models\Animations\Spongebob\Die.anim" />
+    <None Include="Assets\Models\Animations\Spongebob\Die.anim.meta" />
+    <None Include="Assets\Models\Animations\Spongebob\SpongebobController.controller" />
+    <None Include="Assets\Models\Animations\Spongebob\SpongebobController.controller.meta" />
+    <None Include="Assets\Models\Button.fbx" />
+    <None Include="Assets\Models\Button.fbx.meta" />
+    <None Include="Assets\Models\Materials.meta" />
+    <None Include="Assets\Models\Materials\7 - Default.mat" />
+    <None Include="Assets\Models\Materials\7 - Default.mat.meta" />
+    <None Include="Assets\Models\Materials\Material 1.mat" />
+    <None Include="Assets\Models\Materials\Material 1.mat.meta" />
+    <None Include="Assets\Models\Materials\Material.mat" />
+    <None Include="Assets\Models\Materials\Material.mat.meta" />
+    <None Include="Assets\Models\Materials\res2_dat-0000000083.mat" />
+    <None Include="Assets\Models\Materials\res2_dat-0000000083.mat.meta" />
+    <None Include="Assets\Models\Materials\Spongebob.mat" />
+    <None Include="Assets\Models\Materials\Spongebob.mat.meta" />
+    <None Include="Assets\Models\Materials\spongebob01.mat" />
+    <None Include="Assets\Models\Materials\spongebob01.mat.meta" />
+    <None Include="Assets\Models\Materials\water texture 1.mat" />
+    <None Include="Assets\Models\Materials\water texture 1.mat.meta" />
+    <None Include="Assets\Models\Materials\water texture.mat" />
+    <None Include="Assets\Models\Materials\water texture.mat.meta" />
+    <None Include="Assets\Models\Star.fbx" />
+    <None Include="Assets\Models\Star.fbx.meta" />
+    <None Include="Assets\Models\Textures.meta" />
+    <None Include="Assets\Models\water.obj" />
+    <None Include="Assets\Models\water.obj.meta" />
+    <None Include="Assets\Resources\blockdb.xml" />
+    <None Include="Assets\Resources\texturedb.xml" />
+    <None Include="Assets\HolyShift\readme.txt" />
+    <None Include="Assets\HolyShift\Shaders\WaterInclude.cginc" />
+    <None Include="Assets\StinkyFile.dll" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0b13\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -667,6 +748,7 @@
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
