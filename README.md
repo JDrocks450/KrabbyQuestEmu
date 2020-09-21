@@ -38,11 +38,15 @@ Below is a roadmap:
     > A tool to link extracted Assets to BlockDB entries.
   - Manifest Viewer
     > Handles the extraction of Assets to a directory *Vital*
- - Game
+- Game
   - Loading Levels
+    > All levels are loadable, some with incomplete objects
   - Start Screen
+    > Menus in the game were bland, so they are being replaced with newer menu styles that are less abrasive.
   - Map Screen
+    > This menu has also gotten a visual improvement.
   - Basic UI
+    > Menus, Bonus/Patty collection UI is implemented
 #### Under Development:
 - Setup Procedure
   - Make automated setup procedure
