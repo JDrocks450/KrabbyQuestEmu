@@ -6,6 +6,8 @@ The original game came with seven .DAT files that stored all of the content that
 ### File Summary
  - *res1.dat* contains the byte offsets, filenames, and file sizes of all the assets stored in *res2.dat*.
  - *res2.dat* contains Assets such as level data, 3D models, textures, and sound effects.
+ - *res3,4,5,6.dat* music tracks
+ - *res7.dat* a duplicate asset, likely compiler error that this file is even included.
 
 The *ManifestViewer* tool can open and extract these files to a Destination Directory, which is required to play the game.
 
@@ -36,16 +38,21 @@ Below is a roadmap:
     > A tool to link extracted Assets to BlockDB entries.
   - Manifest Viewer
     > Handles the extraction of Assets to a directory *Vital*
+- Game
+  - Loading Levels
+    > All levels are loadable, some with incomplete objects
+  - Start Screen
+    > Menus in the game were bland, so they are being replaced with newer menu styles that are less abrasive.
+  - Map Screen
+    > This menu has also gotten a visual improvement.
+  - Basic UI
+    > Menus, Bonus/Patty collection UI is implemented
 #### Under Development:
 - Setup Procedure
   - Make automated setup procedure
 - Game
-  - Opening Levels
-  - Reimplementing Objects (~50% complete)
-  - Adding Music
-  - Map Screen with Progression
+  - Reimplementing Objects (~80% complete)
   - Highscores
-  - UI
   - New Features?
 
 ## How Do I Play?
