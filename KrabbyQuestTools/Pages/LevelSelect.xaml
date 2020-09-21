@@ -19,6 +19,7 @@
                 <Button x:Name="GalleryViewerButton" Content="View BlockDB Entires"  Height="28" Click="GalleryViewerButton_Click"/>
                 <Button x:Name="ManifestViewerButton" Margin="0,10,0,0" Height="28" Click="ManifestViewerButton_Click">Manifest Viewer</Button>
                 <Button x:Name="ExportModels" Margin="0,10,0,0" Height="28" Click="ExportModels_Click">Export Models</Button>
+                <Button x:Name="FontMakerButton" Margin="0,10,0,0" Height="28" Click="FontMakerButton_Click">Format Bitmap Font</Button>
             </StackPanel>
             <ScrollViewer Width="300" Margin="5,0,0,0" VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="LevelButtons" >

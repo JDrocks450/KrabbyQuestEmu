@@ -61,10 +61,10 @@ namespace StinkyFile
         public bool HasModel => AssetReferences.FirstOrDefault(x => x.type == AssetType.Model) != default;
         public bool HasSound => AssetReferences.FirstOrDefault(x => x.type == AssetType.Sound) != default;
         public SRotation Rotation { get; set; }
-        public IEnumerable<BlockParameter> Parameters
+        public Dictionary<string, BlockParameter> Parameters
         {
             get; set;
-        } = new List<BlockParameter>(); 
+        } = new Dictionary<string, BlockParameter>(); 
 
         public LevelDataBlock(byte[] RawData, BlockLayers Layer = BlockLayers.Integral)
         {
@@ -100,7 +100,7 @@ namespace StinkyFile
                 new XElement("Rotation", Enum.GetName(typeof(SRotation), Rotation)),
                 new XElement("Level", Enum.GetName(typeof(BlockLayers), BlockLayer)));
             foreach (var param in Parameters)
-                param.Save(element);
+                param.Value.Save(element);
             database.Root.Add(element);
             var assetNode = new XElement("AssetReferences");
             element.Add(assetNode);
@@ -120,9 +120,8 @@ namespace StinkyFile
 
         public bool GetParameterByName(string Name, out BlockParameter Data)
         {
-            var value = Parameters.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
-            Data = value;
-            if (value != default) return true;
+            Parameters.TryGetValue(Name, out Data);
+            if (Data != default) return true;
                 return false;
         }
 
@@ -152,7 +151,7 @@ namespace StinkyFile
             else if (GetParameterByName("FLOOR", out _))
             {
                 int index = (int)Context - 2;
-                var value = Parameters.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
+                var value = Parameters.Values.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
                 if (value != null)
                     index = int.Parse(value);
                 if (index > textures.Count() - 1)

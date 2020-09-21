@@ -38,15 +38,17 @@ namespace StinkyFile
         /// </summary>
         /// <param name="DataElement"></param>
         /// <returns></returns>
-        public static IEnumerable<BlockParameter> LoadParams(XElement DataElement)
+        public static Dictionary<string, BlockParameter> LoadParams(XElement DataElement)
         {
-            if (DataElement.Element("Parameters") == null) yield break;
+            Dictionary<string, BlockParameter> source = new Dictionary<string, BlockParameter>();
+            if (DataElement.Element("Parameters") == null) return source;
             foreach (var element in DataElement.Element("Parameters").Elements())
             {
                 var name = element.Element("Name").Value;
                 var value = element.Element("Value").Value;
-                yield return new BlockParameter() { Name = name, Value = value };
+                source.Add(name, new BlockParameter() { Name = name, Value = value });
             }
+            return source;
         }
 
         public void Save(XElement DataElement)

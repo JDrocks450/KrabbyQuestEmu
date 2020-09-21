@@ -486,7 +486,6 @@
     <AssetType>Texture</AssetType>
     <References>O219432,O106005,O285390</References>
   </A772976>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
   <A923829>
     <FilePath>Graphics\wallbluelight.jpg</FilePath>
     <Name>wallbluelight</Name>
@@ -499,4 +498,47 @@
     <AssetType>Texture</AssetType>
     <References>O219432,O106005,O285390</References>
   </A49051>
+  <A77153>
+    <FilePath>Graphics\floorblue.jpg</FilePath>
+    <Name>floorblue</Name>
+    <AssetType>Texture</AssetType>
+    <References>O704805</References>
+  </A77153>
+  <A977911>
+    <FilePath>Export\house_basic01_blue.obj</FilePath>
+    <Name>Blue House</Name>
+    <AssetType>Model</AssetType>
+    <References>O885792</References>
+  </A977911>
+  <A461140>
+    <FilePath>Export\house_basic01_red.obj</FilePath>
+    <Name>Red House</Name>
+    <AssetType>Model</AssetType>
+    <References>O790415</References>
+  </A461140>
+  <A530309>
+    <FilePath>Export\house_basic01_yellow.obj</FilePath>
+    <Name>Yellow House</Name>
+    <AssetType>Model</AssetType>
+    <References>O11037</References>
+  </A530309>
+  <A517043>
+    <FilePath>Graphics\house_basic01_yellow.png</FilePath>
+    <Name>house_basic01_yellow</Name>
+    <AssetType>Texture</AssetType>
+    <References>O11037</References>
+  </A517043>
+  <A422813>
+    <FilePath>Graphics\house_basic01_red.png</FilePath>
+    <Name>house_basic01_red</Name>
+    <AssetType>Texture</AssetType>
+    <References>O790415</References>
+  </A422813>
+  <A894790>
+    <FilePath>Graphics\house_basic01_blue.png</FilePath>
+    <Name>house_basic01_blue</Name>
+    <AssetType>Texture</AssetType>
+    <References>O885792</References>
+  </A894790>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
 </root>

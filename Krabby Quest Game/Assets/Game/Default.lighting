@@ -26,7 +26,7 @@ LightingSettings:
   m_CompAOExponent: 1.99
   m_CompAOExponentDirect: 1.02
   m_ExtractAO: 0
-  m_MixedBakeMode: 0
+  m_MixedBakeMode: 1
   m_LightmapsBakeMode: 1
   m_FilterMode: 1
   m_LightmapParameters: {fileID: 0}

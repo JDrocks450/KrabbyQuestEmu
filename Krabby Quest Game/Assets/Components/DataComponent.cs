@@ -11,6 +11,8 @@ public class DataBlockComponent : MonoBehaviour
     }
     public int WorldTileX { get; set; }
     public int WorldTileY { get; set; }
+    public bool ModelLoaded { get; set; }
+    public bool TextureLoaded { get; set; }
     public GameObject Parent { get; set; }
     // Start is called before the first frame update
     void Start()

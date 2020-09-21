@@ -40,8 +40,8 @@ public class CameraBehavior : MonoBehaviour
                     return;
                 transform.position =
                         new Vector3(player.position.x,
-                                    player.position.y + 8,
-                                    player.position.z + 6);
+                                    player.position.y + 10,
+                                    player.position.z + 7);
             }
             catch
             {

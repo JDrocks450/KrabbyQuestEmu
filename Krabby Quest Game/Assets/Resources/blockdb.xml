@@ -10,39 +10,6 @@
     <Texture>Hello World</Texture>
     <Rotation>NORTH</Rotation>
   </O319375>
-  <O885792>
-    <Name>TOWNHOUSE_GRAY</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>62</ItemId>
-    <Dat2>0</Dat2>
-    <Color>112,128,144,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O885792>
-  <O11037>
-    <Name>TOWNHOUSE_YELLOW</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>64</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,255,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O11037>
-  <O790415>
-    <Name>TOWNHOUSE_RED</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>63</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,0,0,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O790415>
   <O119303>
     <Name>SPONGEBOB_FROGFISH</Name>
     <Package>0</Package>
@@ -76,28 +43,6 @@
     <Level>Decoration</Level>
     <Rotation>NORTH</Rotation>
   </O967963>
-  <O140872>
-    <Name>TOWNHOUSE_TALL</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>58</ItemId>
-    <Dat2>0</Dat2>
-    <Color>144,231,117,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O140872>
-  <O971367>
-    <Name>TOWNHOUSE_TALL2</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>59</ItemId>
-    <Dat2>0</Dat2>
-    <Color>10,78,36,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O971367>
   <O841627>
     <Name>TOWNHOUSE_SHORT</Name>
     <Package>0</Package>
@@ -2062,39 +2007,6 @@
       <A861361>Texture</A861361>
     </AssetReferences>
   </O556221>
-  <O704805>
-    <Name>SAND</Name>
-    <Package>100</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>222,184,135,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>FLOOR</Name>
-        <Value>true</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_1</Name>
-        <Value>0</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_2</Name>
-        <Value>1</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_3</Name>
-        <Value>2</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A63238>Texture</A63238>
-      <A188410>Texture</A188410>
-      <A79677>Texture</A79677>
-    </AssetReferences>
-  </O704805>
   <O219432>
     <Name>WALL_LOW</Name>
     <Package>200</Package>
@@ -2179,4 +2091,167 @@
       <A49051>Texture</A49051>
     </AssetReferences>
   </O285390>
+  <O704805>
+    <Name>SAND</Name>
+    <Package>100</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>222,184,135,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_1</Name>
+        <Value>0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_2</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_3</Name>
+        <Value>2</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_4</Name>
+        <Value>3</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A63238>Texture</A63238>
+      <A188410>Texture</A188410>
+      <A79677>Texture</A79677>
+      <A77153>Texture</A77153>
+    </AssetReferences>
+  </O704805>
+  <O588452>
+    <Name>CIRCLE_BUTTON_WHITE</Name>
+    <Package>101</Package>
+    <PackId>4</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,255,240,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <AssetReferences />
+  </O588452>
+  <O140872>
+    <Name>TOWNHOUSE_TALL</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>58</ItemId>
+    <Dat2>0</Dat2>
+    <Color>144,231,117,255</Color>
+    <Rotation>WEST</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ApplyTemplater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>.2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O140872>
+  <O971367>
+    <Name>TOWNHOUSE_TALL</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>59</ItemId>
+    <Dat2>0</Dat2>
+    <Color>10,78,36,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ApplyTemplater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>.2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O971367>
+  <O885792>
+    <Name>TOWNHOUSE_GRAY</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>62</ItemId>
+    <Dat2>0</Dat2>
+    <Color>112,128,144,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Templater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>AllowMotion</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A977911>Model</A977911>
+      <A894790>Texture</A894790>
+    </AssetReferences>
+  </O885792>
+  <O790415>
+    <Name>TOWNHOUSE_RED</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>63</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,0,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Templater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>AllowMotion</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A461140>Model</A461140>
+      <A422813>Texture</A422813>
+    </AssetReferences>
+  </O790415>
+  <O11037>
+    <Name>TOWNHOUSE_YELLOW</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>64</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,255,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Templater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>AllowMotion</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A530309>Model</A530309>
+      <A517043>Texture</A517043>
+    </AssetReferences>
+  </O11037>
 </root>

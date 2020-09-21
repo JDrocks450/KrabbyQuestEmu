@@ -39,9 +39,8 @@ public class PushableScript : MonoBehaviour
     {
         BlockComponent = GetComponent<DataBlockComponent>();
         MovementScript = BlockComponent.Parent.AddComponent<TileMovingObjectScript>();
-        MovementScript.TileX = BlockComponent.WorldTileX;
-        MovementScript.TileY = BlockComponent.WorldTileY;
         MovementScript.Target = gameObject;
+        MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);        
         TileMovingObjectScript.MoveableMoving += Jetstream_SpongebobPlayerPositionChanging;
         if (BlockComponent.DataBlock.GetParameterByName("CanFloat", out var parameter))
             CanFloat = bool.Parse(parameter.Value);

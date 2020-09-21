@@ -90,7 +90,12 @@ namespace StinkyFile
                 var levelData = new StinkyLevel(this, file.FullName);
                 list.Add(levelData);
             }
-            LevelInfo = list;
+            LevelInfo = list.OrderBy(x =>
+            {
+                if (int.TryParse(x.LevelWorldName, out int levelIndex))
+                    return levelIndex;
+                else return 1000; // put unknown levels at the very end
+            });
         }
 
         /// <summary>

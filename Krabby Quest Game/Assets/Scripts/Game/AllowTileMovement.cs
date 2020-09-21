@@ -38,6 +38,7 @@ public class AllowTileMovement : MonoBehaviour
 
     private void Jetstream_SpongebobPlayerPositionChanged(object sender, MoveEventArgs e)
     {
+        BlockComponent = GetComponent<DataBlockComponent>();
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
             if (e.BlockMotion) return;

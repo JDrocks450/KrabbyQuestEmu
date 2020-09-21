@@ -135,6 +135,21 @@ namespace KrabbyQuestTools.Pages
             NavigationService.Navigate(new ManifestViewer());
         }
 
+        private void FontMakerButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var path = System.IO.Path.Combine(Workspace, "Graphics");
+                var converter = new FontConverter(path);
+                converter.Convert(System.IO.Path.Combine(path, "font.bmp"));
+                (sender as Button).Content = "Converted";
+            }
+            catch
+            {
+                MessageBox.Show("An error has occured, make sure the Workspace is set correctly and that assets have been dumped using the ManifestViewer.");
+            }
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()

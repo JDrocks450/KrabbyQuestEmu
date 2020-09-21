@@ -8,24 +8,31 @@ using UnityEngine;
 
 public class TextureLoader : MonoBehaviour
 {
+    static Dictionary<string, Material> MaterialCache = new Dictionary<string, Material>();
     static Dictionary<string, Texture2D> LoadedContent = new Dictionary<string, Texture2D>();
     static Dictionary<string, LevelDataBlock> TemplatedItems = new Dictionary<string, LevelDataBlock>();
     IEnumerable<AssetDBEntry> textures;
     LevelDataBlock Data;
     DataBlockComponent TileComponent;
     private static LevelDataBlock _floor;
+    private static Material DefaultMaterial;
     public static string AssetDirectory    
     {
         get; set;
     }
+    bool Loaded = false;
     public bool LookIntoParent = false;
     public bool ForceTemplate = false;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         if (!TryGetComponent(out TileComponent) && LookIntoParent && !ForceTemplate)
             TileComponent = GetComponentInParent<DataBlockComponent>();
+        if (TileComponent?.TextureLoaded ?? false) 
+            return;
         Data = TileComponent?.DataBlock;
+        if (DefaultMaterial == null)
+            DefaultMaterial = (Material)Instantiate(Resources.Load("Materials/Object Material"));
         if (Data == null || ForceTemplate)
             Data = ApplyTileData(); // try to apply templated data
         if (Data == null)
@@ -39,6 +46,15 @@ public class TextureLoader : MonoBehaviour
             ApplyTextureMaterial(GetComponent<Renderer>(), int.Parse(parameter.Value));
         else 
             ApplyTextureMaterial(GetComponent<Renderer>(), 0);
+        if (TileComponent != null)
+            TileComponent.TextureLoaded = true;
+        Loaded = true;
+    }
+    void Start()
+    {
+        if (!Loaded)
+            Awake(); // some objects cannot load instantly - wait until the first frame update to do this loading
+        DestroyImmediate(this);
     }
 
     /// <summary>
@@ -64,17 +80,35 @@ public class TextureLoader : MonoBehaviour
     private void ApplyTextureMaterial(Renderer Object, int TextureIndex) => ApplyTextureMaterial(Object, textures.ElementAt(TextureIndex).FileName);
     private void ApplyTextureMaterial(Renderer Object, string TextureName)
     {
-        var materialpath = "Materials/Object Material";
-        if (Data.GetParameterByName("Material", out var value))
-            materialpath = "Materials/" + value.Value;
-        var material = (Material)Instantiate(Resources.Load(materialpath));
-        string path = Path.Combine(AssetDirectory, TextureName);
-        Data.GetParameterByName("TransparentColor", out var colorInfo);            
-        material.mainTexture = RequestTexture(path, colorInfo?.Value ?? default);        
+        if (!MaterialCache.TryGetValue(TextureName, out Material material))
+        {
+            material = null;
+            if (Data.GetParameterByName("Material", out var value))
+            {
+                string materialpath = "Materials/" + value.Value;
+                material = (Material)Instantiate(Resources.Load(materialpath));
+            }
+            if (material == null)
+            {
+                material = Instantiate(DefaultMaterial);
+                material.name = TextureName + " Material";
+            }
+            if (material.mainTexture == null)
+            {
+                string path = Path.Combine(AssetDirectory, TextureName);
+                Data.GetParameterByName("TransparentColor", out var colorInfo);
+                material.mainTexture = RequestTexture(path, colorInfo?.Value ?? default);
+                MaterialCache.Add(TextureName, material);
+            }
+        }
         Object.material = material;
     }
-    private static Texture2D RequestTexture(string path, string TransparentColor = default)
+
+    public static Texture2D RequestTexture(string path, string TransparentColor = default, bool includeAssetDir = false)
     {
+        GameInitialization.Initialize();
+        if (includeAssetDir)
+            path = Path.Combine(AssetDirectory, path);
         if (LoadedContent.TryGetValue(path, out var texture))
             return texture;
         if (path.ToLower().EndsWith("bmp"))
@@ -134,7 +168,7 @@ public class TextureLoader : MonoBehaviour
     private void CreateFloor()
     {
         int index = (int)LevelObjectManager.Context - 2;
-        var value = Data.Parameters.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
+        var value = Data.Parameters.Values.FirstOrDefault(x => x.Name == "Tex_Context_" + index)?.Value ?? null;
         if (value != null)        
             index = int.Parse(value);        
         if (index > textures.Count() - 1)

@@ -28,7 +28,7 @@ namespace KrabbyQuestTools.Pages
         public ParameterDialog(LevelDataBlock subject)
         {
             InitializeComponent();
-            Source = subject.Parameters.ToList();
+            Source = subject.Parameters.Values.ToList();
             Subject = subject;
             Load();
         }
@@ -109,7 +109,9 @@ namespace KrabbyQuestTools.Pages
         {
             if (askSave)
                 Save(namebox.autoTextBox.Text, editing.Text);
-            Subject.Parameters = Source;
+            Subject.Parameters = new Dictionary<string, BlockParameter>();
+            foreach (var param in Source)
+                Subject.Parameters.Add(param.Name, param);
             Close();
         }
 

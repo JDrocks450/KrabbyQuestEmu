@@ -118,13 +118,19 @@ namespace StinkyFile
                     break;
                 int length = BitConverter.ToInt32(data, Position);
                 Position += 4;
+                if (data.Length <= Position + length)
+                    break;                
                 if (length < 1000 && length > 0)
                 {
                     string message = Encoding.ASCII.GetString(data, Position, length);
                     message = message.Replace("#", "\n"); // replace # with new line
                     messages.Add(message);                    
                 }
-                else break;
+                else
+                {
+                    messages.Add(null);
+                    continue;
+                }
                 Position += length;
                 
             }

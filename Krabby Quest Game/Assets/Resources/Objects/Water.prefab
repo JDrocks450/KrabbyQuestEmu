@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookIntoParent: 1
+  ForceTemplate: 0
 --- !u!1 &1764264984359481007
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookIntoParent: 1
+  ForceTemplate: 0
 --- !u!1 &5230383728520978498
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookIntoParent: 1
+  ForceTemplate: 0
 --- !u!1 &8744806539156933833
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2695315844159023131
 Transform:
   m_ObjectHideFlags: 0
@@ -488,6 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookIntoParent: 1
+  ForceTemplate: 0
 --- !u!1 &9148608949858490076
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,3 +602,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookIntoParent: 1
+  ForceTemplate: 0

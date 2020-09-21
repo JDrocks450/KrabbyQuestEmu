@@ -11,6 +11,8 @@ using B83.Image.BMP;
 using System.Xml.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Audio;
+using System.Timers;
+using System.Diagnostics;
 
 public class LevelObjectManager : MonoBehaviour    
 {
@@ -18,6 +20,10 @@ public class LevelObjectManager : MonoBehaviour
     IEnumerable<AssetDBEntry> textures;
     static string AssetDirectory => TextureLoader.AssetDirectory;
     static Dictionary<string, GameObject> LoadedPrefabs = new Dictionary<string, GameObject>();
+    /// <summary>
+    /// Every tile thats loaded is cached here to make cloning them less time consuming
+    /// </summary>
+    Dictionary<string, GameObject> ClonableObjects = new Dictionary<string, GameObject>();
     
     /// <summary>
     /// The current <see cref="StinkyParser"/> instance -- do not use this unless necessary!!
@@ -50,13 +56,11 @@ public class LevelObjectManager : MonoBehaviour
     float titleCardTimer = 0f;
     static LevelObjectManager CurrentObjectManager;
     static AudioSource LevelMusic;
+    Stopwatch debug_loadWatch = new Stopwatch();
     // Start is called before the first frame update
     void Start()
     {
-        LevelDataBlock.BlockDatabasePath = "Assets/Resources/blockdb.xml";
-        AssetDBEntry.AssetDatabasePath = "Assets/Resources/texturedb.xml";
-        XDocument doc = XDocument.Load(AssetDBEntry.AssetDatabasePath);
-        TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;   
+        GameInitialization.Initialize();
         LevelMusic = GameObject.Find("Level Music Provider").GetComponent<AudioSource>();
         IsDone = false;
         if (LoadLevelName != null)        
@@ -103,10 +107,12 @@ public class LevelObjectManager : MonoBehaviour
             case LevelContext.FIELDS:
                 file = "res4.ogg";
                 break;
-            case LevelContext.CAVES:
+            case LevelContext.KELP:
                 file = "res6.ogg";
                 break;
-
+            case LevelContext.CAVES:
+                file = "res5.ogg";
+                break;
         }
         string fileName = Path.Combine(AssetDirectory, "music", file);
         WWW data = new WWW(fileName);
@@ -146,6 +152,8 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (levelLoadingComplete)
             return false;
+        debug_loadWatch.Reset();
+        debug_loadWatch.Start();
         LevelDataBlock block = (CurrentLoadingLayer == BlockLayers.Integral ? Level.IntegralData : Level.DecorationData)[Y * Level.Columns + X];
         var GObject = CurrentLoadingLayer == BlockLayers.Integral ? GetObject(block) : GetDecoration(block);
         if (GObject != null)
@@ -161,9 +169,10 @@ public class LevelObjectManager : MonoBehaviour
                 case SRotation.WEST: angle = -90;  break;
                 case SRotation.SOUTH: angle = 180; break;                    
             }
-            transform.RotateAround(transform.position, Vector3.up, angle);
-            GObject.name = block.Name;
+            transform.RotateAround(transform.position, Vector3.up, angle);            
         }
+        debug_loadWatch.Stop();
+        //UnityEngine.Debug.LogWarning(block.Name + " took " + debug_loadWatch.ElapsedTicks + "ticks to load");
         if (X >= Level.Columns-1)
         {
             X = 0;
@@ -204,20 +213,35 @@ public class LevelObjectManager : MonoBehaviour
         return (GameObject)Instantiate(ResourceLoad("Objects/UnknownObject"));
     }
 
-    GameObject ResourceLoad(string Name)
+    static GameObject ResourceLoad(string Name)
     {
         if (LoadedPrefabs.TryGetValue(Name, out var resource))
             return resource;
-        LoadedPrefabs.Add(Name, Resources.Load(Name) as GameObject);
+        var obj = Resources.Load(Name) as GameObject;
+        obj.SetActive(false);
+        LoadedPrefabs.Add(Name, obj);
         return LoadedPrefabs[Name];
     }
 
-    GameObject GetObjectByParameter(LevelDataBlock block)
+    /// <summary>
+    /// Creates the object without any additional scripts from the given block info
+    /// </summary>
+    /// <param name="block"></param>
+    /// <returns></returns>
+    public static GameObject CreateKrabbyQuestObject(LevelDataBlock block,int X = 0, int Y = 0)
     {
+        void applyLevelBlock(GameObject obj)
+        {            
+            var blockComponent = obj.AddComponent<DataBlockComponent>();
+            blockComponent.DataBlock = block;
+            blockComponent.WorldTileX = X;
+            blockComponent.WorldTileY = Y;
+            blockComponent.Parent = obj;
+        }
+        GameObject returnVal = default;
         BlockParameter parameter = default;
-        GameObject returnVal = default; // the object being created
         if (block.GetParameterByName("FLOOR", out parameter))
-            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/GroundTileObject")); // create a floor
+            returnVal = Instantiate(ResourceLoad("Objects/GroundTileObject")); // create a floor
         else if (block.GetParameterByName("WALL", out parameter))
             switch (parameter.Value)
             {
@@ -225,39 +249,75 @@ public class LevelObjectManager : MonoBehaviour
                     returnVal = Instantiate(ResourceLoad("Objects/LowWallObject"));
                     break;
                 case "Medium":
-                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/MidWallObject"));
+                    returnVal = Instantiate(ResourceLoad("Objects/MidWallObject"));
                     break;
                 case "High":
-                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/HighWallObject"));
+                    returnVal = Instantiate(ResourceLoad("Objects/HighWallObject"));
                     break;
             }
         else if (block.GetParameterByName("Prefab", out parameter))
-            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/" + parameter.Value));
+        {
+            returnVal = Instantiate(ResourceLoad("Objects/" + parameter.Value));
+        }
         else if (block.GetParameterByName("ServiceObject", out _))
             switch (block.BlockLayer)
             {
                 case BlockLayers.Decoration:
-                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/AnonymousObject"));
+                    returnVal = Instantiate(ResourceLoad("Objects/AnonymousObject"));
                     break;
                 case BlockLayers.Integral:
-                    returnVal = (GameObject)Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
+                    returnVal = Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
                     break;
             }
         else if (block.Name?.Contains("THROWER") ?? false)
-            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/TentacleCannon"));
+            returnVal = Instantiate(ResourceLoad("Objects/TentacleCannon"));
         else if (block.Name?.StartsWith("SPROUT") ?? false)
-            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/TentacleSpike"));
-        else if (block.HasModel)
+            returnVal = Instantiate(ResourceLoad("Objects/TentacleSpike"));
+        else if (block.HasModel || block.GetParameterByName("ApplyTemplater", out _))
         {
-            returnVal = (GameObject)Instantiate(ResourceLoad("Objects/EmptyObject"));
+            returnVal = Instantiate(ResourceLoad("Objects/EmptyObject"));
             returnVal.AddComponent<ModelLoader>();
-        }        
+        }
+        if (returnVal == null) return null;
+        returnVal.name = block.Name;
+        applyLevelBlock(returnVal);
+        return returnVal;
+    }
+
+    GameObject GetObjectByParameter(LevelDataBlock block)
+    {        
+        BlockParameter parameter = default;
+        if (!ClonableObjects.TryGetValue(block.GUID, out GameObject returnVal))
+        {
+            bool isClonable = true;
+            returnVal = CreateKrabbyQuestObject(block);
+            if (returnVal == null)
+                return returnVal;
+            if (block.HasSound)
+                returnVal.AddComponent<SoundLoader>().LoadAll(block); // load all sound effects related to the object               
+            returnVal.SetActive(true);
+            if (returnVal != null && isClonable)
+            {
+                ClonableObjects.Add(block.GUID, returnVal);
+                if (returnVal.TryGetComponent<TextureLoader>(out var tloader))                
+                    Destroy(tloader);                
+                returnVal.SetActive(false);
+                returnVal = Instantiate(returnVal);
+            }
+        }
+        else returnVal = Instantiate(returnVal);
         if (returnVal == null)
             return returnVal;
-        if (block.HasSound && !returnVal.TryGetComponent<AudioSource>(out _))
-        {
-            returnVal.AddComponent<SoundLoader>().LoadAll(block); // load all sound effects related to the object
-        }
+        var Component = returnVal.GetComponent<DataBlockComponent>();
+        if (Component == null)
+            Component = returnVal.AddComponent<DataBlockComponent>();
+        Component.DataBlock = block;
+        Component.WorldTileX = X;
+        Component.WorldTileY = Y;
+        Component.Parent = returnVal;
+        returnVal.name = block.Name;
+        returnVal.SetActive(true);
+        returnVal.SetActiveRecursively(true);
         if (!returnVal.TryGetComponent<AllowTileMovement>(out _))
             returnVal.AddComponent<AllowTileMovement>();
         if (block.GetParameterByName("Script", out parameter))
@@ -269,11 +329,6 @@ public class LevelObjectManager : MonoBehaviour
             var pos = returnVal.transform.position;
             returnVal.transform.position = new Vector3(pos.x, float.Parse(parameter.Value), pos.z);
         }
-        var blockComponent = returnVal.AddComponent<DataBlockComponent>();
-        blockComponent.DataBlock = block;
-        blockComponent.WorldTileX = X;
-        blockComponent.WorldTileY = Y;
-        blockComponent.Parent = returnVal;
         return returnVal;
     }
 }

@@ -124,6 +124,7 @@ namespace KrabbyQuestTools.Pages
             int index = 0;
             foreach(var message in OpenLevel.Messages)
             {
+                if (message == null) { index++; continue; } // dont display intentionally null messages
                 var name = "Message #" + (index + 1);
                 var block = LevelDataBlock.LoadFromDatabase(name);
                 var button = new Button()
@@ -347,7 +348,7 @@ namespace KrabbyQuestTools.Pages
         {
             if (Mode != BlockLayers.Integral)
             {
-                PrepareMapScreen(OpenLevel);
+                //PrepareMapScreen(OpenLevel);
                 Mode = BlockLayers.Integral;
                 DecorGrid.Visibility = Visibility.Hidden;
                 LevelGrid.Opacity = 1;
