@@ -66,7 +66,7 @@ entirely possible.
 This means that you will able to create full adventures through the editor in the future.
 #### However
 This is not supported yet. In future it is on my to-do list but as of now the editor is not able to officially edit
-levels at all. 
+levels at all - only view them. 
 
 ## How Do I Play?
 Right now, the setup is difficult as this project is still incomplete. However, it is possible.
