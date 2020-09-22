@@ -61,6 +61,11 @@ namespace StinkyFile
             LoadFromDat(data, 0);            
         }
 
+        internal StinkyLevel()
+        {
+
+        }
+
         [Obsolete]
         public StinkyLevel(StinkyParser parent, byte[] FileData, int index)
         {

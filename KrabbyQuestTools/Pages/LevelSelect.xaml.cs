@@ -150,6 +150,11 @@ namespace KrabbyQuestTools.Pages
             }
         }
 
+        private void MapScreenEditor_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new MapScreenCustomizer(Workspace));
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()

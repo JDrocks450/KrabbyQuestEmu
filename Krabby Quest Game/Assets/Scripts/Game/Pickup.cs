@@ -30,7 +30,14 @@ public class Pickup : MonoBehaviour
     {
         TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
         if (MajorPickups.TryGetValue(pickupName, out var info))
+        {
             MajorPickups[pickupName] = (info.amountLeft + 1, info.amountTotal);
+            if (pickupName == "PATTY")
+            {
+                if (info.amountLeft == info.amountTotal)
+                    LevelObjectManager.SignalLevelCompleted();
+            }
+        }
         Collected = true;
     }
 

@@ -1,0 +1,51 @@
+﻿<Page x:Class="KrabbyQuestTools.Pages.MapScreenCustomizer"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MapScreenCustomizer" Background="#FF1F1F1F">
+
+    <DockPanel>
+        <ScrollViewer DockPanel.Dock="Left" Width="230" Background="#FF151515">
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Margin="0,10">Place Level On Map:</TextBlock>
+                <StackPanel Name="LevelStack"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Button x:Name="PlaceButton" Margin="0,0,10,0" Padding="10,5" Click="PlaceButton_Click">Place Marker</Button>
+                <Button x:Name="MoveButton" Margin="0,0,10,0" Padding="10,5" Click="MoveButton_Click">Move Marker</Button>
+                <Button x:Name="DeleteButton" Margin="0,0,10,0" Padding="10,5" Click="DeleteButton_Click">Delete Marker</Button>
+            </StackPanel>
+            <Border Margin="20,10,0,0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF0280FF" >
+                <TextBlock Margin="10,5">Map Screen</TextBlock>
+            </Border>
+            <Border BorderThickness="1" Grid.Row="1" Margin="20,36,20,20" BorderBrush="#FF0280FF" Background="Black">
+                <Viewbox>
+                    <Grid x:Name="PlaceGrid" ClipToBounds="True" HorizontalAlignment="Center" Width="1024" Height="1024" MouseMove="MapBotRight_MouseMove" MouseEnter="MapBotRight_MouseEnter" MouseLeave="MapBotRight_MouseLeave">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="MapTopLeft" Grid.Row="0"/>
+                        <Image x:Name="MapTopRight" Grid.Column="1"/>
+                        <Image x:Name="MapBotLeft" Grid.Row="1"/>
+                        <Image x:Name="MapBotRight" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+                </Viewbox>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Page>

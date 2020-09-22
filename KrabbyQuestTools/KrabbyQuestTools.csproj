@@ -88,6 +88,9 @@
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
     </Compile>
     <Compile Include="FontConverter.cs" />
+    <Compile Include="Pages\MapScreenCustomizer.xaml.cs">
+      <DependentUpon>MapScreenCustomizer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ModelExporterOptions.xaml.cs">
       <DependentUpon>ModelExporterOptions.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\MapScreenCustomizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ModelExporterOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

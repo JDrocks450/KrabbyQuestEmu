@@ -79,6 +79,11 @@ public class LevelObjectManager : MonoBehaviour
         };               
     }
 
+    public static void SignalLevelCompleted()
+    {
+        SceneManager.LoadSceneAsync("MapScreen");        
+    }
+
     void LoadLevel()
     {
         if (!IsDone)
