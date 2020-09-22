@@ -38,6 +38,8 @@ Below is a roadmap:
     > A tool to link extracted Assets to BlockDB entries.
   - Manifest Viewer
     > Handles the extraction of Assets to a directory *Vital*
+  - Map Screen Editor
+    > Allows creators to add and remove waypoints on the map screen to any level including custom ones.
 - Game
   - Loading Levels
     > All levels are loadable, some with incomplete objects
@@ -54,6 +56,17 @@ Below is a roadmap:
   - Reimplementing Objects (~80% complete)
   - Highscores
   - New Features?
+
+## Custom Content?
+This project largely aims to captivate creators. The editor is designed to allow you to have all the tools that I used to fully restore the game.
+Custom maps will be able to use all of the existing functionality from any level in the game already. 
+Creators will be able to place markers to their maps anywhere on the existing map in the game. On top of that,
+the textures the game uses are completely extracted so they can be patched with ease - including the map textures meaning custom Map-Screens are 
+entirely possible.
+This means that you will able to create full adventures through the editor in the future.
+#### However
+This is not supported yet. In future it is on my to-do list but as of now the editor is not able to officially edit
+levels at all. 
 
 ## How Do I Play?
 Right now, the setup is difficult as this project is still incomplete. However, it is possible.
