@@ -35,12 +35,14 @@ public class WaterBehavior : MonoBehaviour
         }
         var allowMovement = GetComponent<AllowTileMovement>();
         if (allowMovement != null)
-            allowMovement.AllowMovement = true;
+            allowMovement.AllowMovement = false;
         TileMovingObjectScript.MoveableMoved += Jetstream_SpongebobPlayerPositionChanged;
-        /*TileMovingObjectScript.MoveableMoving += (object s, MoveEventArgs e) =>
+        TileMovingObjectScript.MoveableMoving += (object s, MoveEventArgs e) =>
         {
-            e.BlockMotion = false;
-        };*/
+            if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
+                if (!e.BlockMotion && !(s as TileMovingObjectScript).TryGetComponent<PushableScript>(out _))
+                    e.BlockMotion = true;
+        };
     }
 
     private void OnDestroy()
@@ -106,10 +108,10 @@ public class WaterBehavior : MonoBehaviour
             MoveableEnteredTile(sender as TileMovingObjectScript);        
     }
 
-    void MoveableEnteredTile(TileMovingObjectScript Moveable)
+    bool MoveableEnteredTile(TileMovingObjectScript Moveable)
     {
         if (Moveable.Target.TryGetComponent<PushableScript>(out var box)) // is a box?
-        {            
+        {
             var animator = box.GetComponentInChildren<Animator>();
             if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken))
             {
@@ -123,9 +125,11 @@ public class WaterBehavior : MonoBehaviour
                 IsBoxSunken = true;
                 box.MovementAllowed = false;
                 GetComponent<SoundLoader>().Play(0);
-                animator.Play("Sunken");                
-            }            
+                animator.Play("Sunken");
+            }
         }
+        else return false;
+        return true;
     }
 
     // Update is called once per frame

@@ -57,15 +57,20 @@ public class PushableScript : MonoBehaviour
 
     private void Jetstream_SpongebobPlayerPositionChanging(object sender, MoveEventArgs e)
     {
+        if (e.BlockMotion) return;
         if (e.ToTile.x == MovementScript.TileX && e.ToTile.y == MovementScript.TileY)
         {
             if ((sender as TileMovingObjectScript).TryGetComponent<GooberBehavior>(out var goober)) // is a goober
             {
                 if (CanDestory)
-                    Destroy(gameObject);
+                    Destroy(gameObject); // destroy this destructable box
+                else
+                    Destroy(goober.gameObject); // if this box cannot be destoryed, the goober must be destroyed
                 return; // prevent goober pushing box
             }
-            PlayerEnteredTile(e);
+            if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _)) //ignore pushes that aren't players
+                PlayerEnteredTile(e);
+            else e.BlockMotion = true;
         }
     }
 

@@ -108,21 +108,15 @@ public class TileMovingObjectScript : MonoBehaviour
                 Player = Player
             };
         TilePositionChanging?.Invoke(this, args);
+        if (!args.BlockMotion && !NoClip)
+            MoveableMoving?.Invoke(this, args);
         if (args.BlockMotion && !NoClip)
         {
             isWalking = false;
             IsMoving = false;
             MotionCanceled?.Invoke(this, args);
             Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);
-            return false;
-        }
-        MoveableMoving?.Invoke(this, args);
-        if (args.BlockMotion && !NoClip)
-        {
-            isWalking = false;
-            IsMoving = false;
-            MotionCanceled?.Invoke(this, args);
-            Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);
+            args.OnBlockedCallback?.Invoke();
             return false;
         }
         return true;

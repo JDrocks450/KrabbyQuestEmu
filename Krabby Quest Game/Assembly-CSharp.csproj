@@ -108,6 +108,7 @@
      <None Include="Assets\Resources\texturedb.xml" />
      <None Include="Assets\HolyShift\readme.txt" />
      <None Include="Assets\HolyShift\Shaders\WaterInclude.cginc" />
+     <None Include="Assets\Resources\mapdb.xml" />
      <None Include="Assets\Game\InsideOutUnlit.shader" />
      <None Include="Assets\StinkyFile.dll" />
     <Reference Include="UnityEngine">

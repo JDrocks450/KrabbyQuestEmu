@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using StinkyFile;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class PopulateLevels : MonoBehaviour
 {
     Button sampleButton;
+    StinkyLevel selected;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,12 @@ public class PopulateLevels : MonoBehaviour
             button.gameObject.SetActive(true);
             button.onClick.AddListener(delegate
             {
+                if (selected != level)
+                {
+                    selected = level;
+                    mapScreenBhav.SelectLevelOnMap(level);
+                    return;
+                }
                 mapScreenBhav.GoToLevel(Path.GetFileName(level.LevelFilePath).Replace(".lv5", ""));
             });
         }

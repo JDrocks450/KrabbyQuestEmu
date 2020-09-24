@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GateBehavior;
 
 public class GateBehavior : MonoBehaviour
 {
-    static HashSet<string> ClosedGateColors = new HashSet<string>();
+    static HashSet<string> OpenGateColors = new HashSet<string>();
     public DataBlockComponent BlockComponent { get; private set; }
     private Player Spongebob;
     string Color;
@@ -25,12 +26,14 @@ public class GateBehavior : MonoBehaviour
         BlockComponent = GetComponent<DataBlockComponent>();
         TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;
         BlockComponent.DataBlock.GetParameterByName("Color", out var Data);
-        Color = Data.Value;        
+        Color = Data.Value;
+        if (IsOpen)
+            OpenGateColors.Add(Color);
     }
 
     private void OnDestroy()
     {
-        TileMovingObjectScript.MoveableMoving -= Spongebob_PlayerPositionChanging;
+        TileMovingObjectScript.MoveableMoving -= Spongebob_PlayerPositionChanging;        
     }
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
@@ -40,7 +43,7 @@ public class GateBehavior : MonoBehaviour
             if (!IsOpen)
             {
                 e.BlockMotion = true;
-                 e.BlockMotionSender = gameObject.name;
+                e.BlockMotionSender = gameObject.name;
             }
         }
     }    
@@ -50,19 +53,24 @@ public class GateBehavior : MonoBehaviour
         switch (command)
         {
             case GateMsg.Open:
-                ClosedGateColors.Remove(color);
+                OpenGateColors.Add(color);
                 break;
             case GateMsg.Close:
-                ClosedGateColors.Add(color);
+                OpenGateColors.Remove(color);
                 break;
         }
+    }
+
+    public static void ClearGateFlags()
+    {
+        OpenGateColors.Clear();
     }
 
     // Update is called once per frame
     void Update()
     {
         bool lastOpenState = IsOpen;
-        IsOpen = ClosedGateColors.Contains(Color);
+        IsOpen = OpenGateColors.Contains(Color);
         if (lastOpenState != IsOpen)
         {
             var animator = GetComponentInChildren<Animator>();

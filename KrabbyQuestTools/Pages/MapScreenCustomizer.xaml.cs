@@ -24,7 +24,7 @@ namespace KrabbyQuestTools.Pages
     public partial class MapScreenCustomizer : Page
     {
         private readonly string workspaceDir;
-        public const string DBPath = MapWaypointParser.DBPath;
+        public static string DBPath => MapWaypointParser.DBPath;
         MapWaypointParser mapParser;
         enum Tool
         {      

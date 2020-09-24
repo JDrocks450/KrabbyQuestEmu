@@ -45,4 +45,8 @@ public class MoveEventArgs
             else return SRotation.NORTH;
         }
     }
+    /// <summary>
+    /// if the motion is blocked, this action will be invoked on the same frame as the motion started
+    /// </summary>
+    public Action OnBlockedCallback;
 }

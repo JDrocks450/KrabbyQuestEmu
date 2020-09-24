@@ -94,6 +94,7 @@ public class LevelObjectManager : MonoBehaviour
             Level = Parser.LevelRead(path);
             Context = Level.Context;
             Parser.RefreshLevel(Level);
+            Pickup.MajorPickups.Clear();
             isLoadingLevel = true;
             LoadNext();
         }

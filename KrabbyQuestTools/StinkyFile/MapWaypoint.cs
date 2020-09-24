@@ -12,7 +12,7 @@ namespace StinkyFile
     {
         private readonly string workspaceDir;
         private readonly StinkyParser Parser;
-        public const string DBPath = "Resources/mapdb.xml";
+        public static string DBPath = "Resources/mapdb.xml";
         public Dictionary<StinkyLevel, SPoint> Levels = new Dictionary<StinkyLevel, SPoint>();
 
         public MapWaypointParser(string WorkspaceDir, StinkyParser parser)
@@ -55,7 +55,7 @@ namespace StinkyFile
         /// <param name="element"></param>
         /// <returns></returns>
         public (StinkyLevel level, SPoint position) Load(XElement element)
-        {
+        {            
             var levelName = element.Element("LevelFileName").Value;
             var level = Parser.LevelRead(System.IO.Path.Combine(workspaceDir, "levels", levelName));
             var positionStrings = element.Element("Position").Value.Split(',');
@@ -90,14 +90,15 @@ namespace StinkyFile
             return Load(element);
         }
 
+        public IEnumerable<XElement> GetDataElement(StinkyLevel level) => GetDataElement(level, XDocument.Load(DBPath));
+
         /// <summary>
         /// Finds all waypoint DB elements that reference this level
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public IEnumerable<XElement> GetDataElement(StinkyLevel level)
+        public IEnumerable<XElement> GetDataElement(StinkyLevel level, XDocument doc)
         {
-            XDocument doc = XDocument.Load(DBPath);
             var name = System.IO.Path.GetFileName(level.LevelFilePath);
             return doc.Root.Elements("point").Where(x => x.Element("LevelFileName").Value == name);
         }
@@ -112,7 +113,7 @@ namespace StinkyFile
         {
             XDocument doc = XDocument.Load(DBPath);
             var name = System.IO.Path.GetFileName(level.LevelFilePath);
-            var element = GetDataElement(level).ToList();
+            var element = GetDataElement(level, doc).ToList();
             foreach (var e in element)
                 e.Remove();
             doc.Root.Add(new XElement("point",
@@ -128,7 +129,7 @@ namespace StinkyFile
         public void Remove(StinkyLevel level)
         {
             XDocument doc = XDocument.Load(DBPath);
-            var element = GetDataElement(level).ToList(); // foreach collection change workaround
+            var element = GetDataElement(level, doc).ToList(); // foreach collection change workaround
             foreach (var e in element)
                 e.Remove();
             doc.Save(DBPath);

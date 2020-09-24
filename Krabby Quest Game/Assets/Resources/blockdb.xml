@@ -32,17 +32,6 @@
     <Level>Decoration</Level>
     <Rotation>NORTH</Rotation>
   </O952656>
-  <O967963>
-    <Name>TOWNHOUSE_SHORT</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>61</ItemId>
-    <Dat2>0</Dat2>
-    <Color>186,85,211,255</Color>
-    <Texture>Hello World</Texture>
-    <Level>Decoration</Level>
-    <Rotation>NORTH</Rotation>
-  </O967963>
   <O841627>
     <Name>TOWNHOUSE_SHORT</Name>
     <Package>0</Package>
@@ -2254,4 +2243,25 @@
       <A517043>Texture</A517043>
     </AssetReferences>
   </O11037>
+  <O967963>
+    <Name>TOWNHOUSE_SHORT</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>61</ItemId>
+    <Dat2>0</Dat2>
+    <Color>186,85,211,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ApplyTemplater</Name>
+        <Value>HOUSE</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>.2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences />
+  </O967963>
 </root>

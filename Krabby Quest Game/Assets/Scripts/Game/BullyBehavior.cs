@@ -9,6 +9,8 @@ public class BullyBehavior : MonoBehaviour
     {
         get;set;
     }
+    bool[] Modes = {
+        true, true, true, true }; // NSEW
     public DataBlockComponent BlockComponent { get; private set; }
     public TileMovingObjectScript TileScript { get; private set; }
     private AngleRotator Rotator;
@@ -28,22 +30,24 @@ public class BullyBehavior : MonoBehaviour
 
     private void TileScript_MotionCanceled(object sender, MoveEventArgs e)
     {
+        bool Mode = Modes[(int)Rotation];
         switch (Rotation)
         {
             case SRotation.NORTH:
-                Rotation = SRotation.EAST;
+                Rotation = Mode ? SRotation.EAST : SRotation.WEST;                
                 break;
             case SRotation.EAST:
-                Rotation = SRotation.SOUTH;
+                Rotation = Mode ? SRotation.SOUTH : SRotation.NORTH;
                 break;
             case SRotation.SOUTH:
-                Rotation = SRotation.WEST;
+                Rotation = Mode ? SRotation.WEST : SRotation.EAST;
                 break;
             case SRotation.WEST:
-                Rotation = SRotation.NORTH;
+                Rotation = Mode ? SRotation.NORTH : SRotation.SOUTH;
                 break;
         }
-    }
+        Modes[(int)Rotation] = !Mode;
+    }    
 
     void MoveForward()
     {

@@ -34,7 +34,7 @@ public class Pickup : MonoBehaviour
             MajorPickups[pickupName] = (info.amountLeft + 1, info.amountTotal);
             if (pickupName == "PATTY")
             {
-                if (info.amountLeft == info.amountTotal)
+                if (info.amountLeft+1 == info.amountTotal)
                     LevelObjectManager.SignalLevelCompleted();
             }
         }

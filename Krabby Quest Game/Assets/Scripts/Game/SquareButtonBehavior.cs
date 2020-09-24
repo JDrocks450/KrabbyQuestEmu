@@ -17,34 +17,45 @@ public class SquareButtonBehavior : MonoBehaviour
     {
         get; private set;
     } = false;
-
+    public string Color;
     object pressingButton;
+    object lastMotionPressSender;
+    bool lastMotionPushState;
 
     // Start is called before the first frame update
     void Start()
     {
         BlockComponent = GetComponent<DataBlockComponent>();
-        TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;
+        TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;        
         if (gameObject.name.Contains("CIRCLE"))
             CanUnpush = true;
+        if (BlockComponent.DataBlock.GetParameterByName("Button Color", out var param))
+            Color = param.Value;
     }
 
     private void OnDestroy()
     {
         TileMovingObjectScript.MoveableMoving -= Spongebob_PlayerPositionChanging;
+        GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
     }
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
     {
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
+            lastMotionPressSender = pressingButton;
+            lastMotionPushState = Pushed;
+            e.OnBlockedCallback = delegate
+            {
+                Pushed = lastMotionPushState; // ignore the last press as the motion was blocked
+                pressingButton = lastMotionPressSender;
+            };
             Pushed = true;
             var animator = GetComponentInChildren<Animator>();
             animator.Play("Pushed"); // play press anim
             GetComponentInChildren<Light>().enabled = false; // turn off the light
-            BlockComponent.DataBlock.GetParameterByName("Button Color", out var param);
-            OnPress?.Invoke(this, param.Value);
-            GateBehavior.SendMessage(GateBehavior.GateMsg.Close, param.Value);
+            OnPress?.Invoke(this, Color);
+            GateBehavior.SendMessage(GateBehavior.GateMsg.Open, Color);
             pressingButton = sender;
         }
         else if (Pushed && CanUnpush && pressingButton.Equals(sender))
@@ -52,17 +63,17 @@ public class SquareButtonBehavior : MonoBehaviour
             Pushed = false;
             var animator = GetComponentInChildren<Animator>();
             animator.Play("Unpushed"); // play unpress anim
-            GetComponentInChildren<Light>().enabled = true; // turn on the light
-            BlockComponent.DataBlock.GetParameterByName("Button Color", out var param);
-            OnUnpress?.Invoke(this, param.Value);
-            GateBehavior.SendMessage(GateBehavior.GateMsg.Open, param.Value);
+            GetComponentInChildren<Light>().enabled = true; // turn on the light            
+            OnUnpress?.Invoke(this, Color);
+            GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
             pressingButton = sender;
-        }
+            lastMotionPressSender = null;
+        }        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
