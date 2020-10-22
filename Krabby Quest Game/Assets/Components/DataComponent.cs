@@ -13,6 +13,7 @@ public class DataBlockComponent : MonoBehaviour
     public int WorldTileY { get; set; }
     public bool ModelLoaded { get; set; }
     public bool TextureLoaded { get; set; }
+    public Vector2Int WorldTilePosition => new Vector2Int(WorldTileX, WorldTileY);
     public GameObject Parent { get; set; }
     // Start is called before the first frame update
     void Start()

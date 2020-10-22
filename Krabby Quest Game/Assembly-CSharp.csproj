@@ -60,11 +60,11 @@
     <Compile Include="Assets\Components\FontCreator.cs" />
     <Compile Include="Assets\Components\GameInitialization.cs" />
     <Compile Include="Assets\Components\MoveEventArgs.cs" />
+    <Compile Include="Assets\Components\SaveFileManager.cs" />
     <Compile Include="Assets\Jobs\LevelLoadJob.cs" />
     <Compile Include="Assets\LevelObjectManager.cs" />
     <Compile Include="Assets\ObjImporter.cs" />
     <Compile Include="Assets\Scripts\CameraBehavior.cs" />
-    <Compile Include="Assets\Scripts\DebugLoadLevel.cs" />
     <Compile Include="Assets\Scripts\FontApplier.cs" />
     <Compile Include="Assets\Scripts\Game\AllowTileMovement.cs" />
     <Compile Include="Assets\Scripts\Game\AngleRotator.cs" />
@@ -72,10 +72,12 @@
     <Compile Include="Assets\Scripts\Game\BullyBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\ButtonColorAssignment.cs" />
     <Compile Include="Assets\Scripts\Game\CannonBehavior.cs" />
+    <Compile Include="Assets\Scripts\Game\GameMenuBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\GateBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\GooberBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\Jetstream.cs" />
     <Compile Include="Assets\Scripts\Game\KrabbyQuestObjectLoader.cs" />
+    <Compile Include="Assets\Scripts\Game\LoadingProgressScript.cs" />
     <Compile Include="Assets\Scripts\Game\MessageBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\ModelLoader.cs" />
     <Compile Include="Assets\Scripts\Game\Pickup.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Assets\Scripts\MainMenu\ButtonStyler.cs" />
     <Compile Include="Assets\Scripts\MainMenu\FlowerSky.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenuBehavior.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\PopulateSaveFiles.cs" />
     <Compile Include="Assets\Scripts\MainMenu\TitleImageLoader.cs" />
     <Compile Include="Assets\Scripts\MapScreen\Map3DLoader.cs" />
     <Compile Include="Assets\Scripts\MapScreen\MapLoader.cs" />

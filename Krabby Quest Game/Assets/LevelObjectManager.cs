@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using UnityEngine.Audio;
 using System.Timers;
 using System.Diagnostics;
+using Assets.Components;
+using StinkyFile.Save;
 
 public class LevelObjectManager : MonoBehaviour    
 {
@@ -41,50 +43,108 @@ public class LevelObjectManager : MonoBehaviour
     {
         get; set;
     }
-
+    /// <summary>
+    /// The current completion status of the level
+    /// </summary>
+    public static LevelCompletionInfo CurrentCompletionInfo
+    {
+        get; private set;
+    }
+    /// <summary>
+    /// The current progress loading the level
+    /// </summary>
+    public static float LoadingPercentage
+    {
+        get; private set;
+    }
     StinkyFile.BlockLayers CurrentLoadingLayer;
     int X, Y;
     bool levelLoadingComplete = false, isLoadingLevel = false;
-    public static string LoadLevelName = null;
-    static bool sceneUnloading = false;
-
+    /// <summary>
+    /// The filename of the level to load automatically when this object awakens
+    /// </summary>
+    public static string LoadLevelName
+    {
+        get; set;
+    } = null;
+    static bool sceneUnloading = false, levelSwapping = false;
+    /// <summary>
+    /// True if the level is completely loaded
+    /// </summary>
     public static bool IsDone
     {
         get; private set;
     } = false;
+
     bool showingTitleCard = false, canShowTitleCard = true;
     float titleCardTimer = 0f;
     static LevelObjectManager CurrentObjectManager;
     static AudioSource LevelMusic;
     Stopwatch debug_loadWatch = new Stopwatch();
-    // Start is called before the first frame update
-    void Start()
+
+    /// <summary>
+    /// Automatically starts loading the level using <see cref="LoadLevelName"/>
+    /// </summary>
+    void Awake()
     {
         GameInitialization.Initialize();
+        levelSwapping = false;
         LevelMusic = GameObject.Find("Level Music Provider").GetComponent<AudioSource>();
         IsDone = false;
         if (LoadLevelName != null)        
             LoadLevel();        
     }
 
+    void LoadAll()
+    {
+        if (isLoadingLevel && !sceneUnloading)
+        {
+            if (!levelLoadingComplete)
+                for (int i = 0; i < Level.Total; i++)
+                    LoadNext();
+            else IsDone = true;
+        }  
+    }
+
+    public static void ReloadLevel() => ChangeLevel(LoadLevelName);
+
     public static void ChangeLevel(string levelName)
-    {                        
+    {
+        if (levelSwapping)
+            return; // ignore all requests to change level while it's swapping
         LoadLevelName = levelName;
         var operation = SceneManager.LoadSceneAsync("Game");
-        operation.completed += delegate
-        {
-            //sceneUnloading = true;
-            //var unloadOp = SceneManager.UnloadSceneAsync(0);
-            //unloadOp.completed += delegate { sceneUnloading = false; };
+        levelSwapping = true;
+        operation.completed += delegate(AsyncOperation e)
+        {            
+
         };               
     }
 
-    public static void SignalLevelCompleted()
+    public static void SignalLevelCompleted(bool completed)
     {
+        if (levelSwapping) return;
+        levelSwapping = true;
+        if (CurrentCompletionInfo != null)
+        {
+            CurrentCompletionInfo.LevelName = Level.Name;
+            CurrentCompletionInfo.LevelWorldName = Level.LevelWorldName;
+            if (!CurrentCompletionInfo.WasSuccessful)
+                CurrentCompletionInfo.WasSuccessful = completed;
+            if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
+            {
+                CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
+            }
+            if (Pickup.MajorPickups.TryGetValue("BONUS", out var bonusinfo))
+            {
+                CurrentCompletionInfo.BonusesCollected = bonusinfo.amountCollected;
+            }
+        }
+        SaveFileManager.Current.Save();
         SceneManager.LoadSceneAsync("MapScreen");        
     }
 
-    void LoadLevel()
+    void LoadLevel(LevelCompletionInfo completionInfo = default)
     {
         if (!IsDone)
         {
@@ -95,7 +155,22 @@ public class LevelObjectManager : MonoBehaviour
             Context = Level.Context;
             Parser.RefreshLevel(Level);
             Pickup.MajorPickups.Clear();
+            Player.CurrentPlayer = Assets.Scripts.Game.PlayerEnum.SPONGEBOB;
+            LoadingPercentage = 0;
             isLoadingLevel = true;
+            if (completionInfo == default)
+            {
+                if (SaveFileManager.IsFileOpened)
+                    CurrentCompletionInfo = Level.GetSaveFileInfo(SaveFileManager.Current);
+                else 
+                    CurrentCompletionInfo = new LevelCompletionInfo()
+                    {
+                        LevelName = Level.Name,
+                        LevelWorldName = Level.LevelWorldName,
+                        TimeRemaining = 300000
+                    };
+            }
+            else CurrentCompletionInfo = completionInfo;
             LoadNext();
         }
     }
@@ -137,8 +212,15 @@ public class LevelObjectManager : MonoBehaviour
             if (!levelLoadingComplete)
                 for (int i = 0; i < Level.Columns; i++)
                     LoadNext();
-            else IsDone = true;
-        }      
+            else
+            {
+                IsDone = true;
+                CurrentCompletionInfo = new LevelCompletionInfo()
+                {
+                    LevelName = Level.Name
+                };
+            }
+        }
         if (!showingTitleCard && IsDone && canShowTitleCard)
         {
             showingTitleCard = true;
@@ -152,14 +234,26 @@ public class LevelObjectManager : MonoBehaviour
             MessagePromptBehavior.HideMessage();
         }
         else if (showingTitleCard) titleCardTimer += Time.deltaTime;
+        if (IsDone)
+        {
+            //compltion status 
+            if (Pickup.MajorPickups.TryGetValue("BONUS", out var tuple))
+                CurrentCompletionInfo.BonusesCollected = tuple.amountCollected;
+            if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
+            {
+                CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
+                if (pattyinfo.amountCollected == pattyinfo.amountTotal)
+                    SignalLevelCompleted(true);
+            }
+        }
     }
 
     bool LoadNext()
     {
         if (levelLoadingComplete)
             return false;
-        debug_loadWatch.Reset();
-        debug_loadWatch.Start();
+        //debug_loadWatch.Reset();
+        //debug_loadWatch.Start();
         LevelDataBlock block = (CurrentLoadingLayer == BlockLayers.Integral ? Level.IntegralData : Level.DecorationData)[Y * Level.Columns + X];
         var GObject = CurrentLoadingLayer == BlockLayers.Integral ? GetObject(block) : GetDecoration(block);
         if (GObject != null)
@@ -177,7 +271,7 @@ public class LevelObjectManager : MonoBehaviour
             }
             transform.RotateAround(transform.position, Vector3.up, angle);            
         }
-        debug_loadWatch.Stop();
+        //debug_loadWatch.Stop();
         //UnityEngine.Debug.LogWarning(block.Name + " took " + debug_loadWatch.ElapsedTicks + "ticks to load");
         if (X >= Level.Columns-1)
         {
@@ -193,6 +287,7 @@ public class LevelObjectManager : MonoBehaviour
             }
         }
         else X++;
+        LoadingPercentage = ((Y * Level.Columns) + X) / (float)Level.Total;
         return true;
     }
 
@@ -323,7 +418,7 @@ public class LevelObjectManager : MonoBehaviour
         Component.Parent = returnVal;
         returnVal.name = block.Name;
         returnVal.SetActive(true);
-        returnVal.SetActiveRecursively(true);
+        returnVal.SetActiveRecursively(true); // SetActive for some reason doesn't work as it should -- i guess comment this out once it actually works as it says.
         if (!returnVal.TryGetComponent<AllowTileMovement>(out _))
             returnVal.AddComponent<AllowTileMovement>();
         if (block.GetParameterByName("Script", out parameter))

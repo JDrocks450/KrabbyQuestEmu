@@ -155,6 +155,11 @@ namespace KrabbyQuestTools.Pages
             NavigationService.Navigate(new MapScreenCustomizer(Workspace));
         }
 
+        private void SaveEditor_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new SaveFileViewer(System.IO.Path.Combine(Workspace, "levels")));
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()

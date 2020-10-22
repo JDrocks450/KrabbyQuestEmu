@@ -16,9 +16,11 @@ public class WaterBehavior : MonoBehaviour
     {
         get; private set;
     } = false;
-    bool wallsDisabled = false;
+    public bool IsCovered;
+    bool wallsDisabled = false, isplayerfloating = false;
     private Vector2Int Position;
     private string GUID;
+    object floating;
 
     // Start is called before the first frame update
     void Start()
@@ -35,19 +37,27 @@ public class WaterBehavior : MonoBehaviour
         }
         var allowMovement = GetComponent<AllowTileMovement>();
         if (allowMovement != null)
-            allowMovement.AllowMovement = false;
+            allowMovement.AllowMovement = true;
         TileMovingObjectScript.MoveableMoved += Jetstream_SpongebobPlayerPositionChanged;
-        TileMovingObjectScript.MoveableMoving += (object s, MoveEventArgs e) =>
+        TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
+    }
+
+    private void TileMovingObjectScript_MoveableMoving(object sender, MoveEventArgs e)
+    {
+        if (e.BlockMotion) return;
+        if (IsCovered || IsBoxFloating) return;
+        if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
         {
-            if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
-                if (!e.BlockMotion && !(s as TileMovingObjectScript).TryGetComponent<PushableScript>(out _))
-                    e.BlockMotion = true;
-        };
+            if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _))
+                e.BlockMotion = true;
+        }
     }
 
     private void OnDestroy()
     {
         TileMovingObjectScript.MoveableMoved -= Jetstream_SpongebobPlayerPositionChanged;
+        TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
+
     }
 
     void DisableWalls()
@@ -105,20 +115,26 @@ public class WaterBehavior : MonoBehaviour
     private void Jetstream_SpongebobPlayerPositionChanged(object sender, MoveEventArgs e)
     {
         if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
-            MoveableEnteredTile(sender as TileMovingObjectScript);        
+            MoveableEnteredTile(sender as TileMovingObjectScript);
+        else if (isplayerfloating && floating.Equals(sender))
+        {
+            isplayerfloating = false;
+            IsCovered = false;
+            transform.parent.GetChild(1).gameObject.SetActive(false); // hide raft
+        }
     }
 
     bool MoveableEnteredTile(TileMovingObjectScript Moveable)
-    {
+    {        
         if (Moveable.Target.TryGetComponent<PushableScript>(out var box)) // is a box?
         {
             var animator = box.GetComponentInChildren<Animator>();
             if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken))
             {
                 animator.Play("Floating");
-                GetComponent<SoundLoader>().Play(0);
                 IsBoxFloating = true;
                 box.MovementAllowed = false;
+                GetComponent<SoundLoader>().Play(0);                
             }
             else if (!box.CanFloat && !IsBoxSunken)
             {
@@ -126,6 +142,14 @@ public class WaterBehavior : MonoBehaviour
                 box.MovementAllowed = false;
                 GetComponent<SoundLoader>().Play(0);
                 animator.Play("Sunken");
+            }
+        }
+        else if (Moveable.Target.TryGetComponent<Player>(out var player) && IsCovered)
+        {
+            if (!isplayerfloating)
+            {
+                isplayerfloating = true;
+                floating = Moveable;
             }
         }
         else return false;

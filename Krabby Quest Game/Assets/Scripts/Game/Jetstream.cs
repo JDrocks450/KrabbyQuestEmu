@@ -9,6 +9,7 @@ public class Jetstream : MonoBehaviour
     Material jetstreamMaterial;
     private float totalTime = .5f;
     GameObject Render;
+    SoundLoader soundEffects;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,9 @@ public class Jetstream : MonoBehaviour
         var child = Render = transform.GetChild(0).gameObject;
         var component = child.AddComponent<DataBlockComponent>();
         component.DataBlock = BlockComponent.DataBlock;
-        child.AddComponent<TextureLoader>();        
+        child.AddComponent<TextureLoader>();
+        soundEffects = GetComponent<SoundLoader>();
+        soundEffects.ExclusiveSoundMode = true;
     }
 
     private void Jetstream_SpongebobPlayerPositionChanged(object sender, MoveEventArgs e)
@@ -36,22 +39,23 @@ public class Jetstream : MonoBehaviour
     {
         var rotator = Spongebob.GetComponentInChildren<AngleRotator>();
         bool motionResult = false;
+        float motionspeed = 7f;
         switch (BlockComponent.DataBlock.Rotation)
         {
             case StinkyFile.SRotation.NORTH:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY - 1);
+                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY - 1, motionspeed);
                 break;
             case StinkyFile.SRotation.SOUTH:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY + 1);
+                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY + 1, motionspeed);
                 break;
             case StinkyFile.SRotation.WEST:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX - 1, Spongebob.TileY);
+                motionResult = Spongebob.WalkToTile(Spongebob.TileX - 1, Spongebob.TileY, motionspeed);
                 break;
             case StinkyFile.SRotation.EAST:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX + 1, Spongebob.TileY);
+                motionResult = Spongebob.WalkToTile(Spongebob.TileX + 1, Spongebob.TileY, motionspeed);
                 break;
         }
-        GetComponent<SoundLoader>().Play(0);
+        soundEffects.Play(0);
         if (!motionResult && Spongebob.TryGetComponent<Player>(out _))
         {
             Player.KillAllPlayers();

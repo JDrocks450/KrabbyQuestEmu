@@ -38,7 +38,7 @@ public class PushableScript : MonoBehaviour
     void Start()
     {
         BlockComponent = GetComponent<DataBlockComponent>();
-        MovementScript = BlockComponent.Parent.AddComponent<TileMovingObjectScript>();
+        MovementScript = gameObject.AddComponent<TileMovingObjectScript>();
         MovementScript.Target = gameObject;
         MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);        
         TileMovingObjectScript.MoveableMoving += Jetstream_SpongebobPlayerPositionChanging;
@@ -58,6 +58,7 @@ public class PushableScript : MonoBehaviour
     private void Jetstream_SpongebobPlayerPositionChanging(object sender, MoveEventArgs e)
     {
         if (e.BlockMotion) return;
+        if (!MovementAllowed) return;
         if (e.ToTile.x == MovementScript.TileX && e.ToTile.y == MovementScript.TileY)
         {
             if ((sender as TileMovingObjectScript).TryGetComponent<GooberBehavior>(out var goober)) // is a goober

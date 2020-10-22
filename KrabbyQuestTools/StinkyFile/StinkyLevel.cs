@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StinkyFile.Save;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -140,6 +141,25 @@ namespace StinkyFile
                 
             }
             Messages = messages.ToArray();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="LevelCompletionInfo"/> for this level, or creates one if one does not exist
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public LevelCompletionInfo GetSaveFileInfo(SaveFile file)
+        {
+            if (file.LevelInfo.TryGetValue(LevelWorldName, out var value))
+                return value;
+            var newInfo = new LevelCompletionInfo()
+            {
+                LevelWorldName = LevelWorldName,
+                LevelName = Name,
+                TimeRemaining = 300000
+            };
+            file.UpdateInfo(newInfo);
+            return newInfo;
         }
 
         public void SaveAll()

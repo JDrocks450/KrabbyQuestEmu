@@ -26,7 +26,8 @@ public class SquareButtonBehavior : MonoBehaviour
     void Start()
     {
         BlockComponent = GetComponent<DataBlockComponent>();
-        TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;        
+        TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;
+        TileMovingObjectScript.OnObjectMotionCanceled += OnMotionBlocked;
         if (gameObject.name.Contains("CIRCLE"))
             CanUnpush = true;
         if (BlockComponent.DataBlock.GetParameterByName("Button Color", out var param))
@@ -39,36 +40,48 @@ public class SquareButtonBehavior : MonoBehaviour
         GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
     }
 
+    private void Press(object sender, MoveEventArgs e)
+    {
+        Pushed = true;
+        var animator = GetComponentInChildren<Animator>();
+        animator.Play("Pushed"); // play press anim
+        GetComponentInChildren<Light>().enabled = false; // turn off the light
+        OnPress?.Invoke(this, Color);
+        GateBehavior.SendMessage(GateBehavior.GateMsg.Open, Color);
+        pressingButton = sender;
+    }
+
+    private void Unpress(object sender, MoveEventArgs e)
+    {
+        Pushed = false;
+        var animator = GetComponentInChildren<Animator>();
+        animator.Play("Unpushed"); // play unpress anim
+        GetComponentInChildren<Light>().enabled = true; // turn on the light            
+        OnUnpress?.Invoke(this, Color);
+        GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
+        pressingButton = null;
+    }
+
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
     {
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
-            lastMotionPressSender = pressingButton;
-            lastMotionPushState = Pushed;
-            e.OnBlockedCallback = delegate
-            {
-                Pushed = lastMotionPushState; // ignore the last press as the motion was blocked
-                pressingButton = lastMotionPressSender;
-            };
-            Pushed = true;
-            var animator = GetComponentInChildren<Animator>();
-            animator.Play("Pushed"); // play press anim
-            GetComponentInChildren<Light>().enabled = false; // turn off the light
-            OnPress?.Invoke(this, Color);
-            GateBehavior.SendMessage(GateBehavior.GateMsg.Open, Color);
-            pressingButton = sender;
+            Press(sender, e);
         }
         else if (Pushed && CanUnpush && pressingButton.Equals(sender))
         {
-            Pushed = false;
-            var animator = GetComponentInChildren<Animator>();
-            animator.Play("Unpushed"); // play unpress anim
-            GetComponentInChildren<Light>().enabled = true; // turn on the light            
-            OnUnpress?.Invoke(this, Color);
-            GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
-            pressingButton = sender;
-            lastMotionPressSender = null;
+            Unpress(sender, e);
         }        
+    }
+
+    void OnMotionBlocked(object sender, MoveEventArgs e)
+    {
+        if (e.FromTile == BlockComponent.WorldTilePosition)
+        {
+            Pushed = true; // ignore the last press as the motion was blocked
+            pressingButton = lastMotionPressSender;
+            Press(sender, e);
+        }
     }
 
     // Update is called once per frame

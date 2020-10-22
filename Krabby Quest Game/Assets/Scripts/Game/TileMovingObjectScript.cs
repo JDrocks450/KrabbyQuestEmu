@@ -28,6 +28,10 @@ public class TileMovingObjectScript : MonoBehaviour
     /// When any moving object begins to move from one world tile to another
     /// </summary>
     public static event EventHandler<MoveEventArgs> MoveableMoving;
+    /// <summary>
+    /// When any moving object begins to move from one world tile to another
+    /// </summary>
+    public static event EventHandler<MoveEventArgs> OnObjectMotionCanceled;
 
     public GameObject Target
     {
@@ -37,7 +41,23 @@ public class TileMovingObjectScript : MonoBehaviour
     /// <summary>
     /// The speed of the movement in units/sec
     /// </summary>
-    public float MotionSpeed { get; set; } = 5f;
+    public float MotionSpeed
+    {
+        get
+        {
+            if (temporaryMotionSpeed == default)
+                return _motionspeed;
+            else return temporaryMotionSpeed;
+        }
+        set
+        {
+            _motionspeed = value;
+        }
+    }
+    /// <summary>
+    /// things like conveyors give spongebob a temporary boost in speed
+    /// </summary>
+    float temporaryMotionSpeed = default;
     /// <summary>
     /// The current TilePosition of the object in the X-Direction
     /// </summary>
@@ -46,6 +66,7 @@ public class TileMovingObjectScript : MonoBehaviour
     /// The current TilePosition of the object in the Y-Direction
     /// </summary>
     public int TileY { get; set; }
+    public Vector2Int TilePosition => new Vector2Int(TileX, TileY);
     /// <summary>
     /// Is the object currently moving
     /// </summary>
@@ -63,6 +84,7 @@ public class TileMovingObjectScript : MonoBehaviour
     float walkingPercentage = 0f;
     Vector3 walkStartLocation, walkEndLocation;
     int walkTileX = 0, walkTileY = 0;
+    private float _motionspeed = 5f;
 
     private Vector3 getDestination(int x, int y) => new Vector3(-x * LevelObjectManager.Grid_Size.x, transform.position.y, y * LevelObjectManager.Grid_Size.y);
 
@@ -91,7 +113,7 @@ public class TileMovingObjectScript : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns>True if motion is allowed</returns>
-    public bool WalkToTile(int x, int y)
+    public bool WalkToTile(int x, int y, float overrideMotionSpeed = default)
     {
         isWalking = true;
         walkingPercentage = 0f;
@@ -100,6 +122,7 @@ public class TileMovingObjectScript : MonoBehaviour
         walkTileX = x;
         walkTileY = y;
         IsMoving = true;
+        temporaryMotionSpeed = overrideMotionSpeed;
         var args = new MoveEventArgs()
             {
                 FromTile = new Vector2Int(TileX, TileY),
@@ -115,8 +138,8 @@ public class TileMovingObjectScript : MonoBehaviour
             isWalking = false;
             IsMoving = false;
             MotionCanceled?.Invoke(this, args);
-            Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);
-            args.OnBlockedCallback?.Invoke();
+            OnObjectMotionCanceled?.Invoke(this, args);
+            Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);            
             return false;
         }
         return true;

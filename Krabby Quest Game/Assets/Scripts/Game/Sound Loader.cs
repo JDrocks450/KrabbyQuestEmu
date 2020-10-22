@@ -10,6 +10,14 @@ public class SoundLoader : MonoBehaviour
     const int MAX_SOURCES = 5;
     static Dictionary<string, AudioClip> SoundEffects = new Dictionary<string, AudioClip>();
     static AudioSource[] Sources = new AudioSource[5];
+
+    /// <summary>
+    /// The sound effect will only be played if no other sound source is playing that sound effect in this mode
+    /// </summary>
+    public bool ExclusiveSoundMode
+    {
+        get; set;
+    }
     /// <summary>
     /// All the audio clips this object references
     /// </summary>
@@ -43,6 +51,7 @@ public class SoundLoader : MonoBehaviour
             var request = new WWW(Path.Combine(TextureLoader.AssetDirectory, reference.FileName));
             while (request.isDone != true) { }
             var audio = request.GetAudioClipCompressed();
+            audio.name = reference.DBName;
             SoundEffects.Add(reference.DBName, audio);
         }
         SoundReferences = references.ToArray();
@@ -78,7 +87,12 @@ public class SoundLoader : MonoBehaviour
         {
             if (Sources[i] == null)
                 CreateSource(i);
-            var source = Sources[i];            
+            var source = Sources[i];  
+            if (ExclusiveSoundMode)
+            {
+                if (source.isPlaying && source.clip.name == clip.name)
+                    break; // cancel this play request due to the sound already playing
+            }
             if (!source.isPlaying || i == MAX_SOURCES - 1)
             {                
                 source.clip = clip;

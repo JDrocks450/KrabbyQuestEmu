@@ -17,6 +17,6 @@ public class UIPickupText : MonoBehaviour
     void Update()
     {
         if (Pickup.MajorPickups.TryGetValue(WatchingPickup, out var amount))        
-            textComponent.text = WatchingPickup + ": " + amount.amountLeft + " out of " + amount.amountTotal;        
+            textComponent.text = WatchingPickup + ": " + amount.amountCollected + " out of " + amount.amountTotal;        
     }
 }

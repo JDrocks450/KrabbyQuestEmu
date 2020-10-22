@@ -1303,25 +1303,6 @@
     </Parameters>
     <AssetReferences />
   </O382225>
-  <O542113>
-    <Name>RAFTED_WATER</Name>
-    <Package>88</Package>
-    <PackId>2</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>139,69,19,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>Prefab</Name>
-        <Value>CoveredWater</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A372823>Texture</A372823>
-    </AssetReferences>
-  </O542113>
   <O124554>
     <Name>FENCE</Name>
     <Package>0</Package>
@@ -2264,4 +2245,27 @@
     </Parameters>
     <AssetReferences />
   </O967963>
+  <O542113>
+    <Name>RAFTED_WATER</Name>
+    <Package>88</Package>
+    <PackId>2</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>139,69,19,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>CoveredWater</Value>
+      </Parameter>
+      <Parameter>
+        <Name>AllowMotion</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A372823>Texture</A372823>
+    </AssetReferences>
+  </O542113>
 </root>

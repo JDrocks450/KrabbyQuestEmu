@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     public static PlayerEnum CurrentPlayer
     {
-        get; private set;
+        get; set;
     } = PlayerEnum.SPONGEBOB;
     static bool playerSwapping = false;
 
@@ -28,7 +28,8 @@ public class Player : MonoBehaviour
     {
         get; set;
     }
-
+    static bool dying = false;
+    static float dyingTimer = 0f;
     AngleRotator rotator;
 
     TileMovingObjectScript _tileScript;
@@ -102,14 +103,27 @@ public class Player : MonoBehaviour
         animator = GameObject.Find("Patrick").GetComponentInChildren<Animator>();
         animator.enabled = true;
         animator.Play("Die");
+        dying = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (dying)
+        {
+            float deathTime = 1.5f;
+            dyingTimer += Time.deltaTime;
+            if (dyingTimer >= deathTime)
+            {
+                LevelObjectManager.ReloadLevel(); // reset the level
+                dying = false;
+                dyingTimer = 0f;
+            }
+            return; // prevent player control when dying.
+        }
         _ = TileMoveScript; // force update of component
         bool currentPlayer = (PlayerName == "spongebob" && CurrentPlayer == PlayerEnum.SPONGEBOB) ||
-                            (PlayerName == "patrick" && CurrentPlayer == PlayerEnum.PATRICK);
+                            (PlayerName == "patrick" && CurrentPlayer == PlayerEnum.PATRICK);        
         if (currentPlayer)
         {
             Current = this;
@@ -137,6 +151,8 @@ public class Player : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.Q))
                     TileMoveScript.NoClip = !TileMoveScript.NoClip; // no clip toggle
+                if (Input.GetKeyDown(KeyCode.K))
+                    KillAllPlayers(); // kill me now
             }
             if (Input.GetKeyDown(KeyCode.Space) && !playerSwapping)
             {

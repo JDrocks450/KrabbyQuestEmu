@@ -1,4 +1,5 @@
-﻿using StinkyFile;
+﻿using Assets.Components;
+using StinkyFile;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,27 +74,38 @@ public class Map3DLoader : MonoBehaviour
         if (sprite == null)
         {
             Rect source = default;
-            switch (level.Context)
+            bool sourceUpdated = false;
+            if (SaveFileManager.IsFileOpened)
             {
-                default:
+                var saveFileInfo = level.GetSaveFileInfo(SaveFileManager.Current);
+                if (saveFileInfo.WasSuccessful)
+                {
                     source = GetTextureSource(65, 5, 60, 52);
-                    break;
-                case LevelContext.BIKINI:
-                    source = GetTextureSource(64, 64, 64, 64);
-                    break;
-                case LevelContext.BEACH:
-                    source = GetTextureSource(128, 0, 64, 64);
-                    break;
-                case LevelContext.FIELDS:
-                    source = GetTextureSource(192, 0, 64, 64);
-                    break;
-                case LevelContext.KELP:
-                    source = GetTextureSource(128, 64, 64, 64);
-                    break;
-                    case LevelContext.CAVES:
-                    source = GetTextureSource(192, 64, 64, 64);
-                    break;
+                    sourceUpdated = true;
+                }
             }
+            if (!sourceUpdated)
+                switch (level.Context)
+                {
+                    default:
+                        source = GetTextureSource(65, 5, 60, 52);
+                        break;
+                    case LevelContext.BIKINI:
+                        source = GetTextureSource(64, 64, 64, 64);
+                        break;
+                    case LevelContext.BEACH:
+                        source = GetTextureSource(128, 0, 64, 64);
+                        break;
+                    case LevelContext.FIELDS:
+                        source = GetTextureSource(192, 0, 64, 64);
+                        break;
+                    case LevelContext.KELP:
+                        source = GetTextureSource(128, 64, 64, 64);
+                        break;
+                    case LevelContext.CAVES:
+                        source = GetTextureSource(192, 64, 64, 64);
+                        break;
+                }
             sprite = Sprite.Create(markerSheet, source, new Vector2(.5f, .5f));
                        
         }

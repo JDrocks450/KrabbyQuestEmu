@@ -17,27 +17,42 @@ public class BeachBallBehavior : MonoBehaviour
     void Start()
     {
         PushableScript = GetComponent<PushableScript>();
-        PushableScript.OnPushing += OnPushing;        
+        PushableScript.OnPushing += OnPushing;
+        TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
         MoveScript = GetComponent<TileMovingObjectScript>();
         soundEffects = GetComponent<SoundLoader>();
     }
 
+    private void TileMovingObjectScript_MoveableMoving(object sender, MoveEventArgs e)
+    {
+        if (e.ToTile != MoveScript.TilePosition) return;
+        if ((sender as TileMovingObjectScript).gameObject != gameObject && (sender as TileMovingObjectScript).TryGetComponent<BeachBallBehavior>(out var ball))
+        {
+            if (!PushableScript.MovementAllowed) return;
+            MoveScript.MoveInDirection(e.Direction);
+            Direction = e.Direction;
+            bouncing = true;
+        }
+    }
+
     private void OnDestroy()
     {        
-        PushableScript.OnPushing -= OnPushing;     
+        soundEffects.Play(0);
+        PushableScript.OnPushing -= OnPushing;   
+        TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
     }
 
     private void OnPushing(object sender, MoveEventArgs e)
     {
         if (Player.CurrentPlayer == Assets.Scripts.Game.PlayerEnum.SPONGEBOB)
         {
+            if (!PushableScript.MovementAllowed) return;
             MoveScript.MoveInDirection(e.Direction);
             Direction = e.Direction;
             bouncing = true;
         }
         else
-        {
-            soundEffects.Play(0);
+        {            
             Destroy(gameObject);
         }
     }

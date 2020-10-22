@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public static Dictionary<string, (int amountLeft, int amountTotal)> MajorPickups = new Dictionary<string, (int, int)>();
+    public static Dictionary<string, (int amountCollected, int amountTotal)> MajorPickups = new Dictionary<string, (int, int)>();
     const float CollectTime = .15f;
 
     string pickupName;
@@ -20,7 +20,7 @@ public class Pickup : MonoBehaviour
         if (BlockComponent.DataBlock.GetParameterByName("Major Item", out var param))
         {
             if (MajorPickups.TryGetValue(param.Value, out var info))
-                MajorPickups[param.Value] = (info.amountLeft, info.amountTotal + 1);
+                MajorPickups[param.Value] = (info.amountCollected, info.amountTotal + 1);
             else MajorPickups.Add(param.Value, (0, 1));
             pickupName = param.Value;
         }
@@ -29,15 +29,8 @@ public class Pickup : MonoBehaviour
     private void OnDestroy()
     {
         TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
-        if (MajorPickups.TryGetValue(pickupName, out var info))
-        {
-            MajorPickups[pickupName] = (info.amountLeft + 1, info.amountTotal);
-            if (pickupName == "PATTY")
-            {
-                if (info.amountLeft+1 == info.amountTotal)
-                    LevelObjectManager.SignalLevelCompleted();
-            }
-        }
+        if (MajorPickups.TryGetValue(pickupName, out var info))        
+            MajorPickups[pickupName] = (info.amountCollected + 1, info.amountTotal);        
         Collected = true;
     }
 

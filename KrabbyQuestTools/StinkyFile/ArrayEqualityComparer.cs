@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StinkyFile
 {
-    public class ArrayEqualityComparer<T> : IEqualityComparer<T[]>
+    public class ArrayEqualityComparer<T> : EqualityComparer<T[]>
     {
-        public bool Equals(T[] x, T[] y)
+        public override bool Equals(T[] x, T[] y)
         {
             if (x.Length != y.Length)            
                 return false;            
@@ -18,7 +18,9 @@ namespace StinkyFile
             return true;
         }
 
-        public int GetHashCode(T[] obj)
+        public bool CheckEquality(T[] x, T[] y) => Equals(x, y);
+
+        public override int GetHashCode(T[] obj)
         {
             int result = 17;
             for (int i = 0; i < obj.Length; i++)
