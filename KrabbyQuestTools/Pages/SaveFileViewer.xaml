@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" Background="Black"
-      Title="SaveFileViewer">
+      Title="Save File Viewer">
     <Page.Resources>
         <Style TargetType="Border">
             <Setter Property="BorderThickness" Value="1"/>
@@ -15,7 +15,6 @@
         </Style>
     </Page.Resources>
     <Grid>
-
         <DockPanel>
             <ScrollViewer Width="250" DockPanel.Dock="Left" Background="#FF2B2B2B" VerticalScrollBarVisibility="Auto">
                 <StackPanel  Name="LevelButtons" >
@@ -24,7 +23,11 @@
             </ScrollViewer>
             <DockPanel LastChildFill="False">
                 <Border x:Name="ProtectedViewing" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FFFFF7D4" BorderBrush="{x:Null}">
-                    <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="Black" Text="PROTECTED VIEWING: You are viewing a backup save file."/>
+                    <DockPanel>
+                        <Button x:Name="RecoverSaveButton" BorderThickness="1,0,0,0" DockPanel.Dock="Right" Padding="10,0" Background="#FFE0B700" BorderBrush="#FF979700" Foreground="Black" Width="100" Click="RecoverSaveButton_Click">File Recovery</Button>
+                        <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="Black" Text="PROTECTED VIEWING: You are viewing a backup save file."/>
+
+                    </DockPanel>
                 </Border>
                 <Border x:Name="FullEdit" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FF005CA8" BorderBrush="{x:Null}">
                     <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="White" Text="FULL EDITING ACCESS: You can edit your scores by selecting them below."/>
@@ -52,6 +55,12 @@
                                 SPATULAS LEFT
                                     </TextBlock>
                                     <TextBlock x:Name="SpatulasLeft" TextAlignment="Center">UNLIMITED</TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#FF0080CB">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="LEVELS UNLOCKED"/>
+                                    <TextBlock x:Name="UnlockedLevels" TextAlignment="Center"><Run Text="0"/></TextBlock>
                                 </StackPanel>
                             </Border>
                             <Border Background="#FF0072B4">
@@ -89,52 +98,69 @@
                             <Border Margin="0" Background="#FFDC9600">
                                 <StackPanel HorizontalAlignment="Center">
                                     <TextBlock Text="LEVEL SCORE" TextAlignment="Center"/>
-                                    <TextBox x:Name="LevelScore" TextAlignment="Center" IsReadOnly="True"></TextBox>
+                                    <TextBox x:Name="LevelScore" TextAlignment="Center" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
                                 </StackPanel>
                             </Border>
                             <Border Background="#FFC58600">
                                 <StackPanel HorizontalAlignment="Center">
                                     <TextBlock Text="PATTIES COLLECTED" TextAlignment="Center"/>
-                                    <TextBox x:Name="PattiesCollected" TextAlignment="Center"></TextBox>
+                                    <TextBox x:Name="PattiesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
                                 </StackPanel>
                             </Border>
                             <Border Background="#FFAE7600">
                                 <StackPanel HorizontalAlignment="Center">
                                     <TextBlock Text="BONUSES COLLECTED" TextAlignment="Center"/>
-                                    <TextBox x:Name="BonusesCollected" TextAlignment="Center"></TextBox>
+                                    <TextBox x:Name="BonusesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
                                 </StackPanel>
                             </Border>
                             <Border Background="#FF976600">
                                 <StackPanel HorizontalAlignment="Center">
                                     <TextBlock Text="RATING" TextAlignment="Center"/>
-                                    <TextBox x:Name="Rating" TextAlignment="Center" Text="Incomplete" IsReadOnly="True"/>
+                                    <TextBox Padding="10,2" x:Name="Rating" TextAlignment="Center" Text="Incomplete" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF"/>
                                 </StackPanel>
                             </Border>
                         </StackPanel>
                         <Border Background="#FF855B00" Width="{Binding ActualWidth, ElementName=LevelInfoDisplay}" Margin="0,0,0,10" BorderThickness="0" Padding="10,5">
                             <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="TIME REMAINING" TextAlignment="Center"/>
-                                <TextBox x:Name="TimeCompleted" TextAlignment="Center" Text="0" Background="{x:Null}"/>
+                                <TextBox x:Name="TimeCompleted" TextAlignment="Center" Text="0" Background="#3FFFFFFF" BorderBrush="{x:Null}" Padding="10,2"/>
                             </StackPanel>
                         </Border>
-                        <Button x:Name="SaveLevel" Padding="10,5" Click="SaveLevel_Click" Content="Apply Changes"/>
-                        <Button x:Name="SaveToFile" Margin="0,10,0,0"  Padding="10,5" Click="SaveToFile_Click" Content="Save All Changes to File"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="SaveLevel" Padding="10,5" Click="SaveLevel_Click" Content="Apply Changes" Grid.ColumnSpan="1"/>
+                            <Button x:Name="SaveToFile" Padding="10,5" BorderThickness="0,1,1,1" Click="SaveToFile_Click" Content="Save All Changes to File" Grid.Column="1"/>
+                        </Grid>
                     </StackPanel>
                 </Border>
                 <Button x:Name="AnotherSaveFileButton" DockPanel.Dock="Top" Padding="10,5" Margin="10" Background="#FF005DFF" BorderBrush="#FF6AA0FF" Click="AnotherSaveFileButton_Click">Open Another Save File</Button>
             </DockPanel>
         </DockPanel>
-        <Border x:Name="SaveFileDialog" Background="#7F040404" Visibility="Collapsed">
-            <Border HorizontalAlignment="Center" Width="200" Padding="10,0,0,0" Margin="0,20">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="SaveFileStack" Margin="0,0,10,0">
-                        <TextBlock x:Name="Title" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Margin="0,10,0,10">Choose a Save File</TextBlock>
-                        <Button x:Name="CreateNewSave" Padding="10,5" Margin="0,0,0,10" Background="#FF006083" BorderBrush="#FF00B9FF" Click="CreateNewSave_Click">Create Save File</Button>
-                        <Rectangle x:Name="Separator" Fill="#FF4F4F4F" Height="1"/>
-                        <Button x:Name="RefreshButton" Padding="10,5" Margin="0,10,0,5" Background="#FF009580" BorderBrush="#FF00FFDC" Click="RefreshButton_Click">Refresh</Button>
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
+        <Border x:Name="SaveFileDialog" Background="#7F040404" Visibility="Visible">
+            <Grid>
+                <Border HorizontalAlignment="Center" Width="200" Padding="10,0,0,0" Margin="0,20" MaxHeight="650">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="SaveFileStack" Margin="0,0,10,0">
+                            <TextBlock x:Name="SaveTitle" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Margin="0,10,0,10">Choose a Save File</TextBlock>
+                            <Button x:Name="CreateNewSave" Padding="10,5" Margin="0,0,0,10" Background="#FF006083" BorderBrush="#FF00B9FF" Click="CreateNewSave_Click">Create Save File</Button>
+                            <Rectangle x:Name="Separator" Fill="#FF4F4F4F" Height="1"/>
+                            <Button x:Name="RefreshButton" Padding="10,5" Margin="0,10,0,5" Background="#FF009580" BorderBrush="#FF00FFDC" Click="RefreshButton_Click">Refresh</Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <Border HorizontalAlignment="Center" Width="200" Margin="0,20,500,20" MaxHeight="650">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Margin="0,10,0,10" Text="Drag &amp; Drop" VerticalAlignment="Top"/>
+                        <Grid Margin="10,0,10,10">
+                            <Rectangle x:Name="DragAndDropTarget" AllowDrop="True" StrokeThickness="4" StrokeDashOffset="2" StrokeDashArray="8 2" Stroke="#FF009580" DockPanel.Dock="Bottom" Fill="#3F009580" DragEnter="Rectangle_DragEnter" DragLeave="DragAndDropTarget_DragLeave" Drop="DragAndDropTarget_Drop"/>
+                            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"><Run Text="Drag &amp; Drop "/><LineBreak/><Run Text="Save File Here"/></TextBlock>
+                        </Grid>
+                    </DockPanel>
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Page>

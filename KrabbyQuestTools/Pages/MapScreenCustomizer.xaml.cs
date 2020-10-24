@@ -84,7 +84,8 @@ namespace KrabbyQuestTools.Pages
             workspaceDir = WorkspaceDir;
             mapParser = new MapWaypointParser(WorkspaceDir, AppResources.Parser);
             DrawMap();
-            GetLevels();            
+            GetLevels();         
+            Title = $"MSC - Customizing Map";
         }
         
         (StinkyLevel level, Point position) Load(XElement element)
@@ -277,6 +278,7 @@ namespace KrabbyQuestTools.Pages
                 placingMarker.MouseLeftButtonDown += PlacingMarker_MouseLeftButtonDown;
             }   
             placingMarker.Background = getColor(level.Context); 
+            Title = $"MSC - Placing Marker";
         }
 
         private void MoveWaypoint(Border waypoint, StinkyLevel level)
@@ -290,6 +292,7 @@ namespace KrabbyQuestTools.Pages
             }
             placingMarker = waypoint;
             placingMarker.MouseLeftButtonDown += PlacingMarker_MouseLeftButtonDown;
+            Title = $"MSC - Moving Marker";
         }
 
         private void PlacingMarker_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -322,9 +325,14 @@ namespace KrabbyQuestTools.Pages
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            Title = $"MSC - Deleting Marker";
             if (Current != Tool.DELETE)
                 Current = Tool.DELETE;
-            else Current = Tool.NONE;
+            else
+            {
+                Current = Tool.NONE;
+                Title = $"MSC - Customizing Map";
+            }
         }
 
         private void PlaceButton_Click(object sender, RoutedEventArgs e)
@@ -332,16 +340,19 @@ namespace KrabbyQuestTools.Pages
             if (Current == Tool.PLACE)
             {
                 Current = Tool.NONE;
+                Title = $"MSC - Customizing Map";
                 placingMarker.Visibility = Visibility.Hidden;
             }
         }
 
         private void MoveButton_Click(object sender, RoutedEventArgs e)
         {
+            Title = $"MSC - Moving Marker";
             if (Current != Tool.MOVE)
                 Current = Tool.MOVE;
             else
             {
+                Title = $"MSC - Customizing Map";
                 Current = Tool.NONE;
             }
         }

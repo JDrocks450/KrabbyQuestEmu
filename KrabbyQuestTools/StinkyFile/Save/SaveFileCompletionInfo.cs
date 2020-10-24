@@ -7,6 +7,6 @@
         public int CompletedLevels, PerfectLevels;
         public int Spatulas;
         public int Slot;
-        public bool IsBackup;
+        public bool IsBackup;        
     }
 }

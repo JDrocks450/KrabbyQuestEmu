@@ -16,6 +16,7 @@ namespace StinkyFile.Save
         public int LevelScore => BonusScore + TimeScore;        
         public int BonusScore => (250 * BonusesCollected);
         public int TimeScore => ((int)TimeRemaining);
+        public bool IsAvailable;
         public bool WasSuccessful;
         public string LevelWorldName;
         public bool WasPerfect;

@@ -23,20 +23,15 @@ public class PopulateLevels : MonoBehaviour
         int lastHeight = 0, CURRENT = 0, lastAvailableLevel = 0;
         foreach(var level in parser.LevelInfo)
         {
-            bool isAvailable = false;
+            bool isAvailable = false;            
             var levelInfo = level.GetSaveFileInfo(SaveFileManager.Current);
-            if (CURRENT == 0 || CURRENT == 1 || levelInfo.WasSuccessful ||
-                lastAvailableLevel == CURRENT - 1)
-            {
-                isAvailable = true;                
-            }
-            if (levelInfo.WasSuccessful)
-                lastAvailableLevel = CURRENT;
+            isAvailable = levelInfo.IsAvailable;
+            isAvailable = isAvailable ? true : CURRENT < 2; // first 2 levels always unlocked regardless            
             var button = Instantiate(sampleButton);
             var transform = button.gameObject.transform as RectTransform;
             transform.position = new Vector3(0, -lastHeight, 0);
             lastHeight += (int)transform.rect.height + 10;
-            var name = ((isAvailable) ? "" : "LOCKED - ") + level.Name;
+            var name = ((isAvailable) ? "" : "LOCKED - ") + (levelInfo.WasPerfect ? "*" : "") + level.Name + (levelInfo.WasPerfect ? "*" : "");
             if (name.Length > 25)
                 name = name.Substring(0, 25) + "...";
             transform.GetChild(0).GetComponent<Text>().text = name;

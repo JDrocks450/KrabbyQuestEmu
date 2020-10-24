@@ -126,7 +126,7 @@ namespace KrabbyQuestTools.Pages
                     AssetTypeSwitcher.SelectedItem = "Model";
             }
             RefreshReferences(dbe);    
-            Title = AssetDBEntry.GetDBNameFromFileName(filePath);            
+            Title = "ADE - Viewing " + AssetDBEntry.GetDBNameFromFileName(filePath);            
         }
 
         private void RefreshReferences(AssetDBEntry dbe)

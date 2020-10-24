@@ -108,8 +108,10 @@ public class LevelObjectManager : MonoBehaviour
 
     public static void ReloadLevel() => ChangeLevel(LoadLevelName);
 
-    public static void ChangeLevel(string levelName)
+    public static void ChangeLevel(string levelName, bool force = false)
     {
+        if (force)
+            levelSwapping = false;
         if (levelSwapping)
             return; // ignore all requests to change level while it's swapping
         LoadLevelName = levelName;
@@ -138,8 +140,12 @@ public class LevelObjectManager : MonoBehaviour
             if (Pickup.MajorPickups.TryGetValue("BONUS", out var bonusinfo))
             {
                 CurrentCompletionInfo.BonusesCollected = bonusinfo.amountCollected;
+                if (bonusinfo.amountCollected == bonusinfo.amountTotal)
+                    CurrentCompletionInfo.WasPerfect = true;
             }
+            else CurrentCompletionInfo.WasPerfect = true;
         }
+        SaveFileManager.Current.UpdateInfo(CurrentCompletionInfo);
         SaveFileManager.Current.Save();
         SceneManager.LoadSceneAsync("MapScreen");        
     }

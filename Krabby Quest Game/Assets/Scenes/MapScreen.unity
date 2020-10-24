@@ -633,7 +633,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 344.409}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 600}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &425998747
@@ -746,7 +746,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 315.0758, y: 36.74243}
+  m_SizeDelta: {x: 228.37799, y: 33.778397}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &537279456
 MonoBehaviour:
@@ -781,7 +781,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: ====== LEVELS ======
+  m_Text: Choose A Level
 --- !u!222 &537279457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1628,7 +1628,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LEVEL NAME
+  m_Text: Hello there! :)
 --- !u!222 &977224907
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2511,8 +2511,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2115412786}
   m_HandleRect: {fileID: 2115412785}
   m_Direction: 2
-  m_Value: -0.88201636
-  m_Size: 0
+  m_Value: 1
+  m_Size: 0.695
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 305914122}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1

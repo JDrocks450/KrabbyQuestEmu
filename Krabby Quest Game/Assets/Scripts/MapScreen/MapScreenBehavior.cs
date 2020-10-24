@@ -18,8 +18,8 @@ public class MapScreenBehavior : MonoBehaviour
     public void GoToLevel_OnClick(Button button) => GoToLevel(button.tag as string);
 
     public void GoToLevel(string levelName)
-    {
-        LevelObjectManager.ChangeLevel(levelName);
+    {        
+        LevelObjectManager.ChangeLevel(levelName, true);
     }
 
     public void SelectLevelOnMap(StinkyLevel level) => mapScreen.ChangeSelectedLevel(level);

@@ -78,32 +78,42 @@ public class Map3DLoader : MonoBehaviour
             if (SaveFileManager.IsFileOpened)
             {
                 var saveFileInfo = level.GetSaveFileInfo(SaveFileManager.Current);
-                if (saveFileInfo.WasSuccessful)
+                if (saveFileInfo.WasPerfect)
                 {
-                    source = GetTextureSource(65, 5, 60, 52);
+                    source = GetTextureSource(0, 64, 64, 64); // Original Krabby Patty
                     sourceUpdated = true;
                 }
+                else if (saveFileInfo.WasSuccessful)
+                {
+                    source = GetTextureSource(65, 5, 60, 52); // Original Krabby Patty
+                    sourceUpdated = true;
+                }
+                else if (saveFileInfo.IsAvailable)
+                {
+                    source = GetTextureSource(0, 0, 64, 64); // Original Krabby Patty
+                    sourceUpdated = true;
+                }                                
             }
             if (!sourceUpdated)
                 switch (level.Context)
                 {
                     default:
-                        source = GetTextureSource(65, 5, 60, 52);
+                        source = GetTextureSource(65, 5, 60, 52); // Original Krabby Patty
                         break;
                     case LevelContext.BIKINI:
-                        source = GetTextureSource(64, 64, 64, 64);
+                        source = GetTextureSource(64, 64, 64, 64);// Bikini Flag
                         break;
                     case LevelContext.BEACH:
-                        source = GetTextureSource(128, 0, 64, 64);
+                        source = GetTextureSource(128, 0, 64, 64);// Beach Flag
                         break;
                     case LevelContext.FIELDS:
-                        source = GetTextureSource(192, 0, 64, 64);
+                        source = GetTextureSource(192, 0, 64, 64);// Jelly Flag
                         break;
                     case LevelContext.KELP:
-                        source = GetTextureSource(128, 64, 64, 64);
+                        source = GetTextureSource(128, 64, 64, 64);// Kelp Flag
                         break;
                     case LevelContext.CAVES:
-                        source = GetTextureSource(192, 64, 64, 64);
+                        source = GetTextureSource(192, 64, 64, 64);// Caves Flag
                         break;
                 }
             sprite = Sprite.Create(markerSheet, source, new Vector2(.5f, .5f));

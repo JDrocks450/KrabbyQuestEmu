@@ -23,12 +23,12 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void CloseSaveSelect()
     {
-        GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(true);
+        GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void OpenSaveSelect()
     {
-        GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(true);
+        GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(true);
     }
 
     public void GoToMapScreen(SaveFile Current)

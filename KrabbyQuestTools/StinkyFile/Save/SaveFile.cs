@@ -8,34 +8,78 @@ using System.Threading.Tasks;
 
 namespace StinkyFile.Save
 {
-
+    /// <summary>
+    /// Interfaces with save files to read/write to them.
+    /// </summary>
     public class SaveFile
     {
+        /// <summary>
+        /// The header expected in every genuine save file
+        /// </summary>
         static byte[] Header =
         {
             75, 114, 97, 98, 98, 121, 32, 81, 117, 101, 115, 116, 32, 83, 97,
             118, 101, 32, 70, 105, 108, 101, 32, 66, 121, 32, 74 ,101, 114, 101,
             109, 121, 32, 71, 108, 97, 122, 101, 98, 114, 111, 111, 107
         };
+        /// <summary>
+        /// The length of the header
+        /// </summary>
         static int HeaderLength => Header.Length;
+        bool initLoad = false;
+        /// <summary>
+        /// The directory to find save files in
+        /// </summary>
         public static string SaveFileDir
         {
             get; set;
         } = "Resources/Saves";
-
+        /// <summary>
+        /// Contains information about the save file and its completion status
+        /// </summary>
         public SaveFileCompletionInfo SaveFileInfo
         {
             get; private set;
         } = new SaveFileCompletionInfo();
-
+        /// <summary>
+        /// The path to this save file (relative or absolute depending on <see cref="SaveFileDir"/>)
+        /// </summary>
         public string FilePath
         {
             get; private set;
         }
+        /// <summary>
+        /// True if <see cref="FullLoad"/> has been called on this save file. Indicates whether level completion status has been loaded
+        /// </summary>
         public bool Loaded { get; private set; }
+        /// <summary>
+        /// The number of unlocked levels
+        /// </summary>
+        public int UnlockedLevels { get; private set; }
+        /// <summary>
+        /// The total number of levels this save file contains
+        /// </summary>
+        public int TotalLevels { get; private set; }
+        /// <summary>
+        /// A string that says: Unlocked Levels: (x/x) (x.xx%)
+        /// </summary>
+        public string UnlockedLevelsString => $"Unlocked Levels: " +
+            $"{UnlockedLevels}/{TotalLevels} ({(UnlockedLevels/(double)TotalLevels).ToString("P")})";
+         /// <summary>
+        /// A string that says: Perfected Levels: (x/x) (x.xx%)
+        /// </summary>
+        public string PerfectLevelsString => $"Perfected Levels: " +
+            $"{SaveFileInfo.PerfectLevels}/{TotalLevels} ({(SaveFileInfo.PerfectLevels/(double)TotalLevels).ToString("P")})";
+        /// <summary>
+        /// A string that says: Completed Levels: (x/x) (x.xx%)
+        /// </summary>
+        public string CompletedLevelString => $"Completed Levels: " +
+            $"{SaveFileInfo.CompletedLevels}/{TotalLevels} ({(SaveFileInfo.CompletedLevels/(double)TotalLevels).ToString("P")})";
 
         private int ContentIndex;
-
+        /// <summary>
+        /// The completion status for every level in this save file. See <see cref="UpdateInfo(LevelCompletionInfo)"/> to write to this
+        /// </summary>
         public Dictionary<string, LevelCompletionInfo> LevelInfo = new Dictionary<string, LevelCompletionInfo>();
 
         private SaveFile()
@@ -46,7 +90,7 @@ namespace StinkyFile.Save
         /// <summary>
         /// Creates a new save file using the next available save slot 
         /// </summary>
-        /// <param name="Name"></param>
+        /// <param name="Name">The PlayerName for this save file</param>
         public SaveFile(string Name)
         {
             int tries = 0;
@@ -70,7 +114,7 @@ namespace StinkyFile.Save
         /// <summary>
         /// Loads the save file at the slot provided
         /// </summary>
-        /// <param name="slot"></param>
+        /// <param name="slot">The slot to open</param>
         public SaveFile(int slot)
         {
             Directory.CreateDirectory(SaveFileDir);
@@ -85,7 +129,7 @@ namespace StinkyFile.Save
         /// <summary>
         /// Open a save file from the specified path
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">The path to the save file relative/absolute</param>
         public SaveFile(Uri filePath)
         {
             if (!File.Exists(filePath.OriginalString))
@@ -102,7 +146,7 @@ namespace StinkyFile.Save
         /// <summary>
         /// Gets all the save files in the directory
         /// </summary>
-        /// <param name="SaveDir"></param>
+        /// <param name="SaveDir">The directory to use - defaults to <see cref="SaveFileDir"/>. This will update <see cref="SaveFileDir"/> to the value provided.</param>
         /// <returns></returns>
         public static SaveFile[] GetAllSaves(string SaveDir = default)
         {
@@ -122,10 +166,11 @@ namespace StinkyFile.Save
         }
 
         /// <summary>
-        /// Previews the save file by only getting the necessary data: PlayerName
+        /// Previews the save file by only getting the necessary preview data: PlayerName
         /// </summary>        
         public void Load()
         {
+            if (!File.Exists(FilePath)) return;
             var handle = File.OpenRead(FilePath);
             if (!CheckHeader(handle))
                 throw new Exception("The level header is not correct. The file could be corrupt or is not genuine.");
@@ -138,12 +183,13 @@ namespace StinkyFile.Save
             SaveFileInfo.PlayerName = Encoding.ASCII.GetString(nameArr);
             ContentIndex = (int)handle.Position;
             handle.Dispose();
+            initLoad = true;
         }
 
         /// <summary>
         /// The header data must match the preset header data above
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="stream">The save file stream</param>
         /// <returns></returns>
         private bool CheckHeader(FileStream stream)
         {
@@ -160,11 +206,20 @@ namespace StinkyFile.Save
         {
             if (Loaded)
                 return;
-            Loaded = true;
+            if (!initLoad)
+                Load();            
+            if (!File.Exists(FilePath))
+            {
+                Loaded = true;
+                return;
+            }
             var handle = File.OpenRead(FilePath);
             if (!CheckHeader(handle))
-                throw new Exception("The level header is not correct. The file could be corrupt or is not genuine.");
+                throw new Exception("The level header is not correct. The file could be corrupt or the save file is not genuine. " +
+                    "You can recover the save file from a backup using the \"Save File Editor\" tool in the Editor. ");
             handle.Position = ContentIndex;
+            LevelInfo.Clear();
+            int CURRENT = 0, lastAvailableLevel = 0, totalUnlocked = 0;
             while (handle.Position < handle.Length)
             {
                 var sizeArr = new byte[4];
@@ -174,17 +229,33 @@ namespace StinkyFile.Save
                 handle.Read(serializedData, 0, size);
                 var info = Deserialize(serializedData);
                 LevelInfo.Add(info.LevelWorldName, info);
+                bool isAvailable = false;
+                if (CURRENT == 0 || CURRENT == 1 || info.WasSuccessful ||
+                    lastAvailableLevel == CURRENT - 1)
+                {
+                    isAvailable = true;
+                    totalUnlocked++;
+                }
+                if (info.WasSuccessful)
+                    lastAvailableLevel = CURRENT;
+                info.IsAvailable = isAvailable;
+                CURRENT++;
             }
+            TotalLevels = CURRENT;
+            UnlockedLevels = totalUnlocked;
             handle.Dispose();
             RefreshStats();
+            Loaded = true;
         }
 
         /// <summary>
         /// Pushes the <see cref="LevelCompletionInfo"/> to the <see cref="LevelInfo"/> collection. Call <see cref="Save"/> to save changes to file
         /// </summary>
-        /// <param name="NewInfo"></param>
+        /// <param name="NewInfo">The data to update in <see cref="LevelInfo"/>. LevelWorldName must be set or else an exception will be thrown. </param>
         public void UpdateInfo(LevelCompletionInfo NewInfo)
         {
+            if (NewInfo.LevelWorldName == null)
+                throw new Exception("Error in updating save file. LevelWorldName is not set properly.");
             if (LevelInfo.ContainsKey(NewInfo.LevelWorldName))
                 LevelInfo.Remove(NewInfo.LevelWorldName);
             LevelInfo.Add(NewInfo.LevelWorldName, NewInfo);
@@ -195,11 +266,10 @@ namespace StinkyFile.Save
         /// </summary>
         public void RefreshStats()
         {
-            SaveFileInfo = new SaveFileCompletionInfo()
-            {
-                PlayerName = SaveFileInfo.PlayerName,
-                Slot = SaveFileInfo.Slot
-            };
+            SaveFileInfo.CompletedLevels = 0;
+            SaveFileInfo.PerfectLevels = 0;
+            SaveFileInfo.Spatulas = 10;
+            SaveFileInfo.TotalScore = 0;
             foreach(var level in LevelInfo)
             {
                 if (level.Value.WasSuccessful)
@@ -207,7 +277,6 @@ namespace StinkyFile.Save
                 if (level.Value.WasPerfect)
                     SaveFileInfo.PerfectLevels++;
                 SaveFileInfo.TotalScore += level.Value.LevelScore;
-                SaveFileInfo.Spatulas = 10;
             }
         }
 
@@ -237,6 +306,8 @@ namespace StinkyFile.Save
                 }
             }
             handle.Dispose();
+            Loaded = false;
+            FullLoad(); // refresh the save file to keep perfect sync
         }
 
         private LevelCompletionInfo Deserialize(byte[] serializedData)

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Height="450" Width="800" Background="#FF1D1D1D" Loaded="Window_Loaded">
     <Grid>
-        <TabControl BorderThickness="0,1,0,0" Background="#FF323232" BorderBrush="#FF3E3E3E" Name="TabSwitcher" SelectionChanged="TabSwitcher_SelectionChanged">
+        <TabControl BorderThickness="0,1,0,0" Background="#FF323232" BorderBrush="#FF3E3E3E" Name="TabSwitcher" SelectionChanged="TabSwitcher_SelectionChanged" >
             <TabItem Padding="0" BorderThickness="0">
                 <TabItem.Header>
                     <Border Margin="-2,-2,-2,-2" BorderThickness="0,0,1,0" Background="#FF323232" BorderBrush="#FF3E3E3E">

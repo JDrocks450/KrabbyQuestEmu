@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\MainMenu\FlowerSky.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenuBehavior.cs" />
     <Compile Include="Assets\Scripts\MainMenu\PopulateSaveFiles.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\SaveFileInfoPopulate.cs" />
     <Compile Include="Assets\Scripts\MainMenu\TitleImageLoader.cs" />
     <Compile Include="Assets\Scripts\MapScreen\Map3DLoader.cs" />
     <Compile Include="Assets\Scripts\MapScreen\MapLoader.cs" />

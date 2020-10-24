@@ -38,7 +38,8 @@ namespace KrabbyQuestTools.Pages
         {
             InitializeComponent();
             Parser = new ManifestParser();
-            LoadingCover.Visibility = Visibility.Collapsed;            
+            LoadingCover.Visibility = Visibility.Collapsed;
+            Title = "MV - Waiting For File...";
         }
 
         private void ManifestBox_KeyDown(object sender, KeyEventArgs e)
@@ -143,6 +144,7 @@ namespace KrabbyQuestTools.Pages
                 };
                 PathViewer.Children.Add(button);
             }
+            Title = $"MV - Viewing {Parser.Chunks.Count} Chunks";
         }
 
         private void AddToFileMap(ManifestChunk chunk)
@@ -173,6 +175,7 @@ namespace KrabbyQuestTools.Pages
 
         private void ExtractButton_Click(object sender, RoutedEventArgs e)
         {
+            Title = $"MV - Extracting {Parser.Chunks.Count} Chunks";
             LoadingCover.Visibility = Visibility.Visible; //open loading cover
             tgaConvert = TGACheckBox.IsChecked.Value;
             try
@@ -264,6 +267,7 @@ namespace KrabbyQuestTools.Pages
                 OpenFileButton.IsEnabled = false;
                 HexEditor.CloseProvider();               
             }
+             Title = $"MV - Viewing {chunk.Name}";
         }
 
         /// <summary>

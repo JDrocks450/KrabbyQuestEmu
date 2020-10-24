@@ -2,6 +2,7 @@
 using StinkyFile.Save;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace KrabbyQuestTools.Pages
 
         private void GetLevels()
         {
+            LevelSaves.Clear();
             foreach(var level in Parser.LevelInfo)
             {
                 LevelSaves.Add(level, level.GetSaveFileInfo(saveFile));
@@ -61,7 +63,7 @@ namespace KrabbyQuestTools.Pages
         }
 
         private void ShowFileInfo()
-        {
+        {            
             FileTitleText.Text = saveFile.SaveFileInfo.PlayerName + "'s Krabby Quest Save File - Slot: #" + saveFile.SaveFileInfo.Slot;
             if (IsProtectedViewing)
             {
@@ -73,10 +75,12 @@ namespace KrabbyQuestTools.Pages
                 ProtectedViewing.Visibility = Visibility.Collapsed;
                 FullEdit.Visibility = Visibility.Visible;
             }
+            UnlockedLevels.Text = $"{saveFile.UnlockedLevels}/{saveFile.TotalLevels} ({(saveFile.UnlockedLevels/(double)saveFile.TotalLevels).ToString("P")})";
             TotalScore.Text = saveFile.SaveFileInfo.TotalScore.ToString();
-            PerfectLevels.Text = saveFile.SaveFileInfo.PerfectLevels.ToString();
+            PerfectLevels.Text = $"{saveFile.SaveFileInfo.PerfectLevels}/{saveFile.TotalLevels} ({(saveFile.SaveFileInfo.PerfectLevels/(double)saveFile.TotalLevels).ToString("P")})"; 
             SpatulasLeft.Text = saveFile.SaveFileInfo.Spatulas.ToString();
-            PassedLevels.Text = saveFile.SaveFileInfo.CompletedLevels.ToString();
+            PassedLevels.Text = $"{saveFile.SaveFileInfo.CompletedLevels}/{saveFile.TotalLevels} ({(saveFile.SaveFileInfo.CompletedLevels/(double)saveFile.TotalLevels).ToString("P")})";
+            Title = "SFV - Viewing " + saveFile.SaveFileInfo.PlayerName;
         }
 
         private void ShowInfo(LevelCompletionInfo info)
@@ -89,12 +93,18 @@ namespace KrabbyQuestTools.Pages
             {
                 if (info.WasPerfect)
                     Rating.Text = "Perfected";
-                Rating.Text = "Beaten";
+                Rating.Text = "Completed";
             }
-            else
-                Rating.Text = "Unbeaten";
-                TimeCompleted.Text = info.TimeRemaining.ToString();
+            else if (info.IsAvailable)
+                Rating.Text = "Unlocked";
+            else Rating.Text = "Locked";
+            TimeCompleted.Text = info.TimeRemaining.ToString();
             SaveLevel.IsEnabled = !IsProtectedViewing;
+            SaveLevel.Content = "Apply Changes";
+            if (!info.IsAvailable)
+                SaveLevel.Content = "Unlock Level and Apply Changes";
+            else if (!info.WasSuccessful)
+                SaveLevel.Content = "Complete Level and Apply Changes";
             SaveToFile.IsEnabled = !IsProtectedViewing;
             OpenInfo = info;
         }
@@ -135,7 +145,7 @@ namespace KrabbyQuestTools.Pages
         private void FindAllSaves()
         {
             SaveFileStack.Children.Clear();
-            SaveFileStack.Children.Add(Title);
+            SaveFileStack.Children.Add(SaveTitle);
             SaveFileStack.Children.Add(CreateNewSave);
             SaveFileStack.Children.Add(Separator);
             SaveFileStack.Children.Add(RefreshButton);
@@ -155,10 +165,61 @@ namespace KrabbyQuestTools.Pages
 
         private void AnotherSaveFileButton_Click(object sender, RoutedEventArgs e)
         {
+            Title = "SFV - Selecting A Save...";
             FindAllSaves();
             SaveFileDialog.Visibility = Visibility.Visible;
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e) => AnotherSaveFileButton_Click(null, null);
+
+        private void RecoverSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("This will restore the current backed-up save file. " +
+                "The save file being used in this save-slot will be replaced by the backup opened now. " +
+                "You should only use this recovery tool if your save file is corrupt or otherwise lost! " +
+                "Do you wish to replace your current save file with this backup?",
+                "WARNING", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                var path = saveFile.FilePath.Substring(0, saveFile.FilePath.Length - 4);
+                File.Copy(saveFile.FilePath, path, true);
+                File.Delete(saveFile.FilePath);
+                SelectSaveFile(new SaveFile(new Uri(path, UriKind.Relative)));
+                MessageBox.Show("The backup save file has been restored. It has been automatically opened and is being viewed right now.");
+            }
+        }
+
+        private void Rectangle_DragEnter(object sender, DragEventArgs e)
+        {
+            DragAndDropTarget.Stroke = Brushes.DeepSkyBlue;
+            var background = Brushes.DeepSkyBlue;
+            background = new SolidColorBrush(Color.FromArgb((byte)(255 / 4.0), background.Color.R, background.Color.G, background.Color.B));
+            DragAndDropTarget.Fill = background;
+        }
+
+        private void DragAndDropTarget_DragLeave(object sender, DragEventArgs e)
+        {
+            var color = (Color)ColorConverter.ConvertFromString("#FF009580");
+            var background = new SolidColorBrush(color);
+            DragAndDropTarget.Stroke = background;
+            color.A = (byte)(255 / 4.0);
+            DragAndDropTarget.Fill = new SolidColorBrush(color);
+        }
+
+        private void DragAndDropTarget_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+                try
+                {
+                    SelectSaveFile(new SaveFile(new Uri(file[0], UriKind.Absolute)));
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            DragAndDropTarget_DragLeave(null, null);
+        }
     }
 }

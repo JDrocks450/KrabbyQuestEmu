@@ -7,7 +7,7 @@ using UnityEngine;
 public class Spawnpoint : MonoBehaviour
 {
     DataBlockComponent BlockComponent;
-    bool[] LoadedPlayers = new bool[2] { false, false };
+    static bool[] LoadedPlayers = new bool[2] { false, false };
     // Start is called before the first frame update
     void Start()
     {
