@@ -249,6 +249,35 @@ namespace StinkyFile.Save
         }
 
         /// <summary>
+        /// Publishes the current <see cref="LevelCompletionInfo.LevelScore"/> to the HighScores list in the parameter
+        /// </summary>
+        /// <param name="info"></param>
+        public void PublishScore(LevelCompletionInfo info)
+        {
+            if (info.HighScores == null) {
+                info.HighScores = new int[10];
+                info.HighScores[0] = info.LevelScore;
+                return;
+            }
+            bool applied = false, overwriting = false;
+            while (!applied)
+            {
+                for (int i = 0; i < info.HighScores.Length; i++)
+                {
+                    if (info.HighScores[i] == 0 || info.HighScores[i] == info.LevelScore || 
+                        (overwriting && info.HighScores[i] < info.LevelScore))
+                    {
+                        info.HighScores[i] = info.LevelScore;
+                        applied = true;
+                        break;
+                    }
+                }
+                if (!applied)
+                    overwriting = true;
+            }
+        }
+
+        /// <summary>
         /// Pushes the <see cref="LevelCompletionInfo"/> to the <see cref="LevelInfo"/> collection. Call <see cref="Save"/> to save changes to file
         /// </summary>
         /// <param name="NewInfo">The data to update in <see cref="LevelInfo"/>. LevelWorldName must be set or else an exception will be thrown. </param>
@@ -258,6 +287,7 @@ namespace StinkyFile.Save
                 throw new Exception("Error in updating save file. LevelWorldName is not set properly.");
             if (LevelInfo.ContainsKey(NewInfo.LevelWorldName))
                 LevelInfo.Remove(NewInfo.LevelWorldName);
+            PublishScore(NewInfo);
             LevelInfo.Add(NewInfo.LevelWorldName, NewInfo);
         }
 
@@ -276,7 +306,7 @@ namespace StinkyFile.Save
                     SaveFileInfo.CompletedLevels++;
                 if (level.Value.WasPerfect)
                     SaveFileInfo.PerfectLevels++;
-                SaveFileInfo.TotalScore += level.Value.LevelScore;
+                SaveFileInfo.TotalScore += level.Value.GetHighScore();
             }
         }
 

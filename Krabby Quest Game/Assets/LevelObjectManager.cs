@@ -76,6 +76,7 @@ public class LevelObjectManager : MonoBehaviour
         get; private set;
     } = false;
 
+    static TimeSpan levelTime = new TimeSpan();
     bool showingTitleCard = false, canShowTitleCard = true;
     float titleCardTimer = 0f;
     static LevelObjectManager CurrentObjectManager;
@@ -131,6 +132,7 @@ public class LevelObjectManager : MonoBehaviour
         {
             CurrentCompletionInfo.LevelName = Level.Name;
             CurrentCompletionInfo.LevelWorldName = Level.LevelWorldName;
+            CurrentCompletionInfo.TimeRemaining = (int)levelTime.TotalSeconds;
             if (!CurrentCompletionInfo.WasSuccessful)
                 CurrentCompletionInfo.WasSuccessful = completed;
             if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
@@ -164,6 +166,10 @@ public class LevelObjectManager : MonoBehaviour
             Player.CurrentPlayer = Assets.Scripts.Game.PlayerEnum.SPONGEBOB;
             LoadingPercentage = 0;
             isLoadingLevel = true;
+            int timeRemaining = LevelCompletionInfo.DefaultTime;
+            if (Level.Name == "Bonus Level")
+                timeRemaining = LevelCompletionInfo.BonusTime;
+            levelTime = TimeSpan.FromSeconds(timeRemaining);
             if (completionInfo == default)
             {
                 if (SaveFileManager.IsFileOpened)
@@ -173,10 +179,18 @@ public class LevelObjectManager : MonoBehaviour
                     {
                         LevelName = Level.Name,
                         LevelWorldName = Level.LevelWorldName,
-                        TimeRemaining = 300000
+                        TimeRemaining = timeRemaining
                     };
             }
             else CurrentCompletionInfo = completionInfo;
+            if (CurrentCompletionInfo != null)
+            {
+                CurrentCompletionInfo.TimeRemaining = timeRemaining;
+                CurrentCompletionInfo.PattiesCollected = 0;
+                CurrentCompletionInfo.BonusesCollected = 0;                
+            }
+            if (!Pickup.MajorPickups.ContainsKey("TIME"))
+                Pickup.MajorPickups.Add("TIME", (timeRemaining, timeRemaining));
             LoadNext();
         }
     }
@@ -251,6 +265,8 @@ public class LevelObjectManager : MonoBehaviour
                 if (pattyinfo.amountCollected == pattyinfo.amountTotal)
                     SignalLevelCompleted(true);
             }
+            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);
+            Pickup.MajorPickups["TIME"] = ((int)levelTime.TotalSeconds, Pickup.MajorPickups["TIME"].amountTotal);
         }
     }
 

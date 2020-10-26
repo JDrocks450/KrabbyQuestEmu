@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" Background="Black"
+      d:DesignHeight="600" d:DesignWidth="800" Background="Black"
       Title="Save File Viewer">
     <Page.Resources>
         <Style TargetType="Border">
@@ -16,130 +16,180 @@
     </Page.Resources>
     <Grid>
         <DockPanel>
-            <ScrollViewer Width="250" DockPanel.Dock="Left" Background="#FF2B2B2B" VerticalScrollBarVisibility="Auto">
-                <StackPanel  Name="LevelButtons" >
+            <Grid Width="250" DockPanel.Dock="Left" Background="#FF2B2B2B">
+                <Button x:Name="AnotherSaveFileButton" Padding="10,5" Background="#FF005DFF" BorderBrush="#FF6AA0FF" Click="AnotherSaveFileButton_Click" Content="Open Another Save File" VerticalAlignment="Top"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,28,0,0">
+                    <StackPanel  Name="LevelButtons" >
 
-                </StackPanel>
-            </ScrollViewer>
-            <DockPanel LastChildFill="False">
-                <Border x:Name="ProtectedViewing" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FFFFF7D4" BorderBrush="{x:Null}">
-                    <DockPanel>
-                        <Button x:Name="RecoverSaveButton" BorderThickness="1,0,0,0" DockPanel.Dock="Right" Padding="10,0" Background="#FFE0B700" BorderBrush="#FF979700" Foreground="Black" Width="100" Click="RecoverSaveButton_Click">File Recovery</Button>
-                        <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="Black" Text="PROTECTED VIEWING: You are viewing a backup save file."/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DockPanel LastChildFill="False">
+                    <Border x:Name="ProtectedViewing" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FFFFF7D4" BorderBrush="{x:Null}">
+                        <DockPanel>
+                            <Button x:Name="RecoverSaveButton" BorderThickness="1,0,0,0" DockPanel.Dock="Right" Padding="10,0" Background="#FFE0B700" BorderBrush="#FF979700" Foreground="Black" Width="100" Click="RecoverSaveButton_Click">File Recovery</Button>
+                            <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="Black" Text="PROTECTED VIEWING: You are viewing a backup save file."/>
 
-                    </DockPanel>
-                </Border>
-                <Border x:Name="FullEdit" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FF005CA8" BorderBrush="{x:Null}">
-                    <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="White" Text="FULL EDITING ACCESS: You can edit your scores by selecting them below."/>
-                </Border>
-                <Border BorderThickness="1" Margin="10" DockPanel.Dock="Top">
-                    <StackPanel Margin="10,10">
-                        <TextBlock x:Name="FileTitleText" FontSize="16" FontWeight="Bold">Name's Krabby Quest Save File</TextBlock>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <StackPanel.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="Padding" Value="15,5"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <Border Margin="0" Background="#FF00A6AE">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock>
+                        </DockPanel>
+                    </Border>
+                    <Border x:Name="FullEdit" DockPanel.Dock="Top" Margin="10,10,10,0" Background="#FF005CA8" BorderBrush="{x:Null}">
+                        <TextBlock HorizontalAlignment="Center" Padding="10,5" Foreground="White" Text="FULL EDITING ACCESS: You can edit your scores by selecting them below."/>
+                    </Border>
+                    <Border BorderThickness="1" Margin="10" DockPanel.Dock="Top">
+                        <StackPanel Margin="10,10">
+                            <TextBlock x:Name="FileTitleText" FontSize="16" FontWeight="Bold">Name's Krabby Quest Save File</TextBlock>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Padding" Value="15,5"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Border Margin="0" Background="#FF00A6AE">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock>
                                 TOTAL SCORE
-                                    </TextBlock>
-                                    <TextBlock x:Name="TotalScore" TextAlignment="Center">69420</TextBlock>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FF0087E4">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock>
+                                        </TextBlock>
+                                        <TextBlock x:Name="TotalScore" TextAlignment="Center">69420</TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF0087E4">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock>
                                 SPATULAS LEFT
-                                    </TextBlock>
-                                    <TextBlock x:Name="SpatulasLeft" TextAlignment="Center">UNLIMITED</TextBlock>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FF0080CB">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="LEVELS UNLOCKED"/>
-                                    <TextBlock x:Name="UnlockedLevels" TextAlignment="Center"><Run Text="0"/></TextBlock>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FF0072B4">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock>
+                                        </TextBlock>
+                                        <TextBlock x:Name="SpatulasLeft" TextAlignment="Center">UNLIMITED</TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF0080CB">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="LEVELS UNLOCKED"/>
+                                        <TextBlock x:Name="UnlockedLevels" TextAlignment="Center"><Run Text="0"/></TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF0072B4">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock>
                                 LEVELS PASSED
-                                    </TextBlock>
-                                    <TextBlock x:Name="PassedLevels" TextAlignment="Center">0</TextBlock>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FF00629B">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock>
+                                        </TextBlock>
+                                        <TextBlock x:Name="PassedLevels" TextAlignment="Center">0</TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF00629B">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock>
                                 PERFECT LEVELS
-                                    </TextBlock>
-                                    <TextBlock x:Name="PerfectLevels" TextAlignment="Center">0</TextBlock>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-                <Border BorderThickness="1" Margin="10,0" DockPanel.Dock="Top">
-                    <StackPanel Margin="10,10">
-                        <TextBlock x:Name="LevelFileTitle" FontSize="16" Text="Level Name" FontWeight="Bold"/>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal" HorizontalAlignment="Center" Name="LevelInfoDisplay">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="Padding" Value="15,5"/>
-                                </Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <Border Margin="0" Background="#FFDC9600">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="LEVEL SCORE" TextAlignment="Center"/>
-                                    <TextBox x:Name="LevelScore" TextAlignment="Center" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FFC58600">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="PATTIES COLLECTED" TextAlignment="Center"/>
-                                    <TextBox x:Name="PattiesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FFAE7600">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="BONUSES COLLECTED" TextAlignment="Center"/>
-                                    <TextBox x:Name="BonusesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#FF976600">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="RATING" TextAlignment="Center"/>
-                                    <TextBox Padding="10,2" x:Name="Rating" TextAlignment="Center" Text="Incomplete" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF"/>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                        <Border Background="#FF855B00" Width="{Binding ActualWidth, ElementName=LevelInfoDisplay}" Margin="0,0,0,10" BorderThickness="0" Padding="10,5">
-                            <StackPanel HorizontalAlignment="Center">
-                                <TextBlock Text="TIME REMAINING" TextAlignment="Center"/>
-                                <TextBox x:Name="TimeCompleted" TextAlignment="Center" Text="0" Background="#3FFFFFFF" BorderBrush="{x:Null}" Padding="10,2"/>
+                                        </TextBlock>
+                                        <TextBlock x:Name="PerfectLevels" TextAlignment="Center">0</TextBlock>
+                                    </StackPanel>
+                                </Border>
                             </StackPanel>
-                        </Border>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="SaveLevel" Padding="10,5" Click="SaveLevel_Click" Content="Apply Changes" Grid.ColumnSpan="1"/>
-                            <Button x:Name="SaveToFile" Padding="10,5" BorderThickness="0,1,1,1" Click="SaveToFile_Click" Content="Save All Changes to File" Grid.Column="1"/>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-                <Button x:Name="AnotherSaveFileButton" DockPanel.Dock="Top" Padding="10,5" Margin="10" Background="#FF005DFF" BorderBrush="#FF6AA0FF" Click="AnotherSaveFileButton_Click">Open Another Save File</Button>
-            </DockPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderThickness="1" Margin="10,0,10,10" DockPanel.Dock="Top">
+                        <StackPanel Margin="10,10">
+                            <TextBlock x:Name="LevelFileTitle" FontSize="16" Text="Level Name" FontWeight="Bold"/>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" HorizontalAlignment="Center" Name="LevelInfoDisplay">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="Padding" Value="15,5"/>
+                                    </Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Border Margin="0" Background="#FFDC9600">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="LEVEL SCORE" TextAlignment="Center"/>
+                                        <TextBox x:Name="LevelScore" TextAlignment="Center" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FFC58600">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="PATTIES COLLECTED" TextAlignment="Center"/>
+                                        <TextBox x:Name="PattiesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FFAE7600">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="BONUSES COLLECTED" TextAlignment="Center"/>
+                                        <TextBox x:Name="BonusesCollected" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2"></TextBox>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF976600">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="RATING" TextAlignment="Center"/>
+                                        <TextBox Padding="10,2" x:Name="Rating" TextAlignment="Center" Text="Incomplete" IsReadOnly="True" BorderBrush="{x:Null}" Background="#3FFFFFFF"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <Border Background="#FF855B00" Width="{Binding ActualWidth, ElementName=LevelInfoDisplay}" Margin="0,0,0,10" BorderThickness="0" Padding="10,5">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="TIME REMAINING" TextAlignment="Center"/>
+                                    <TextBox x:Name="TimeCompleted" TextAlignment="Center" Text="0" Background="#3FFFFFFF" BorderBrush="{x:Null}" Padding="10,2"/>
+                                </StackPanel>
+                            </Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="SaveLevel" Padding="10,5" Click="SaveLevel_Click" Content="Apply Changes" Grid.ColumnSpan="1"/>
+                                <Button x:Name="SaveToFile" Padding="10,5" BorderThickness="0,1,1,1" Click="SaveToFile_Click" Content="Save All Changes to File" Grid.Column="1"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderThickness="1" Margin="10,0" DockPanel.Dock="Top">
+                        <StackPanel Margin="10,10">
+                            <TextBlock x:Name="LevelFileTitle1" FontSize="16" Text="Highscores" FontWeight="Bold"/>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" HorizontalAlignment="Center" x:Name="HighScoreDisplay">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="Padding" Value="15,5"/>
+                                    </Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Border Background="#FFC58600" Width="100">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="#1" TextAlignment="Center" FontWeight="Bold"/>
+                                        <TextBox x:Name="HighScore1" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF898989" Width="100">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="#2" TextAlignment="Center" FontWeight="Bold"/>
+                                        <TextBox x:Name="HighScore2" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" Padding="10,2" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#FF815700" Width="100">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="#3" TextAlignment="Center" FontWeight="Bold"/>
+                                        <TextBox Padding="10,2" x:Name="HighScore3" TextAlignment="Center" BorderBrush="{x:Null}" Background="#3FFFFFFF" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel x:Name="ExtraHighScores" Width="{Binding ActualWidth, ElementName=HighScoreDisplay}" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                        <Setter Property="Padding" Value="10,5"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Border>
+                                    <TextBlock HorizontalAlignment="Center" >#4 Sample</TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
+            </ScrollViewer>
         </DockPanel>
-        <Border x:Name="SaveFileDialog" Background="#7F040404" Visibility="Visible">
+        <Border x:Name="SaveFileDialog" Background="#7F040404" Visibility="Hidden">
             <Grid>
                 <Border HorizontalAlignment="Center" Width="200" Padding="10,0,0,0" Margin="0,20" MaxHeight="650">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">

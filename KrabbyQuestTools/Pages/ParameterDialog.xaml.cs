@@ -46,13 +46,14 @@ namespace KrabbyQuestTools.Pages
                 var textbox = new TextBox() { Width = 200, HorizontalAlignment = HorizontalAlignment.Right, Text = param.Value };
                 dock.Children.Add(textbox);
                 textbox.KeyDown += Textbox_KeyDown;
-                textbox.Tag = param.Name;
+                textbox.Tag = param;
                 var nameBox = new TextBlock() { Margin = new Thickness(0, 0, 10, 0), Text = param.Name + ":" };
                 dock.Children.Add(nameBox);
                 DockPanel.SetDock(nameBox, Dock.Left);
                 DockPanel.SetDock(textbox, Dock.Right);
                 ParameterStack.Children.Add(dock);
             }
+            AddNewButton.IsEnabled = true;
             BlockParameter.LoadParameterDB();
             namebox.AutoSuggestionList.Clear();
             foreach (var name in BlockParameter.ParameterDBDescriptions.Keys)
@@ -70,6 +71,7 @@ namespace KrabbyQuestTools.Pages
             ParameterStack.Children.Add(AddNewDock);
             ScrollView.ScrollToBottom();
             askSave = true;
+            AddNewButton.IsEnabled = false;
         }
 
         private void Save(string name, string value)
@@ -85,24 +87,30 @@ namespace KrabbyQuestTools.Pages
         private void Textbox_KeyDown(object sender, KeyEventArgs e)
         {
             editing = (sender as SuggestionTextbox)?.autoTextBox;
+            askSave = true;
             if (sender is TextBox)
+            {
+                askSave = false;
                 editing = sender as TextBox;
-            if (editing == namebox.autoTextBox)
-                return;
+            }
             if (e.Key == Key.Enter)
             {
-                string value = editing.Text;
-                string name = editing.Tag as string;
-                if (sender == namebox)
+                if (editing == namebox.autoTextBox)
                 {
-                    name = namebox.autoTextBox.Text;
-                    value = textbox.autoTextBox.Text;
+                    MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+                    return;
                 }
-                Save(name, value);
+                string value = editing.Text;
+                if (editing.Tag == null)
+                {
+                    Save(namebox.autoTextBox.Text, value);
+                    Load();
+                    return;
+                }
+                BlockParameter block = editing.Tag as BlockParameter;
+                block.Value = value;                
                 Load();
-            }
-            else
-                askSave = true;
+            }                
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

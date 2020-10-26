@@ -156,7 +156,7 @@ namespace StinkyFile
             {
                 LevelWorldName = LevelWorldName,
                 LevelName = Name,
-                TimeRemaining = 300000
+                TimeRemaining = 0
             };
             file.UpdateInfo(newInfo);
             return newInfo;

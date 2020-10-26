@@ -107,6 +107,44 @@ namespace KrabbyQuestTools.Pages
                 SaveLevel.Content = "Complete Level and Apply Changes";
             SaveToFile.IsEnabled = !IsProtectedViewing;
             OpenInfo = info;
+            PopulateHighScores(info);
+        }
+
+        private void PopulateHighScores(LevelCompletionInfo info)
+        {
+            ExtraHighScores.Children.Clear();
+            if (info.HighScores == null) return;
+            var source = info.HighScores.OrderByDescending(x => x);
+            int total = source.Count();
+            for(int count = 0; count < info.HighScores.Length; count++)
+            {
+                int score = 0;
+                if (count < total) score = source.ElementAt(count);
+                if (count == 0)
+                {
+                    HighScore1.Text = score.ToString();
+                    continue;
+                }
+                if (count == 1)
+                {
+                    HighScore2.Text = score.ToString();
+                    continue;
+                }
+                if (count == 2)
+                {
+                    HighScore3.Text = score.ToString();
+                    continue;
+                }
+                Border b = new Border()
+                {
+                    Child = new TextBlock()
+                    {
+                        Text = $"#{count + 1} - {score}",
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    }
+                };
+                ExtraHighScores.Children.Add(b);
+            }
         }
 
         private void SaveLevel_Click(object sender, RoutedEventArgs e)
@@ -116,6 +154,7 @@ namespace KrabbyQuestTools.Pages
             info.BonusesCollected = int.Parse(BonusesCollected.Text);
             info.TimeRemaining = int.Parse(TimeCompleted.Text);
             info.WasSuccessful = true;
+            saveFile.UpdateInfo(info);
             saveFile.RefreshStats();
             ShowInfo(info);
         }
