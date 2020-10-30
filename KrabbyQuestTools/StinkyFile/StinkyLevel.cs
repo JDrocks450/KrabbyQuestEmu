@@ -55,19 +55,16 @@ namespace StinkyFile
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="FileData"></param>
-        public StinkyLevel(StinkyParser parent, string LevelPath)
-        {
-            LevelFilePath = LevelPath;
-            var data = File.ReadAllBytes(LevelPath);
-            LoadFromDat(data, 0);            
+        public StinkyLevel(StinkyParser parent, string LevelPath) : this(parent, File.ReadAllBytes(LevelPath), 0)
+        {            
+            LevelFilePath = LevelPath;         
         }
 
         internal StinkyLevel()
         {
 
         }
-
-        [Obsolete]
+        
         public StinkyLevel(StinkyParser parent, byte[] FileData, int index)
         {
             Parent = parent;      

@@ -36,10 +36,15 @@ public class BeachBallBehavior : MonoBehaviour
     }
 
     private void OnDestroy()
-    {        
-        soundEffects.Play(0);
+    {                
         PushableScript.OnPushing -= OnPushing;   
         TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
+    }    
+
+    public void Destroy()
+    {
+        soundEffects.Play(0);
+        Destroy(gameObject);
     }
 
     private void OnPushing(object sender, MoveEventArgs e)
@@ -53,7 +58,7 @@ public class BeachBallBehavior : MonoBehaviour
         }
         else
         {            
-            Destroy(gameObject);
+            Destroy();
         }
     }
 

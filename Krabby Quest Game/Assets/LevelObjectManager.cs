@@ -128,27 +128,30 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (levelSwapping) return;
         levelSwapping = true;
-        if (CurrentCompletionInfo != null)
+        if (completed)
         {
-            CurrentCompletionInfo.LevelName = Level.Name;
-            CurrentCompletionInfo.LevelWorldName = Level.LevelWorldName;
-            CurrentCompletionInfo.TimeRemaining = (int)levelTime.TotalSeconds;
-            if (!CurrentCompletionInfo.WasSuccessful)
-                CurrentCompletionInfo.WasSuccessful = completed;
-            if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
+            if (CurrentCompletionInfo != null)
             {
-                CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
+                CurrentCompletionInfo.LevelName = Level.Name;
+                CurrentCompletionInfo.LevelWorldName = Level.LevelWorldName;
+                CurrentCompletionInfo.TimeRemaining = (int)levelTime.TotalSeconds;
+                if (!CurrentCompletionInfo.WasSuccessful)
+                    CurrentCompletionInfo.WasSuccessful = completed;
+                if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
+                {
+                    CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
+                }
+                if (Pickup.MajorPickups.TryGetValue("BONUS", out var bonusinfo))
+                {
+                    CurrentCompletionInfo.BonusesCollected = bonusinfo.amountCollected;
+                    if (bonusinfo.amountCollected == bonusinfo.amountTotal)
+                        CurrentCompletionInfo.WasPerfect = true;
+                }
+                else CurrentCompletionInfo.WasPerfect = true;
             }
-            if (Pickup.MajorPickups.TryGetValue("BONUS", out var bonusinfo))
-            {
-                CurrentCompletionInfo.BonusesCollected = bonusinfo.amountCollected;
-                if (bonusinfo.amountCollected == bonusinfo.amountTotal)
-                    CurrentCompletionInfo.WasPerfect = true;
-            }
-            else CurrentCompletionInfo.WasPerfect = true;
+            SaveFileManager.Current.UpdateInfo(CurrentCompletionInfo);
+            SaveFileManager.Current.Save();
         }
-        SaveFileManager.Current.UpdateInfo(CurrentCompletionInfo);
-        SaveFileManager.Current.Save();
         SceneManager.LoadSceneAsync("MapScreen");        
     }
 

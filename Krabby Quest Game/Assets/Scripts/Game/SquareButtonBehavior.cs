@@ -49,6 +49,7 @@ public class SquareButtonBehavior : MonoBehaviour
         OnPress?.Invoke(this, Color);
         GateBehavior.SendMessage(GateBehavior.GateMsg.Open, Color);
         pressingButton = sender;
+        GetComponent<SoundLoader>().Play(0);  
     }
 
     private void Unpress(object sender, MoveEventArgs e)
@@ -60,6 +61,7 @@ public class SquareButtonBehavior : MonoBehaviour
         OnUnpress?.Invoke(this, Color);
         GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
         pressingButton = null;
+        GetComponent<SoundLoader>().Play(0); 
     }
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)

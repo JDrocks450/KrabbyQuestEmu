@@ -1,16 +1,19 @@
-﻿using StinkyFile;
+﻿using KrabbyQuestTools.Controls;
+using StinkyFile;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -20,16 +23,22 @@ namespace KrabbyQuestTools.Pages
     /// <summary>
     /// Interaction logic for LevelSelect.xaml
     /// </summary>
-    public partial class LevelSelect : Page
+    public partial class LevelSelect : KQTPage
     {
         private StinkyParser Parser => AppResources.Parser;
         string Workspace, DATpath;
+        const double scrollTimerInterval = .1, scrollTime = 3.5;
+        double currentScrollTime = 0, scrollFrom, scrollTo;
 
         public LevelSelect()
         {
             InitializeComponent();
             DATpath = Properties.Settings.Default.DataPath;
             Workspace = Properties.Settings.Default.DestinationDir;
+            string gameResources = Properties.Settings.Default.GameResourcesPath;
+            if (!string.IsNullOrWhiteSpace(gameResources))            
+                GamePathBox.Text = gameResources;            
+            else GamePathBox.BorderBrush = Brushes.Red;
             if (AppResources.Parser == null)
                 AppResources.Parser = new StinkyParser();
             if (!File.Exists(LevelDataBlock.BlockDatabasePath))
@@ -44,15 +53,12 @@ namespace KrabbyQuestTools.Pages
                 GetLevels();
                 WorkspacePath.Text = Workspace;
             }
-            Title = "Editor Homepage";
+            Title = "Editor Homepage";            
         }
 
         private void GetLevels(string searchTerm = "")
         {
             LevelButtons.Children.Clear();
-            LevelButtons.Children.Add(LevelsLabel);
-            LevelButtons.Children.Add(SearchLabel);
-            LevelButtons.Children.Add(SearchBox);
             int number = 0;
             string levelDir = System.IO.Path.Combine(Workspace, "levels");
             DirectoryInfo dir = new DirectoryInfo(levelDir);
@@ -62,15 +68,32 @@ namespace KrabbyQuestTools.Pages
                 return;
             }
             Parser.FindAllLevels(dir.FullName);
-            foreach(var level in Parser.LevelInfo)
+            foreach (var level in Parser.LevelInfo)
             {
-                var button = new Button() 
+                bool allow = false;
+                if (searchTerm != "")
                 {
-                    Height = 25,
-                    Margin = new Thickness(0,5,0,5),
-                    Content = $"({System.IO.Path.GetFileName(level.LevelFilePath)})" +
+                    if (level.Name.Contains(searchTerm) || level.LevelWorldName.Contains(searchTerm))
+                        allow = true;
+                }
+                else
+                    allow = true;
+                if (!allow) continue;
+                var button = new Button()
+                {
+                    Height = 75,
+                    Width = 100,
+                    Margin = new Thickness(10),
+                    Content = new TextBlock()
+                    {
+                        Text = $"({System.IO.Path.GetFileName(level.LevelFilePath)})" +
                         $": " + level.Name,
-                    Tag = level
+                        TextWrapping = TextWrapping.Wrap,
+                        TextAlignment = TextAlignment.Center
+                    },
+                    Tag = level,
+                    Background = Brushes.DarkCyan,
+                    BorderBrush = Brushes.Cyan
                 };
                 button.Click += Level_Click;
                 LevelButtons.Children.Add(button);
@@ -160,6 +183,55 @@ namespace KrabbyQuestTools.Pages
             NavigationService.Navigate(new SaveFileViewer(System.IO.Path.Combine(Workspace, "levels")));
         }
 
+        private void OpenLevelButton_Click(object sender, RoutedEventArgs e)
+        {
+            LevelCategory.Visibility = Visibility.Visible;
+            //scroll animation
+            Timer timer = new Timer(scrollTimerInterval);
+            currentScrollTime = 0;
+            scrollFrom = CategoryViewer.VerticalOffset;
+            scrollTo = LevelCategory.TranslatePoint(new Point(0,0), CategoryViewer).Y;
+            timer.Elapsed += delegate
+            {
+                double percentage = currentScrollTime / scrollTime;
+                double offset = scrollFrom + ((scrollTo - scrollFrom) * percentage);
+                percentage += scrollTimerInterval;
+                if (percentage >= 1)
+                {
+                    offset = scrollTo;
+                    timer.Stop();
+                }
+                Dispatcher.Invoke(() =>
+                {
+                    CategoryViewer.ScrollToVerticalOffset(offset);
+                });
+                currentScrollTime += scrollTimerInterval;
+            };
+            timer.Start();
+        }
+
+        private void PushAllChanges_Click(object sender, RoutedEventArgs e)
+        {
+            string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
+            string assetDBpath1 = AssetDBEntry.AssetDatabasePath, assetDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml");
+            File.Copy(blockDBpath1, blockDBpath2, true);
+            File.Copy(assetDBpath1, assetDBpath2, true);
+            Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void GamePathBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(GamePathBox.Text))
+                GamePathBox.BorderBrush = Brushes.Red;
+            else GamePathBox.BorderBrush = Brushes.Gray;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshAllChanges();
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()
@@ -167,6 +239,109 @@ namespace KrabbyQuestTools.Pages
                 Content = new ModelExporterOptions()
             };
             dialog.ShowDialog();
+        }
+        public override void OnActivated()
+        {
+            RefreshAllChanges();
+            base.OnActivated();
+        }
+        string editorDefinition, gameDefinition;
+        private void RefreshAllChanges()
+        {
+            bool changes = false;
+            EditorStack.Children.Clear();
+            GameStack.Children.Clear();
+            if (editorDefinition == null)
+            {
+                editorDefinition = AppResources.XamlToString(SampleEditor);
+                gameDefinition = AppResources.XamlToString(SampleGame);
+            }
+            DockPanel getRow(DockPanel dockPanel,string fileName, string dateModified, long byteChange, RoutedEventHandler onPush)
+            {
+                Brush brush = Brushes.Orange;
+                if (byteChange > 0)
+                    brush = Brushes.Green;
+                else if (byteChange < 0) brush = Brushes.Red;
+                (dockPanel.Children[2] as TextBlock).Text = fileName;
+                (dockPanel.Children[3] as TextBlock).Foreground = brush;
+                (dockPanel.Children[3] as TextBlock).Text = (byteChange > 0 ? "+" : "") + byteChange.ToString() + " bytes";
+                (dockPanel.Children[4] as TextBlock).Text = dateModified;
+                (dockPanel.Children[5] as Button).Click += onPush;
+                return dockPanel;
+            }
+            DockPanel getEditorRow(string fileName, string dateModified, long byteChange, RoutedEventHandler onPush) => 
+                getRow(AppResources.CloneXaml<DockPanel>(editorDefinition), fileName, dateModified, byteChange, onPush);                    
+            DockPanel getGameRow(string fileName, string dateModified, long byteChange, RoutedEventHandler onPush)=>
+                getRow(AppResources.CloneXaml<DockPanel>(gameDefinition), fileName, dateModified, byteChange, onPush);
+            void Push(FileInfo fInfo, string destination)
+            {
+                fInfo.CopyTo(destination, true);
+                Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
+                Properties.Settings.Default.Save();
+            }
+            void Revert(FileInfo fInfo, string destination)
+            {
+                if (MessageBox.Show("This will delete any changes currently unsaved and restore the selected file to the Game's current version. " +
+                    "This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    fInfo.CopyTo(destination, true);
+                    Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
+                    Properties.Settings.Default.Save();
+                }
+            }
+            string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
+            string assetDBpath1 = AssetDBEntry.AssetDatabasePath, assetDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml");
+            FileInfo info1 = new FileInfo(blockDBpath1), info2 = new FileInfo(blockDBpath2);
+            if (info1.LastWriteTime.ToFileTime() != info2.LastWriteTime.ToFileTime()) // one is modified
+            {
+                changes = true;
+                string time = info1.LastWriteTime.ToShortDateString() + " " + info1.LastWriteTime.ToShortTimeString();
+                EditorStack.Children.Add(
+                    getEditorRow("Block Database", 
+                    time,
+                    info1.Length - info2.Length,
+                    delegate
+                    {
+                        Push(info1, blockDBpath2);
+                        RefreshAllChanges();
+                    }));
+                time = info2.LastWriteTime.ToShortDateString() + " " + info2.LastWriteTime.ToShortTimeString();
+                GameStack.Children.Add(
+                    getGameRow("Block Database", 
+                    time,
+                    info2.Length - info1.Length,
+                    delegate
+                    {
+                        Revert(info2, blockDBpath1);
+                        RefreshAllChanges();
+                    }));
+            }
+            FileInfo ainfo1 = new FileInfo(assetDBpath1), ainfo2 = new FileInfo(assetDBpath2);
+            if (ainfo1.LastWriteTime.ToFileTime() != ainfo2.LastWriteTime.ToFileTime()) // one is modified
+            {
+                changes = true;
+                string time = ainfo1.LastWriteTime.ToShortDateString() + " " + ainfo1.LastWriteTime.ToShortTimeString();
+                EditorStack.Children.Add(
+                    getEditorRow("Asset Database", 
+                    time,
+                    ainfo1.Length - ainfo2.Length,
+                    delegate
+                    {
+                        Push(ainfo1, assetDBpath2);
+                        RefreshAllChanges();
+                    }));
+                time = ainfo2.LastWriteTime.ToShortDateString() + " " + ainfo2.LastWriteTime.ToShortTimeString();
+                GameStack.Children.Add(
+                    getGameRow("Asset Database", 
+                    time,
+                    ainfo2.Length - ainfo1.Length,
+                    delegate
+                    {
+                        Revert(ainfo2, assetDBpath1);
+                        RefreshAllChanges();
+                    }));
+            }
+            PushAllChanges.IsEnabled = changes;
         }
     }
 }

@@ -19,38 +19,61 @@ namespace KrabbyQuestTools.Pages
     /// <summary>
     /// Interaction logic for ParameterDialog.xaml
     /// </summary>
-    public partial class ParameterDialog : Window
+    public partial class ParameterDialog : Page
     {
-        public List<BlockParameter> Source { get; }
+        public List<BlockParameter> Source { get; private set; }
         public LevelDataBlock Subject;
-        bool askSave = false;
+        bool askSave = false, isWindow = false;
 
-        public ParameterDialog(LevelDataBlock subject)
+        public ParameterDialog()
         {
             InitializeComponent();
-            Source = subject.Parameters.Values.ToList();
-            Subject = subject;
-            Load();
+            if (!(Parent is Window))
+            {
+                CancelButton.Visibility = Visibility.Collapsed;
+                isWindow = false;
+            }
+            else isWindow = true;
         }
 
-        private void Load()
+        public ParameterDialog(LevelDataBlock subject) : this()
+        {           
+            Load(subject);
+        }
+
+        public void Load(LevelDataBlock subject)
         {
+            if (Subject != subject)
+            {
+                Source = subject.Parameters.Values.ToList();
+                Subject = subject;
+            }
             ParameterStack.Children.Clear();
             foreach (var param in Source) {
-                var dock = new DockPanel() { Margin = new Thickness(0, 0, 0, 5) };
-                var deleteButton = new Button() { Content = "x", Margin = new Thickness(0,0,10,0) };
+                var dock = new Grid() { Margin = new Thickness(0, 0, 0, 5) };
+                dock.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star),
+                });
+                dock.ColumnDefinitions.Add(new ColumnDefinition()                
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                });
+                var deleteButton = new Button() { Content = "x", Background = Brushes.DarkRed, BorderBrush = Brushes.Red, Margin = new Thickness(0,0,10,0) };
                 deleteButton.Click += DeleteButton_Click;
                 deleteButton.Tag = param;
-                DockPanel.SetDock(deleteButton, Dock.Left);
-                dock.Children.Add(deleteButton);
-                var textbox = new TextBox() { Width = 200, HorizontalAlignment = HorizontalAlignment.Right, Text = param.Value };
+                var stack = new DockPanel();
+                stack.Children.Add(deleteButton);
+                Grid.SetColumn(stack, 0);
+                dock.Children.Add(stack);
+                var textbox = new TextBox() { Text = param.Value };
                 dock.Children.Add(textbox);
+                Grid.SetColumn(textbox, 1);
                 textbox.KeyDown += Textbox_KeyDown;
                 textbox.Tag = param;
                 var nameBox = new TextBlock() { Margin = new Thickness(0, 0, 10, 0), Text = param.Name + ":" };
-                dock.Children.Add(nameBox);
-                DockPanel.SetDock(nameBox, Dock.Left);
-                DockPanel.SetDock(textbox, Dock.Right);
+                DockPanel.SetDock(nameBox, Dock.Right);
+                stack.Children.Add(nameBox);
                 ParameterStack.Children.Add(dock);
             }
             AddNewButton.IsEnabled = true;
@@ -63,7 +86,7 @@ namespace KrabbyQuestTools.Pages
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             Source.Remove((BlockParameter)(sender as Button).Tag);
-            Load();
+            Load(Subject);
         }
 
         private void AddNewButton_Click(object sender, RoutedEventArgs e)
@@ -77,7 +100,9 @@ namespace KrabbyQuestTools.Pages
         private void Save(string name, string value)
         {
             var duplicates = Source.FindAll(x => x.Name == name);
-            if (duplicates.Any()) foreach (var dup in duplicates) Source.Remove(dup);
+            if (duplicates.Any()) 
+                foreach (var dup in duplicates) 
+                    Source.Remove(dup);
             Source.Add(new BlockParameter() { Name = namebox.autoTextBox.Text, Value = value });            
             askSave = false;
         }
@@ -104,12 +129,12 @@ namespace KrabbyQuestTools.Pages
                 if (editing.Tag == null)
                 {
                     Save(namebox.autoTextBox.Text, value);
-                    Load();
+                    Load(Subject);
                     return;
                 }
                 BlockParameter block = editing.Tag as BlockParameter;
                 block.Value = value;                
-                Load();
+                Load(Subject);
             }                
         }
 
@@ -126,6 +151,12 @@ namespace KrabbyQuestTools.Pages
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void Close()
+        {
+            if (isWindow)
+                (Parent as Window).Close();
         }
     }
 }

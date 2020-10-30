@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\KQTPage.cs" />
     <Compile Include="Controls\SuggestionTextbox.xaml.cs">
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
     </Compile>

@@ -71,6 +71,12 @@ namespace StinkyFile
             }
         }
 
+        /// <summary>
+        /// Loads the AssetDB from the filepath provided
+        /// </summary>
+        /// <param name="Filename">The relative file name of the file to open</param>
+        /// <param name="Created">Represents whether the AssetDB did not contain an entry for this file and thus has created one for you to edit.</param>
+        /// <returns></returns>
         public static AssetDBEntry LoadFromFileName(string Filename, out bool Created)
         {
             var database = XDocument.Load(AssetDatabasePath);
