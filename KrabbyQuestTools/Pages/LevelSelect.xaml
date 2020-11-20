@@ -21,14 +21,12 @@
                 <DropShadowEffect Direction="270" BlurRadius="50"/>
             </Border.Effect>
             <StackPanel>
-                <Border Margin="10,10,10,0" Padding="10" DockPanel.Dock="Top" Background="#FFFFEDB0" MaxWidth="980">
+                <Border x:Name="MessagePrompt" Margin="10,10,10,0" Padding="10" DockPanel.Dock="Top" Background="#FFFFEDB0" MaxWidth="980">
                     <DockPanel>
                         <StackPanel>
-                            <TextBlock Foreground="Black" FontWeight="Bold">
-                        Welcome to Krabby Quest Tools!
-                            </TextBlock>
-                            <TextBlock TextWrapping="Wrap" Foreground="Black" Text="This is a specially designed program that allows you to edit the systems that go into KrabbyQuestEmu. There's a lot to explore, so make sure to refer to the GitHub documentation for any page that you have a question about. This tool is still in BETA. If you run into any problems your work is likely to be auto-saved already, so it should not be more than an inconvenience. Thank you for taking interest in KrabbyQuestEmu!"/>
-                            <Button Margin="0,10,0,0" Background="DarkCyan" Foreground="White" HorizontalAlignment="Right" Width="100" Height="33" Content="Got it" BorderBrush="#FF02D1FF"/>
+                                <TextBlock Foreground="Black" FontWeight="Bold" Text="Welcome to Krabby Quest Tools [BETA]!"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="Black"><Run Text="This is a specially designed program that allows you to edit the systems that go into KrabbyQuestEmu. There's a lot to explore, so make sure to refer to the GitHub documentation for any page that you have a question about. This tool is still in BETA. If you run into any problems your work is likely to be auto-saved already, so it should not be more than an inconvenience. "/><LineBreak/><Run Text="Thank you for taking interest in KrabbyQuestEmu!" FontStyle="Italic" Foreground="#FF0065CB"/></TextBlock>
+                                <Button x:Name="MessagePromptOKButton" Margin="0,10,0,0" Background="DarkCyan" Foreground="White" HorizontalAlignment="Right" Width="100" Height="33" Content="Got it" BorderBrush="#FF02D1FF" Click="MessagePromptOKButton_Click"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>
@@ -93,7 +91,7 @@
                         </Grid>
                         <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch">
                             <Button x:Name="PushAllChanges" DockPanel.Dock="Right" Background="DarkCyan" Foreground="White" Width="155" Height="33" Content="Push all changes" BorderBrush="#FF02D1FF" Click="PushAllChanges_Click"/>
-                            <Button x:Name="RefreshChanges" DockPanel.Dock="Right" Background="#FF6A6A6A" Foreground="White" Width="87" Height="33" Content="Refresh" BorderBrush="#FF02D1FF" Margin="0,0,5,0"/>
+                            <Button x:Name="RefreshChanges" DockPanel.Dock="Right" Background="#FF6A6A6A" Foreground="White" Width="87" Height="33" Content="Refresh" BorderBrush="#FF02D1FF" Margin="0,0,5,0" Click="RefreshChanges_Click"/>
                             <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Margin="20,0,10,0" Text="The Game and the Editor both have their own versions of the BlockDB, AssetDB, and MapDB. When changes are made in the editor, you need to push the changes to the Game file directory in order to see the changes. "/>
                         </DockPanel>
                     </StackPanel>
@@ -171,15 +169,15 @@
                     <TextBlock FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Padding="0,20,0,0" Text="Levels"/>
                     <Rectangle Margin="20,5" Fill="#FF838383" Height="1"/>
                     <StackPanel>
-                        <TextBlock x:Name="SearchLabel" Margin="10,0" FontSize="14">Search</TextBlock>
-                        <TextBox x:Name="SearchBox" Margin="10,0" TextChanged="SearchBox_TextChanged" Height="24" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200"/>
+                        <TextBlock x:Name="SearchLabel" Margin="20,0" FontSize="14">Search</TextBlock>
+                        <TextBox x:Name="SearchBox" Margin="20,0" TextChanged="SearchBox_TextChanged" Height="24" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200"/>
                         <WrapPanel x:Name="LevelButtons" Orientation="Horizontal" MaxWidth="1000" Margin="10,10,10,0">
 
                         </WrapPanel>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="DatabaseOptions" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="30" Width="115" Click="DatabaseOptions_Click">
-                    Database Options
+                <Button x:Name="DatabaseOptions" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Height="30" Click="DatabaseOptions_Click" Background="#FF444444" Foreground="White">
+                    Legacy Database Options
                 </Button>
             </StackPanel>
         </DockPanel>

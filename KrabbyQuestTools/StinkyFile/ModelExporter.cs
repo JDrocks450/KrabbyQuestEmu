@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StinkyFile.Installation;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +18,22 @@ namespace StinkyFile
         public string BlenderPath { get; }
         public string B3DContentDirectory { get; }
         public string ExportDirectory { get; }
+        public bool Paused { get; set; } = false;
+        public bool TryingToSkip { get; set; } = false;
+
+        /// <summary>
+        /// Called whenever the model exporter makes progress. String Message, Double PercentComplete 0-1
+        /// </summary>
+        public event EventHandler<(string message, double percentComplete)> OnProgressChanged;
+        /// <summary>
+        /// Called whenever the model exporter extracts a file. FilePath is the supplied string
+        /// </summary>
+        public event EventHandler<string> OnFileExtracted;
+        /// <summary>
+        /// Called whenever the model exporter recieves output from Blender.exe
+        /// </summary>
+        public event EventHandler<string> OnStandardOutput;
+
         public ModelExporter(string BlenderPath, string B3DContentDirectory, string ExportDirectory)
         {
             this.BlenderPath = BlenderPath;
@@ -24,34 +41,76 @@ namespace StinkyFile
             this.ExportDirectory = ExportDirectory;
         }
 
-        public void ExportAll()
+        public bool ExportAll()
         {
             ExceptionObject = null;
             try
             {
                 Directory.CreateDirectory(ExportDirectory);
                 var files = Directory.GetFiles(B3DContentDirectory, "*.b3d");
+                var pluginPath = Path.Combine(Environment.CurrentDirectory, "BlenderBackgroundConverter.py").Replace("\\", "/");
+                PythonParameterEditor pythonEditor = new PythonParameterEditor(pluginPath);
+                int current = 0;
+                Process BlenderProcess = new Process();
+                BlenderProcess.EnableRaisingEvents = true;
+                BlenderProcess.ErrorDataReceived += 
+                        (object s, DataReceivedEventArgs e) => 
+                            OnStandardOutput?.Invoke(this, e.Data);
+                BlenderProcess.OutputDataReceived +=
+                        (object s, DataReceivedEventArgs e) =>
+                            OnStandardOutput?.Invoke(this, e.Data);
                 foreach (var file in files)
                 {
-                    var python = File.ReadAllText("BlenderBackgroundConverter.py");
-                    int index = python.IndexOf("filepath=", 0) + 10;
-                    int endIndex = python.IndexOf("\"", index);
-                    python = python.Remove(index, endIndex - index);
-                    python = python.Insert(index, file.Replace("\\", "/"));
-                    index = python.IndexOf("filepath=", index + file.Length + 5) + 10;
-                    endIndex = python.IndexOf("\"", index);
-                    python = python.Remove(index, endIndex - index);
+                    if (TryingToSkip)
+                        return true;
+                    while (Paused)
+                    {
+
+                    }
+                    if (TryingToSkip)
+                        return true;
+                    OnProgressChanged?.Invoke(this, ("Converting " + file, current / (double)files.Length));
                     var name = Path.GetFileNameWithoutExtension(file);
-                    python = python.Insert(index, Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/"));
-                    File.WriteAllText("BlenderBackgroundConverter.py", python);
-                    var processInfo = Process.Start(BlenderPath, "--background --python " + Path.Combine(Environment.CurrentDirectory, "BlenderBackgroundConverter.py"));
-                    processInfo.WaitForExit();
+                    var destination = Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/");
+                    int index = pythonEditor.Replace("filepath=", 0, file.Replace("\\", "/"));                                                            
+                    index = pythonEditor.Replace("filepath=", index + file.Length + 5, destination);
+                    pythonEditor.Save();                    
+                    var logFile = Path.Combine(Environment.CurrentDirectory, "log.log");
+                    var startInfo = new ProcessStartInfo(BlenderPath, "-b -P " + pluginPath)
+                    {
+                        UseShellExecute = false,
+                        WorkingDirectory = Path.GetDirectoryName(BlenderPath),
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+                    BlenderProcess.StartInfo = startInfo;                    
+                    BlenderProcess.Start();
+                    BlenderProcess.BeginOutputReadLine();
+                    BlenderProcess.BeginErrorReadLine();
+                    BlenderProcess.WaitForExit();
+                    BlenderProcess.CancelOutputRead();
+                    BlenderProcess.CancelErrorRead();
+                    if (BlenderProcess.ExitCode != 0)
+                    {
+                        //Process.Start(logFile);
+                        throw new Exception("Blender.exe exited with error code: " + BlenderProcess.ExitCode +
+                            ". Try repeating the 3D Model extraction stage again. If the problem persists, " +
+                            "try moving all files related to the installer to the desktop, as long filepaths can " +
+                            "cause errors using Blender. The Blender output is shown above for more information.");
+                    }
+                    OnFileExtracted?.Invoke(this, destination);
+                    current++;
                 }
             }
             catch(Exception e)
             {
                 ExceptionObject = e;
+                OnProgressChanged?.Invoke(this, ("Could Not Convert Model", 0/1.0));
+                return false;
             }
+            OnProgressChanged?.Invoke(this, ("All Models Converted", 1/1.0));
+            return true;
         }
     }
 }

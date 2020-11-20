@@ -1,4 +1,5 @@
-﻿using KrabbyQuestTools.Controls;
+﻿using KrabbyQuestTools.Common;
+using KrabbyQuestTools.Controls;
 using StinkyFile;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace KrabbyQuestTools.Pages
     /// </summary>
     public partial class LevelSelect : KQTPage
     {
+        /// <summary>
+        /// Is the message prompt hidden by default
+        /// </summary>
+        static bool IsPromptHidden = false;
+
         private StinkyParser Parser => AppResources.Parser;
         string Workspace, DATpath;
         const double scrollTimerInterval = .1, scrollTime = 3.5;
@@ -53,7 +59,9 @@ namespace KrabbyQuestTools.Pages
                 GetLevels();
                 WorkspacePath.Text = Workspace;
             }
-            Title = "Editor Homepage";            
+            Title = "Editor Homepage";
+            if (IsPromptHidden)
+                MessagePrompt.Visibility = Visibility.Collapsed;
         }
 
         private void GetLevels(string searchTerm = "")
@@ -218,6 +226,7 @@ namespace KrabbyQuestTools.Pages
             File.Copy(assetDBpath1, assetDBpath2, true);
             Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
             Properties.Settings.Default.Save();
+            RefreshAllChanges();
         }
 
         private void GamePathBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -230,6 +239,17 @@ namespace KrabbyQuestTools.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshAllChanges();
+        }
+
+        private void RefreshChanges_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshAllChanges();
+        }
+
+        private void MessagePromptOKButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessagePrompt.Visibility = Visibility.Collapsed;
+            IsPromptHidden = true;
         }
 
         private void ExportModels_Click(object sender, RoutedEventArgs e)

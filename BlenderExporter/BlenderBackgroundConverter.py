@@ -15,6 +15,7 @@ for c in bpy.data.collections:
 bpy.ops.import_scene.blitz3d_b3d(filepath="D:/Projects/Krabby Quest/Workspace/Graphics/rock.b3d", filter_glob="*.b3d", constrain_size=10, 
 use_image_search=True, use_apply_transform=True, axis_forward='Z', axis_up='Y')
 
+#export to OBJ
 bpy.ops.export_scene.obj(filepath="hewwo", check_existing=True, filter_glob="*.obj;*.mtl", use_selection=False, 
 use_animation=False, use_mesh_modifiers=True, use_edges=True, use_smooth_groups=False, 
 use_smooth_groups_bitflags=False, use_normals=True, use_uvs=True, use_materials=True, 

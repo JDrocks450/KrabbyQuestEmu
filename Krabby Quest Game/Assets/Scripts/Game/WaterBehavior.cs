@@ -134,7 +134,7 @@ public class WaterBehavior : MonoBehaviour
         if (Moveable.Target.TryGetComponent<PushableScript>(out var box)) // is a box?
         {
             var animator = box.GetComponentInChildren<Animator>();
-            if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken))
+            if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken && !IsBoxFloating))
             {
                 animator.Play("Floating");
                 IsBoxFloating = true;

@@ -88,7 +88,6 @@
     <Compile Include="Controls\SuggestionTextbox.xaml.cs">
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FontConverter.cs" />
     <Compile Include="Pages\MapScreenCustomizer.xaml.cs">
       <DependentUpon>MapScreenCustomizer.xaml</DependentUpon>
     </Compile>
@@ -98,7 +97,6 @@
     <Compile Include="Pages\SaveFileViewer.xaml.cs">
       <DependentUpon>SaveFileViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TargaImage.cs" />
     <Page Include="Controls\Gallery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -225,6 +223,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KrabbyQuestTools.Common\KrabbyQuestTools.Common.csproj">
+      <Project>{8341C197-E693-42B9-80CC-5E214D136CFB}</Project>
+      <Name>KrabbyQuestTools.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="StinkyFile\StinkyFile.csproj">
       <Project>{1A2E0E3A-520F-4AD6-B635-2A6CEB574A16}</Project>
       <Name>StinkyFile</Name>

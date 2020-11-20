@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StinkyFile
+namespace KrabbyQuestTools.Common
 {
     public class FontConverter
     {
         const int MAX_FONT_PIECE = 6, COLUMNS = 16, ROWS = 8;
-        string[] fontPieces = new string[MAX_FONT_PIECE];
+        string[] fontPieces = new string[MAX_FONT_PIECE];        
         public FontConverter(string GraphicsDir)
         {
             for(int i = 0; i < MAX_FONT_PIECE; i++)            

@@ -42,26 +42,19 @@ public class SquareButtonBehavior : MonoBehaviour
 
     private void Press(object sender, MoveEventArgs e)
     {
-        Pushed = true;
-        var animator = GetComponentInChildren<Animator>();
-        animator.Play("Pushed"); // play press anim
-        GetComponentInChildren<Light>().enabled = false; // turn off the light
+        Pushed = true;        
         OnPress?.Invoke(this, Color);
         GateBehavior.SendMessage(GateBehavior.GateMsg.Open, Color);
-        pressingButton = sender;
-        GetComponent<SoundLoader>().Play(0);  
+        pressingButton = sender;         
     }
 
     private void Unpress(object sender, MoveEventArgs e)
     {
         Pushed = false;
-        var animator = GetComponentInChildren<Animator>();
-        animator.Play("Unpushed"); // play unpress anim
-        GetComponentInChildren<Light>().enabled = true; // turn on the light            
+               
         OnUnpress?.Invoke(this, Color);
         GateBehavior.SendMessage(GateBehavior.GateMsg.Close, Color);
-        pressingButton = null;
-        GetComponent<SoundLoader>().Play(0); 
+        pressingButton = null;        
     }
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
@@ -89,6 +82,22 @@ public class SquareButtonBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Pushed != lastMotionPushState)
+        {
+            if (!Pushed)
+            {
+                var animator = GetComponentInChildren<Animator>();
+                animator.Play("Unpushed"); // play unpress anim
+                GetComponentInChildren<Light>().enabled = true; // turn on the light     
+            }
+            else
+            {
+                var animator = GetComponentInChildren<Animator>();
+                animator.Play("Pushed"); // play press anim
+                GetComponentInChildren<Light>().enabled = false; // turn off the light
+            }
+            GetComponent<SoundLoader>().Play(0);
+        } 
+        lastMotionPushState = Pushed;
     }
 }

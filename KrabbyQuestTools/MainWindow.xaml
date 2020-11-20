@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:KrabbyQuestTools"
         xmlns:pages="clr-namespace:KrabbyQuestTools.Pages"
         mc:Ignorable="d"
+        Title="Krabby Quest Tools [BETA] v0.6"
         Height="700" Width="1200" Background="#FF1D1D1D" Loaded="Window_Loaded" MinWidth="800" MinHeight="600" Activated="Window_Activated">
     <Grid>
         <TabControl BorderThickness="0,1,0,0" Background="#FF323232" BorderBrush="#FF3E3E3E" Name="TabSwitcher" SelectionChanged="TabSwitcher_SelectionChanged" >
