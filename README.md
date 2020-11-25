@@ -40,21 +40,29 @@ Below is a roadmap:
     > Handles the extraction of Assets to a directory *Vital*
   - Map Screen Editor
     > Allows creators to add and remove waypoints on the map screen to any level including custom ones.
+  - Save File Editor
+    > Allows users to edit their scores on certain levels. Used mostly for development, however if you need it, it's here for you. 
 - Game
   - Loading Levels
     > All levels are loadable, some with incomplete objects
   - Start Screen
-    > Menus in the game were bland, so they are being replaced with newer menu styles that are less abrasive.
+    > Menus in the game were bland, so newer menus were designed to be fully 3D, using assets from the original game.
   - Map Screen
-    > This menu has also gotten a visual improvement.
+    > This menu has also gotten a significant visual improvement, complete with a 3D version of the original map screen.
   - Basic UI
-    > Menus, Bonus/Patty collection UI is implemented
+    > Menus, Bonus/Patty collection UI is implemented, time remaining is implemented
+  - Obstacles
+    > Level time limit (disabled during BETA stage), Goobers, Boxes, Bullies are all ways Spongebob can get hurt, forcing you restart the level for a little challenge. When has challenge been a bad thing?
+  - Save Files
+    > Highscores, completed levels, perfected levels, time completed are all tracked in your save file. Multiple save files can be used at a time.
 #### Under Development:
+- Launcher/Installer
+  > Two-in-one launcher for KrabbyQuestEmu that take your original Spongebob: Krabby Quest game files (which you must obtain on your own!) and extracts them to allow for customization and to play KrabbyQuestEmu. Ordinarily, you would need to do this yourself. *Check Releases for installer updates*
 - Setup Procedure
-  - Make automated setup procedure
+  - Make automated setup procedure (~80% complete)
 - Game
-  - Reimplementing Objects (~80% complete)
-  - Highscores
+  - Reimplementing Objects (~83% complete)  
+  - Custom Content (See below)
   - New Features?
 
 ## Custom Content?
@@ -71,6 +79,8 @@ levels at all - only view them.
 ## How Do I Play?
 Right now, the setup is difficult as this project is still incomplete. However, it is possible.
 
+  >*! See Completed - Launcher/Installer above for latest news !*
+
 *You must have Blender installed!*
  
  1. Extract an original copy of the game to a directory.
@@ -86,5 +96,5 @@ Right now, the setup is difficult as this project is still incomplete. However, 
  11. Build and Run Krabby Quest Game
 
 ## Is this legal?
-I am not distributing any copyrighted content, this is only a tool to read the game files that were distributed from another source. 
+I am not distributing any copyrighted content, this is only a tool to read the game files that were distributed from another source. This is not a reason for piracy, nor does it condone/enable people to do so. It is simply a way to enjoy the game you obtained on modern hardware. 
 Additionally, I am doing this only in the name of media preservation - not for profit in any way. I do not plan on accepting any donations.
