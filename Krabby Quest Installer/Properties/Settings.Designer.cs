@@ -58,5 +58,53 @@ namespace KrabbyQuestInstaller.Properties {
                 this["BlenderDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameExePath {
+            get {
+                return ((string)(this["GameExePath"]));
+            }
+            set {
+                this["GameExePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameDir {
+            get {
+                return ((string)(this["GameDir"]));
+            }
+            set {
+                this["GameDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EditorExePath {
+            get {
+                return ((string)(this["EditorExePath"]));
+            }
+            set {
+                this["EditorExePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EditorDir {
+            get {
+                return ((string)(this["EditorDir"]));
+            }
+            set {
+                this["EditorDir"] = value;
+            }
+        }
     }
 }

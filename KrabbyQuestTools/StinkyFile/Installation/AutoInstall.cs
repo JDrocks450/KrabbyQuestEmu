@@ -64,8 +64,13 @@ namespace StinkyFile.Installation
                 _paused = value;
                 if (ThreeDModelExporter != null)
                     ThreeDModelExporter.Paused = value;
+                OnPausedStateChanged?.Invoke(this, value);
             }
         }
+        /// <summary>
+        /// Raised when the installation is Paused/Unpaused
+        /// </summary>
+        public event EventHandler<bool> OnPausedStateChanged;
         /// <summary>
         /// The current errors with the installation
         /// </summary>
@@ -256,6 +261,27 @@ namespace StinkyFile.Installation
         /// <returns></returns>
         private bool FinishUp()
         {
+            if (!CanUninstall(DestinationDirectory))
+            {
+                CallInstallationUpdate(
+                "Finalization",
+                "Unable to check files",
+                1 / 1.0);
+                PushError("Could not find installer manifest file, the installation cannot be verified. ");
+                return true;
+            }
+            var entries = StinkyFile.Installation.Uninstall.ParseInstallerManifest(DestinationDirectory);
+            int current = 0;
+            foreach (var entry in entries)
+            {
+                CallInstallationUpdate(
+                                "Finalization",
+                                "Checking Files (" + current + "/" + entries.Count,
+                                current/(double)entries.Count);
+                if (entry.Value == FileChange.ADD && !File.Exists(entry.Key))
+                    PushError(entry.Key + " is missing!");
+                current++;
+            }            
             return true;
         }
 
@@ -357,6 +383,8 @@ namespace StinkyFile.Installation
                 var filePath = Parser.ExtractFile(DestinationDirectory, chunk);
                 if (System.IO.Path.GetExtension(chunk.Name) == ".tga")
                 {
+                    if (File.Exists(path.Remove(path.Length-4) + ".png"))
+                        continue;  
                     try
                     {
                         var refBool = new Primitive.RefPrim<bool>(false);
@@ -435,7 +463,7 @@ namespace StinkyFile.Installation
                 CurrentTask = Description,
                 PercentComplete = Completion,
                 ElapsedTime = ElapsedTime,
-                StandardOutput = StandardOutput.ToString()
+                StandardOutput = StandardOutput.ToString() == "" ? null : StandardOutput.ToString()
             });
             StandardOutput = new StringBuilder();
         }

@@ -59,6 +59,9 @@ public class SquareButtonBehavior : MonoBehaviour
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
     {
+        if (sender is TileMovingObjectScript)
+            if ((sender as TileMovingObjectScript).SpecialObjectIgnore)
+                return;
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
             Press(sender, e);

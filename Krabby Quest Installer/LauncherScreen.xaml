@@ -1,0 +1,54 @@
+﻿<Page x:Class="KrabbyQuestInstaller.LauncherScreen"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KrabbyQuestInstaller"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LauncherScreen">
+
+    <Page.Resources>
+        <Style TargetType="Border" BasedOn="{StaticResource CardBorderStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource XButtonStyle}">
+            <Setter Property="Background" Value="DarkCyan"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6FFFAA"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ProgressBar">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="Value" Value="50"/>
+        </Style>
+    </Page.Resources>
+    <DockPanel>
+        <DockPanel.Background>
+            <ImageBrush ImageSource="/Krabby Quest Installer;component/Images/KrustyKrab.png" Stretch="UniformToFill"/>
+        </DockPanel.Background>
+        <Border x:Name="HostBorder" Margin="10" Background="#FF343434" MaxHeight="570" HorizontalAlignment="Left">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Width="250" Margin="10" MinHeight="300">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="Images/feature.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+                    <Button x:Name="PlayButton" FontWeight="Bold" Background="#FF0091BB" FontSize="16" Grid.Row="1" Margin="0,10,0,0" Click="PlayButton_Click">Play</Button>
+                    <Button x:Name="EditorButton" FontWeight="Bold" Background="#FF878787" FontSize="16" Grid.Row="2" Margin="0,5,0,5" Click="EditorButton_Click" BorderBrush="White">Editor</Button>
+                    <Button x:Name="OptionsButton" Margin="0,5,0,0" Grid.Row="3">Options</Button>
+                    <Button x:Name="AboutButton" Margin="0,5,0,0" Grid.Row="4">About</Button>
+                    <Button x:Name="ExitButton" Margin="0,5,0,0" Grid.Row="5" Click="ExitButton_Click">Exit</Button>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        <Grid/>
+    </DockPanel>
+</Page>

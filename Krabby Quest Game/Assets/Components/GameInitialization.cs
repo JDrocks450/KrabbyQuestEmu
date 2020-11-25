@@ -15,8 +15,7 @@ internal static class GameInitialization
         if (initialized == true) return;
         LevelDataBlock.BlockDatabasePath = "Assets/Resources/blockdb.xml";
         AssetDBEntry.AssetDatabasePath = "Assets/Resources/texturedb.xml";
-        MapWaypointParser.DBPath = "Assets/Resources/mapdb.xml";
-        StinkyFile.Save.SaveFile.SaveFileDir = "Saves/";
+        MapWaypointParser.DBPath = "Assets/Resources/mapdb.xml";        
         XDocument doc = XDocument.Load(AssetDBEntry.AssetDatabasePath);
         TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;
         _ = FontCreator.KrabbyQuestFont;

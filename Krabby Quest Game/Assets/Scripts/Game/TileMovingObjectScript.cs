@@ -75,6 +75,10 @@ public class TileMovingObjectScript : MonoBehaviour
     /// This object can move through anything
     /// </summary>
     public bool NoClip { get; set; } = false;
+    /// <summary>
+    /// Jetstreams, buttons will ignore this object
+    /// </summary>
+    public bool SpecialObjectIgnore = false;
 
     public PlayerEnum Player { get; set; } = PlayerEnum.ANYONE;
 

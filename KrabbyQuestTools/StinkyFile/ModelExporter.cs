@@ -44,17 +44,17 @@ namespace StinkyFile
         public bool ExportAll()
         {
             ExceptionObject = null;
+            Process BlenderProcess = new Process();
             try
             {
                 Directory.CreateDirectory(ExportDirectory);
                 var files = Directory.GetFiles(B3DContentDirectory, "*.b3d");
                 var pluginPath = Path.Combine(Environment.CurrentDirectory, "BlenderBackgroundConverter.py").Replace("\\", "/");
                 PythonParameterEditor pythonEditor = new PythonParameterEditor(pluginPath);
-                int current = 0;
-                Process BlenderProcess = new Process();
+                int current = 0;                
                 BlenderProcess.EnableRaisingEvents = true;
-                BlenderProcess.ErrorDataReceived += 
-                        (object s, DataReceivedEventArgs e) => 
+                BlenderProcess.ErrorDataReceived +=
+                        (object s, DataReceivedEventArgs e) =>
                             OnStandardOutput?.Invoke(this, e.Data);
                 BlenderProcess.OutputDataReceived +=
                         (object s, DataReceivedEventArgs e) =>
@@ -72,9 +72,9 @@ namespace StinkyFile
                     OnProgressChanged?.Invoke(this, ("Converting " + file, current / (double)files.Length));
                     var name = Path.GetFileNameWithoutExtension(file);
                     var destination = Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/");
-                    int index = pythonEditor.Replace("filepath=", 0, file.Replace("\\", "/"));                                                            
+                    int index = pythonEditor.Replace("filepath=", 0, file.Replace("\\", "/"));
                     index = pythonEditor.Replace("filepath=", index + file.Length + 5, destination);
-                    pythonEditor.Save();                    
+                    pythonEditor.Save();
                     var logFile = Path.Combine(Environment.CurrentDirectory, "log.log");
                     var startInfo = new ProcessStartInfo(BlenderPath, "-b -P " + pluginPath)
                     {
@@ -84,7 +84,7 @@ namespace StinkyFile
                         RedirectStandardError = true,
                         CreateNoWindow = true
                     };
-                    BlenderProcess.StartInfo = startInfo;                    
+                    BlenderProcess.StartInfo = startInfo;
                     BlenderProcess.Start();
                     BlenderProcess.BeginOutputReadLine();
                     BlenderProcess.BeginErrorReadLine();
@@ -103,10 +103,12 @@ namespace StinkyFile
                     current++;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ExceptionObject = e;
-                OnProgressChanged?.Invoke(this, ("Could Not Convert Model", 0/1.0));
+                OnProgressChanged?.Invoke(this, ("Could Not Convert Model", 0 / 1.0));
+                BlenderProcess.CancelOutputRead();
+                BlenderProcess.CancelErrorRead();
                 return false;
             }
             OnProgressChanged?.Invoke(this, ("All Models Converted", 1/1.0));

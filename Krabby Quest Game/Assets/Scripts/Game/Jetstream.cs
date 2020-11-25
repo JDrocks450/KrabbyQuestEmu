@@ -35,28 +35,29 @@ public class Jetstream : MonoBehaviour
         TileMovingObjectScript.MoveableMoved -= Jetstream_SpongebobPlayerPositionChanged;
     }
 
-    void PlayerEnteredTile(TileMovingObjectScript Spongebob)
+    void PlayerEnteredTile(TileMovingObjectScript TileObject)
     {
-        var rotator = Spongebob.GetComponentInChildren<AngleRotator>();
+        if (TileObject.SpecialObjectIgnore) return;
+        var rotator = TileObject.GetComponentInChildren<AngleRotator>();
         bool motionResult = false;
         float motionspeed = 7f;
         switch (BlockComponent.DataBlock.Rotation)
         {
             case StinkyFile.SRotation.NORTH:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY - 1, motionspeed);
+                motionResult = TileObject.WalkToTile(TileObject.TileX, TileObject.TileY - 1, motionspeed);
                 break;
             case StinkyFile.SRotation.SOUTH:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX, Spongebob.TileY + 1, motionspeed);
+                motionResult = TileObject.WalkToTile(TileObject.TileX, TileObject.TileY + 1, motionspeed);
                 break;
             case StinkyFile.SRotation.WEST:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX - 1, Spongebob.TileY, motionspeed);
+                motionResult = TileObject.WalkToTile(TileObject.TileX - 1, TileObject.TileY, motionspeed);
                 break;
             case StinkyFile.SRotation.EAST:
-                motionResult = Spongebob.WalkToTile(Spongebob.TileX + 1, Spongebob.TileY, motionspeed);
+                motionResult = TileObject.WalkToTile(TileObject.TileX + 1, TileObject.TileY, motionspeed);
                 break;
         }
         soundEffects.Play(0);
-        if (!motionResult && Spongebob.TryGetComponent<Player>(out _))
+        if (!motionResult && TileObject.TryGetComponent<Player>(out _))
         {
             Player.KillAllPlayers();
             return;

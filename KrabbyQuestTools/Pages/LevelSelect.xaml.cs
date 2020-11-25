@@ -3,6 +3,7 @@ using KrabbyQuestTools.Controls;
 using StinkyFile;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -252,6 +253,11 @@ namespace KrabbyQuestTools.Pages
             IsPromptHidden = true;
         }
 
+        private void OpenInstallerButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()
@@ -312,54 +318,60 @@ namespace KrabbyQuestTools.Pages
             string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
             string assetDBpath1 = AssetDBEntry.AssetDatabasePath, assetDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml");
             FileInfo info1 = new FileInfo(blockDBpath1), info2 = new FileInfo(blockDBpath2);
-            if (info1.LastWriteTime.ToFileTime() != info2.LastWriteTime.ToFileTime()) // one is modified
+            if (info1.Exists && info2.Exists)
             {
-                changes = true;
-                string time = info1.LastWriteTime.ToShortDateString() + " " + info1.LastWriteTime.ToShortTimeString();
-                EditorStack.Children.Add(
-                    getEditorRow("Block Database", 
-                    time,
-                    info1.Length - info2.Length,
-                    delegate
-                    {
-                        Push(info1, blockDBpath2);
-                        RefreshAllChanges();
-                    }));
-                time = info2.LastWriteTime.ToShortDateString() + " " + info2.LastWriteTime.ToShortTimeString();
-                GameStack.Children.Add(
-                    getGameRow("Block Database", 
-                    time,
-                    info2.Length - info1.Length,
-                    delegate
-                    {
-                        Revert(info2, blockDBpath1);
-                        RefreshAllChanges();
-                    }));
+                if (info1.LastWriteTime.ToFileTime() != info2.LastWriteTime.ToFileTime()) // one is modified
+                {
+                    changes = true;
+                    string time = info1.LastWriteTime.ToShortDateString() + " " + info1.LastWriteTime.ToShortTimeString();
+                    EditorStack.Children.Add(
+                        getEditorRow("Block Database",
+                        time,
+                        info1.Length - info2.Length,
+                        delegate
+                        {
+                            Push(info1, blockDBpath2);
+                            RefreshAllChanges();
+                        }));
+                    time = info2.LastWriteTime.ToShortDateString() + " " + info2.LastWriteTime.ToShortTimeString();
+                    GameStack.Children.Add(
+                        getGameRow("Block Database",
+                        time,
+                        info2.Length - info1.Length,
+                        delegate
+                        {
+                            Revert(info2, blockDBpath1);
+                            RefreshAllChanges();
+                        }));
+                }
             }
             FileInfo ainfo1 = new FileInfo(assetDBpath1), ainfo2 = new FileInfo(assetDBpath2);
-            if (ainfo1.LastWriteTime.ToFileTime() != ainfo2.LastWriteTime.ToFileTime()) // one is modified
+            if (ainfo1.Exists && ainfo2.Exists)
             {
-                changes = true;
-                string time = ainfo1.LastWriteTime.ToShortDateString() + " " + ainfo1.LastWriteTime.ToShortTimeString();
-                EditorStack.Children.Add(
-                    getEditorRow("Asset Database", 
-                    time,
-                    ainfo1.Length - ainfo2.Length,
-                    delegate
-                    {
-                        Push(ainfo1, assetDBpath2);
-                        RefreshAllChanges();
-                    }));
-                time = ainfo2.LastWriteTime.ToShortDateString() + " " + ainfo2.LastWriteTime.ToShortTimeString();
-                GameStack.Children.Add(
-                    getGameRow("Asset Database", 
-                    time,
-                    ainfo2.Length - ainfo1.Length,
-                    delegate
-                    {
-                        Revert(ainfo2, assetDBpath1);
-                        RefreshAllChanges();
-                    }));
+                if (ainfo1.LastWriteTime.ToFileTime() != ainfo2.LastWriteTime.ToFileTime()) // one is modified
+                {
+                    changes = true;
+                    string time = ainfo1.LastWriteTime.ToShortDateString() + " " + ainfo1.LastWriteTime.ToShortTimeString();
+                    EditorStack.Children.Add(
+                        getEditorRow("Asset Database",
+                        time,
+                        ainfo1.Length - ainfo2.Length,
+                        delegate
+                        {
+                            Push(ainfo1, assetDBpath2);
+                            RefreshAllChanges();
+                        }));
+                    time = ainfo2.LastWriteTime.ToShortDateString() + " " + ainfo2.LastWriteTime.ToShortTimeString();
+                    GameStack.Children.Add(
+                        getGameRow("Asset Database",
+                        time,
+                        ainfo2.Length - ainfo1.Length,
+                        delegate
+                        {
+                            Revert(ainfo2, assetDBpath1);
+                            RefreshAllChanges();
+                        }));
+                }
             }
             PushAllChanges.IsEnabled = changes;
         }

@@ -26,10 +26,12 @@ namespace StinkyFile.Installation
             this.InstallDir = InstallDir;
         }
 
-        bool ParseInstallerManifest()
+        public static string GetManifestPath(string InstallDir) => Path.Combine(InstallDir, "manifest.txt");
+
+        public static Dictionary<string, FileChange> ParseInstallerManifest(string InstallDir)
         {
-            Entries.Clear();
-            using (var fs = File.OpenText(Path.Combine(InstallDir, "manifest.txt")))
+            var Entries = new Dictionary<string, FileChange>();
+            using (var fs = File.OpenText(GetManifestPath(InstallDir)))
             {
                 while (!fs.EndOfStream)
                 {
@@ -44,8 +46,10 @@ namespace StinkyFile.Installation
                         Entries.Add(path, change);
                 }
             }
-            return true;
+            return Entries;
         }
+
+        void ParseInstallerManifest() => Entries = ParseInstallerManifest(InstallDir);
 
         /// <summary>
         /// Starts the uninstallation
