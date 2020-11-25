@@ -1,4 +1,5 @@
-﻿using KrabbyQuestTools.Pages;
+﻿using KrabbyQuestTools.Controls;
+using KrabbyQuestTools.Pages;
 using StinkyFile;
 using System;
 using System.Collections.Generic;
@@ -24,17 +25,23 @@ namespace KrabbyQuestTools
     public partial class MainWindow : Window
     {
         string TabDeclarationCached;
+        public static MainWindow ApplicationMainWindow;
         public MainWindow()
         {
             InitializeComponent();
+            ApplicationMainWindow = this;
             TabDeclarationCached = AppResources.XamlToString(TabSwitcher.Items[0] as TabItem);            
         }
 
-        private void CreateTab_Selected(object sender, RoutedEventArgs e)
+        public static void PushTab(Page Content) => ApplicationMainWindow.PushNewTab(Content);
+
+        public void PushNewTab(Page Content)
         {
             TabItem tab = AppResources.CloneXaml<TabItem>(TabDeclarationCached);
-            (tab.Content as Frame).Content = new LevelSelect();
-            var closeButton = (((tab.Header as Border).Child as DockPanel).Children[0] as Button);            
+            (tab.Content as Frame).Content = Content;
+            var closeButton = (((tab.Header as Border).Child as DockPanel).Children[0] as Button);  
+            var title = (((tab.Header as Border).Child as DockPanel).Children[1] as TextBlock);
+            title.Text = Content.Title;
             (tab.Content as Frame).Tag = tab;
             (tab.Content as Frame).Navigating += MainWindow_Navigating;            
             closeButton.Tag = tab;
@@ -42,6 +49,11 @@ namespace KrabbyQuestTools
             TabSwitcher.Items.Insert(TabSwitcher.Items.Count - 1,tab);
             int x = TabSwitcher.Items.Count - 1;
             Dispatcher.BeginInvoke((Action)(() => TabSwitcher.SelectedItem = tab));
+        }
+
+        private void CreateTab_Selected(object sender, RoutedEventArgs e)
+        {
+            PushNewTab(new LevelSelect());
         }
 
         Dictionary<TabItem, EventHandler> currentHandlers = new Dictionary<TabItem, EventHandler>();
@@ -69,9 +81,10 @@ namespace KrabbyQuestTools
         }
 
         private void CloseButtonClick(object sender, RoutedEventArgs e)
-        {
+        {           
             var tab = (TabItem)(sender as Button).Tag;
-            var stinkyPage = ((tab.Content as Frame).Content) as StinkyUI;
+            if (tab.Content == null) return;
+            var stinkyPage = ((tab.Content as Frame).Content) as KQTPage;
             if (stinkyPage != null)
                 if (!stinkyPage.OnClosing()) return;
             TabSwitcher.Items.Remove(tab);
@@ -98,6 +111,17 @@ namespace KrabbyQuestTools
             catch
             {
 
+            }
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            foreach(TabItem tab in TabSwitcher.Items)
+            {
+                if (tab.Content == null) return;
+                var page = ((tab.Content as Frame).Content) as KQTPage;
+                if (page != null)
+                    page.OnActivated();
             }
         }
     }

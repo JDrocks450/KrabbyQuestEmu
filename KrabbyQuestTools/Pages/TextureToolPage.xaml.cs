@@ -51,6 +51,17 @@ namespace KrabbyQuestTools.Pages
             database.Root.Add(new XElement("WorkspaceDirectory", FilePath));
             database.Save(AssetDBEntry.AssetDatabasePath);
         }
+        public TextureToolPage(string FilePath, string AssetGuid) : this(FilePath)
+        {
+            var dbe = AssetDBEntry.Load(AssetGuid, true);
+            if (dbe == null)
+            {
+                MessageBox.Show($"The AssetDBEntry using GUID: {AssetGuid} could not be found. Verify that the path: {FilePath} is " +
+                    $"the correct Workspace Directory. If not, you can change it on the opening screen of the editor.");
+                return;
+            }
+            PopulateFileInfo(dbe, false);
+        }
 
         private void PopulateFileBrowser()
         {
@@ -111,11 +122,21 @@ namespace KrabbyQuestTools.Pages
                 FileCorruptBlock.Visibility = Visibility.Visible;
             }
             var dbe = AssetDBEntry.LoadFromFileName(filePath, out bool created);
+            PopulateFileInfo(dbe, created);   
+        }
+
+        public void PopulateFileInfo(AssetDBEntry dbe, bool newlyCreated)
+        {
+            if (dbe == null)
+            {
+                return;
+            }
             OpenEntry = dbe;
-            FileNameBox.Text = filePath;
-            DBNameBox.Text = dbe.DBName ?? System.IO.Path.GetFileNameWithoutExtension(filePath);
+            FileNameBox.Text = dbe.FileName;
+            var name = dbe.DBName ?? "UNKNOWN";
+            DBNameBox.Text = name;
             AssetGuidBox.Text = dbe.GUID;
-            if (!created)
+            if (!newlyCreated)
                 AssetTypeSwitcher.SelectedItem = Enum.GetName(typeof(AssetType), dbe.Type);
             else
             {
@@ -126,7 +147,7 @@ namespace KrabbyQuestTools.Pages
                     AssetTypeSwitcher.SelectedItem = "Model";
             }
             RefreshReferences(dbe);    
-            Title = "ADE - Viewing " + AssetDBEntry.GetDBNameFromFileName(filePath);            
+            Title = "ADE - Viewing " + name; 
         }
 
         private void RefreshReferences(AssetDBEntry dbe)

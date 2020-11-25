@@ -1,0 +1,5 @@
+﻿KrabbyQuestEmu Resources file -- The installer will move the files from the source dir (!) to the destination directory (>)
+!2e4ef40f-fa9e-4185-8fc7-fe8752a448f5.ico
+>icon.ico
+!feature.jpg
+>Images/feature.jpg

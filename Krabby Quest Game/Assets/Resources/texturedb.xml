@@ -336,18 +336,6 @@
     <AssetType>Texture</AssetType>
     <References>O170254,O245554,O714060,O844664</References>
   </A519435>
-  <A94528>
-    <FilePath>Export\tentacle_both01.obj</FilePath>
-    <Name>Tentacle</Name>
-    <AssetType>Model</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O170254,O245554,O714060,O844664,O503264,O614014</References>
-  </A94528>
-  <A704444>
-    <FilePath>Graphics\tentacle_cannon01.png</FilePath>
-    <Name>tentacle_cannon01</Name>
-    <AssetType>Texture</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264</References>
-  </A704444>
   <A381986>
     <FilePath>sound\sb-bonus.wav</FilePath>
     <Name>sb-bonus</Name>
@@ -378,12 +366,6 @@
     <AssetType>Sound</AssetType>
     <References>O985647,O161677</References>
   </A285245>
-  <A440017>
-    <FilePath>sound\sb-tentacle2.wav</FilePath>
-    <Name>sb-tentaclethrow</Name>
-    <AssetType>Sound</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264</References>
-  </A440017>
   <A186068>
     <FilePath>sound\sb-tentacle.wav</FilePath>
     <Name>sb-tentacle</Name>
@@ -540,5 +522,41 @@
     <AssetType>Texture</AssetType>
     <References>O885792</References>
   </A894790>
+  <A122131>
+    <FilePath>sound\sb-boxexplo.wav</FilePath>
+    <Name>sb-boxexplo</Name>
+    <AssetType>Sound</AssetType>
+    <References>O161677</References>
+  </A122131>
+  <A867523>
+    <FilePath>sound\sb-button.wav</FilePath>
+    <Name>sb-button</Name>
+    <AssetType>Sound</AssetType>
+    <References>O319375,O374697,O395001,O775265,O824671,O649974,O927556,O356167,O472611,O990960,O536395,O828136,O339486,O588452,O201429</References>
+  </A867523>
+  <A25181>
+    <FilePath>sound\sb-breakaway.wav</FilePath>
+    <Name>sb-breakaway</Name>
+    <AssetType>Sound</AssetType>
+    <References>O842172,O83202,O542113</References>
+  </A25181>
+  <A94528>
+    <FilePath>Export\tentacle_both01.obj</FilePath>
+    <Name>Tentacle</Name>
+    <AssetType>Model</AssetType>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O170254,O245554,O714060,O844664,O503264,O614014,O950193</References>
+  </A94528>
+  <A704444>
+    <FilePath>Graphics\tentacle_cannon01.png</FilePath>
+    <Name>tentacle_cannon01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
+  </A704444>
   <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
+  <A440017>
+    <FilePath>sound\sb-tentacle2.wav</FilePath>
+    <Name>sb-tentaclethrow</Name>
+    <AssetType>Sound</AssetType>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
+  </A440017>
 </root>

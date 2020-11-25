@@ -25,7 +25,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BlenderExporter.py" />
-    <Compile Include="BlenderB3DImport.py">
+    <Compile Include="InstallPlugin.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

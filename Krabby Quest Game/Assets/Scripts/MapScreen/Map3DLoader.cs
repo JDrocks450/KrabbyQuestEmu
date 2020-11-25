@@ -1,5 +1,6 @@
 ﻿using Assets.Components;
 using StinkyFile;
+using StinkyFile.Save;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,9 @@ public class Map3DLoader : MonoBehaviour
     Sprite[] UnlockedNotCompleted = new Sprite[7], Locked, Completed;
     Vector2 TopLeft = new Vector2(15, -15), BotRight = new Vector2(-5, 5);
     GameObject CurrentLevelIndicator, MarkerTemplate;
+    Transform UIGroup;
     MapWaypointParser mparser;
+    SaveFile currentSave;
     public StinkyLevel CurrentlySelected
     {
         get; private set;
@@ -21,8 +24,14 @@ public class Map3DLoader : MonoBehaviour
     void Start()
     {        
         GameInitialization.Initialize();
+        if (SaveFileManager.IsFileOpened)
+        {
+            currentSave = SaveFileManager.Current;
+            currentSave.RefreshStats(); // get the latest level statistics
+        }
         var transform = this.transform;
         var objectMaterial = Resources.Load("Materials/Object Material") as Material;
+        UIGroup = transform.GetChild(5); // the map UI group
         //apply textures
         for (int i = 0; i < 4; i++)
         {
@@ -33,8 +42,16 @@ public class Map3DLoader : MonoBehaviour
         }
         MarkerTemplate = transform.GetChild(4).gameObject; // marker sample
         LoadWaypoints();
-        CurrentLevelIndicator = GetCursor();
+        CurrentLevelIndicator = GetCursor();        
         ChangeSelectedLevel(mparser.Levels.Keys.ElementAt(0));
+    }
+
+    void SetUIText()
+    {
+        if (SaveFileManager.IsFileOpened != true) return;
+        UIGroup.GetChild(0).GetComponent<TextMesh>().text = "Score: " + currentSave.SaveFileInfo.TotalScore; // score
+        UIGroup.GetChild(1).GetComponent<TextMesh>().text = "Levels: " + currentSave.SaveFileInfo.CompletedLevels; // levels
+        UIGroup.GetChild(2).GetComponent<TextMesh>().text = "Spatulas: " + currentSave.SaveFileInfo.Spatulas; // spatulas
     }
 
     void LoadWaypoints()
@@ -77,7 +94,7 @@ public class Map3DLoader : MonoBehaviour
             bool sourceUpdated = false;
             if (SaveFileManager.IsFileOpened)
             {
-                var saveFileInfo = level.GetSaveFileInfo(SaveFileManager.Current);
+                var saveFileInfo = level.GetSaveFileInfo(currentSave);
                 if (saveFileInfo.WasPerfect)
                 {
                     source = GetTextureSource(0, 64, 64, 64); // Original Krabby Patty
@@ -147,6 +164,7 @@ public class Map3DLoader : MonoBehaviour
             marker.localPosition = new Vector3(point.x, 0.15f, point.y);
             CurrentlySelected = level;
         }
+        SetUIText();
     }
 
     // Update is called once per frame

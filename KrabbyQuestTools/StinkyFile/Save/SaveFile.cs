@@ -82,16 +82,24 @@ namespace StinkyFile.Save
         /// </summary>
         public Dictionary<string, LevelCompletionInfo> LevelInfo = new Dictionary<string, LevelCompletionInfo>();
 
+        private static void MakeDocumentsDirectory()
+        {
+            SaveFileDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "KrabbyQuestEmu", "Save"); // save to my documents for safety
+            Directory.CreateDirectory(SaveFileDir);
+        }
+
         private SaveFile()
         {
-
+            MakeDocumentsDirectory();
         }
 
         /// <summary>
         /// Creates a new save file using the next available save slot 
         /// </summary>
         /// <param name="Name">The PlayerName for this save file</param>
-        public SaveFile(string Name)
+        public SaveFile(string Name) : this()
         {
             int tries = 0;
             while (true)
@@ -115,7 +123,7 @@ namespace StinkyFile.Save
         /// Loads the save file at the slot provided
         /// </summary>
         /// <param name="slot">The slot to open</param>
-        public SaveFile(int slot)
+        public SaveFile(int slot) : this()
         {
             Directory.CreateDirectory(SaveFileDir);
             var path = Path.Combine(SaveFileDir, slot.ToString());
@@ -130,7 +138,7 @@ namespace StinkyFile.Save
         /// Open a save file from the specified path
         /// </summary>
         /// <param name="filePath">The path to the save file relative/absolute</param>
-        public SaveFile(Uri filePath)
+        public SaveFile(Uri filePath) : this()
         {
             if (!File.Exists(filePath.OriginalString))
                 throw new Exception("Save file doesn't exist!");
@@ -151,7 +159,10 @@ namespace StinkyFile.Save
         public static SaveFile[] GetAllSaves(string SaveDir = default)
         {
             if (SaveDir == default)
+            {
+                MakeDocumentsDirectory();
                 SaveDir = SaveFileDir;
+            }
             if (!Directory.Exists(SaveDir)) 
                 return new SaveFile[0];
             var dirFiles = Directory.GetFiles(SaveDir);

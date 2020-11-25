@@ -1,4 +1,5 @@
 ﻿using KrabbyQuestTools;
+using KrabbyQuestTools.Controls;
 using StinkyFile;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,14 @@ namespace KrabbyQuestTools.Pages
     /// <summary>
     /// Interaction logic for StinkyUI.xaml
     /// </summary>
-    public partial class StinkyUI : Page
+    public partial class StinkyUI : KQTPage
     {
         private StinkyParser Parser => AppResources.Parser;
         private StinkyLevel OpenLevel;
         private LevelDataBlock OpenDataBlock;
         private BlockLayers _mode;
         private string AssetDir = @"D:\Projects\Krabby Quest\Workspace";
-        bool askSave = false;       
+        bool askSave = false, decorPrepared = false;       
 
         private BlockLayers Mode
         {
@@ -205,9 +206,10 @@ namespace KrabbyQuestTools.Pages
                             }
                             try
                             {
+                                var image = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName)));
                                 cell.Child = new Image()
                                 {
-                                    Source = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName))),
+                                    Source = image,
                                     RenderTransform = transform,
                                     RenderTransformOrigin = new Point(.5, .5)
                                 };
@@ -233,13 +235,12 @@ namespace KrabbyQuestTools.Pages
             ToDoListContent.Children.Clear();
             foreach(var block in Parser.UnknownBlocks.Values)
             {
-                var border = new Border()
+                var border = new Button()
                 {
                     Height = 20,
                     Margin = new Thickness(0,5,0,5),
                     VerticalAlignment = VerticalAlignment.Top,
-                    BorderThickness = new Thickness(1, 1, 1, 1),
-                    BorderBrush = Brushes.Gray,
+                    BorderBrush = Brushes.White,
                     Background = new SolidColorBrush(AppResources.S_ColorConvert(block.Color)),
                     Tag = block
                 };
@@ -303,6 +304,7 @@ namespace KrabbyQuestTools.Pages
                     TextureSelectionField.Background = null;
                     TextureNameBox.Text = "No Texture";
                 }
+                ParameterMenu.Load(dataBlock);
                 RotationField.SelectedIndex = Array.IndexOf(Enum.GetNames(typeof(SRotation)), Enum.GetName(typeof(SRotation), dataBlock.Rotation));
                 OpenDataBlock = dataBlock;
                 BlockSaveButton.IsEnabled = true;                
@@ -359,11 +361,21 @@ namespace KrabbyQuestTools.Pages
         {
             if (Mode != BlockLayers.Decoration)
             {
-                PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
+                if (!decorPrepared)
+                {
+                    PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
+                    decorPrepared = true;
+                }
                 Mode = BlockLayers.Decoration;
                 DecorGrid.Visibility = Visibility.Visible;
                 LevelGrid.Opacity = .15;
             }
+        }
+
+        public override void OnActivated()
+        {
+            UpdateToolMenu(OpenDataBlock);
+            base.OnActivated();
         }
 
         private void RotationField_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -376,12 +388,16 @@ namespace KrabbyQuestTools.Pages
         {
             if (OpenDataBlock != null)
             {
-                var paramDialog = new ParameterDialog(OpenDataBlock);
-                paramDialog.ShowDialog();
+                var paramDialog = new KQTDialog()
+                {
+                    Content = new ParameterDialog(OpenDataBlock),
+                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"))
+                };
+                paramDialog.Show();
             }
         }
 
-        public bool OnClosing()
+        public override bool OnClosing()
         {
             if (askSave)
             {

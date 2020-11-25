@@ -28,7 +28,7 @@ public class TextureLoader : MonoBehaviour
     {
         if (!TryGetComponent(out TileComponent) && LookIntoParent && !ForceTemplate)
             TileComponent = GetComponentInParent<DataBlockComponent>();
-        if (TileComponent?.TextureLoaded ?? false || ForceTemplate) 
+        if (TileComponent?.TextureLoaded ?? false && !ForceTemplate) 
             return;
         Data = TileComponent?.DataBlock;
         if (DefaultMaterial == null)
@@ -69,7 +69,7 @@ public class TextureLoader : MonoBehaviour
             TemplatedItems.Add(name, LevelObjectManager.Level.IntegralData.FirstOrDefault(x => x.Name == "SAND"));
             return TemplatedItems[name];
         }
-        else if (name == "Water") // water tile
+        else if (name == "NorthPlane" || name == "EastPlane" || name == "SouthPlane" || name == "WestPlane" || name == "Bottom") // water tile
         {
             TemplatedItems.Add(name, LevelObjectManager.Level.IntegralData.FirstOrDefault(x => x.Name == "BIKINI_WATER" || x.Name == "WATER_GOO_LAGOON"));
             return TemplatedItems[name];

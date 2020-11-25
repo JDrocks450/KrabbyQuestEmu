@@ -52,7 +52,18 @@ public class PushableScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        TileMovingObjectScript.MoveableMoving -= Jetstream_SpongebobPlayerPositionChanging;
+        TileMovingObjectScript.MoveableMoving -= Jetstream_SpongebobPlayerPositionChanging;        
+    }
+
+    public void Destroy()
+    {
+        if (TryGetComponent<BeachBallBehavior>(out var bhav))
+        {
+            bhav.Destroy();
+            return;
+        }
+        GetComponent<SoundLoader>().Play(2);
+        GameObject.Destroy(gameObject);
     }
 
     private void Jetstream_SpongebobPlayerPositionChanging(object sender, MoveEventArgs e)
@@ -64,9 +75,8 @@ public class PushableScript : MonoBehaviour
             if ((sender as TileMovingObjectScript).TryGetComponent<GooberBehavior>(out var goober)) // is a goober
             {
                 if (CanDestory)
-                    Destroy(gameObject); // destroy this destructable box
-                else
-                    Destroy(goober.gameObject); // if this box cannot be destoryed, the goober must be destroyed
+                    Destroy(); // destroy this destructable box
+                Destroy(goober.gameObject); //the goober must also be destroyed
                 return; // prevent goober pushing box
             }
             if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _)) //ignore pushes that aren't players
@@ -102,7 +112,7 @@ public class PushableScript : MonoBehaviour
             Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);
             return;
         }
-        MovementScript.MotionSpeed = e.MotionSpeed;
+        MovementScript.MotionSpeed = e.MotionSpeed + .1f;
         bool blockMotion = false;
         blockMotion = !MovementScript.MoveInDirection(e.Direction);
         e.BlockMotion = blockMotion;

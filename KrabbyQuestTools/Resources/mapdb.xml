@@ -165,6 +165,10 @@
     <Position>193.703812316716,535.287390029325</Position>
   </point>
   <point>
+    <LevelFileName>1.lv5</LevelFileName>
+    <Position>733.127853881279,696.890410958904</Position>
+  </point>
+  <point>
     <LevelFileName>4.lv5</LevelFileName>
     <Position>561.292237442922,681.694063926941</Position>
   </point>
@@ -251,9 +255,5 @@
   <point>
     <LevelFileName>52.lv5</LevelFileName>
     <Position>53.9680365296804,140.470319634703</Position>
-  </point>
-  <point>
-    <LevelFileName>1.lv5</LevelFileName>
-    <Position>734.296803652968,694.552511415525</Position>
   </point>
 </root>

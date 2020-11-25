@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KrabbyQuestTools"
         mc:Ignorable="d"
-        Title="Dialog" Height="261" Width="447.714">
+        Title="Dialog" Height="261" Width="447.714" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
 
 </Window>

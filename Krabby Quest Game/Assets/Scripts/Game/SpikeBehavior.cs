@@ -98,8 +98,8 @@ public class SpikeBehavior : MonoBehaviour
         }
         else if (standingInside.TryGetComponent<PushableScript>(out var box))
         {
-            if (box.CanDestory) 
-                Destroy(box);
+            if (box.CanDestory)
+                box.Destroy();
         }
     }
 }

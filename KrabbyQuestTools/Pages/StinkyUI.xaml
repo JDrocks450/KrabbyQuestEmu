@@ -1,9 +1,10 @@
-﻿<Page x:Class="KrabbyQuestTools.Pages.StinkyUI"
+﻿<controls:KQTPage x:Class="KrabbyQuestTools.Pages.StinkyUI"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
+      xmlns:controls="clr-namespace:KrabbyQuestTools.Controls"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -15,11 +16,17 @@
     <Grid>
         <DockPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid Width="225" Background="#FF1B1B1B">
+                <Grid Width="225" Background="#FF323232">
                     <StackPanel Margin="10">
-                        <Button x:Name="RefreshEditorButton" Height="30" Click="RefreshEditorButton_Click">Refresh Editor</Button>
-                        <Button Margin="0,5,0,0" Click="Button_Click">Save All</Button>
-                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                        <StackPanel.Resources>
+                            <Style TargetType="Border" BasedOn="{StaticResource CardBorderStyle}">
+                                <Setter Property="Background" Value="#FF303030"/>
+                            </Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource XButtonStyle}"/>
+                        </StackPanel.Resources>
+                        <Button x:Name="RefreshEditorButton" Height="30" Click="RefreshEditorButton_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan">Refresh Editor</Button>
+                        <Button Margin="0,5,0,0" Click="Button_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan">Save All</Button>
+                        <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
                                 <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block Editor"/>
                                 <Grid x:Name="RawDataField" Height="20" Margin="0,10,0,0">
@@ -36,40 +43,53 @@
                                 </DockPanel>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Color:</TextBlock>
-                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="119" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="146" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
                                 </DockPanel>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Texture:</TextBlock>
                                     <Border DockPanel.Dock="Right" x:Name="TextureSelectionField" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="25" Height="25" BorderBrush="#FF636363" BorderThickness="1"/>
-                                    <TextBox x:Name="TextureNameBox" Margin="10,0,0,0"></TextBox>
+                                    <TextBox x:Name="TextureNameBox" Margin="10,0,0,0" VerticalContentAlignment="Center"/>
                                 </DockPanel>
-                                <Border Margin="0,2,0,0">
-                                    <TextBlock x:Name="ContextWarningLabel" Padding="10,3" Background="#FFFFF4AE" Foreground="Black">Affected by Context: </TextBlock>
+                                <Border Margin="0,2,0,0" Background="#FFFFF4AE" Style="{x:Null}">
+                                    <TextBlock x:Name="ContextWarningLabel" Padding="10,3"  Foreground="Black">Affected by Context:</TextBlock>
                                 </Border>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Rotation:</TextBlock>
-                                    <ComboBox x:Name="RotationField" Margin="5,0,0,0" HorizontalAlignment="Right" SelectedIndex="0" VerticalAlignment="Top" Width="105" Height="25" BorderBrush="#FF636363" SelectionChanged="RotationField_SelectionChanged">
+                                    <ComboBox x:Name="RotationField" Margin="5,0,0,0" HorizontalAlignment="Right" SelectedIndex="0" VerticalAlignment="Top" Width="130" Height="25" BorderBrush="#FF636363" SelectionChanged="RotationField_SelectionChanged">
                                         <ComboBoxItem Content="NORTH"/>
                                         <ComboBoxItem Content="SOUTH"/>
                                         <ComboBoxItem Content="EAST"/>
                                         <ComboBoxItem Content="WEST"/>
                                     </ComboBox>
                                 </DockPanel>
-                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="24" Click="ParameterButton_Click">
-                                    Manage Parameters
-                                </Button>
                                 <TextBlock x:Name="BlockLayerDisplay" FontStyle="Italic" Margin="0,5,0,0">Integral</TextBlock>
-                                <Button x:Name="BlockSaveButton" Margin="0,10,0,0" Height="25" Click="BlockSaveButton_Click">Save</Button>
+                                <Button x:Name="BlockSaveButton" Margin="0,10,0,0" Height="30" Click="BlockSaveButton_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan">Save</Button>
                             </StackPanel>
                         </Border>
-                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
-                            <StackPanel  Margin="10">
+                        <Border Margin="0,10,0,0">
+                            <StackPanel Margin="10">
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Block Parameters" />
+                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="30" Click="ParameterButton_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan" Content="Pop out window"/>
+                                <Frame>
+                                    <Frame.Content>
+                                        <local:ParameterDialog x:Name="ParameterMenu" Margin="-10,10,-10,0"/>
+                                    </Frame.Content>
+                                </Frame>
+                                <GroupBox Header="Warning" Foreground="White" BorderBrush="White" Margin="0,5,0,0">
+                                    <TextBlock Margin="5,5,5,5" TextWrapping="Wrap">Applying these parameters does not save them to file. 
+                                        Apply parameters then use Save All or the Save button in LevelDataBlock Editor to save these changes to file.
+                                    </TextBlock>
+                                </GroupBox>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="0,10,0,0">
+                            <StackPanel Margin="10">
                                 <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Message Text Editor"/>
                                 <StackPanel x:Name="MessageButtons" Margin="0,10"/>
                                 <TextBox x:Name="MessageTextEditor" IsReadOnly="True" TextWrapping="Wrap" Text="&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;"/>
                             </StackPanel>
                         </Border>
-                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                        <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
                                 <TextBlock HorizontalAlignment="Left" FontWeight="Bold">Map</TextBlock>
                                 <DockPanel Margin="0,10,0,0">
@@ -92,7 +112,7 @@
                                 <StackPanel x:Name="HeaderData"/>
                             </StackPanel>
                         </Border>
-                        <Border Margin="0,10,0,0" Background="#FF303030" BorderBrush="#FF646464" BorderThickness="1">
+                        <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
                                 <TextBlock FontWeight="Bold">To-Do List</TextBlock>
                                 <StackPanel x:Name="ToDoListContent" Margin="10"/>
@@ -117,4 +137,4 @@
             </Grid>
         </DockPanel>
     </Grid>
-</Page>
+</controls:KQTPage>

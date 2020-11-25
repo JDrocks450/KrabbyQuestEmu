@@ -29,6 +29,9 @@ public class WaterBehavior : MonoBehaviour
         {
             var component = GetComponentInParent<DataBlockComponent>();
             Position = new Vector2Int(component.WorldTileX, component.WorldTileY);
+            BlockComponent = component;
+            SoundLoader loader = gameObject.AddComponent<SoundLoader>();
+            loader.LoadAll(BlockComponent.DataBlock);
         }
         else
         {
@@ -116,11 +119,13 @@ public class WaterBehavior : MonoBehaviour
     {
         if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
             MoveableEnteredTile(sender as TileMovingObjectScript);
-        else if (isplayerfloating && floating.Equals(sender))
+        else if (isplayerfloating && floating.Equals(sender)) // destroy raft
         {
             isplayerfloating = false;
             IsCovered = false;
             transform.parent.GetChild(1).gameObject.SetActive(false); // hide raft
+            var soundLoader = GetComponent<SoundLoader>();
+            soundLoader.Play(0); 
         }
     }
 
@@ -129,7 +134,7 @@ public class WaterBehavior : MonoBehaviour
         if (Moveable.Target.TryGetComponent<PushableScript>(out var box)) // is a box?
         {
             var animator = box.GetComponentInChildren<Animator>();
-            if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken))
+            if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken && !IsBoxFloating))
             {
                 animator.Play("Floating");
                 IsBoxFloating = true;

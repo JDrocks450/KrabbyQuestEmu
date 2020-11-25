@@ -10,7 +10,15 @@
       Title="Gallery Viewer" Background="#FF252525">
 
     <Grid>
-        <TextBlock Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontStyle="Italic">Gallery Viewer</TextBlock>
-        <controls:Gallery Margin="10,60,10,10" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+        <TextBlock Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Bold">Gallery Viewer</TextBlock>
+        <DockPanel Margin="10,60,10,10">
+            <Border DockPanel.Dock="Right" Width="250" Margin="5,0,0,0" Background="#FF323232" BorderBrush="#FF6E6E6E" BorderThickness="1">
+                <StackPanel x:Name="AssetInfoStack">
+                    <TextBlock x:Name="assetInfoLabel" FontWeight="Bold" Margin="10,10">Asset Info</TextBlock>
+                </StackPanel>
+            </Border>
+            <controls:Gallery x:Name="Gallery" Margin="0,0,5,0"/>
+        </DockPanel>
+        
     </Grid>
 </Page>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="KrabbyQuestInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KrabbyQuestInstaller"
+        mc:Ignorable="d"
+        Title="Krabby Quest Emu Installer" Foreground="White" Height="600" Width="1000" Background="#FF2C2C2C" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource XButtonStyle}">
+            <Setter Property="Background" Value="DarkCyan"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Cyan"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="InstallerButton" Padding="10,10" Margin="10,10,0,0" FontSize="16" FontWeight="Bold" Width="145" Click="InstallerButton_Click">
+                <TextBlock>
+                    <Run Text="&#xE896;" FontFamily="Segoe MDL2 Assets"/>
+                    <Run Text="Installer"/>
+                </TextBlock>
+            </Button>
+            <Button x:Name="LauncherButton" Padding="10,10" Margin="4,10,0,0" FontSize="16" FontWeight="Bold" Width="145" Click="LauncherButton_Click">
+                <TextBlock>
+                    <Run Text="&#xE74A;" FontFamily="Segoe MDL2 Assets"/>
+                    <Run Text="Launcher"/>
+                </TextBlock>
+            </Button>
+        </StackPanel>
+        <Rectangle VerticalAlignment="Bottom" Height="2" Fill="DarkCyan"/>
+        <Grid x:Name="ContentHost" Grid.Row="1" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Frame x:Name="WindowContentLeft" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="WindowContentRight" NavigationUIVisibility="Hidden" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</Window>
