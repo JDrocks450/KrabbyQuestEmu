@@ -42,8 +42,9 @@ namespace StinkyFile
         }
 
         public bool ExportAll()
-        {
+        {            
             ExceptionObject = null;
+            bool asyncReading = false;
             Process BlenderProcess = new Process();
             try
             {
@@ -88,6 +89,7 @@ namespace StinkyFile
                     BlenderProcess.Start();
                     BlenderProcess.BeginOutputReadLine();
                     BlenderProcess.BeginErrorReadLine();
+                    asyncReading = true;
                     BlenderProcess.WaitForExit();
                     BlenderProcess.CancelOutputRead();
                     BlenderProcess.CancelErrorRead();
@@ -107,8 +109,11 @@ namespace StinkyFile
             {
                 ExceptionObject = e;
                 OnProgressChanged?.Invoke(this, ("Could Not Convert Model", 0 / 1.0));
-                BlenderProcess.CancelOutputRead();
-                BlenderProcess.CancelErrorRead();
+                if (asyncReading)
+                {
+                    BlenderProcess.CancelOutputRead();
+                    BlenderProcess.CancelErrorRead();
+                }
                 return false;
             }
             OnProgressChanged?.Invoke(this, ("All Models Converted", 1/1.0));

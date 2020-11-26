@@ -1,7 +1,8 @@
-﻿//#define CHECK_VERSION
+﻿#define CHECK_VERSION
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using StinkyFile;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +42,7 @@ namespace KrabbyQuestTools.Common
         /// <summary>
         /// Path that is populated <see cref="Start"/> is called and completed successfully.
         /// </summary>
-        public string GameExePath, EditorExePath;
+        public string GameExePath, GameDir, EditorExePath, EditorDir;
 
         public EventHandler<(string message, double percent)> ProgressChanged { get; set; }
 
@@ -50,21 +51,55 @@ namespace KrabbyQuestTools.Common
             this.DestinationDirectory = DestinationDirectory;            
         }
 
-        private static string ReadVersion() => File.ReadAllText("Resources/versioninfo.txt");        
+        private static string ReadVersion() => File.ReadAllText("Resources/versioninfo.txt");
 
-        public async Task<bool> Start()
+        private StinkyFile.Installation.AutoInstall CurrentInstallation;
+
+        /// <summary>
+        /// Starts the GamePatching execution
+        /// </summary>
+        /// <param name="CurrentInstallation">Used to push files to the installer manifest</param>
+        /// <returns></returns>
+        public async Task<bool> Start(StinkyFile.Installation.AutoInstall CurrentInstallation)
         {
+            this.CurrentInstallation = CurrentInstallation;
             string extractPath = await GetLatestDist();
+            PushProgressChanged($"Extracting KrabbyQuestEmu...", 0.0);
             string gameExtractPath = DestinationDirectory;
             ExtractZip(extractPath, gameExtractPath);
+            AssetDBEntry.PushWorkspaceDir(DestinationDirectory, Path.Combine(GameDir, "Assets", "Resources", "texturedb.xml"));
+            CurrentInstallation.DumpManifest();
+            PushProgressChanged($"Completed KrabbyQuestEmu", 1.0);
             return true;
         }
 
         private void ExtractZip(string source, string destination)
         {
-            ZipFile.ExtractToDirectory(source, destination);
-            GameExePath = Path.Combine(destination, "Krabby Quest Game", "Krabby Quest Game.exe");
-            EditorExePath = Path.Combine(destination, "KrabbyQuestTools", "KrabbyQuestTools.exe");
+            using (FileStream fs = File.OpenRead(source))
+            {
+                using (ZipArchive file = new ZipArchive(fs, ZipArchiveMode.Read, true))
+                {
+                    foreach (var entry in file.Entries)
+                    {
+                        var entryFullname = Path.Combine(destination, entry.FullName);
+                        var entryPath = Path.GetDirectoryName(entryFullname);
+                        if (!Directory.Exists(entryPath))
+                            Directory.CreateDirectory(entryPath);
+
+                        var entryFn = Path.GetFileName(entryFullname);
+                        if (!String.IsNullOrEmpty(entryFn))
+                        {
+                            CurrentInstallation.FileChanged(entryFullname, StinkyFile.Installation.FileChange.ADD);
+                            entry.ExtractToFile(entryFullname, true);
+                        }
+                    }
+                }
+            }
+            //ZipFile.ExtractToDirectory(source, destination);
+            GameDir = Path.Combine(destination, "Krabby Quest Game");
+            EditorDir = Path.Combine(destination, "KrabbyQuestTools");
+            GameExePath = Path.Combine(GameDir, "Krabby Quest Game.exe");
+            EditorExePath = Path.Combine(EditorDir, "KrabbyQuestTools.exe");
         }
 
         private async Task<string> getDownloadUrl()
@@ -83,9 +118,10 @@ namespace KrabbyQuestTools.Common
                     foreach (dynamic response in responseArray.Children())
                     {
                         string tag = response.tag_name;
-#if CHECK_VERSION
+
                         if (!tag.StartsWith(GameGitReleaseTag)) continue; // this response is an update for something else
-                        if (tag == ReadVersion()) return null; // no updates found
+#if CHECK_VERSION
+                        if (tag == ReadVersion()) throw new Exception("The latest version of KrabbyQuestEmu is already installed."); // no updates found
 #endif
                         JArray assets = response.assets;
                         string downloadUrl = null;
@@ -94,6 +130,7 @@ namespace KrabbyQuestTools.Common
                             if (asset.content_type != "application/x-zip-compressed" &&
                                 asset.content_type != "application/zip") continue; // it isn't a zip file, so it can't be extracted
                             downloadUrl = asset.browser_download_url;
+                            break;
                         }
                         if (downloadUrl == null) return null;                        
                         File.WriteAllText("Resources/versioninfo.txt", tag); // write new version
@@ -114,11 +151,9 @@ namespace KrabbyQuestTools.Common
                 throw new Exception("Could not get release info from GitHub.");
             WebClient client = new WebClient();
             string dest = "dist.zip";
-            if (File.Exists("dist.zip"))
-                return dest;
-            client.DownloadProgressChanged += async (object s, 
-                DownloadProgressChangedEventArgs e) => 
-                    PushProgressChanged($"Downloading KrabbyQuestEmu ({e.TotalBytesToReceive} bytes)", e.ProgressPercentage);
+            client.DownloadProgressChanged += async (object s,
+                DownloadProgressChangedEventArgs e) =>
+                    PushProgressChanged($"Downloading KrabbyQuestEmu ({e.TotalBytesToReceive} bytes)", e.ProgressPercentage / 100.0);
             await client.DownloadFileTaskAsync(new Uri(url), dest);
             return dest;
         }

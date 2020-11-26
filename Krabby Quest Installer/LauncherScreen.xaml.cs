@@ -41,9 +41,16 @@ namespace KrabbyQuestInstaller
                     path = settings.GameExePath;
                     break;
             }
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                MessageBox.Show("The application has not been found. Try installing again, or manually looking in the " +
+                    "installation directory for Krabby Quest Game.exe/KrabbyQuestTools.exe", "Game not found");
+                return null;
+            }
             ProcessStartInfo info = new ProcessStartInfo(path)
             {
-                UseShellExecute = true
+                UseShellExecute = false,
+                WorkingDirectory = System.IO.Path.GetDirectoryName(path)
             };
             Process p = new Process()
             {
@@ -56,6 +63,7 @@ namespace KrabbyQuestInstaller
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             var process = LaunchComponent(ProjectComponent.Game);
+            if (process == null) return;
             var state = Application.Current.MainWindow.WindowState;
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
             Task.Run(() =>

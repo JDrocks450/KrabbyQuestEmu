@@ -29,18 +29,18 @@
         <DockPanel.Background>
             <ImageBrush ImageSource="/Krabby Quest Installer;component/Images/KrustyKrab.png" Stretch="UniformToFill"/>
         </DockPanel.Background>
-        <Border x:Name="HostBorder" Margin="10" Background="#FF343434" MaxHeight="570" HorizontalAlignment="Left">
+        <Border x:Name="HostBorder" Margin="10" Background="#FF343434" MaxHeight="450" HorizontalAlignment="Left">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid Width="250" Margin="10" MinHeight="300">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="250"/>
+                        <RowDefinition />
                         <RowDefinition Height="1.5*"/>
                         <RowDefinition Height="1.5*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Image Source="Images/feature.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+                    <Image Source="Images/KrabbyQuestEmu.png" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
                     <Button x:Name="PlayButton" FontWeight="Bold" Background="#FF0091BB" FontSize="16" Grid.Row="1" Margin="0,10,0,0" Click="PlayButton_Click">Play</Button>
                     <Button x:Name="EditorButton" FontWeight="Bold" Background="#FF878787" FontSize="16" Grid.Row="2" Margin="0,5,0,5" Click="EditorButton_Click" BorderBrush="White">Editor</Button>
                     <Button x:Name="OptionsButton" Margin="0,5,0,0" Grid.Row="3">Options</Button>

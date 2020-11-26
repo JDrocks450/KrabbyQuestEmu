@@ -41,15 +41,11 @@ namespace KrabbyQuestTools.Pages
             AssetTypeSwitcher.ItemsSource = Enum.GetNames(typeof(AssetType));
             GalleryView.OnDataSelected += (object sender, LevelDataBlock d) =>
             {
-                OpenEntry.ReferencedDataBlockGuids.Add(d);
+                OpenEntry.ReferencedDataBlocks.Add(d);
                 RefreshReferences(OpenEntry);
                 unsavedChanges = true;
             };
-            var database = XDocument.Load(AssetDBEntry.AssetDatabasePath);
-            if (database.Root.Element("WorkspaceDirectory") != null)
-                database.Root.Element("WorkspaceDirectory").Remove();
-            database.Root.Add(new XElement("WorkspaceDirectory", FilePath));
-            database.Save(AssetDBEntry.AssetDatabasePath);
+            AssetDBEntry.PushWorkspaceDir(FilePath);
         }
         public TextureToolPage(string FilePath, string AssetGuid) : this(FilePath)
         {
@@ -153,7 +149,7 @@ namespace KrabbyQuestTools.Pages
         private void RefreshReferences(AssetDBEntry dbe)
         {
             GUIDBox.Children.Clear();
-            foreach(var guid in dbe.ReferencedDataBlockGuids)
+            foreach(var guid in dbe.ReferencedDataBlocks)
             {
                 var button = new Button()
                 {
@@ -165,7 +161,7 @@ namespace KrabbyQuestTools.Pages
                 };
                 button.Click += delegate
                 {
-                    dbe.ReferencedDataBlockGuids.Remove((LevelDataBlock)button.Tag);
+                    dbe.ReferencedDataBlocks.Remove((LevelDataBlock)button.Tag);
                     RefreshReferences(dbe);
                     unsavedChanges = true;
                 };

@@ -111,6 +111,10 @@ namespace StinkyFile.Installation
         /// </summary>
         public EventHandler<InstallationType> OnStepStarted;
         /// <summary>
+        /// Called when an error has occured
+        /// </summary>
+        public EventHandler<string> OnErrorRaised;
+        /// <summary>
         /// The amount of time spent from when <c>Start</c> was called
         /// </summary>
         public TimeSpan ElapsedTime => stopWatch.Elapsed;
@@ -186,10 +190,17 @@ namespace StinkyFile.Installation
                     retVal = Uninstall();
                     break;
             }
-            if (!dontDump)
-                DumpManifest();
-            dontDump = false;
-            stopWatch.Stop();
+            try
+            {
+                if (!dontDump)
+                    DumpManifest();
+                dontDump = false;
+                stopWatch.Stop();
+            }
+            catch(Exception e)
+            {
+                PushError("Error outside of installation (ignore this): " + e.Message);
+            }
             return retVal;
         }
 
@@ -243,7 +254,7 @@ namespace StinkyFile.Installation
 
         internal static string FileChangedFormat(string path, FileChange changeMode) => $"[{Enum.GetName(typeof(FileChange), changeMode)}]{path}";
 
-        private void DumpManifest(string path = default)
+        public void DumpManifest(string path = default)
         {
             if (path == default)
                 path = Path.Combine(DestinationDirectory, "manifest.txt");
@@ -261,6 +272,7 @@ namespace StinkyFile.Installation
         /// <returns></returns>
         private bool FinishUp()
         {
+            AwaitPaused();
             if (!CanUninstall(DestinationDirectory))
             {
                 CallInstallationUpdate(
@@ -270,18 +282,29 @@ namespace StinkyFile.Installation
                 PushError("Could not find installer manifest file, the installation cannot be verified. ");
                 return true;
             }
-            var entries = StinkyFile.Installation.Uninstall.ParseInstallerManifest(DestinationDirectory);
-            int current = 0;
-            foreach (var entry in entries)
+            try
             {
                 CallInstallationUpdate(
-                                "Finalization",
-                                "Checking Files (" + current + "/" + entries.Count,
-                                current/(double)entries.Count);
-                if (entry.Value == FileChange.ADD && !File.Exists(entry.Key))
-                    PushError(entry.Key + " is missing!");
-                current++;
-            }            
+                    "Finalization",
+                    "Finishing up...",
+                    0 / 1.0);
+                var entries = StinkyFile.Installation.Uninstall.ParseInstallerManifest(DestinationDirectory);
+                int current = 0;
+                foreach (var entry in entries)
+                {
+                    CallInstallationUpdate(
+                        "Finalization",
+                        "Checking Files (" + current + "/" + entries.Count,
+                        current / (double)entries.Count);
+                    if (entry.Value == FileChange.ADD && !File.Exists(entry.Key))
+                        PushError(entry.Key + " is missing!");
+                    current++;
+                }
+            }
+            catch(Exception e)
+            {
+                PushError(e.Message);
+            }
             return true;
         }
 
@@ -292,18 +315,18 @@ namespace StinkyFile.Installation
         private bool CreateFont()
         {
             CallInstallationUpdate(
-                    "Font Creation",
-                    $"Creating Font: KrabbyQuestFont",
-                    0.0 / 1
-                );
+                "Font Creation",
+                $"Creating Font: KrabbyQuestFont",
+                0.0 / 1
+            );
             var path = System.IO.Path.Combine(DestinationDirectory, "Graphics");
             Primitive.RefPrim<bool> success = new Primitive.RefPrim<bool>(false);
             OnFontCreate?.Invoke(this, (path, success));            
             CallInstallationUpdate(
-                    "Font Creation",
-                    $"Created Font: KrabbyQuestFont",
-                    1 / 1
-                );
+                "Font Creation",
+                $"Created Font: KrabbyQuestFont",
+                1 / 1
+            );
             return success.Value;
         }
 
@@ -401,6 +424,15 @@ namespace StinkyFile.Installation
                 }     
                 else FileChanged(filePath, FileChange.ADD);
             }
+            //install music
+            var musicDir = Path.Combine(DestinationDirectory, "music");
+            Directory.CreateDirectory(musicDir);
+            for (int i = 3; i < 7; i++) {
+                var fn = Path.Combine(SourceDirectory, $"res{i}.dat");
+                var dfn = Path.Combine(musicDir, $"res{i}.ogg");
+                if (File.Exists(fn) && !File.Exists(dfn))
+                    File.Copy(fn, dfn);
+            }
             return true;
         }
 
@@ -450,14 +482,14 @@ namespace StinkyFile.Installation
         }
 
         public void Skip()
-        {
-            Paused = false;
+        {            
             tryingToSkip = true;
+            Paused = false;
         }
 
         private void CallInstallationUpdate(string Title, string Description, double Completion)
         {
-            OnProgressChanged.Invoke(this, new InstallationCompletionInfo()
+            OnProgressChanged?.Invoke(this, new InstallationCompletionInfo()
             {
                 StepName = Title,
                 CurrentTask = Description,
@@ -487,6 +519,22 @@ namespace StinkyFile.Installation
             }
         }
 
-        public void PushError(string error) => (Errors as List<string>).Add(error);
+        public void PushError(string error)
+        {
+            (Errors as List<string>).Add(error);
+            OnErrorRaised?.Invoke(this, error);
+        }
+
+        public static string GetFriendlyStepName(AutoInstall.InstallationType type)
+        {
+            switch (type)
+            {
+                case InstallationType.CreateFont: return "Font Creation";
+                case InstallationType.CreateModels: return "Model Conversion";
+                case InstallationType.ExtractContent: return "Content Extraction";
+                case InstallationType.Uninstallation: return "Uninstallation";
+                default: return Enum.GetName(typeof(InstallationType), type);
+            }
+        }
     }    
 }
