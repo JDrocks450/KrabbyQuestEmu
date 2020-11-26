@@ -65,7 +65,21 @@
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=ExtractionStepBorder}"/>
                                 </Grid.OpacityMask>
-                                <Border x:Name="ExtractionStepBorder" Style="{x:Null}" Background="#FF006C6C" CornerRadius="5,5,0,0" MouseLeftButtonUp="StartInstallStep"/>
+                                <Border x:Name="ExtractionStepBorder" CornerRadius="5,5,0,0" MouseLeftButtonUp="StartInstallStep">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Background" Value="#FF006C6C"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="DarkTurquoise"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
                                 <ProgressBar x:Name="ExtractBar" />
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Extraction" FontWeight="Bold"/>
                             </Grid>
@@ -73,15 +87,43 @@
                                 <!--<Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=ExtractionStepBorder}"/>
                                 </Grid.OpacityMask>-->
-                                <Border x:Name="FontBorder" Style="{x:Null}" MouseLeftButtonUp="StartInstallStep"/>
-                                <ProgressBar x:Name="FontBar" Background="#FF006C6C" BorderBrush="#FF006C6C"/>
+                                <Border x:Name="FontBorder" MouseLeftButtonUp="StartInstallStep">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Background" Value="#FF006C6C"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="DarkTurquoise"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+                                <ProgressBar x:Name="FontBar"/>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Font Creation" FontWeight="Bold"/>
                             </Grid>
                             <Grid Margin="10,0,10,10" Height="40">
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=ModelsBorder}"/>
                                 </Grid.OpacityMask>
-                                <Border x:Name="ModelsBorder" CornerRadius="0,0,5,5" Style="{x:Null}" MouseLeftButtonUp="StartInstallStep" Background="#FF006C6C"/>
+                                <Border x:Name="ModelsBorder" CornerRadius="0,0,5,5" MouseLeftButtonUp="StartInstallStep">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Background" Value="#FF006C6C"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="DarkTurquoise"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
                                 <ProgressBar x:Name="ModelBar"/>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="3D Model Creation" FontWeight="Bold"/>
                             </Grid>
