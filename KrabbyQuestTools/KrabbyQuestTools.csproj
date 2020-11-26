@@ -234,9 +234,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="KrabbyQuestTools.ico" />
     <Content Include="Resources\blockdb.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

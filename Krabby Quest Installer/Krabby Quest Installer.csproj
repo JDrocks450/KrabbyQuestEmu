@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\KrabbyQuestEmuBlack.png" />
     <Resource Include="Installer.ico" />
     <Resource Include="Images\Installer.png" />
     <Resource Include="Images\KrabbyQuestEmu.png" />
