@@ -1,6 +1,10 @@
 # KrabbyQuestEmu
 A project aiming to restore Spongebob: Krabby Quest by emulating the original game engine using the original game files.
 
+## Community
+A discord server where you can chat with me and others about the project can be found here: 
+https://discord.gg/wvFPYSrGRu
+
 ## How does it work?
 The original game came with seven .DAT files that stored all of the content that the game engine would use to display levels. 
 ### File Summary
