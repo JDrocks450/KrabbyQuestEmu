@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Krabby Quest Installer/Images/KrabbyQuestEmuBlack.png" width="350" title="KrabbyQuestEmu logo">
+</p>
+
 # KrabbyQuestEmu
 A project aiming to restore Spongebob: Krabby Quest by emulating the original game engine using the original game files.
 
