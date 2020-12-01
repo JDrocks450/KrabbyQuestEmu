@@ -12,7 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace KrabbyQuestInstaller
 {
@@ -554,10 +556,22 @@ namespace KrabbyQuestInstaller
             Installation.Paused = true;
             ShowMessage("Blender Addon Required",
                 "KrabbyQuestEmu requires all models to be converted. " +
-                "A Blender addon is required to do this, as Blender cannot do this conversion " +
+                "Joric's B3D importer Blender addon is required to do this, as Blender cannot do this conversion " +
                 "normally. \n \n" +
-                "Do you wish to proceed with the installation? (If the plug-in is already installed, you can click 'No')",
+                "Link to addon: ",
                 "Yes", "No/Installed Already");
+            var link = new Hyperlink()
+            {
+                NavigateUri = new Uri("https://github.com/joric/io_scene_b3d")
+            };
+            link.Inlines.Add(link.NavigateUri.AbsoluteUri);
+            link.RequestNavigate += (object s, RequestNavigateEventArgs e) =>
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+                e.Handled = true;
+            };
+            MsgBody.Inlines.Add(link);
+            MsgBody.Inlines.Add("\nIf you don't want to install this or already have the addon, Click 'No/Installed Already'");
             CurrentState = InstallerState.AskingToInstall3D;
         }
 

@@ -40,7 +40,7 @@ public class PushableScript : MonoBehaviour
         BlockComponent = GetComponent<DataBlockComponent>();
         MovementScript = gameObject.AddComponent<TileMovingObjectScript>();
         MovementScript.Target = gameObject;
-        MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);        
+        MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);            
         TileMovingObjectScript.MoveableMoving += Jetstream_SpongebobPlayerPositionChanging;
         if (BlockComponent.DataBlock.GetParameterByName("CanFloat", out var parameter))
             CanFloat = bool.Parse(parameter.Value);
@@ -48,11 +48,13 @@ public class PushableScript : MonoBehaviour
             ExclusivePushMode = (PlayerEnum)int.Parse(parameter.Value);
         if (BlockComponent.DataBlock.GetParameterByName("CanDestory", out parameter))
             CanDestory = bool.Parse(parameter.Value);
+        if (!CanDestory)
+            MovementScript.CanMoveOverWorldReservedTiles = false;
     }
 
     private void OnDestroy()
     {
-        TileMovingObjectScript.MoveableMoving -= Jetstream_SpongebobPlayerPositionChanging;        
+        TileMovingObjectScript.MoveableMoving -= Jetstream_SpongebobPlayerPositionChanging;               
     }
 
     public void Destroy()

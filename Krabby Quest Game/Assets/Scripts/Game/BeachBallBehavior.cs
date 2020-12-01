@@ -17,9 +17,10 @@ public class BeachBallBehavior : MonoBehaviour
     void Start()
     {
         PushableScript = GetComponent<PushableScript>();
-        PushableScript.OnPushing += OnPushing;
+        PushableScript.OnPushing += OnPushing;        
         TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
         MoveScript = GetComponent<TileMovingObjectScript>();
+        MoveScript.CanMoveOverWorldReservedTiles = true;
         soundEffects = GetComponent<SoundLoader>();
     }
 

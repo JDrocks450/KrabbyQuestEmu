@@ -29,11 +29,24 @@ public class SoundLoader : MonoBehaviour
     {
         get; private set;
     } = false;
+
+    Dictionary<AudioClip, AudioSource> LoopingClips = new Dictionary<AudioClip, AudioSource>();
+    public bool IsLoopingClips => false;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (Sources[0] == null)
-            Sources[0] = GameObject.Find("Sound FX").GetComponent<AudioSource>();
+        
+    }
+
+    static AudioClip LoadFromFile(string FileName)
+    {
+        var name = Path.GetFileNameWithoutExtension(FileName);
+        if (SoundEffects.TryGetValue(name, out var audio))
+            return audio;
+        var request = new WWW(Path.Combine(TextureLoader.AssetDirectory, FileName));
+        while (request.isDone != true) { }
+        return request.GetAudioClipCompressed();        
     }
 
     /// <summary>
@@ -48,9 +61,7 @@ public class SoundLoader : MonoBehaviour
             references.Add(reference.DBName);
             if (SoundEffects.ContainsKey(reference.DBName))
                 continue;
-            var request = new WWW(Path.Combine(TextureLoader.AssetDirectory, reference.FileName));
-            while (request.isDone != true) { }
-            var audio = request.GetAudioClipCompressed();
+            var audio = LoadFromFile(reference.FileName);
             audio.name = reference.DBName;
             SoundEffects.Add(reference.DBName, audio);
         }
@@ -63,11 +74,13 @@ public class SoundLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void CreateSource(int index)
+    static void CreateSource(int index)
     {
+        if (Sources[0] == null)
+            Sources[0] = GameObject.Find("Sound FX").GetComponent<AudioSource>();
         if (Sources[index] == null)
         {
             var source = Instantiate(Sources[0]);
@@ -79,26 +92,60 @@ public class SoundLoader : MonoBehaviour
 
     public void Play(int Index) => Play(SoundReferences[Index]);
 
-    public void Play(string DBName) => Play(GetAudio(DBName));
+    public void Play(string DBName) => Play(GetAudio(DBName), ExclusiveSoundMode);
 
-    public void Play(AudioClip clip)
-    {
+    public static AudioSource Play(AudioClip clip, bool isExclusive)
+    {        
         for (int i = 0; i < MAX_SOURCES; i++)
         {
             if (Sources[i] == null)
                 CreateSource(i);
             var source = Sources[i];  
-            if (ExclusiveSoundMode)
+            if (isExclusive)
             {
                 if (source.isPlaying && source.clip.name == clip.name)
                     break; // cancel this play request due to the sound already playing
             }
             if (!source.isPlaying || i == MAX_SOURCES - 1)
-            {                
+            {
+                source.loop = false;
                 source.clip = clip;
+                source.volume = 1;
                 source.Play();
-                return;
+                return source;
             }
+        }
+        return null;
+    }
+
+    public static AudioSource Play(string RelativeFileName, bool isExclusive)
+    {
+        var audio = LoadFromFile("sound\\" + RelativeFileName);
+        audio.name = Path.GetFileNameWithoutExtension(RelativeFileName);
+        if (!SoundEffects.ContainsKey(audio.name))
+            SoundEffects.Add(audio.name, audio);
+        return Play(audio, isExclusive);
+    }
+
+    public AudioSource LoopStart(string DBName, out AudioClip clip, bool isExclusive = false)
+    {
+        clip = GetAudio(DBName);
+        return LoopStart(clip, isExclusive);
+    }
+    public AudioSource LoopStart(AudioClip clip, bool isExclusive)
+    {
+        var source = Play(clip, isExclusive);
+        if (source == null) return null; // play request cancelled
+        source.loop = true;
+        LoopingClips.Add(clip, source);
+        return source;
+    }
+    public void LoopStop(AudioClip clip)
+    {
+        if (LoopingClips.ContainsKey(clip))
+        {
+            LoopingClips[clip].Stop();
+            LoopingClips.Remove(clip);
         }
     }
 }

@@ -29,6 +29,7 @@ public class GooberBehavior : MonoBehaviour
     public void StartProjectile(Vector2Int Position, SRotation Direction)
     {
         MovementScript = GetComponent<TileMovingObjectScript>();
+        MovementScript.MotionSpeed = 12f;
         MovementScript.SpecialObjectIgnore = true;
         MovementScript.JumpToTile(Position.x, Position.y);
         this.Direction = Direction;

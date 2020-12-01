@@ -10,6 +10,8 @@ using System.Xml.Linq;
 internal static class GameInitialization
 {
     static bool initialized = false;
+    public static StinkyParser GlobalParser = new StinkyParser();
+
     public static void Initialize()
     {
         if (initialized == true) return;

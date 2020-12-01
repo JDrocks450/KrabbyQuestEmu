@@ -1,8 +1,10 @@
 ﻿using Assets.Components;
 using StinkyFile;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,10 @@ public class PopulateLevels : MonoBehaviour
 {
     Button sampleButton;
     StinkyLevel selected;
+
+    public event EventHandler OnLevelsLoaded;
+    Dictionary<StinkyLevel, RectTransform> transforms = new Dictionary<StinkyLevel, RectTransform>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +24,10 @@ public class PopulateLevels : MonoBehaviour
         var mapScreenBhav = GameObject.Find("EventSystem").GetComponent<MapScreenBehavior>();
         sampleButton = scrollRegion.content.transform.GetChild(0).gameObject.GetComponent<Button>();
         ButtonStyler.Style(sampleButton);
-        var parser = LevelObjectManager.Parser = new StinkyFile.StinkyParser();
+        var parser = GameInitialization.GlobalParser;
         parser.FindAllLevels(Path.Combine(TextureLoader.AssetDirectory, "levels"));
         int lastHeight = 0, CURRENT = 0, lastAvailableLevel = 0;
+        transforms.Clear();
         foreach(var level in parser.LevelInfo)
         {
             bool isAvailable = false;            
@@ -54,9 +61,31 @@ public class PopulateLevels : MonoBehaviour
             {
                 button.spriteState = new SpriteState(); // make sure hovering doesn't work on these.
             }
+            transforms.Add(level, transform);
             CURRENT++;
         }
         (scrollRegion.content.transform as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, lastHeight);
+        OnLevelsLoaded?.Invoke(this, null);
+    }
+
+    public void ScrollToLevel(string LevelWorldName)
+    {
+        ScrollToLevel(transforms.Keys.FirstOrDefault(x => x.LevelWorldName == LevelWorldName));
+    }
+
+    public void ScrollToLevel(StinkyLevel level)
+    {
+        if (level == default) return;
+        ScrollIntoView(transforms[level]);
+    }
+
+    void ScrollIntoView(RectTransform target)
+    {
+        ScrollRect scrollRect = GetComponent<ScrollRect>();
+        var contentPanel = scrollRect.content;
+        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x,
+            ((Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(target.position)).y);
     }
 
     // Update is called once per frame

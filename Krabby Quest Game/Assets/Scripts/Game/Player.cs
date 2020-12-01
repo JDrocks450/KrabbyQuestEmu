@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
         get; set;
     } = PlayerEnum.SPONGEBOB;
     static bool playerSwapping = false;
+    static PlayerEnum swappingPlayer;
 
     public string PlayerName
     {
@@ -103,6 +104,7 @@ public class Player : MonoBehaviour
         animator = GameObject.Find("Patrick").GetComponentInChildren<Animator>();
         animator.enabled = true;
         animator.Play("Die");
+        SoundLoader.Play("sb-death.wav", true);
         dying = true;
     }
 
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour
     {
         if (dying)
         {
-            float deathTime = 1.5f;
+            float deathTime = 2.5f;
             dyingTimer += Time.deltaTime;
             if (dyingTimer >= deathTime)
             {
@@ -122,8 +124,11 @@ public class Player : MonoBehaviour
             return; // prevent player control when dying.
         }
         _ = TileMoveScript; // force update of component
+        PlayerEnum updatingPlayer = PlayerName == "spongebob" ? PlayerEnum.SPONGEBOB : PlayerEnum.PATRICK;
         bool currentPlayer = (PlayerName == "spongebob" && CurrentPlayer == PlayerEnum.SPONGEBOB) ||
-                            (PlayerName == "patrick" && CurrentPlayer == PlayerEnum.PATRICK);        
+                            (PlayerName == "patrick" && CurrentPlayer == PlayerEnum.PATRICK);     
+        if (updatingPlayer == swappingPlayer && playerSwapping) // this frame is the update frame after swapping
+            playerSwapping = false;
         if (currentPlayer)
         {
             Current = this;
@@ -156,6 +161,7 @@ public class Player : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space) && !playerSwapping)
             {
+                swappingPlayer = CurrentPlayer;
                 switch (CurrentPlayer) // switch current player
                 {
                     case PlayerEnum.SPONGEBOB:
@@ -164,10 +170,9 @@ public class Player : MonoBehaviour
                     case PlayerEnum.PATRICK:
                         CurrentPlayer = PlayerEnum.SPONGEBOB; // spongebob
                         break;
-                }
+                }                
                 playerSwapping = true;
             }
-        }
-        else playerSwapping = false;
+        }        
     }
 }

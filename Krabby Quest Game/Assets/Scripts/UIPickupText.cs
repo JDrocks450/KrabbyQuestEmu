@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Components.World;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,13 +18,15 @@ public class UIPickupText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        World current = World.Current;
+        if (current == null) return;
         if (WatchingPickup == "TIME")
         {
-            if (Pickup.MajorPickups.TryGetValue(WatchingPickup, out var timeLeft))            
-                textComponent.text = $"TIME REMAINING: {TimeSpan.FromSeconds(timeLeft.amountCollected).ToString()}";            
+            if (current.TryGetPickupInfo("TIME", out var timeLeft))            
+                textComponent.text = $"TIME REMAINING: {TimeSpan.FromSeconds(timeLeft.AmountCollected).ToString()}";            
             return;
         }
-        if (Pickup.MajorPickups.TryGetValue(WatchingPickup, out var amount))        
-            textComponent.text = WatchingPickup + ": " + amount.amountCollected + " out of " + amount.amountTotal;        
+        if (current.TryGetPickupInfo(WatchingPickup, out var amount))        
+            textComponent.text = WatchingPickup + ": " + amount.AmountCollected + " out of " + amount.AmountTotal;        
     }
 }

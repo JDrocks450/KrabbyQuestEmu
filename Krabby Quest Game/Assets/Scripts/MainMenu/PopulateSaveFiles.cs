@@ -38,6 +38,7 @@ public class PopulateSaveFiles : MonoBehaviour
                         bhav.GoToMapScreen(save);
                     else
                     {
+                        SoundLoader.Play("sb-type.wav", false).volume = .5f;
                         selected = save;
                         save.FullLoad();
                         SaveFileInfoPopulate.PopulateInfo(save);

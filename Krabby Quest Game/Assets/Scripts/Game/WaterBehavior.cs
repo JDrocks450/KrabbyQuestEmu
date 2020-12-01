@@ -1,4 +1,5 @@
-﻿using StinkyFile;
+﻿using Assets.Components.World;
+using StinkyFile;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,8 @@ public class WaterBehavior : MonoBehaviour
         if (IsCovered || IsBoxFloating) return;
         if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
         {
-            if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _))
+            if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _) || 
+                (sender as TileMovingObjectScript).TryGetComponent<BullyBehavior>(out _))
                 e.BlockMotion = true;
         }
     }
@@ -147,7 +149,7 @@ public class WaterBehavior : MonoBehaviour
                 box.MovementAllowed = false;
                 GetComponent<SoundLoader>().Play(0);
                 animator.Play("Sunken");
-            }
+            }            
         }
         else if (Moveable.Target.TryGetComponent<Player>(out var player) && IsCovered)
         {
@@ -169,5 +171,6 @@ public class WaterBehavior : MonoBehaviour
             DisableWalls();
             wallsDisabled = true;
         }
+        World.Current.CollisionMapUpdate(gameObject, false, BlockComponent.WorldTileX, BlockComponent.WorldTileY); // free this space always
     }
 }

@@ -1,36 +1,37 @@
-﻿using System;
+﻿using Assets.Components.World;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public static Dictionary<string, (int amountCollected, int amountTotal)> MajorPickups = new Dictionary<string, (int, int)>();
+    World CurrentWorld => World.Current;
     const float CollectTime = .15f;
 
     string pickupName;
     DataBlockComponent BlockComponent;
     bool Collected = false, isPickingUp = false;
     float pickingUpTime = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
         BlockComponent = GetComponent<DataBlockComponent>();
         TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
         if (BlockComponent.DataBlock.GetParameterByName("Major Item", out var param))
-        {
-            if (MajorPickups.TryGetValue(param.Value, out var info))
-                MajorPickups[param.Value] = (info.amountCollected, info.amountTotal + 1);
-            else MajorPickups.Add(param.Value, (0, 1));
+        {            
             pickupName = param.Value;
+            CurrentWorld.AddPickup(pickupName);
+            CurrentWorld.CollisionMapUpdate(gameObject, true, BlockComponent.WorldTileX, BlockComponent.WorldTileY);
         }
     }
 
     private void OnDestroy()
     {
         TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
-        if (MajorPickups.TryGetValue(pickupName, out var info))        
-            MajorPickups[pickupName] = (info.amountCollected + 1, info.amountTotal);        
+        CurrentWorld.RemovePickup(pickupName);
+        CurrentWorld.CollisionMapUpdate(gameObject, false, BlockComponent.WorldTileX, BlockComponent.WorldTileY);
         Collected = true;
     }
 

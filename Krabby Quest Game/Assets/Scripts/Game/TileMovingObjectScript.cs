@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game;
+﻿using Assets.Components.World;
+using Assets.Scripts.Game;
 using StinkyFile;
 using System;
 using System.Collections;
@@ -75,10 +76,12 @@ public class TileMovingObjectScript : MonoBehaviour
     /// This object can move through anything
     /// </summary>
     public bool NoClip { get; set; } = false;
+    public bool CanMoveOverWorldReservedTiles = true;
     /// <summary>
     /// Jetstreams, buttons will ignore this object
     /// </summary>
     public bool SpecialObjectIgnore = false;
+    private bool unreservedWalkingTilePrev = false;
 
     public PlayerEnum Player { get; set; } = PlayerEnum.ANYONE;
 
@@ -119,6 +122,7 @@ public class TileMovingObjectScript : MonoBehaviour
     /// <returns>True if motion is allowed</returns>
     public bool WalkToTile(int x, int y, float overrideMotionSpeed = default)
     {
+        //if (PreemptiveBlockMotion(x, y)) return false;        
         isWalking = true;
         walkingPercentage = 0f;
         walkStartLocation = transform.position;
@@ -128,15 +132,21 @@ public class TileMovingObjectScript : MonoBehaviour
         IsMoving = true;
         temporaryMotionSpeed = overrideMotionSpeed;
         var args = new MoveEventArgs()
-            {
-                FromTile = new Vector2Int(TileX, TileY),
-                ToTile = new Vector2Int(walkTileX, walkTileY),
-                MotionSpeed = MotionSpeed,
-                Player = Player
-            };
+        {
+            FromTile = new Vector2Int(TileX, TileY),
+            ToTile = new Vector2Int(walkTileX, walkTileY),
+            MotionSpeed = MotionSpeed,
+            Player = Player
+        };
         TilePositionChanging?.Invoke(this, args);
         if (!args.BlockMotion && !NoClip)
             MoveableMoving?.Invoke(this, args);
+        if (!CanMoveOverWorldReservedTiles && !args.BlockMotion && !NoClip)
+            if (World.Current.IsTileReserved(x, y))
+            {
+                args.BlockMotion = true;
+                args.BlockMotionSender = "WORLD_RESERVEFLAG";
+            }
         if (args.BlockMotion && !NoClip)
         {
             isWalking = false;
@@ -146,7 +156,30 @@ public class TileMovingObjectScript : MonoBehaviour
             Debug.LogWarning("Movement Canceled for: " + gameObject.name + " by: " + args.BlockMotionSender);            
             return false;
         }
+        World.Current.CollisionMapUpdate(gameObject, true, x, y);
         return true;
+    }
+
+    private void OnDestroy()
+    {
+        World.Current.CollisionMapUpdate(gameObject, false, TileX, TileY);
+    }
+
+    /// <summary>
+    /// Uses <see cref="World"/> data to check if an object capable of blocking motion is around the player.
+    /// </summary>
+    /// <param name="ToX"></param>
+    /// <param name="ToY"></param>
+    /// <returns></returns>
+    public bool PreemptiveBlockMotion(int ToX, int ToY)
+    {
+        if (World.Current.TryGetBlockAt(BlockLayers.Integral, ToX, ToY, out var info))
+        {
+            if (info.GetParameterByName("AllowMotion", out var value) && value.Value.ToLower() == "true")
+                return true;
+            return false;
+        }
+        else return false;
     }
 
     public Vector2Int GetTileFromDirection(SRotation Direction, int Tiles = 1)
@@ -188,7 +221,18 @@ public class TileMovingObjectScript : MonoBehaviour
         {
             transform.position = Vector3.Lerp(walkStartLocation, walkEndLocation, walkingPercentage);
             walkingPercentage += MotionSpeed * Time.deltaTime;
-            if (walkingPercentage >= 1f)
+            if (walkingPercentage >= .5f) // 50% complete walking
+            {
+                if (TileX != walkTileX || TileY != walkTileY)
+                {
+                    if (!unreservedWalkingTilePrev)
+                    {
+                        unreservedWalkingTilePrev = true;
+                        World.Current.CollisionMapUpdate(gameObject, false, TileX, TileY); // unreserve tile halfway through walking
+                    }
+                }
+            }
+            if (walkingPercentage >= 1f) // 100% done walking
             {
                 isWalking = false;
                 IsMoving = false;
@@ -201,7 +245,9 @@ public class TileMovingObjectScript : MonoBehaviour
                         ToTile = new Vector2Int(walkTileX, walkTileY)
                     };
                 TilePositionChanged?.Invoke(this, args);
-                MoveableMoved?.Invoke(this, args);
+                MoveableMoved?.Invoke(this, args);    
+                World.Current.CollisionMapUpdate(gameObject, true, TileX, TileY); // unreserve tile halfway through walking
+                unreservedWalkingTilePrev = false;
             }
         }
     }

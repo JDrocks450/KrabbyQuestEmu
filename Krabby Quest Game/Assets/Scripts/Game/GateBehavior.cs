@@ -10,6 +10,7 @@ public class GateBehavior : MonoBehaviour
     public DataBlockComponent BlockComponent { get; private set; }
     private Player Spongebob;
     string Color;
+    public bool IsPlayerInside { get; private set; }
     public bool IsOpen
     {
         get; private set;
@@ -38,6 +39,7 @@ public class GateBehavior : MonoBehaviour
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
     {
+        bool isPlayer = (sender as TileMovingObjectScript).GetComponent<Player>();
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
             if (!IsOpen)
@@ -45,8 +47,12 @@ public class GateBehavior : MonoBehaviour
                 e.BlockMotion = true;
                 e.BlockMotionSender = gameObject.name;
             }
+            else if (isPlayer)
+                IsPlayerInside = true;
         }
-    }    
+        else if (isPlayer)        
+            IsPlayerInside = false;        
+    }  
 
     public static void SendMessage(GateMsg command, string color)
     {
@@ -76,8 +82,12 @@ public class GateBehavior : MonoBehaviour
             var animator = GetComponentInChildren<Animator>();
             if (IsOpen) // closed -> open
                 animator.Play("Opened");
-            else 
+            else
+            {
                 animator.Play("Closed");
+                if (IsPlayerInside)
+                    Player.KillAllPlayers();
+            }
         }
     }
 }

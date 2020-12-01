@@ -552,11 +552,23 @@
     <AssetType>Texture</AssetType>
     <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
   </A704444>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
   <A440017>
     <FilePath>sound\sb-tentacle2.wav</FilePath>
     <Name>sb-tentaclethrow</Name>
     <AssetType>Sound</AssetType>
     <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
   </A440017>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
+  <A373796>
+    <FilePath>sound\sb-bully.wav</FilePath>
+    <Name>sb-bully</Name>
+    <AssetType>Sound</AssetType>
+    <References>O302390,O881279,O427502,O441458</References>
+  </A373796>
+  <A297679>
+    <FilePath>sound\sb-bullyx.wav</FilePath>
+    <Name>sb-bullyx</Name>
+    <AssetType>Sound</AssetType>
+    <References>O302390,O881279,O427502,O441458</References>
+  </A297679>
 </root>

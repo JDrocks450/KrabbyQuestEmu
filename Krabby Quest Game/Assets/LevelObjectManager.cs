@@ -15,6 +15,7 @@ using System.Timers;
 using System.Diagnostics;
 using Assets.Components;
 using StinkyFile.Save;
+using Assets.Components.World;
 
 public class LevelObjectManager : MonoBehaviour    
 {
@@ -25,31 +26,23 @@ public class LevelObjectManager : MonoBehaviour
     /// <summary>
     /// Every tile thats loaded is cached here to make cloning them less time consuming
     /// </summary>
-    Dictionary<string, GameObject> ClonableObjects = new Dictionary<string, GameObject>();
-    
+    static Dictionary<string, GameObject> ClonableObjects = new Dictionary<string, GameObject>();    
+
     /// <summary>
-    /// The current <see cref="StinkyParser"/> instance -- do not use this unless necessary!!
+    /// The currently loading/open world
     /// </summary>
-    public static StinkyParser Parser = new StinkyParser();
+    public World CurrentWorld => World.Current;
+
     /// <summary>
     /// The current open level
     /// </summary>
-    public static StinkyLevel Level;
+    public static StinkyLevel Level => World.Current?.Level;
 
     /// <summary>
     /// The current level context
     /// </summary>
-    public static LevelContext Context
-    {
-        get; set;
-    }
-    /// <summary>
-    /// The current completion status of the level
-    /// </summary>
-    public static LevelCompletionInfo CurrentCompletionInfo
-    {
-        get; private set;
-    }
+    public static LevelContext Context => World.Current?.Context ?? LevelContext.BIKINI;
+    
     /// <summary>
     /// The current progress loading the level
     /// </summary>
@@ -57,9 +50,11 @@ public class LevelObjectManager : MonoBehaviour
     {
         get; private set;
     }
+
     StinkyFile.BlockLayers CurrentLoadingLayer;
     int X, Y;
     bool levelLoadingComplete = false, isLoadingLevel = false;
+
     /// <summary>
     /// The filename of the level to load automatically when this object awakens
     /// </summary>
@@ -117,41 +112,15 @@ public class LevelObjectManager : MonoBehaviour
             return; // ignore all requests to change level while it's swapping
         LoadLevelName = levelName;
         var operation = SceneManager.LoadSceneAsync("Game");
-        levelSwapping = true;
-        operation.completed += delegate(AsyncOperation e)
-        {            
-
-        };               
+        levelSwapping = true;           
     }
 
     public static void SignalLevelCompleted(bool completed)
     {
         if (levelSwapping) return;
         levelSwapping = true;
-        if (completed)
-        {
-            if (CurrentCompletionInfo != null)
-            {
-                CurrentCompletionInfo.LevelName = Level.Name;
-                CurrentCompletionInfo.LevelWorldName = Level.LevelWorldName;
-                CurrentCompletionInfo.TimeRemaining = (int)levelTime.TotalSeconds;
-                if (!CurrentCompletionInfo.WasSuccessful)
-                    CurrentCompletionInfo.WasSuccessful = completed;
-                if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
-                {
-                    CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
-                }
-                if (Pickup.MajorPickups.TryGetValue("BONUS", out var bonusinfo))
-                {
-                    CurrentCompletionInfo.BonusesCollected = bonusinfo.amountCollected;
-                    if (bonusinfo.amountCollected == bonusinfo.amountTotal)
-                        CurrentCompletionInfo.WasPerfect = true;
-                }
-                else CurrentCompletionInfo.WasPerfect = true;
-            }
-            SaveFileManager.Current.UpdateInfo(CurrentCompletionInfo);
-            SaveFileManager.Current.Save();
-        }
+        if (completed)        
+            World.Current.Finish((int)levelTime.TotalSeconds, completed);        
         SceneManager.LoadSceneAsync("MapScreen");        
     }
 
@@ -160,40 +129,15 @@ public class LevelObjectManager : MonoBehaviour
         if (!IsDone)
         {
             CurrentObjectManager = this;
-            PlayMusic(Context);
-            var path = Path.Combine(AssetDirectory, "levels", LoadLevelName + ".lv5");
-            Level = Parser.LevelRead(path);
-            Context = Level.Context;
-            Parser.RefreshLevel(Level);
-            Pickup.MajorPickups.Clear();
-            Player.CurrentPlayer = Assets.Scripts.Game.PlayerEnum.SPONGEBOB;
-            LoadingPercentage = 0;
-            isLoadingLevel = true;
-            int timeRemaining = LevelCompletionInfo.DefaultTime;
+            World.SetCurrent(new World(LoadLevelName + ".lv5")); // set the current world
+            PlayMusic(Context); // play the level music           
+            LoadingPercentage = 0; // update the percent complete of level layer loading
+            isLoadingLevel = true; 
+            int timeRemaining = LevelCompletionInfo.DefaultTime; // set the time remaining for the level
             if (Level.Name == "Bonus Level")
-                timeRemaining = LevelCompletionInfo.BonusTime;
+                timeRemaining = LevelCompletionInfo.BonusTime; // use bonus time instead
             levelTime = TimeSpan.FromSeconds(timeRemaining);
-            if (completionInfo == default)
-            {
-                if (SaveFileManager.IsFileOpened)
-                    CurrentCompletionInfo = Level.GetSaveFileInfo(SaveFileManager.Current);
-                else 
-                    CurrentCompletionInfo = new LevelCompletionInfo()
-                    {
-                        LevelName = Level.Name,
-                        LevelWorldName = Level.LevelWorldName,
-                        TimeRemaining = timeRemaining
-                    };
-            }
-            else CurrentCompletionInfo = completionInfo;
-            if (CurrentCompletionInfo != null)
-            {
-                CurrentCompletionInfo.TimeRemaining = timeRemaining;
-                CurrentCompletionInfo.PattiesCollected = 0;
-                CurrentCompletionInfo.BonusesCollected = 0;                
-            }
-            if (!Pickup.MajorPickups.ContainsKey("TIME"))
-                Pickup.MajorPickups.Add("TIME", (timeRemaining, timeRemaining));
+            World.Current.LoadSave(completionInfo); // load save information for the current world
             LoadNext();
         }
     }
@@ -234,14 +178,27 @@ public class LevelObjectManager : MonoBehaviour
         {
             if (!levelLoadingComplete)
                 for (int i = 0; i < Level.Columns; i++)
+                {
                     LoadNext();
-            else
+                    if (X >= Level.Columns - 1)
+                    {
+                        X = 0;
+                        Y++;
+                        if (Y >= Level.Rows)
+                        {
+                            Y = 0;
+                            if (CurrentLoadingLayer == BlockLayers.Integral)
+                                CurrentLoadingLayer = BlockLayers.Decoration;
+                            else
+                                levelLoadingComplete = true;
+                        }
+                    }
+                    else X++;
+                }
+            else if (!IsDone)
             {
                 IsDone = true;
-                CurrentCompletionInfo = new LevelCompletionInfo()
-                {
-                    LevelName = Level.Name
-                };
+                SoundLoader.Play("sb-enter.wav", true); // play level open chime
             }
         }
         if (!showingTitleCard && IsDone && canShowTitleCard)
@@ -259,17 +216,11 @@ public class LevelObjectManager : MonoBehaviour
         else if (showingTitleCard) titleCardTimer += Time.deltaTime;
         if (IsDone)
         {
-            //compltion status 
-            if (Pickup.MajorPickups.TryGetValue("BONUS", out var tuple))
-                CurrentCompletionInfo.BonusesCollected = tuple.amountCollected;
-            if (Pickup.MajorPickups.TryGetValue("PATTY", out var pattyinfo))
-            {
-                CurrentCompletionInfo.PattiesCollected = pattyinfo.amountCollected;
-                if (pattyinfo.amountCollected == pattyinfo.amountTotal)
-                    SignalLevelCompleted(true);
-            }
-            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);
-            Pickup.MajorPickups["TIME"] = ((int)levelTime.TotalSeconds, Pickup.MajorPickups["TIME"].amountTotal);
+            //Check if all pickups are picked up
+            if (CurrentWorld.AllPattiesCollected)
+                SignalLevelCompleted(true);   
+            CurrentWorld.UpdateTimeRemaining((int)levelTime.TotalSeconds);   
+            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);                  
         }
     }
 
@@ -277,15 +228,16 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (levelLoadingComplete)
             return false;
-        //debug_loadWatch.Reset();
-        //debug_loadWatch.Start();
-        LevelDataBlock block = (CurrentLoadingLayer == BlockLayers.Integral ? Level.IntegralData : Level.DecorationData)[Y * Level.Columns + X];
+        var integralParent = GameObject.Find("Integral").transform;
+        var decoratationParent = GameObject.Find("Decoration").transform;
+        LevelDataBlock block = CurrentWorld.GetBlockAt(CurrentLoadingLayer, X, Y);
         var GObject = CurrentLoadingLayer == BlockLayers.Integral ? GetObject(block) : GetDecoration(block);
         if (GObject != null)
         {
             var transform = GObject.transform;
             transform.position = new Vector3(-X * Grid_Size.x, transform.position.y, Y * Grid_Size.y);
             transform.rotation = Quaternion.identity;
+            transform.parent = CurrentLoadingLayer == BlockLayers.Integral ? integralParent : decoratationParent;
             float angle = 0;
             switch (block.Rotation)
             {
@@ -295,24 +247,8 @@ public class LevelObjectManager : MonoBehaviour
                 case SRotation.SOUTH: angle = 180; break;                    
             }
             transform.RotateAround(transform.position, Vector3.up, angle);            
-        }
-        //debug_loadWatch.Stop();
-        //UnityEngine.Debug.LogWarning(block.Name + " took " + debug_loadWatch.ElapsedTicks + "ticks to load");
-        if (X >= Level.Columns-1)
-        {
-            X = 0;
-            Y++;
-            if (Y >= Level.Rows)
-            {
-                Y = 0;
-                if (CurrentLoadingLayer == BlockLayers.Integral)
-                    CurrentLoadingLayer = BlockLayers.Decoration;
-                else
-                    levelLoadingComplete = true;
-            }
-        }
-        else X++;
-        LoadingPercentage = ((Y * Level.Columns) + X) / (float)Level.Total;
+        }      
+        LoadingPercentage = (((Y * Level.Columns) + X) / ((float)Level.Total * 2)) + (CurrentLoadingLayer == BlockLayers.Decoration ? .5f : 0.0f);
         return true;
     }
 
@@ -324,7 +260,6 @@ public class LevelObjectManager : MonoBehaviour
 
     private GameObject GetDecoration(LevelDataBlock block)
     {
-        GameObject decoration = null;
         textures = block.GetReferences(AssetType.Texture);
         if (TryGetByParameter(block, out var byParameter))
             return byParameter; // try getting by parameter
@@ -332,11 +267,10 @@ public class LevelObjectManager : MonoBehaviour
     }             
 
     GameObject GetObject(LevelDataBlock Data)
-    {
-        GameObject wallObject = null;        
+    {   
         if (TryGetByParameter(Data, out var byParameter))
             return byParameter; // try getting by parameter
-        return (GameObject)Instantiate(ResourceLoad("Objects/UnknownObject"));
+        return Instantiate(ResourceLoad("Objects/UnknownObject"));
     }
 
     static GameObject ResourceLoad(string Name)
