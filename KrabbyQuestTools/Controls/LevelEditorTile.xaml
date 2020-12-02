@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="KrabbyQuestTools.Controls.LevelEditorTile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KrabbyQuestTools.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450">
+    <Grid x:Name="HostGrid">
+        <Image x:Name="EditorPreview"/>
+        <Border x:Name="DimBorder" Background="Black" Opacity=".25">
+            <Image x:Name="EditorSelectionImage"/>
+        </Border>
+        <Border x:Name="SelectionBorder" BorderBrush="#FF005E9E" />
+    </Grid>
+</UserControl>

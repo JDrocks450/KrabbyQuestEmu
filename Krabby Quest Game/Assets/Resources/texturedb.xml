@@ -276,18 +276,6 @@
     <AssetType>Texture</AssetType>
     <References>O985647</References>
   </A719401>
-  <A301051>
-    <FilePath>Export\bully01.obj</FilePath>
-    <Name>Bully</Name>
-    <AssetType>Model</AssetType>
-    <References>O441458,O881279,O302390,O427502</References>
-  </A301051>
-  <A429073>
-    <FilePath>Graphics\bully01.png</FilePath>
-    <Name>bully01</Name>
-    <AssetType>Texture</AssetType>
-    <References>O881279,O881279,O427502,O441458</References>
-  </A429073>
   <A372823>
     <FilePath>Graphics\bridge.jpg</FilePath>
     <Name>bridge</Name>
@@ -544,31 +532,55 @@
     <FilePath>Export\tentacle_both01.obj</FilePath>
     <Name>Tentacle</Name>
     <AssetType>Model</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O170254,O245554,O714060,O844664,O503264,O614014,O950193</References>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O170254,O245554,O714060,O844664,O503264,O614014,O950193,O911855,O419663,O902073,O531040,O672115</References>
   </A94528>
   <A704444>
     <FilePath>Graphics\tentacle_cannon01.png</FilePath>
     <Name>tentacle_cannon01</Name>
     <AssetType>Texture</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193,O911855,O419663,O902073,O531040,O672115</References>
   </A704444>
   <A440017>
     <FilePath>sound\sb-tentacle2.wav</FilePath>
     <Name>sb-tentaclethrow</Name>
     <AssetType>Sound</AssetType>
-    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193</References>
+    <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O614014,O503264,O950193,O911855,O419663,O902073,O531040,O672115</References>
   </A440017>
+  <A269941>
+    <FilePath>Graphics\ice.jpg</FilePath>
+    <Name>ice</Name>
+    <AssetType>Texture</AssetType>
+    <References>O254939</References>
+  </A269941>
+  <A28148>
+    <FilePath>sound\sb-ice.wav</FilePath>
+    <Name>sb-ice</Name>
+    <AssetType>Sound</AssetType>
+    <References>O254939</References>
+  </A28148>
   <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
+  <A429073>
+    <FilePath>Graphics\bully01.png</FilePath>
+    <Name>bully01</Name>
+    <AssetType>Texture</AssetType>
+    <References>O881279,O427502,O441458,O744745,O302390</References>
+  </A429073>
+  <A301051>
+    <FilePath>Export\bully01.obj</FilePath>
+    <Name>Bully</Name>
+    <AssetType>Model</AssetType>
+    <References>O441458,O881279,O302390,O427502,O744745</References>
+  </A301051>
   <A373796>
     <FilePath>sound\sb-bully.wav</FilePath>
     <Name>sb-bully</Name>
     <AssetType>Sound</AssetType>
-    <References>O302390,O881279,O427502,O441458</References>
+    <References>O302390,O881279,O427502,O441458,O744745</References>
   </A373796>
   <A297679>
     <FilePath>sound\sb-bullyx.wav</FilePath>
     <Name>sb-bullyx</Name>
     <AssetType>Sound</AssetType>
-    <References>O302390,O881279,O427502,O441458</References>
+    <References>O302390,O881279,O427502,O441458,O744745</References>
   </A297679>
 </root>

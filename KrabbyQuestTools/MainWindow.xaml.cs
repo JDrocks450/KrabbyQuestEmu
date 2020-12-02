@@ -87,6 +87,12 @@ namespace KrabbyQuestTools
             var stinkyPage = ((tab.Content as Frame).Content) as KQTPage;
             if (stinkyPage != null)
                 if (!stinkyPage.OnClosing()) return;
+            if (tab.IsSelected)
+            {
+                if (TabSwitcher.SelectedIndex > 0)
+                    TabSwitcher.SelectedIndex--;
+                else return;
+            }
             TabSwitcher.Items.Remove(tab);
         }
 

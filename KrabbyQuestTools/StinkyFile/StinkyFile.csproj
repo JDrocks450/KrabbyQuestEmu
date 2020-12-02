@@ -65,6 +65,8 @@
     <Compile Include="Installation\InstallationCompletionInfo.cs" />
     <Compile Include="Installation\PythonParameterEditor.cs" />
     <Compile Include="Installation\Uninstall.cs" />
+    <Compile Include="Primitive\EditorVisible.cs" />
+    <Compile Include="Primitive\FileTools.cs" />
     <Compile Include="Primitive\RefBool.cs" />
     <Compile Include="Save\LevelCompletionInfo.cs" />
     <Compile Include="LevelContext.cs" />

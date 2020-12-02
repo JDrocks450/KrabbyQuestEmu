@@ -307,5 +307,11 @@ namespace Assets.Components.World
             SenderReserveTiles[TileX, TileY] = sender;
             return true;
         }
+
+        public void ForceCollisionFree(int TileX, int TileY)
+        {
+            ReservedTiles[TileX, TileY] = false;
+            SenderReserveTiles[TileX, TileY] = null;
+        }
     }
 }

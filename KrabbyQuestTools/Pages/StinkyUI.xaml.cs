@@ -3,7 +3,9 @@ using KrabbyQuestTools.Controls;
 using StinkyFile;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,8 +31,26 @@ namespace KrabbyQuestTools.Pages
         private StinkyLevel OpenLevel;
         private LevelDataBlock OpenDataBlock;
         private BlockLayers _mode;
-        private string AssetDir = @"D:\Projects\Krabby Quest\Workspace";
-        bool askSave = false, decorPrepared = false;       
+        private string AssetDir;
+        bool askSave = false, decorPrepared = false;
+        LevelEditorTile[,] LevelTileMap, ObjTileMap;
+        private int _cellSize = 50;
+
+        private int CellSize
+        {
+            get => _cellSize;
+            set
+            {
+                if (_cellSize == value) return;
+                _cellSize = value;
+                CellSizeBlock.Text = value.ToString();
+                if (OpenLevel == null) return;
+                SetupGridLength(LevelGrid, OpenLevel, value).ContinueWith(async delegate
+                {
+                    await SetupGridLength(DecorGrid, OpenLevel, value);
+                });
+            }
+        }
 
         private BlockLayers Mode
         {
@@ -41,7 +61,7 @@ namespace KrabbyQuestTools.Pages
                 {
                     case BlockLayers.Decoration:
                         IntegralModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
-                        DecorModeButton.Background = Brushes.DarkCyan;
+                        DecorModeButton.Background = Brushes.DarkCyan;                        
                         break;
                     case BlockLayers.Integral:                        
                         DecorModeButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"));
@@ -51,16 +71,22 @@ namespace KrabbyQuestTools.Pages
                 _mode = value;
             }            
         }
-        
-        public StinkyUI(StinkyLevel Level)
+
+        public BlockLayers CurrentLayer => Mode;
+
+        public StinkyUI(StinkyLevel Level, string AssetDirectory)
         {            
             InitializeComponent();
+            LoadingPanel.Visibility = Visibility.Hidden;
+            AssetDir = AssetDirectory;
+            LevelEditorTile.AssetDir = AssetDirectory;
             OpenLevel = Level;
             PrepareMapScreen(Level);           
             Title = Level.Name;
             Mode = BlockLayers.Integral;
             GetMessages();
             GetHeaderData();
+            LevelTitleText.Text = Level.Name;
         }                
 
         private void Refresh()
@@ -83,27 +109,43 @@ namespace KrabbyQuestTools.Pages
         private void GetHeaderData()
         {
             int index = 0;
-            foreach(var param in OpenLevel.LevelParameters)
+            if (OpenLevel.LevelFileVersion < 5)
             {
+                LevelWarningLabel.Text = "LV3 levels not supported.";
+                LevelWarningLabel.Background = Brushes.Red;
+            }
+            else
+                LevelWarningLabel.Text = "Viewing Level File Version: " + OpenLevel.LevelFileVersion;
+            foreach(var param in typeof(StinkyLevel).GetProperties(
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance))
+            {
+                var att = param.CustomAttributes.FirstOrDefault();
+                if (att == default) continue;
+                if (att.AttributeType != typeof(StinkyFile.Primitive.EditorVisible)) continue;
+                var paramAtt = (param.GetCustomAttributes().ElementAt(0) as StinkyFile.Primitive.EditorVisible);
+                if (paramAtt.LevelVersion > OpenLevel.LevelFileVersion) continue;
                 var dock = new DockPanel()
                 {
                     Margin = new Thickness(0,0,0,5)
                 };
-                string name = "Param #" + (index + 1),
-                    value = param?.ToString() ?? "null";
-                if (index == (int)ParameterDefinitions.CONTEXT)
-                {
-                    name = "Context";
-                    value = Enum.GetName(typeof(LevelContext), OpenLevel.Context);
-                }
-                else if (index == (int)ParameterDefinitions.LEVEL_WORLD_NAME)
-                {
-                    name = "Level Codename";
-                    value = OpenLevel.LevelWorldName;
-                }
+                string name = param.Name,
+                    value = param.GetValue(OpenLevel)?.ToString() ?? "not found";
                 var textBlock = new TextBlock()
                 {
-                    Text = name
+                    Text = name,
+                    ToolTip = new Border()
+                    {
+                        Style = null,
+                        BorderThickness = new Thickness(1),
+                        Padding = new Thickness(10,5,10,5),
+                        Background = Brushes.Gray,
+                        BorderBrush = Brushes.Silver,
+                        Child = new TextBlock()
+                        {
+                            Text = paramAtt.Description
+                        }
+                    }
                 };
                 var textbox = new TextBox()
                 {
@@ -125,7 +167,7 @@ namespace KrabbyQuestTools.Pages
             int index = 0;
             foreach(var message in OpenLevel.Messages)
             {
-                if (message == null) { index++; continue; } // dont display intentionally null messages
+                if (string.IsNullOrWhiteSpace(message)) { index++; continue; } // dont display intentionally null messages
                 var name = "Message #" + (index + 1);
                 var block = LevelDataBlock.LoadFromDatabase(name);
                 var button = new Button()
@@ -138,96 +180,126 @@ namespace KrabbyQuestTools.Pages
                 button.Click += delegate
                 {
                     MessageTextEditor.Text = message;
+                    UpdateToolMenu(block);
                 };
                 if (block != null) {
                     button.Background = new SolidColorBrush(AppResources.S_ColorConvert(block.Color));
-                    button.Content = block.GUID + " " + block.Name;
+                    button.Content = block.GUID + " " + block.Name;                    
                 }
                 MessageButtons.Children.Add(button);
                 index++;
             }
         }
 
+        private async Task SetupGridLength(Grid destination, StinkyLevel level, int cellSize)
+        {
+            await Dispatcher.InvokeAsync(() =>
+            {
+                int columns = level.Columns;
+                int rows = level.Rows;
+                LevelGridHost.MaxWidth = columns * CellSize;
+                destination.RowDefinitions.Clear();
+                destination.ColumnDefinitions.Clear();
+                for (int r = 0; r < rows; r++)
+                {
+                    destination.RowDefinitions.Add(new RowDefinition()
+                    {
+                        Height = new GridLength(cellSize, GridUnitType.Pixel),
+                    });
+                    for (int c = 0; c < columns; c++)
+                    {
+                        destination.ColumnDefinitions.Add(new ColumnDefinition()
+                        {
+                            Width = new GridLength(cellSize, GridUnitType.Pixel),
+                        });
+                    }
+                }
+            });
+        }
+
         private void PrepareMapScreen(StinkyLevel level, BlockLayers Viewing = BlockLayers.Integral)
-        {            
+        {  
             int columns = level.Columns;
-            int rows = level.Rows;
+            int rows = level.Rows;              
+                                         
             RowsSelectionBox.Text = rows.ToString();
             ColumnsSelectionBox.Text = columns.ToString();
             TotalCellsDisplay.Text = level.Total.ToString();
             //BitSkipSelection.Text = parser.BitRead.ToString();
             var destination = Viewing == BlockLayers.Integral ? LevelGrid : DecorGrid;
-            destination.Children.Clear();
-            destination.RowDefinitions.Clear();
-            destination.ColumnDefinitions.Clear();
-            GridBorder.MaxWidth = columns * 25;
-            for (int r = 0; r < rows; r++)
+            _ = SetupGridLength(destination, level, CellSize);
+            _ = LoadMapAsync(destination, level, Viewing);
+            PrepareToDoList();
+        }
+
+        private async Task LoadMapAsync(Panel destination, StinkyLevel level, BlockLayers Viewing)
+        {
+            int columns = level.Columns;
+            int rows = level.Rows;    
+            destination.Children.Clear();  
+            if (Viewing == BlockLayers.Integral)
+                LevelTileMap = new LevelEditorTile[columns, rows];      
+            else ObjTileMap = new LevelEditorTile[columns, rows]; 
+            var tileMap = Viewing == BlockLayers.Integral ? LevelTileMap : ObjTileMap;
+            LoadingPanel.Visibility = Visibility.Visible;
+            LoadingBar.Maximum = level.Total;
+            LoadingBar.Value = 0;
+            await Task.Run(async delegate
             {
-                destination.RowDefinitions.Add(new RowDefinition()
+                for (int r = 0; r < rows; r++)
                 {
-                    Height = new GridLength(1, GridUnitType.Star),
-                    MinHeight = 25,
-                    MaxHeight = 30
-                });
-                for (int c = 0; c < columns; c++)
-                {
-                    destination.ColumnDefinitions.Add(new ColumnDefinition()
+                    for (int c = 0; c < columns; c++)
                     {
-                        Width = new GridLength(1, GridUnitType.Star),
-                        MinWidth = 25,
-                        MaxWidth = 30
-                    });
-                    var data = ((Viewing == BlockLayers.Integral) ? level.IntegralData : level.DecorationData)[r * columns + c];
-                    if (data != null)
-                    {
-                        var cell = new Border()
+                        var data = ((Viewing == BlockLayers.Integral) ? level.IntegralData : level.DecorationData)[r * columns + c];
+                        if (data != null)
                         {
-                            Background = new SolidColorBrush(AppResources.S_ColorConvert(data.Color))
-                        };
-                        var texture = data.GetEditorPreview(OpenLevel.Context);
-                        if (texture != null)
-                        {
-                            RotateTransform transform = new RotateTransform(0);
-                            if (data.Name.Contains("_N")) // North
-                            {
-
-                            }
-                            else if (data.Name.Contains("_S")) //south
-                            {
-                                transform = new RotateTransform(180);
-                            }
-                            else if (data.Name.Contains("_E")) //east
-                            {
-                                transform = new RotateTransform(90);
-                            }
-                            else // west 
-                            {
-                                transform = new RotateTransform(-90);
-                            }
-                            try
-                            {
-                                var image = new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, texture.FileName)));
-                                cell.Child = new Image()
+                            int row = r;
+                            int column = c;
+                            await Dispatcher.InvokeAsync(delegate
+                            {        
+                                LoadingBar.Value++;
+                                var cell = new LevelEditorTile(OpenLevel, data)
                                 {
-                                    Source = image,
-                                    RenderTransform = transform,
-                                    RenderTransformOrigin = new Point(.5, .5)
+                                    BorderThickness = new Thickness(2, 2, 2, 2)
                                 };
-                            }
-                            catch
-                            {
-
-                            }
+                                cell.MouseLeftButtonDown += LevelBlock_Click;
+                                cell.Tag = data;
+                                Grid.SetRow(cell, row);
+                                Grid.SetColumn(cell, column);
+                                destination.Children.Add(cell);
+                                cell.MouseEnter += delegate
+                                {
+                                    UpdateHoverText(cell);
+                                };
+                                lock (tileMap)
+                                {
+                                    tileMap[column, row] = cell;
+                                }                                
+                            }, DispatcherPriority.Normal);
                         }
-                        cell.MouseLeftButtonDown += LevelBlock_Click;
-                        cell.Tag = data;
-                        Grid.SetRow(cell, r);
-                        Grid.SetColumn(cell, c);
-                        destination.Children.Add(cell);
                     }
                 }
-            }
-            PrepareToDoList();
+                for (int r = 0; r < OpenLevel.Rows; r++)
+                {
+                    for (int c = 0; c < OpenLevel.Columns; c++)
+                    {
+                        int row = r;
+                        int column = c;
+                        _ = Dispatcher.InvokeAsync(() => tileMap[column, row].SetupBorder(tileMap, new Point(column, row)));
+                    }
+                }
+            });
+            LoadingPanel.Visibility = Visibility.Hidden;
+        }
+
+        private void UpdateHoverText(LevelEditorTile cell, bool forceSelected = false)
+        {
+            var data = cell.BlockData;
+            HoverTooltipText.Inlines.Clear();
+            if (cell.Selected || forceSelected)
+                HoverTooltipText.Inlines.Add("*");
+            HoverTooltipText.Inlines.Add(new Run(data.GUID) { FontStyle = FontStyles.Italic });
+            HoverTooltipText.Inlines.Add(" " + data.Name);
         }
 
         private void PrepareToDoList()
@@ -256,6 +328,7 @@ namespace KrabbyQuestTools.Pages
 
         private void LevelBlock_Click(object sender, MouseButtonEventArgs e)
         {
+            UpdateHoverText(sender as LevelEditorTile, true);
             UpdateToolMenu((sender as FrameworkElement).Tag);
         }
 
@@ -265,10 +338,10 @@ namespace KrabbyQuestTools.Pages
         /// <param name="SelectedItem"></param>
         private void UpdateToolMenu(object SelectedItem)
         {
-            if (SelectedItem is LevelDataBlock)
+            if (SelectedItem is LevelDataBlock && (OpenDataBlock?.GUID ?? null) != ((SelectedItem as LevelDataBlock)?.GUID ?? null))
             {
                 askSave = true;
-                var dataBlock = SelectedItem as LevelDataBlock;                
+                var dataBlock = SelectedItem as LevelDataBlock;
                 dataBlock = dataBlock.RefreshFromDatabase(Parser);
                 RawDataField.Children.Clear();
                 BlockSaveButton.IsEnabled = false;
@@ -278,7 +351,7 @@ namespace KrabbyQuestTools.Pages
                     BlockSaveButton.IsEnabled = false;
                     return;
                 }
-                for(int i = 0; i < LevelDataBlock.RAW_DATA_SIZE; i++)
+                for (int i = 0; i < LevelDataBlock.RAW_DATA_SIZE; i++)
                 {
                     var box = new TextBox()
                     {
@@ -290,16 +363,18 @@ namespace KrabbyQuestTools.Pages
                     Grid.SetColumn(box, i);
                 }
                 NameSelectionField.Text = dataBlock.Name;
+                if (string.IsNullOrWhiteSpace(NameSelectionField.Text))
+                    NameSelectionField.Text = "Untitled object";
                 BlockLayerDisplay.Text = Enum.GetName(typeof(BlockLayers), dataBlock.BlockLayer) + " - " + dataBlock.GUID;
                 BlockColorPicker.SelectedColor = AppResources.S_ColorConvert(dataBlock.Color);
-                ContextWarningLabel.Text = "Affected by Context: " + Enum.GetName(typeof(LevelContext), OpenLevel.Context);
+                ContextWarningLabel.Text = "Using Context: " + Enum.GetName(typeof(LevelContext), OpenLevel.Context);
                 var textureRef = dataBlock.GetEditorPreview(OpenLevel.Context);
                 try
                 {
                     TextureSelectionField.Background = new ImageBrush(new BitmapImage(new Uri(System.IO.Path.Combine(AssetDir, textureRef.FileName))));
                     TextureNameBox.Text = textureRef.DBName;
                 }
-                catch 
+                catch
                 {
                     TextureSelectionField.Background = null;
                     TextureNameBox.Text = "No Texture";
@@ -307,8 +382,16 @@ namespace KrabbyQuestTools.Pages
                 ParameterMenu.Load(dataBlock);
                 RotationField.SelectedIndex = Array.IndexOf(Enum.GetNames(typeof(SRotation)), Enum.GetName(typeof(SRotation), dataBlock.Rotation));
                 OpenDataBlock = dataBlock;
-                BlockSaveButton.IsEnabled = true;                
+                BlockSaveButton.IsEnabled = true;
+                //refresh updated state
+                LevelEditorTile.SetSelectedGUID(dataBlock.GUID);
             }
+            else LevelEditorTile.SetSelectedGUID(null);
+            //undim the map
+            var tileMap = CurrentLayer == BlockLayers.Integral ? LevelTileMap : ObjTileMap;     
+            for (int r = 0; r < OpenLevel.Rows; r++)
+                for (int c = 0; c < OpenLevel.Columns; c++)
+                    tileMap[c, r].UpdateSelectedState();
         }        
 
         private void RefreshEditorButton_Click(object sender, RoutedEventArgs e) => Refresh();
@@ -395,6 +478,37 @@ namespace KrabbyQuestTools.Pages
                 };
                 paramDialog.Show();
             }
+        }
+
+        private void FitButton_Click(object sender, RoutedEventArgs e)
+        {
+            var usableSpace = ContentGrid.ActualHeight - 30;
+            var heightWise = (int)(usableSpace / OpenLevel.Rows);
+            usableSpace = ContentGrid.ActualWidth - 10;
+            var widthWise = (int)(usableSpace / OpenLevel.Columns);
+            CellSize = Math.Min(heightWise, widthWise);
+        }
+
+        private void GridBorder_MouseMove(object sender, MouseEventArgs e)
+        {
+            var point = e.GetPosition(sender as Panel);
+            HoverTooltipText.Margin = new Thickness(point.X + 10, point.Y + 10,0,0);
+        }
+
+        private void GridBorder_MouseEnter(object sender, MouseEventArgs e)
+        {            
+            HoverTooltipText.Visibility = Visibility.Visible;
+        }
+
+        private void GridBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            HoverTooltipText.Visibility = Visibility.Hidden;
+        }
+
+        private void CellSizeBlock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (int.TryParse(CellSizeBlock.Text, out int cellSize))
+                CellSize = cellSize;
         }
 
         public override bool OnClosing()

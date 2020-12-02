@@ -146,7 +146,7 @@ public class WaterBehavior : MonoBehaviour
             else if (!box.CanFloat && !IsBoxSunken)
             {
                 IsBoxSunken = true;
-                box.MovementAllowed = false;
+                box.MovementAllowed = false;                
                 GetComponent<SoundLoader>().Play(0);
                 animator.Play("Sunken");
             }            
@@ -170,7 +170,7 @@ public class WaterBehavior : MonoBehaviour
         {
             DisableWalls();
             wallsDisabled = true;
-        }
-        World.Current.CollisionMapUpdate(gameObject, false, BlockComponent.WorldTileX, BlockComponent.WorldTileY); // free this space always
+        }     
+        World.Current.ForceCollisionFree(BlockComponent.WorldTileX, BlockComponent.WorldTileY); // free this space always
     }
 }

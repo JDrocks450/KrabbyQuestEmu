@@ -114,7 +114,7 @@ namespace KrabbyQuestTools.Pages
         {
             StinkyLevel level = (StinkyLevel)(sender as Button).Tag;
             Parser.RefreshLevel(level);
-            NavigationService.Navigate(new StinkyUI(level));
+            NavigationService.Navigate(new StinkyUI(level, Workspace));
         }
 
         private void FilePathScreen_Drop(object sender, DragEventArgs e)
@@ -125,7 +125,7 @@ namespace KrabbyQuestTools.Pages
                 if (file[0].EndsWith(".lv5")) // directly open level
                 {
                     var level = Parser.LevelRead(file[0]);
-                    NavigationService.Navigate(new StinkyUI(level));
+                    NavigationService.Navigate(new StinkyUI(level, Workspace));
                     return;
                 }                
                 WorkspacePath.Text = file[0];

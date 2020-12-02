@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Assets.Components;
 using StinkyFile.Save;
 using Assets.Components.World;
+using Debug = UnityEngine.Debug;
 
 public class LevelObjectManager : MonoBehaviour    
 {
@@ -26,7 +27,7 @@ public class LevelObjectManager : MonoBehaviour
     /// <summary>
     /// Every tile thats loaded is cached here to make cloning them less time consuming
     /// </summary>
-    static Dictionary<string, GameObject> ClonableObjects = new Dictionary<string, GameObject>();    
+    Dictionary<string, GameObject> ClonableObjects = new Dictionary<string, GameObject>();    
 
     /// <summary>
     /// The currently loading/open world
@@ -133,9 +134,7 @@ public class LevelObjectManager : MonoBehaviour
             PlayMusic(Context); // play the level music           
             LoadingPercentage = 0; // update the percent complete of level layer loading
             isLoadingLevel = true; 
-            int timeRemaining = LevelCompletionInfo.DefaultTime; // set the time remaining for the level
-            if (Level.Name == "Bonus Level")
-                timeRemaining = LevelCompletionInfo.BonusTime; // use bonus time instead
+            int timeRemaining = World.Current.Level.LevelTime; // set the time remaining for the level
             levelTime = TimeSpan.FromSeconds(timeRemaining);
             World.Current.LoadSave(completionInfo); // load save information for the current world
             LoadNext();
@@ -264,22 +263,37 @@ public class LevelObjectManager : MonoBehaviour
         if (TryGetByParameter(block, out var byParameter))
             return byParameter; // try getting by parameter
         return default;
-    }             
+    }
 
     GameObject GetObject(LevelDataBlock Data)
-    {   
+    {
         if (TryGetByParameter(Data, out var byParameter))
             return byParameter; // try getting by parameter
-        return Instantiate(ResourceLoad("Objects/UnknownObject"));
+        var obj = ResourceLoad("Objects/UnknownObject");
+        if (obj != null)
+        {
+            var retVal = Instantiate(obj);
+            retVal.SetActive(true);
+            return retVal;
+        }
+        return null;
     }
 
     static GameObject ResourceLoad(string Name)
     {
         if (LoadedPrefabs.TryGetValue(Name, out var resource))
             return resource;
-        var obj = Resources.Load(Name) as GameObject;
-        obj.SetActive(false);
-        LoadedPrefabs.Add(Name, obj);
+        try
+        {
+            var obj = Resources.Load(Name) as GameObject;
+            obj.SetActive(false);
+            LoadedPrefabs.Add(Name, obj);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Error loading Object: " + Name + ". Object was not Defined in Resources/Objects, yet references a Prefab using Parameters.");
+            return null;
+        }        
         return LoadedPrefabs[Name];
     }
 
@@ -317,7 +331,9 @@ public class LevelObjectManager : MonoBehaviour
             }
         else if (block.GetParameterByName("Prefab", out parameter))
         {
-            returnVal = Instantiate(ResourceLoad("Objects/" + parameter.Value));
+            var prefab = ResourceLoad("Objects/" + parameter.Value);
+            if (prefab != null)
+                returnVal = Instantiate(prefab);
         }
         else if (block.GetParameterByName("ServiceObject", out _))
             switch (block.BlockLayer)

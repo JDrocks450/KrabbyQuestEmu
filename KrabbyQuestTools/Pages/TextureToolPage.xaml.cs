@@ -41,6 +41,8 @@ namespace KrabbyQuestTools.Pages
             AssetTypeSwitcher.ItemsSource = Enum.GetNames(typeof(AssetType));
             GalleryView.OnDataSelected += (object sender, LevelDataBlock d) =>
             {
+                if (OpenEntry.ReferencedDataBlocks.Where(x => x.GUID == d.GUID).Any())
+                    return;
                 OpenEntry.ReferencedDataBlocks.Add(d);
                 RefreshReferences(OpenEntry);
                 unsavedChanges = true;
@@ -162,8 +164,8 @@ namespace KrabbyQuestTools.Pages
                 button.Click += delegate
                 {
                     dbe.ReferencedDataBlocks.Remove((LevelDataBlock)button.Tag);
-                    RefreshReferences(dbe);
                     unsavedChanges = true;
+                    RefreshReferences(dbe);                    
                 };
                 GUIDBox.Children.Add(button);
             }

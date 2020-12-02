@@ -1,4 +1,5 @@
-﻿using StinkyFile.Save;
+﻿using StinkyFile.Primitive;
+using StinkyFile.Save;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +10,31 @@ namespace StinkyFile
 {
     public partial class StinkyLevel
     {
+        /// <summary>
+        /// The amount of bytes the level data takes up
+        /// </summary>
         public int ByteSize => Rows * Columns * 4;
+        /// <summary>
+        /// The header, is expected to always be level file v5
+        /// </summary>
         public string Header { get; private set; }
-        public string Name { get; private set; }
+        [EditorVisible("The version of the level loaded")]
+        /// <summary>
+        /// The version of the level loaded
+        /// </summary>
+        public int LevelFileVersion
+        {
+            get; private set;
+        }
+        [EditorVisible("The name of the Level, included in the header data")]
+        /// <summary>
+        /// The name of the Level, included in the header data
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// The amount of signs supported by the level file version
+        /// </summary>
+        public int SupportedSignAmount { get; private set; } = 20;
 
         private StinkyParser Parent;
 
@@ -19,23 +42,115 @@ namespace StinkyFile
         /// The tile data that is Integral to the level layout
         /// </summary>
         public LevelDataBlock[] IntegralData;
+
         /// <summary>
         /// Any objects that are placed above Integral tiles
         /// </summary>
         public LevelDataBlock[] DecorationData;
-        public string[] Messages;
-
-        public string LevelFilePath;
 
         /// <summary>
-        /// The developer name for worlds, usually the ordered index of the level in the world.
+        /// The sign data in the world.
+        /// <para>Stinky and Loof v5+ have 20 signs</para>
         /// </summary>
-        public string LevelWorldName;
-        public int LevelContentIndex;
+        public string[] Messages;
+
+        [EditorVisible("The FileName of the level")]
+        /// <summary>
+        /// The FileName of the level
+        /// </summary>
+        public string LevelFilePath;
+
+        [EditorVisible("Each level has a unique ID")]
+        /// <summary>
+        /// Each level has a unique ID
+        /// </summary>
+        public int ID
+        {
+            get; set;
+        }
+        [EditorVisible("The developer name for worlds, usually the ordered index of the level in the world. \n" +
+            "For all intents and purposes, this is identical to the level's FileName")]
+        /// <summary>
+        /// The developer name for worlds, usually the ordered index of the level in the world.
+        /// <para>For all intents and purposes, this is identical to the level's FileName</para>
+        /// </summary>
+        public string LevelWorldName
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// The point in the file data where the object data begins
+        /// </summary>
+        internal int LevelContentIndex;
+
+        [EditorVisible("The Height, in Tiles, of the World")]
+        /// <summary>
+        /// The Height, in Tiles, of the World
+        /// </summary>
         public int Rows { get; set; }
-        public int Columns { get; set; }        
+        [EditorVisible("The Width, in Tiles, of the World")]
+        /// <summary>
+        /// The Width, in Tiles, of the World
+        /// </summary>
+        public int Columns { get; set; }  
+        [EditorVisible]
+        /// <summary>
+        /// The total amount of tiles on either level of the World.
+        /// <para><code>Rows * Columns</code></para>
+        /// </summary>
         public int Total => IntegralData?.Length ?? 0;
-        public LevelContext Context { get; private set; }
+        [EditorVisible]
+        /// <summary>
+        /// The context this level uses (LevelTexture) 
+        /// <para>This dictates the style of the objects in the world.</para>
+        /// </summary>
+        public LevelContext Context => (LevelContext)LevelParameters[(int)ParameterDefinitions.CONTEXT_LEVEL_TEXTURE];
+        [EditorVisible]
+        /// <summary>
+        /// The context this level uses. 
+        /// <para>This dictates the style of the objects in the world.</para>
+        /// </summary>
+        public int LevelBackground => (int)LevelParameters[(int)ParameterDefinitions.LEVEL_BG];
+        [EditorVisible("The time you have to complete the level")]
+        /// <summary>
+        /// The time you have to complete the level
+        /// </summary>
+        public int LevelTime
+        {
+            get; set;
+        }
+        [EditorVisible(3)]
+        /// <summary>
+        /// The music the level is intended to use        
+        /// </summary>
+        public int LevelMusic => (int)LevelParameters[(int)ParameterDefinitions.LEVEL_MUSIC];
+        [EditorVisible("The level's custom model, if applicable", 5)]
+        /// <summary>
+        /// The level's custom model, if applicable
+        /// </summary>
+        public string CustomModel => (string)LevelParameters[(int)ParameterDefinitions.CUSTOM_MODEL];
+        [EditorVisible("The level's custom house, if applicable", 5)]
+        /// <summary>
+        /// The level's custom house, if applicable
+        /// </summary>
+        public string CustomHouse => (string)LevelParameters[(int)ParameterDefinitions.CUSTOM_HOUSE];
+        [EditorVisible(6)]
+        /// <summary>
+        /// LV6 compatibility
+        /// </summary>
+        public string CustomTexture
+        {
+            get; private set;
+        }
+        [EditorVisible(6)]
+        /// <summary>
+        /// LV6 compatibility
+        /// </summary>
+        public string CustomBackground
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Is this level currently loaded
@@ -43,7 +158,7 @@ namespace StinkyFile
         public bool IsLoaded
         {
             get; set;
-        } = false;
+        } = false;        
 
         /// <summary>
         /// Level parameters stored in the header information
@@ -65,6 +180,12 @@ namespace StinkyFile
 
         }
         
+        /// <summary>
+        /// Load from a file at a specific index
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="FileData"></param>
+        /// <param name="index"></param>
         public StinkyLevel(StinkyParser parent, byte[] FileData, int index)
         {
             Parent = parent;      
@@ -78,66 +199,57 @@ namespace StinkyFile
         /// <param name="index"></param>
         internal void LoadFromDat(byte[] data, int index)
         {                      
-            int Position = index; // keeps track of the current file index
-            int headerLength = BitConverter.ToInt32(data, Position); // the length of the header... should be 27!            
-            Position += 4;
-            Header = Encoding.ASCII.GetString(data, Position, headerLength); // extra debugging information
-            Position += headerLength;
-            int LevelIndexLength = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            LevelWorldName = Encoding.ASCII.GetString(data, Position, LevelIndexLength);
+            int Position = index; // keeps track of the current file index    
+            Header = FileTools.ReadString(data, Position, out Position); // header data
+            LevelWorldName = FileTools.ReadString(data, Position, out Position); // level filename
             LevelParameters[8] = LevelWorldName; // enables the editor to display this data field
-            Position += LevelIndexLength;
-            LevelParameters[1] = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            int TitleLength = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            Name = Encoding.ASCII.GetString(data, Position, TitleLength); // the name of the level
-            Position += TitleLength;
-            LevelParameters[2] = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            LevelParameters[3] = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            LevelParameters[4] = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            LevelParameters[5] = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            Position += 4; // comma separator
-            LevelParameters[6] = BitConverter.ToInt32(data, Position); // Big endian conversion
-            Position += 4;
-            LevelParameters[7] = BitConverter.ToInt32(data, Position); // level parameter?
-            Position += 4;
-            Columns = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            Rows = BitConverter.ToInt32(data, Position);
-            Position += 4;
-            LevelContentIndex = Position;
-            Context = (LevelContext)LevelParameters[(int)ParameterDefinitions.CONTEXT];
-            Position += (ByteSize * 2); // jump to file footer data where messages are stored
-            var messages = new List<string>();
-            while (true)
+            ID = FileTools.ReadInt(data, Position, out Position);
+            Name = FileTools.ReadString(data, Position, out Position); // the name of the level
+            SupportedSignAmount = 5;
+            switch (Header)
             {
-                if (Position >= data.Length - 1)
+                case "Stinky & Loof Level File v3": // LV3 [UNSUPPORTED]
+                    LevelFileVersion = 3;
+                    LevelTime = FileTools.ReadInt(data, Position, out Position); // level time
                     break;
-                int length = BitConverter.ToInt32(data, Position);
-                Position += 4;
-                if (data.Length <= Position + length)
-                    break;                
-                if (length < 1000 && length > 0)
-                {
-                    string message = Encoding.ASCII.GetString(data, Position, length);
-                    message = message.Replace("#", "\n"); // replace # with new line
-                    messages.Add(message);                    
-                }
-                else
-                {
-                    messages.Add(null);
-                    continue;
-                }
-                Position += length;
-                
+                case "Stinky & Loof Level File v5": // LV5 [SUPPORTED]
+                    PopulateLV5(data, ref Position);
+                    LevelFileVersion = 5;
+                    break;
+                case "Stinky & Loof Level File v6": // LV6 [SUPPORTED]
+                    PopulateLV5(data, ref Position);
+                    _ = FileTools.ReadInt(data, Position, out Position); // dummy
+                    CustomTexture = FileTools.ReadString(data, Position, out Position);
+                    _ = FileTools.ReadInt(data, Position, out Position); // dummy
+                    CustomBackground = FileTools.ReadString(data, Position, out Position);
+                    LevelFileVersion = 6;
+                    break;
+            }                        
+            LevelParameters[6] = FileTools.ReadInt(data, Position, out Position); // level texture
+            LevelParameters[7] = FileTools.ReadInt(data, Position, out Position); // level background
+            Columns = FileTools.ReadInt(data, Position, out Position); 
+            Rows = FileTools.ReadInt(data, Position, out Position); 
+            LevelContentIndex = Position;
+            Position += (ByteSize * 2); // jump to file footer data where messages are stored
+            var messages = new string[SupportedSignAmount];
+            for (int i = 0; i < SupportedSignAmount; i++)
+            {
+                string message = FileTools.ReadString(data, Position, out Position);
+                message = message.Replace("#", "\n"); // replace # with new line
+                messages[i] = message;
             }
             Messages = messages.ToArray();
+            LevelParameters[1] = FileTools.ReadInt(data, Position, out Position); // level music
+        }
+
+        private void PopulateLV5(byte[] data, ref int Position)
+        {
+            SupportedSignAmount = 20;
+            LevelParameters[2] = FileTools.ReadInt(data, Position, out Position); // likely nothing
+            LevelParameters[3] = FileTools.ReadString(data, Position, out Position); // custom house
+            LevelParameters[4] = FileTools.ReadInt(data, Position, out Position); // likely nothing
+            LevelParameters[5] = FileTools.ReadString(data, Position, out Position); // custom model
+            LevelTime = FileTools.ReadInt(data, Position, out Position); // level time
         }
 
         /// <summary>

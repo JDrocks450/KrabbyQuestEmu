@@ -128,6 +128,8 @@ namespace StinkyFile
         public AssetDBEntry GetEditorPreview(LevelContext Context)
         {
             var textures = GetReferences(AssetType.Texture);
+            if (textures.Count() == 0)
+                return null;
             if (GetParameterByName("WALL", out _))
             {
                 int TopIndex = 0;
@@ -146,7 +148,9 @@ namespace StinkyFile
                         TopIndex = 9;
                         break;
                 }
-                return textures.ElementAt(TopIndex);
+                if (textures.Count() > 0)
+                    return textures.ElementAt(TopIndex);
+                else return null;
             }
             else if (GetParameterByName("FLOOR", out _))
             {

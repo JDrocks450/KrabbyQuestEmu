@@ -165,6 +165,8 @@ public class BullyBehavior : MonoBehaviour
                 isPassable = true;
             if (blockData.GetParameterByName("FLOOR", out blockParameter) && blockParameter.Value.ToLower() == "true") // ran into a non-passable object
                 isPassable = true;
+            if (blockData.GetParameterByName("ServiceObject", out blockParameter) && blockParameter.Value.ToLower() == "true") // ran into a non-passable object
+                isPassable = true;
             if (blockData.GetParameterByName("Bully_Ignore", out blockParameter) && blockParameter.Value.ToLower() == "true")
                 isPassable = true;
             if (i > 0 && i < amountOfTimes)

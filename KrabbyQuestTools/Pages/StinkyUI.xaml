@@ -7,7 +7,7 @@
       xmlns:controls="clr-namespace:KrabbyQuestTools.Controls"
       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1000" d:DesignWidth="800"
       Title="StinkyUI">
     <Page.Resources>
 
@@ -28,7 +28,7 @@
                         <Button Margin="0,5,0,0" Click="Button_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan">Save All</Button>
                         <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
-                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block Editor"/>
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Level Data Block" FontSize="16"/>
                                 <Grid x:Name="RawDataField" Height="20" Margin="0,10,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -39,11 +39,11 @@
                                 </Grid>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Name:</TextBlock>
-                                    <TextBox x:Name="NameSelectionField" Margin="5,0,0,0"/>
+                                    <TextBox x:Name="NameSelectionField" Margin="5,0,0,0" Height="25" VerticalContentAlignment="Center"/>
                                 </DockPanel>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Color:</TextBlock>
-                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="146" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+                                    <xctk:ColorPicker x:Name="BlockColorPicker" Width="146" HorizontalAlignment="Right" Foreground="White" HeaderBackground="#FF2E2E2E" TabBackground="#FF575757" Background="#FF363636" BorderBrush="#FF6E6E6E" DropDownBackground="#FF2E2E2E" SelectedColorChanged="ColorPicker_SelectedColorChanged" Height="25"/>
                                 </DockPanel>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">Texture:</TextBlock>
@@ -68,8 +68,8 @@
                         </Border>
                         <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
-                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Block Parameters" />
-                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="30" Click="ParameterButton_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan" Content="Pop out window"/>
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Block Parameters" FontSize="16" />
+                                <Button x:Name="ParameterButton" Margin="0,10,0,0" Height="30" Click="ParameterButton_Click" Background="DarkCyan" Foreground="White" BorderBrush="Cyan" Content="Pop out window" Visibility="Collapsed"/>
                                 <Frame>
                                     <Frame.Content>
                                         <local:ParameterDialog x:Name="ParameterMenu" Margin="-10,10,-10,0"/>
@@ -84,14 +84,14 @@
                         </Border>
                         <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
-                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Message Text Editor"/>
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" Text="Messages" FontSize="16"/>
                                 <StackPanel x:Name="MessageButtons" Margin="0,10"/>
                                 <TextBox x:Name="MessageTextEditor" IsReadOnly="True" TextWrapping="Wrap" Text="&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
-                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold">Map</TextBlock>
+                                <TextBlock HorizontalAlignment="Left" FontWeight="Bold" FontSize="16">Map</TextBlock>
                                 <DockPanel Margin="0,10,0,0">
                                     <TextBlock DockPanel.Dock="Left">Rows:</TextBlock>
                                     <TextBox x:Name="RowsSelectionBox" Margin="5,0,0,0" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" KeyDown="RowsSelectionBox_KeyDown"/>
@@ -108,25 +108,27 @@
                                     <TextBlock DockPanel.Dock="Left">Total:</TextBlock>
                                     <TextBox x:Name="TotalCellsDisplay" Margin="5,0,0,0" HorizontalAlignment="Right" Width="{Binding ActualWidth, ElementName=ColumnsSelectionBox}" HorizontalContentAlignment="Right" IsEnabled="False"/>
                                 </DockPanel>
-                                <TextBlock Margin="0,10,5,0">Header Data</TextBlock>
+                                <TextBlock FontWeight="Bold" Margin="0,10,5,0" FontSize="16">Header Data</TextBlock>
+                                <TextBlock x:Name="LevelWarningLabel" Padding="10,3" Foreground="White" Background="#FF005E9E" Margin="0,0,0,10">Viewing Level File Version: 3</TextBlock>
                                 <StackPanel x:Name="HeaderData"/>
                             </StackPanel>
                         </Border>
                         <Border Margin="0,10,0,0">
                             <StackPanel Margin="10">
-                                <TextBlock FontWeight="Bold">To-Do List</TextBlock>
+                                <TextBlock FontWeight="Bold" FontSize="16">To-Do List</TextBlock>
                                 <StackPanel x:Name="ToDoListContent" Margin="10"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
-            <Grid Background="Black">
-                <Border x:Name="GridBorder" HorizontalAlignment="Left" Margin="10,36,10,0" VerticalAlignment="Top" BorderBrush="#FF5F5F5F" BorderThickness="1" Background="#FF343434">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Grid>
+            <Grid x:Name="ContentGrid" Background="Black">
+                <Border x:Name="GridBorder" Margin="10,36,0,0" BorderBrush="#FF5F5F5F" BorderThickness="1" Background="#FF343434" MouseEnter="GridBorder_MouseEnter" MouseLeave="GridBorder_MouseLeave">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Grid x:Name="LevelGridHost" HorizontalAlignment="Left" VerticalAlignment="Top" MouseMove="GridBorder_MouseMove">
                             <Grid x:Name="LevelGrid" MinHeight="20" MinWidth="20" />
                             <Grid x:Name="DecorGrid" MinHeight="20" MinWidth="20" />
+                            <TextBlock Visibility="Collapsed" Background="#BF000000" x:Name="HoverTooltipText" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10,5">SAND</TextBlock>
                         </Grid>
                     </ScrollViewer>
                 </Border>
@@ -134,7 +136,21 @@
                     <Button x:Name="IntegralModeButton" Margin="0,0,0,0" Padding="10,5" Width="80" BorderThickness="1,1,1,0" Click="IntegralModeButton_Click">Integral</Button>
                     <Button x:Name="DecorModeButton" BorderThickness="0,1,1,0" Margin="0,0,0,0" Padding="10,5" Click="DecorModeButton_Click">Decoration</Button>
                 </StackPanel>
+                <TextBlock x:Name="LevelTitleText" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="16" FontWeight="Bold">LevelTitle</TextBlock>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,10,0,0">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Grid Cell Size:</TextBlock>
+                    <TextBox x:Name="CellSizeBlock" Margin="0,0,10,0" VerticalAlignment="Center" Padding="5,2" TextChanged="CellSizeBlock_TextChanged" Text="30"/>
+                    <Button x:Name="FitButton" Padding="10,5" BorderThickness="1,1,1,0" Click="FitButton_Click">Fit to Screen</Button>
+                </StackPanel>
             </Grid>
         </DockPanel>
+        <Border Background="#7F000000" x:Name="LoadingPanel" Visibility="Hidden">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Padding="20" Style="{StaticResource CardBorderStyle}" Background="#FF252525">
+                <DockPanel VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock DockPanel.Dock="Top" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Loading Level...</TextBlock>
+                    <ProgressBar x:Name="LoadingBar" Height="2" Margin="0,5,0,0" DockPanel.Dock="Bottom" Value="50" Foreground="DarkCyan"></ProgressBar>
+                </DockPanel>
+            </Border>
+        </Border>
     </Grid>
 </controls:KQTPage>

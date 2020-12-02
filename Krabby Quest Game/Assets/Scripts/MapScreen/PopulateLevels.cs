@@ -33,7 +33,8 @@ public class PopulateLevels : MonoBehaviour
             bool isAvailable = false;            
             var levelInfo = level.GetSaveFileInfo(SaveFileManager.Current);
             isAvailable = levelInfo.IsAvailable;
-            isAvailable = isAvailable ? true : CURRENT < 2; // first 2 levels always unlocked regardless            
+            isAvailable = isAvailable ? true : CURRENT < 2; // first 2 levels always unlocked regardless 
+            isAvailable = true;
             var button = Instantiate(sampleButton);
             var transform = button.gameObject.transform as RectTransform;
             transform.position = new Vector3(0, -lastHeight, 0);
