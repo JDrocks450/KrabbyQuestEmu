@@ -258,6 +258,12 @@ namespace KrabbyQuestTools.Pages
             
         }
 
+        private void DiffChecker_Click(object sender, RoutedEventArgs e)
+        {
+            string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
+            NavigationService.Navigate(new DiffPage(blockDBpath2, blockDBpath1));
+        }
+
         private void ExportModels_Click(object sender, RoutedEventArgs e)
         {
             KQTDialog dialog = new KQTDialog()

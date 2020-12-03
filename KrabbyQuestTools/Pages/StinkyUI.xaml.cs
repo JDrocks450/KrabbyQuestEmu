@@ -34,7 +34,9 @@ namespace KrabbyQuestTools.Pages
         private string AssetDir;
         bool askSave = false, decorPrepared = false;
         LevelEditorTile[,] LevelTileMap, ObjTileMap;
+        private List<LevelDataBlock> UnsavedChanges = new List<LevelDataBlock>();
         private int _cellSize = 50;
+        LevelEditorTile currentlySelected;
 
         private int CellSize
         {
@@ -87,23 +89,17 @@ namespace KrabbyQuestTools.Pages
             GetMessages();
             GetHeaderData();
             LevelTitleText.Text = Level.Name;
-        }                
+        }
 
         private void Refresh()
         {
-            try
-            {
-                OpenLevel.Columns = int.Parse(ColumnsSelectionBox.Text);
-                OpenLevel.Rows = int.Parse(RowsSelectionBox.Text);
-                Parser.BitRead = int.Parse(BitSkipSelection.Text);
-            }
-            catch(Exception)
-            {
-                //!
-            }            
+            OpenLevel.Columns = int.Parse(ColumnsSelectionBox.Text);
+            OpenLevel.Rows = int.Parse(RowsSelectionBox.Text);
+            Parser.BitRead = int.Parse(BitSkipSelection.Text);
             Parser.RefreshLevel(OpenLevel);
             PrepareMapScreen(OpenLevel);
-            PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
+            decorPrepared = false;
+            //PrepareMapScreen(OpenLevel, BlockLayers.Decoration);
         }
 
         private void GetHeaderData()
@@ -177,14 +173,14 @@ namespace KrabbyQuestTools.Pages
                     Margin = new Thickness(0,0,0,5),
                     Tag = index
                 };
-                button.Click += delegate
+                if (block != null)
                 {
-                    MessageTextEditor.Text = message;
-                    UpdateToolMenu(block);
-                };
-                if (block != null) {
+                    button.Click += delegate
+                    {
+                        UpdateToolMenu(block);
+                    };
                     button.Background = new SolidColorBrush(AppResources.S_ColorConvert(block.Color));
-                    button.Content = block.GUID + " " + block.Name;                    
+                    button.Content = block.GUID + " " + block.Name;
                 }
                 MessageButtons.Children.Add(button);
                 index++;
@@ -258,7 +254,7 @@ namespace KrabbyQuestTools.Pages
                             await Dispatcher.InvokeAsync(delegate
                             {        
                                 LoadingBar.Value++;
-                                var cell = new LevelEditorTile(OpenLevel, data)
+                                var cell = new LevelEditorTile(OpenLevel.Context, data)
                                 {
                                     BorderThickness = new Thickness(2, 2, 2, 2)
                                 };
@@ -330,6 +326,8 @@ namespace KrabbyQuestTools.Pages
         {
             UpdateHoverText(sender as LevelEditorTile, true);
             UpdateToolMenu((sender as FrameworkElement).Tag);
+            if (sender is LevelEditorTile)
+                currentlySelected = sender as LevelEditorTile;
         }
 
         /// <summary>
@@ -383,6 +381,8 @@ namespace KrabbyQuestTools.Pages
                 RotationField.SelectedIndex = Array.IndexOf(Enum.GetNames(typeof(SRotation)), Enum.GetName(typeof(SRotation), dataBlock.Rotation));
                 OpenDataBlock = dataBlock;
                 BlockSaveButton.IsEnabled = true;
+                if (OpenDataBlock.HasMessageContent)
+                    MessageTextEditor.Text = OpenDataBlock.GetMessageContent(OpenLevel);
                 //refresh updated state
                 LevelEditorTile.SetSelectedGUID(dataBlock.GUID);
             }
@@ -412,14 +412,16 @@ namespace KrabbyQuestTools.Pages
         {
             OpenDataBlock.Name = NameSelectionField.Text;
             OpenDataBlock.SaveToDatabase();
-            Parser.CacheRefresh(OpenDataBlock.GUID);
+            Parser.CacheRefresh(OpenDataBlock.GUID);            
             askSave = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenLevel.SaveAll();
+            UnsavedChanges = new List<LevelDataBlock>();
             askSave = false;
+            Refresh();
         }
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -492,7 +494,12 @@ namespace KrabbyQuestTools.Pages
         private void GridBorder_MouseMove(object sender, MouseEventArgs e)
         {
             var point = e.GetPosition(sender as Panel);
-            HoverTooltipText.Margin = new Thickness(point.X + 10, point.Y + 10,0,0);
+            if (point.X + HoverTooltipText.ActualWidth < LevelGridHost.ActualWidth)
+                HoverTooltipText.Margin = new Thickness(point.X + 10, point.Y + 10,0,0);
+            else 
+                HoverTooltipText.Margin = new Thickness(
+                    point.X - 10 - HoverTooltipText.ActualWidth,
+                    point.Y + 10,0,0);
         }
 
         private void GridBorder_MouseEnter(object sender, MouseEventArgs e)

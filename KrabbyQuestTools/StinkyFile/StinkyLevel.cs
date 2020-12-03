@@ -125,6 +125,11 @@ namespace StinkyFile
         /// The music the level is intended to use        
         /// </summary>
         public int LevelMusic => (int)LevelParameters[(int)ParameterDefinitions.LEVEL_MUSIC];
+        [EditorVisible("This is identical to Context: the textures the level should use.")]
+        /// <summary>
+        /// This is identical to CONTEXT, however, it is duplicated for editor clarity
+        /// </summary>
+        public int LevelTexture => (int)LevelParameters[(int)ParameterDefinitions.CONTEXT_LEVEL_TEXTURE];
         [EditorVisible("The level's custom model, if applicable", 5)]
         /// <summary>
         /// The level's custom model, if applicable

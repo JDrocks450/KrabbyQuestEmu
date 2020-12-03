@@ -8,7 +8,74 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace StinkyFile
-{    
+{
+    /// <summary>
+    /// Attempts to convert the string value into type T
+    /// <para><c>enum, string, int, double</c></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class TypedBlockParameter<T> : BlockParameter
+    {
+        /// <summary>
+        /// The value of the parameter, converted to the type parameter
+        /// </summary>
+        public new T Value { get => _value; set => _value = value; }
+        private T _value;
+        /// <summary>
+        /// Gets whether the conversion should be considered successful. 
+        /// </summary>
+        public bool ConversionSuccessful
+        {
+            get; private set;
+        }
+
+        public TypedBlockParameter() { }
+        public TypedBlockParameter(string Value) : this() { ConversionSuccessful = Parse<T>(Value, out _value); }
+        public TypedBlockParameter(T value) : this() => Value = value;
+
+        private bool Parse<T>(string Value, out T pValue)
+        {
+            Type dType = typeof(T);
+            if (dType.IsClass)
+            {
+                if (dType == typeof(string))
+                {
+                    pValue = (T)(object)Value;
+                    return true;
+                }
+            }
+            else if (dType.IsEnum)
+            {
+                try
+                {
+                    pValue = (T)Enum.Parse(dType, Value, true);
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                }
+                pValue = default;
+                return false; // if it's an enum and the string wasn't found, there is no sense in trying any other types, this is a spelling mistake.
+            }
+            try
+            {
+                pValue = (T)Convert.ChangeType(Value, typeof(T));
+                return true;
+            }
+            catch (InvalidCastException)
+            {
+
+            }
+            pValue = default;
+            return false;
+        }
+
+        public static TypedBlockParameter<T> Create(string Value)
+        {
+            return new TypedBlockParameter<T>(Value);
+        }
+    }
     public class BlockParameter
     {
         public static String ParameterDBPath => LevelDataBlock.ParameterDatabasePath;

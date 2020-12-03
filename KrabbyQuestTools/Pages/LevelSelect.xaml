@@ -92,6 +92,7 @@
                             <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch">
                                 <Button x:Name="PushAllChanges" DockPanel.Dock="Right" Background="DarkCyan" Foreground="White" Width="155" Height="33" Content="Push all changes" BorderBrush="#FF02D1FF" Click="PushAllChanges_Click"/>
                                 <Button x:Name="RefreshChanges" DockPanel.Dock="Right" Background="#FF6A6A6A" Foreground="White" Width="87" Height="33" Content="Refresh" BorderBrush="#FF02D1FF" Margin="0,0,5,0" Click="RefreshChanges_Click"/>
+                                <Button x:Name="DiffChecker" DockPanel.Dock="Right" Background="#FF065BB0" Foreground="White" Width="87" Height="33" Content="Compare" BorderBrush="#FF02D1FF" Margin="0,0,5,0" Click="DiffChecker_Click"/>
                                 <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Margin="20,0,10,0" Text="The Game and the Editor both have their own versions of the BlockDB, AssetDB, and MapDB. When changes are made in the editor, you need to push the changes to the Game file directory in order to see the changes. "/>
                             </DockPanel>
                         </StackPanel>

@@ -86,6 +86,7 @@
     <Compile Include="StinkyLevel.cs" />
     <Compile Include="S_Color.cs" />
     <Compile Include="AssetDBEntry.cs" />
+    <Compile Include="Util\DBDiffUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

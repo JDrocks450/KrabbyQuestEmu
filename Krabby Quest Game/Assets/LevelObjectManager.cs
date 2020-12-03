@@ -398,7 +398,7 @@ public class LevelObjectManager : MonoBehaviour
             returnVal.AddComponent<AllowTileMovement>();
         if (block.GetParameterByName("Script", out parameter))
             returnVal.AddComponent(Type.GetType(parameter.Value, true));
-        if (block.Name.StartsWith("Message"))
+        if (block.HasMessageContent)
             returnVal.AddComponent<MessageBehavior>();
         if (block.GetParameterByName("PosY", out parameter))
         {

@@ -54,6 +54,13 @@ namespace StinkyFile
         }
         public string Name { get; set; }
         public S_Color Color { get; set; }
+        public bool HasMessageContent => GetParameterByName("Message", out _);
+        public string GetMessageContent(StinkyLevel ParentLevel)
+        {
+            if (GetParameterByName<int>("Message", out var param))
+                return ParentLevel.Messages[param.Value-1];
+            return null;
+        }
 
         public HashSet<(string guid, AssetType type)> AssetReferences = new HashSet<(string guid, AssetType type)>();
 
@@ -123,6 +130,23 @@ namespace StinkyFile
             Parameters.TryGetValue(Name, out Data);
             if (Data != default) return true;
                 return false;
+        }
+
+        /// <summary>
+        /// Attempts to convert the parameter value into the type T
+        /// <para>See: <see cref="TypedBlockParameter{T}.ConversionSuccessful"/> before using</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Name"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        public bool GetParameterByName<T>(string Name, out TypedBlockParameter<T> Data)
+        {
+            Data = null;
+            if (!GetParameterByName(Name, out BlockParameter data))
+                return false;
+            Data = new TypedBlockParameter<T>(data.Value);
+            return Data.ConversionSuccessful; 
         }
 
         public AssetDBEntry GetEditorPreview(LevelContext Context)

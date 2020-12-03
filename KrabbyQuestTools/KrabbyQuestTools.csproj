@@ -93,6 +93,9 @@
     <Compile Include="Controls\SuggestionTextbox.xaml.cs">
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DiffPage.xaml.cs">
+      <DependentUpon>DiffPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MapScreenCustomizer.xaml.cs">
       <DependentUpon>MapScreenCustomizer.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\DiffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MapScreenCustomizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

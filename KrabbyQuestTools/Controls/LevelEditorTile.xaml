@@ -12,5 +12,10 @@
             <Image x:Name="EditorSelectionImage"/>
         </Border>
         <Border x:Name="SelectionBorder" BorderBrush="#FF005E9E" />
+        <Viewbox x:Name="MessageIndexContainer" Visibility="Hidden">
+            <TextBlock x:Name="MessageIndex">
+                1
+            </TextBlock>
+        </Viewbox>
     </Grid>
 </UserControl>

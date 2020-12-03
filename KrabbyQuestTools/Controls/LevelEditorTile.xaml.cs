@@ -55,17 +55,18 @@ namespace KrabbyQuestTools.Controls
             EditorSelectionImage.Source = BitmapSourceProvider.Load(new Uri("Resources/Editor/selection.png", UriKind.Relative));
         }
 
-        public LevelEditorTile(StinkyLevel level, LevelDataBlock block) : this()
+        public LevelEditorTile(LevelContext context, LevelDataBlock block) : this()
         {
-            Reflect(level, block);
+            Reflect(context, block);
         }
 
-        public void Reflect(StinkyLevel level, LevelDataBlock block)
+        public void Reflect(LevelContext context, LevelDataBlock block)
         {
             BlockData = block;
             HostGrid.Background = new SolidColorBrush(AppResources.S_ColorConvert(block.Color));
             UpdateSelectedState();
-            UpdateImage(level);
+            UpdateImage(context);
+            DoMessageText(); // whether or not this block is a message is checked within this method anyway, so call it all the time
         }
 
         public Task SetupBorder(LevelEditorTile[,] Map, Point MapLocation)
@@ -92,10 +93,18 @@ namespace KrabbyQuestTools.Controls
             });
         }
 
-        public void UpdateImage(StinkyLevel level)
+        private void DoMessageText()
+        {
+            if (BlockData.GetParameterByName("Message", out var param)) {
+                MessageIndex.Text = param.Value;
+                MessageIndexContainer.Visibility = Visibility.Visible;
+            }            
+        }
+
+        public void UpdateImage(LevelContext context)
         {
             var data = BlockData;
-            var texture = data.GetEditorPreview(level.Context);
+            var texture = data.GetEditorPreview(context);
             if (texture != null)
             {
                 RotateTransform transform = new RotateTransform(0);

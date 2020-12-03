@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Parameter>
+    <Name>Prefab</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Button Color</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ServiceObject</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Animation</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>uScale</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>TransparentColor</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ScaleX</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ScaleY</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ScaleZ</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>FLOOR</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Color</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Spawnpoint</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Script</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ScaleModel</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>AllowMotion</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Major Item</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Primitive</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>PosY</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>FillTexture</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Material</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>CanFloat</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ExclusiveMode</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Pushable</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>CanDestory</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>WALL</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Tex_Context_1</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Tex_Context_2</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Tex_Context_3</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Tex_Context_4</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>Templater</Name>
+    <Summary />
+  </Parameter>
+  <Parameter>
+    <Name>ApplyTemplater</Name>
+    <Summary />
+  </Parameter>
+</root>
