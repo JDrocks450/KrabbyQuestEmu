@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BullyBehavior : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour
 {
     public enum EnemyMode
     {
@@ -29,6 +29,16 @@ public class BullyBehavior : MonoBehaviour
     public int TileX => TileScript.TileX;
     public int TileY => TileScript.TileY;
     public bool IsMoving => TileScript.IsMoving;
+    public float BaseMotionSpeed = default;
+    bool ShouldChase
+    {
+        get
+        {
+            return shouldChasePlayer;
+        }
+    }
+
+    public float ChasingSpeed;
 
     /// <summary>
     /// Dictates whether this enemy should chase the player
@@ -49,7 +59,17 @@ public class BullyBehavior : MonoBehaviour
         transform.eulerAngles = new Vector3();
         TileScript = GetComponent<TileMovingObjectScript>();
         TileScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);
-        TileScript.MotionSpeed = 2f;
+        if (BaseMotionSpeed == default)
+        {
+            if (BlockComponent.DataBlock.GetParameterByName<float>("MotionSpeed", out var param))
+                BaseMotionSpeed = param.Value;
+            else
+                BaseMotionSpeed = 5;
+        }
+        ChasingSpeed = BaseMotionSpeed * 2;
+        if (BlockComponent.DataBlock.GetParameterByName<float>("Enemy_ChaseSpeed", out var data))
+            ChasingSpeed = data.Value;
+        TileScript.MotionSpeed = BaseMotionSpeed;
         TileScript.CanMoveOverWorldReservedTiles = false;
         Rotator = GetComponentInChildren<AngleRotator>();
         var loopSource = GetComponent<SoundLoader>().LoopStart("sb-bullyx", out _, true); // walking sound looped
@@ -191,19 +211,11 @@ public class BullyBehavior : MonoBehaviour
             }            
         }
         return true;
-    }
-
-    bool ShouldChase
-    {
-        get
-        {
-            return shouldChasePlayer;
-        }
-    }
+    }    
 
     void Patrol()
     {
-        TileScript.MotionSpeed = 2f;
+        TileScript.MotionSpeed = BaseMotionSpeed;
         if (!TileScript.IsMoving)
         {            
             bool[] attemptedRotations = new bool[] { false, false, false, false };            
@@ -228,25 +240,11 @@ public class BullyBehavior : MonoBehaviour
         }
     }
 
-    private SRotation GetBehind(SRotation rotation)
-    {
-        switch (rotation) // get behind direction
-        {
-            case SRotation.EAST:
-                return SRotation.WEST;                
-            case SRotation.WEST:
-                return SRotation.EAST;                
-            case SRotation.SOUTH:
-                return SRotation.NORTH;                
-            case SRotation.NORTH:
-                return SRotation.SOUTH;
-        }
-        return SRotation.EAST;
-    }
+    private static SRotation GetBehind(SRotation rotation) => TileMovingObjectScript.GetBehindDirection(rotation);
 
     void Chase()
     {
-        TileScript.MotionSpeed = 4f;
+        TileScript.MotionSpeed = ChasingSpeed;
         if (!TileScript.IsMoving)
         {
             if (!ShouldChase) // stop chasing when they're not in view

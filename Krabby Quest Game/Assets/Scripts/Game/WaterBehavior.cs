@@ -53,7 +53,7 @@ public class WaterBehavior : MonoBehaviour
         if (e.ToTile.x == Position.x && e.ToTile.y == Position.y)
         {
             if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _) || 
-                (sender as TileMovingObjectScript).TryGetComponent<BullyBehavior>(out _))
+                (sender as TileMovingObjectScript).TryGetComponent<EnemyBehavior>(out _))
                 e.BlockMotion = true;
         }
     }

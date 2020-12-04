@@ -12,24 +12,32 @@ public class CameraBehavior : MonoBehaviour
     void Start()
     {
         
-    }
+    }    
 
     // Update is called once per frame
     void Update()
-    {
-        if (!LevelObjectManager.IsDone) return;
+    {        
         if (!canUpdate)
         {
             Destroy(this);
             return;
         }
-        var transform = this.transform;        
-        var player = Player.Current?.transform ?? null;
+        var transform = this.transform;
+        Transform player = null;
+        if (Player.Current != null)
+        {
+            player = Player.Current.transform;
+        }         
         var camDesiredPos = transform.position;
         if (player != null)
             camDesiredPos = new Vector3(player.position.x,
                                     player.position.y + 10,
                                     player.position.z + 7);
+        if (!LevelObjectManager.IsDone)
+        {
+            transform.position = camDesiredPos;
+            return;
+        }
         if (Input.GetMouseButtonDown(1))
             mouseHoldPosition = Input.mousePosition;
         if (Input.GetMouseButton(1))

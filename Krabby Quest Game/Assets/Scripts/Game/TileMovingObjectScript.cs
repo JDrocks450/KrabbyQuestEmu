@@ -87,6 +87,19 @@ public class TileMovingObjectScript : MonoBehaviour
 
     public Vector2Int DestinationTile => new Vector2Int(walkTileX, walkTileY);
 
+    /// <summary>
+    /// The amount of time to wait in between movement (in seconds)
+    /// </summary>
+    public float MotionCooldown { get; set; }
+    /// <summary>
+    /// The current waited amount of time since the last movement. If MotionCooldown is not set, this is always -1.
+    /// </summary>
+    public float CurrentMotionCooldownTime { get; private set; } = -1;
+    /// <summary>
+    /// If the current cooldown time is -1, motion is allowed. If this is false, <c>WalkToTile</c> will always return <c>false</c>
+    /// </summary>
+    public bool CooldownAllowedToMove => CurrentMotionCooldownTime == -1;
+
     bool isWalking = false;
     float walkingPercentage = 0f;
     Vector3 walkStartLocation, walkEndLocation;
@@ -115,14 +128,19 @@ public class TileMovingObjectScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Walks to the specified tile if the motion is allowed
+    /// Walks to the specified tile if the motion is allowed, and the current <see cref="CurrentMotionCooldownTime"/> is completed (-1).
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns>True if motion is allowed</returns>
     public bool WalkToTile(int x, int y, float overrideMotionSpeed = default)
     {
-        //if (PreemptiveBlockMotion(x, y)) return false;        
+        //if (PreemptiveBlockMotion(x, y)) return false;  
+        if (CurrentMotionCooldownTime != -1)
+        {
+            Debug.LogWarning($"Motion Refused for: {gameObject.name} as the motion cooldown (set in KrabbyQuestTools) is not yet completed: {CurrentMotionCooldownTime}/{MotionCooldown}");
+            return false; // cannot walk until cooldown timer is completed.
+        }
         isWalking = true;
         walkingPercentage = 0f;
         walkStartLocation = transform.position;
@@ -201,17 +219,24 @@ public class TileMovingObjectScript : MonoBehaviour
         return default;
     }
 
-    public bool MoveInDirection(SRotation Direction, int Tiles = 1)
+    public bool MoveInDirection(SRotation Direction, int Tiles = 1, float overrideMotionSpeed = default)
     {
         var destination = GetTileFromDirection(Direction, Tiles);
-        return WalkToTile(destination.x, destination.y);
+        return WalkToTile(destination.x, destination.y, overrideMotionSpeed);
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (Target == null)
             Target = gameObject;
+        if (TryGetComponent<DataBlockComponent>(out var component)) // PARAMETER: MotionSpeed
+        {
+            if (component.DataBlock.GetParameterByName<float>("MotionSpeed", out var data))
+                MotionSpeed = data.Value;
+            if (component.DataBlock.GetParameterByName<float>("MotionCooldown", out data))
+                MotionCooldown = data.Value;
+        }
     }
 
     // Update is called once per frame
@@ -240,15 +265,40 @@ public class TileMovingObjectScript : MonoBehaviour
                 TileX = walkTileX;
                 TileY = walkTileY;
                 var args = new MoveEventArgs()
-                    {
-                        FromTile = from,
-                        ToTile = new Vector2Int(walkTileX, walkTileY)
-                    };
+                {
+                    FromTile = from,
+                    ToTile = new Vector2Int(walkTileX, walkTileY)
+                };
                 TilePositionChanged?.Invoke(this, args);
-                MoveableMoved?.Invoke(this, args);    
+                MoveableMoved?.Invoke(this, args);
                 World.Current.CollisionMapUpdate(gameObject, true, TileX, TileY); // unreserve tile halfway through walking
                 unreservedWalkingTilePrev = false;
+                if (MotionCooldown > 0)
+                    CurrentMotionCooldownTime = 0;
+                else CurrentMotionCooldownTime = -1;
             }
         }
+        else if (CurrentMotionCooldownTime >= 0)
+        {
+            CurrentMotionCooldownTime += Time.deltaTime;
+            if (CurrentMotionCooldownTime > MotionCooldown)
+                CurrentMotionCooldownTime = -1;
+        }
+    }
+
+    public static SRotation GetBehindDirection(SRotation rotation)
+    {
+        switch (rotation) // get behind direction
+        {
+            case SRotation.EAST:
+                return SRotation.WEST;                
+            case SRotation.WEST:
+                return SRotation.EAST;                
+            case SRotation.SOUTH:
+                return SRotation.NORTH;                
+            case SRotation.NORTH:
+                return SRotation.SOUTH;
+        }
+        return SRotation.EAST;    
     }
 }

@@ -11,7 +11,7 @@ public class MessagePromptBehavior : MonoBehaviour
     void Start()
     {
         ScreenDim = gameObject;
-        ScreenDim.SetActive(false);
+        //ScreenDim.SetActive(false);
         TextComponent = transform.GetChild(1).GetComponent<Text>();
     }
 

@@ -19,6 +19,8 @@ public class GooberBehavior : MonoBehaviour
         get; private set;
     }
     float timeSinceDestroyed, timeUntilDelete = 3f;
+    private bool effectPlayed = false;
+    ParticleSystem particleSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +36,11 @@ public class GooberBehavior : MonoBehaviour
         MovementScript.JumpToTile(Position.x, Position.y);
         this.Direction = Direction;
         CanMove = true;
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        if (particleSystem != default)
+            ParticleLoader.SetBurst(particleSystem, 4);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -68,6 +73,14 @@ public class GooberBehavior : MonoBehaviour
         if (timeSinceDestroyed > timeUntilDelete)
             Destroy(gameObject);
         else if (IsDestoryed)
+        {
+            if (!effectPlayed)
+            {
+                particleSystem?.Play();
+                SoundLoader.Play("teleport.wav", true);
+                effectPlayed = true;
+            }
             timeSinceDestroyed += Time.deltaTime;
+        }
     }
 }

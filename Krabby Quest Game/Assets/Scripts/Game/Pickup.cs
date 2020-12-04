@@ -9,6 +9,8 @@ public class Pickup : MonoBehaviour
     World CurrentWorld => World.Current;
     const float CollectTime = .15f;
 
+    GameObject pickupModel, particleObject;
+    ParticleSystem particleSystem;
     string pickupName;
     DataBlockComponent BlockComponent;
     bool Collected = false, isPickingUp = false;
@@ -19,20 +21,37 @@ public class Pickup : MonoBehaviour
     {
         BlockComponent = GetComponent<DataBlockComponent>();
         TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
+        pickupModel = transform.GetChild(0).gameObject;
+        particleObject = transform.GetChild(1).gameObject;
+        if (particleObject != default)
+            particleSystem = particleObject.GetComponent<ParticleSystem>();
         if (BlockComponent.DataBlock.GetParameterByName("Major Item", out var param))
         {            
             pickupName = param.Value;
             CurrentWorld.AddPickup(pickupName);
             CurrentWorld.CollisionMapUpdate(gameObject, true, BlockComponent.WorldTileX, BlockComponent.WorldTileY);
-        }
+        }        
     }
 
     private void OnDestroy()
     {
         TileMovingObjectScript.MoveableMoving -= TileMovingObjectScript_MoveableMoving;
+        //Collect();
+    }
+
+    private void Collect()
+    {
+        if (Collected) return;
         CurrentWorld.RemovePickup(pickupName);
         CurrentWorld.CollisionMapUpdate(gameObject, false, BlockComponent.WorldTileX, BlockComponent.WorldTileY);
         Collected = true;
+        pickupModel.SetActive(false);
+        SpawnParticleEffect();
+    }
+
+    private void SpawnParticleEffect()
+    {
+        particleSystem.Play();
     }
 
     private void TileMovingObjectScript_MoveableMoving(object sender, MoveEventArgs e)
@@ -57,7 +76,7 @@ public class Pickup : MonoBehaviour
         if (Collected) return;
         var audioLoader = GetComponent<SoundLoader>();
         audioLoader.Play(0);
-        Destroy(gameObject);        
+        Collect();       
         Collected = true;
     }
 

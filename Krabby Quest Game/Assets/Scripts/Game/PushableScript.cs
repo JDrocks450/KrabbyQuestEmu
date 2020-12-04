@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game;
+﻿using Assets.Components.World;
+using Assets.Scripts.Game;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,10 @@ public class PushableScript : MonoBehaviour
     {
         get; set;
     } = false;
+    /// <summary>
+    /// Used when boxes slide into eachother on ICE. This is set by objects having the BOX_ForcePush parameter set to true.
+    /// </summary>
+    public bool ForcePush { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +45,8 @@ public class PushableScript : MonoBehaviour
         BlockComponent = GetComponent<DataBlockComponent>();
         MovementScript = gameObject.AddComponent<TileMovingObjectScript>();
         MovementScript.Target = gameObject;
-        MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);            
+        MovementScript.JumpToTile(BlockComponent.WorldTileX, BlockComponent.WorldTileY);
+        MovementScript.TilePositionChanged += MovementScript_TilePositionChanged;
         TileMovingObjectScript.MoveableMoving += Jetstream_SpongebobPlayerPositionChanging;
         if (BlockComponent.DataBlock.GetParameterByName("CanFloat", out var parameter))
             CanFloat = bool.Parse(parameter.Value);
@@ -50,6 +56,15 @@ public class PushableScript : MonoBehaviour
             CanDestory = bool.Parse(parameter.Value);
         if (!CanDestory)
             MovementScript.CanMoveOverWorldReservedTiles = false;
+    }
+
+    private void MovementScript_TilePositionChanged(object sender, MoveEventArgs e)
+    {
+        if (World.Current.TryGetBlockAt(StinkyFile.BlockLayers.Integral, e.ToTile.x, e.ToTile.y, out var block))
+        {
+            if (block.GetParameterByName<bool>("BOX_ForcePush", out var param))
+                ForcePush = param.Value; // check for BOX_ForcePush flag and set as necessary. Whenever the box fully moves to a new tile, this is updated to that tile's value.
+        }
     }
 
     private void OnDestroy()
@@ -65,7 +80,13 @@ public class PushableScript : MonoBehaviour
             return;
         }
         GetComponent<SoundLoader>().Play(2);
-        GameObject.Destroy(gameObject);
+        if (gameObject.transform.childCount > 0)
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(false); // make visual component disappear
+            OnDestroy(); // unsubscribe from all events to be safe
+            GetComponentInChildren<ParticleLoader>()?.Play();
+        }
+        else GameObject.Destroy(gameObject);
     }
 
     private void Jetstream_SpongebobPlayerPositionChanging(object sender, MoveEventArgs e)
@@ -83,6 +104,8 @@ public class PushableScript : MonoBehaviour
             }
             if ((sender as TileMovingObjectScript).TryGetComponent<Player>(out _)) //ignore pushes that aren't players
                 PlayerEnteredTile(e);
+            else if ((sender as TileMovingObjectScript).TryGetComponent<PushableScript>(out var pushable) && pushable.ForcePush)
+                DoPush(e);
             else e.BlockMotion = true;
         }
     }
@@ -103,6 +126,11 @@ public class PushableScript : MonoBehaviour
                 return;
             }
         }
+        DoPush(e);           
+    }
+
+    void DoPush(MoveEventArgs e)
+    {
         var args = new MoveEventArgs()
         {
             FromTile = new Vector2Int(MovementScript.TileX, MovementScript.TileY),
@@ -119,7 +147,7 @@ public class PushableScript : MonoBehaviour
         blockMotion = !MovementScript.MoveInDirection(e.Direction);
         e.BlockMotion = blockMotion;
         if (!blockMotion)        
-            GetComponent<SoundLoader>().Play(1);                    
+            GetComponent<SoundLoader>().Play(1);  
     }
 
     // Update is called once per frame

@@ -78,6 +78,7 @@ public class LevelObjectManager : MonoBehaviour
     static LevelObjectManager CurrentObjectManager;
     static AudioSource LevelMusic;
     Stopwatch debug_loadWatch = new Stopwatch();
+    GameObject screenBlocker;
 
     /// <summary>
     /// Automatically starts loading the level using <see cref="LoadLevelName"/>
@@ -103,7 +104,7 @@ public class LevelObjectManager : MonoBehaviour
         }  
     }
 
-    public static void ReloadLevel() => ChangeLevel(LoadLevelName);
+    public static void ReloadLevel() => DoLevelOutro(delegate { ChangeLevel(LoadLevelName); });
 
     public static void ChangeLevel(string levelName, bool force = false)
     {
@@ -111,9 +112,15 @@ public class LevelObjectManager : MonoBehaviour
             levelSwapping = false;
         if (levelSwapping)
             return; // ignore all requests to change level while it's swapping
+        levelSwapping = true;
         LoadLevelName = levelName;
-        var operation = SceneManager.LoadSceneAsync("Game");
-        levelSwapping = true;           
+        SceneManager.LoadSceneAsync("Game");       
+    }
+
+    private static void DoLevelOutro(Action callback)
+    {
+        GameObject.Find("GameCamera").GetComponent<Animator>().Play("Level Exit");
+        callback.Invoke();            
     }
 
     public static void SignalLevelCompleted(bool completed)
@@ -129,6 +136,7 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (!IsDone)
         {
+            screenBlocker = GameObject.Find("ScreenBlocker");
             CurrentObjectManager = this;
             World.SetCurrent(new World(LoadLevelName + ".lv5")); // set the current world
             PlayMusic(Context); // play the level music           
@@ -197,7 +205,7 @@ public class LevelObjectManager : MonoBehaviour
             else if (!IsDone)
             {
                 IsDone = true;
-                SoundLoader.Play("sb-enter.wav", true); // play level open chime
+                OnLevelLoaded();
             }
         }
         if (!showingTitleCard && IsDone && canShowTitleCard)
@@ -221,6 +229,13 @@ public class LevelObjectManager : MonoBehaviour
             CurrentWorld.UpdateTimeRemaining((int)levelTime.TotalSeconds);   
             levelTime -= TimeSpan.FromSeconds(Time.deltaTime);                  
         }
+    }
+
+    void OnLevelLoaded()
+    {
+        SoundLoader.Play("sb-enter.wav", true); // play level open chime
+        GameObject.Find("GameCamera").GetComponent<Animator>().Play("Level Open");
+        screenBlocker.SetActive(false);
     }
 
     bool LoadNext()

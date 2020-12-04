@@ -15,8 +15,8 @@ public class MessageBehavior : MonoBehaviour
     {
         blockComponent = GetComponent<DataBlockComponent>();
         MessageText = blockComponent.DataBlock.GetMessageContent(World.Current.Level);
-        TileMovingObjectScript.MoveableMoving += PlayerMoved;
         TileMovingObjectScript.MoveableMoving += PlayerMoving;
+        TileMovingObjectScript.MoveableMoved += PlayerMoved;
     }
 
     private void PlayerMoving(object sender, MoveEventArgs e)
@@ -50,7 +50,8 @@ public class MessageBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
-        TileMovingObjectScript.MoveableMoving -= PlayerMoved;
+        TileMovingObjectScript.MoveableMoving -= PlayerMoving;
+        TileMovingObjectScript.MoveableMoved -= PlayerMoved;
     }
 
     // Update is called once per frame

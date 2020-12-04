@@ -558,7 +558,6 @@
     <AssetType>Sound</AssetType>
     <References>O254939</References>
   </A28148>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
   <A429073>
     <FilePath>Graphics\bully01.png</FilePath>
     <Name>bully01</Name>
@@ -583,4 +582,17 @@
     <AssetType>Sound</AssetType>
     <References>O302390,O881279,O427502,O441458,O744745</References>
   </A297679>
+  <A988552>
+    <FilePath>Graphics\floorblue4.jpg</FilePath>
+    <Name>floorblue4</Name>
+    <AssetType>Texture</AssetType>
+    <References>O586289</References>
+  </A988552>
+  <A572195>
+    <FilePath>Graphics\floorblue3.jpg</FilePath>
+    <Name>floorblue3</Name>
+    <AssetType>Texture</AssetType>
+    <References>O107917</References>
+  </A572195>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
 </root>

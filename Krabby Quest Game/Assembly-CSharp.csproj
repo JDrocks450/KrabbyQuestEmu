@@ -105,8 +105,10 @@
     <Compile Include="Assets\Scripts\MainMenu\FlowerSky.cs" />
     <Compile Include="Assets\Components\GameInitialization.cs" />
     <Compile Include="Assets\Scripts\Game\PlayerEnum.cs" />
-    <Compile Include="Assets\Scripts\Game\BullyBehavior.cs" />
+    <Compile Include="Assets\Scripts\Game\EnemyBehavior.cs" />
     <Compile Include="Assets\BMPLoader.cs" />
+    <Compile Include="Assets\Scripts\Game\IceBehavior.cs" />
+    <Compile Include="Assets\Scripts\Game\ParticleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
