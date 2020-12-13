@@ -184,6 +184,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\B3DPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\DatabaseOptions.xaml.cs">
@@ -206,6 +210,9 @@
     </Compile>
     <Compile Include="Pages\TextureToolPage.xaml.cs">
       <DependentUpon>TextureToolPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\B3DPage.xaml.cs">
+      <DependentUpon>B3DPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -242,6 +249,10 @@
     <ProjectReference Include="..\KrabbyQuestTools.Common\KrabbyQuestTools.Common.csproj">
       <Project>{8341C197-E693-42B9-80CC-5E214D136CFB}</Project>
       <Name>KrabbyQuestTools.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StinkyFile.Blitz3D\StinkyFile.Blitz3D.csproj">
+      <Project>{b8f9c474-a633-4ebe-bf67-4a9e23b7943d}</Project>
+      <Name>StinkyFile.Blitz3D</Name>
     </ProjectReference>
     <ProjectReference Include="StinkyFile\StinkyFile.csproj">
       <Project>{1A2E0E3A-520F-4AD6-B635-2A6CEB574A16}</Project>

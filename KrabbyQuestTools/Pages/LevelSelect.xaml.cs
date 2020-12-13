@@ -1,24 +1,14 @@
 ﻿using KrabbyQuestTools.Common;
 using KrabbyQuestTools.Controls;
 using StinkyFile;
+using StinkyFile.Blitz3D.Visualizer;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KrabbyQuestTools.Pages
 {
@@ -62,7 +52,7 @@ namespace KrabbyQuestTools.Pages
             }
             Title = "Editor Homepage";
             if (IsPromptHidden)
-                MessagePrompt.Visibility = Visibility.Collapsed;
+                MessagePrompt.Visibility = Visibility.Collapsed;            
         }
 
         private void GetLevels(string searchTerm = "")
@@ -262,6 +252,11 @@ namespace KrabbyQuestTools.Pages
         {
             string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
             NavigationService.Navigate(new DiffPage(blockDBpath2, blockDBpath1));
+        }
+
+        private void TreeVisualButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new TreeVisualizer(Workspace));
         }
 
         private void ExportModels_Click(object sender, RoutedEventArgs e)

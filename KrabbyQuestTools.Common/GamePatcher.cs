@@ -48,7 +48,8 @@ namespace KrabbyQuestTools.Common
 
         public GamePatcher(string DestinationDirectory)
         {            
-            this.DestinationDirectory = DestinationDirectory;            
+            this.DestinationDirectory = DestinationDirectory;         
+            
         }
 
         private static string ReadVersion() => File.ReadAllText("Resources/versioninfo.txt");

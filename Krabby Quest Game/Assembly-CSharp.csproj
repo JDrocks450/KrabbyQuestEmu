@@ -88,6 +88,8 @@
     <Compile Include="Assets\Components\SaveFileManager.cs" />
     <Compile Include="Assets\Components\World\World.cs" />
     <Compile Include="Assets\Scripts\Game\GameMenuBehavior.cs" />
+    <Compile Include="Assets\Scripts\Game\IceBehavior.cs" />
+    <Compile Include="Assets\Scripts\Game\ParticleLoader.cs" />
     <Compile Include="Assets\Scripts\CameraBehavior.cs" />
     <Compile Include="Assets\Scripts\Game\GooberBehavior.cs" />
     <Compile Include="Assets\Scripts\MapScreen\Map3DLoader.cs" />
@@ -107,8 +109,6 @@
     <Compile Include="Assets\Scripts\Game\PlayerEnum.cs" />
     <Compile Include="Assets\Scripts\Game\EnemyBehavior.cs" />
     <Compile Include="Assets\BMPLoader.cs" />
-    <Compile Include="Assets\Scripts\Game\IceBehavior.cs" />
-    <Compile Include="Assets\Scripts\Game\ParticleLoader.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

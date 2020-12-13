@@ -114,18 +114,7 @@ public class TextureLoader : MonoBehaviour
         {
             var bmp = new BMPLoader().LoadBMP(path);
             if (TransparentColor != default)
-            {
-                var colorInfo = TransparentColor;
-                string[] separated = colorInfo.Split(',');
-                Color32 transColor = 
-                    new Color32(byte.Parse(separated[0]), byte.Parse(separated[1]), byte.Parse(separated[2]), 255);                
-                for(int i = 0; i < bmp.imageData.Length; i++)
-                {
-                    var color = bmp.imageData[i];
-                    if (color.r == transColor.r && color.g == transColor.g && color.b == transColor.b)                    
-                        bmp.imageData[i] = new Color32(0, 0, 0, 0);                    
-                }
-            }
+                MakeTransparent(bmp, TransparentColor);
             LoadedContent.Add(path, bmp.ToTexture2D());
             return LoadedContent[path];
         }
@@ -135,10 +124,50 @@ public class TextureLoader : MonoBehaviour
             while (!request.isDone) { }
             if (request.error != null)
                 Debug.LogWarning("[TextureLoader]: " + request.error);
-            LoadedContent.Add(path, request.texture);
-            return request.texture;
+            var tex = request.texture;
+            if (TransparentColor != default)
+                MakeTransparent(tex, TransparentColor);
+            LoadedContent.Add(path, tex);
+            return tex;
         }
     }   
+
+    static void MakeTransparent(Texture2D texture, string TransparentColor)
+    {
+        if (TransparentColor != default)
+        {
+            var colorInfo = TransparentColor;
+            string[] separated = colorInfo.Split(',');
+            Color32 transColor =
+                new Color32(byte.Parse(separated[0]), byte.Parse(separated[1]), byte.Parse(separated[2]), 255);
+            for (int x = 0; x < texture.width; x++)
+            {
+                for (int y = 0; y < texture.height; y++)
+                {
+                    var color = texture.GetPixel(x, y);
+                    if (color.r == transColor.r && color.g == transColor.g && color.b == transColor.b)
+                        texture.SetPixel(x, y, new Color32(0, 0, 0, 0));
+                }
+            }            
+            texture.Apply(true, false);
+        }
+    }
+    static void MakeTransparent(BMPImage bmp, string TransparentColor)
+    {
+        if (TransparentColor != default)
+        {
+            var colorInfo = TransparentColor;
+            string[] separated = colorInfo.Split(',');
+            Color32 transColor =
+                new Color32(byte.Parse(separated[0]), byte.Parse(separated[1]), byte.Parse(separated[2]), 255);
+            for (int i = 0; i < bmp.imageData.Length; i++)
+            {
+                var color = bmp.imageData[i];
+                if (color.r == transColor.r && color.g == transColor.g && color.b == transColor.b)
+                    bmp.imageData[i] = new Color32(0, 0, 0, 0);
+            }
+        }
+    }
     void CreateWall()
     {
         int TopIndex = 0, WallIndex = 1;

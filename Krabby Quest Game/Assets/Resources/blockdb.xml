@@ -1849,26 +1849,6 @@
     <Level>Decoration</Level>
     <AssetReferences />
   </O952656>
-  <O556221>
-    <Name>JELLYFISH</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>46</ItemId>
-    <Dat2>0</Dat2>
-    <Color>186,85,211,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>TransparentColor</Name>
-        <Value>0,0,0</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A736809>Model</A736809>
-      <A861361>Texture</A861361>
-    </AssetReferences>
-  </O556221>
   <O890634>
     <Name>KELP_VINE</Name>
     <Package>0</Package>
@@ -3128,4 +3108,28 @@
       <A122131>Sound</A122131>
     </AssetReferences>
   </O161677>
+  <O556221>
+    <Name>JELLYFISH</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>46</ItemId>
+    <Dat2>0</Dat2>
+    <Color>186,85,211,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>.5</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A736809>Model</A736809>
+      <A861361>Texture</A861361>
+    </AssetReferences>
+  </O556221>
 </root>

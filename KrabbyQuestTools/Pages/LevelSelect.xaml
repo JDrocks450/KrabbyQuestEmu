@@ -162,6 +162,13 @@
                             <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="Handles all aspects of Game installation automatically."/>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="TreeVisualButton" Margin="0,0,10,0" Height="200" Width="200" Background="#FF474747" Click="TreeVisualButton_Click">
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold" HorizontalAlignment="Center" Text="Blitz3D Object Tree" FontSize="14"/>
+                            <TextBlock Margin="10" Text="&#xE896;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72"></TextBlock>
+                            <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="Allows you to open *.B3D files to view their structure."/>
+                        </StackPanel>
+                    </Button>
                     <StackPanel x:Name="LegacyToolsGroup" Orientation="Horizontal" Visibility="Collapsed">
                         <Button x:Name="ExportModels" Margin="0,0,10,0" Height="200" Click="ExportModels_Click" Width="200" Background="#FF474747">
                             <StackPanel>
