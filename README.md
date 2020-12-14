@@ -1,3 +1,7 @@
+[![Discord](https://img.shields.io/discord/781637294750302249.svg)](https://discord.gg/wvFPYSrGRu)
+[![GitHub issues](https://img.shields.io/github/issues/JDrocks450/KrabbyQuestEmu.svg)](https://github.com/JDrocks450/KrabbyQuestEmu/issues)
+[![GitHub license](https://img.shields.io/badge/license-GNU-blue.svg)](https://raw.githubusercontent.com/JDrocks450/KrabbyQuestEmu/master/LICENSE.md)
+
 <p align="center">
   <img src="Krabby Quest Installer/Images/KrabbyQuestEmuBlack.png" width="350" title="KrabbyQuestEmu logo">
 </p>
@@ -64,6 +68,8 @@ Below is a roadmap:
   - Save Files
     > Highscores, completed levels, perfected levels, time completed are all tracked in your save file. Multiple save files can be used at a time.
 #### Under Development:
+- Animations
+  > Requires restoration of .B3D animation keyframes and conversion to glTF animations for use in the Game. 
 - Launcher/Installer
   > Two-in-one launcher for KrabbyQuestEmu that take your original Spongebob: Krabby Quest game files (which you must obtain on your own!) and extracts them to allow for customization and to play KrabbyQuestEmu. Ordinarily, you would need to do this yourself. *Check Releases for installer updates*
 - Setup Procedure
