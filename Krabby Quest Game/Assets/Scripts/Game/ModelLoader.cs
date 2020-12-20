@@ -14,7 +14,7 @@ public class ModelLoader : MonoBehaviour
     LevelDataBlock Data;
     DataBlockComponent TileComponent;
     private static LevelDataBlock _floor;
-    bool Loaded = false;
+    public bool Loaded { get; set; }
 
     private void Awake()
     {
@@ -62,7 +62,7 @@ public class ModelLoader : MonoBehaviour
                 }
                 else return;
             }
-            else ImportMesh(fileName); // imports the mesh without templating
+            else AddGLBObject(fileName); // imports the mesh without templating
         }
         if (Data.HasTexture && !overrideTextureSetting)
             gameObject.AddComponent<TextureLoader>().LookIntoParent = true; // adds the texture loader to apply a texture to the model
@@ -102,6 +102,14 @@ public class ModelLoader : MonoBehaviour
         DestroyImmediate(this);
     }
 
+    void AddGLBObject(string fileName)
+    {
+        var glb = Siccity.GLTFUtility.Importer.LoadFromFile(Path.Combine(AssetDirectory, fileName));        
+        glb.transform.parent = gameObject.transform;
+        glb.transform.position = new Vector3();
+        glb.transform.localScale = new Vector3(1,1,1);
+    }
+
     void ImportMesh(string fileName)
     {
         if (!gameObject.TryGetComponent<MeshRenderer>(out _))
@@ -123,6 +131,17 @@ public class ModelLoader : MonoBehaviour
     }
 
     Mesh GetMesh(string fileName)
+    {
+        if (LoadedContent.TryGetValue(fileName, out var mesh))
+            return mesh;
+        Mesh holderMesh = null;       
+        holderMesh = Siccity.GLTFUtility.Importer.LoadFromFile(Path.Combine(AssetDirectory, fileName)).GetComponentInChildren<MeshFilter>().mesh;
+        if (holderMesh == null) throw new System.Exception("Model not loaded");
+        LoadedContent.Add(fileName, holderMesh);
+        return holderMesh;
+    }
+
+    Mesh GetMeshOBJ(string fileName)
     {
         if (LoadedContent.TryGetValue(fileName, out var mesh))
             return mesh;

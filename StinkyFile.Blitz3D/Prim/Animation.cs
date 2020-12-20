@@ -42,6 +42,28 @@ namespace StinkyFile.Blitz3D.Prim
             rep = new Rep();
         }
 
+        /// <summary>
+        /// Makes a new animation by taking a part of an existing one
+        /// </summary>
+        /// <param name="from">The base animation</param>
+        /// <param name="first">The first frame in the range</param>
+        /// <param name="last">The last frame in the range</param>
+        public Animation(Animation from, int first, int last) : this()
+        {
+            for (int i = first; i < last - first; i++)
+            {
+                if (from.rep.pos_anim.Count <= i) break;
+                if (from.rep.rot_anim.Count <= i) break;
+                if (from.rep.scale_anim.Count <= i) break;
+                var keyFrame = from.rep.pos_anim.ElementAt(i);
+                rep.setKey(rep.pos_anim, keyFrame.Key, keyFrame.Value);
+                keyFrame = from.rep.rot_anim.ElementAt(i);
+                rep.setKey(rep.rot_anim, keyFrame.Key, keyFrame.Value);
+                keyFrame = from.rep.scale_anim.ElementAt(i);
+                rep.setKey(rep.scale_anim, keyFrame.Key, keyFrame.Value);
+            }
+        }        
+
         void write()
         {
 
@@ -77,7 +99,7 @@ namespace StinkyFile.Blitz3D.Prim
 
         public override string ToString()
         {
-            return $"(Animation) Keys- P: {numPositionKeys()}, R: {numRotationKeys()}, S: {numScaleKeys()}";
+            return $"Keys- P: {numPositionKeys()}, R: {numRotationKeys()}, S: {numScaleKeys()}";
         }
     }
 }

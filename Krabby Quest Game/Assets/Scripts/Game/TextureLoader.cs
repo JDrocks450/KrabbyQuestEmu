@@ -45,7 +45,7 @@ public class TextureLoader : MonoBehaviour
         else if (Data.GetParameterByName("FillTexture", out var parameter)) // generic fill texture parameter info
             ApplyTextureMaterial(GetComponent<Renderer>(), int.Parse(parameter.Value));
         else 
-            ApplyTextureMaterial(GetComponent<Renderer>(), 0);
+            ApplyTextureMaterial(GetComponentInChildren<Renderer>(), 0);
         if (TileComponent != null)
             TileComponent.TextureLoaded = true;
         Loaded = true;
@@ -101,6 +101,15 @@ public class TextureLoader : MonoBehaviour
             }
         }
         Object.material = material;
+    }
+
+    public static Material RequestMaterialTexture(string TextureName, string TransparentColor = null)
+    {
+        string path = Path.Combine(AssetDirectory, TextureName);
+        var material = (Material)Instantiate(Resources.Load("Materials/Object Material"));
+        material.mainTexture = RequestTexture(path, TransparentColor ?? default);
+        MaterialCache.Add(TextureName, material);
+        return material;
     }
 
     public static Texture2D RequestTexture(string path, string TransparentColor = default, bool includeAssetDir = false)

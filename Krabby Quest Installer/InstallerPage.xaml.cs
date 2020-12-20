@@ -422,7 +422,7 @@ namespace KrabbyQuestInstaller
                 return;
             }
             string path = destinationBox.Text;            
-            if (FileBrowser.BrowseForFile(ref path) == System.Windows.Forms.DialogResult.Cancel)
+            if (FileBrowser.BrowseForFile(ref path, "Find Blender.exe on your PC") == System.Windows.Forms.DialogResult.Cancel)
                 return; // cancelled
             destinationBox.Text = path;
         }

@@ -44,9 +44,10 @@
   <ItemGroup>
     <Compile Include="B3D\B3D_Loader.cs" />
     <Compile Include="BlitzObject.cs" />
+    <Compile Include="MeshLoader.cs" />
     <Compile Include="MeshModel.cs" />
     <Compile Include="Prim\Animation.cs" />
-    <Compile Include="Prim\Animator.cs" />
+    <Compile Include="Animator.cs" />
     <Compile Include="Prim\FileRoot.cs" />
     <Compile Include="Prim\Pivot.cs" />
     <Compile Include="Prim\Quat.cs" />

@@ -170,7 +170,8 @@ public class Player : MonoBehaviour
                     case PlayerEnum.PATRICK:
                         CurrentPlayer = PlayerEnum.SPONGEBOB; // spongebob
                         break;
-                }                
+                }
+                SoundLoader.Play("teleport.wav", false);
                 playerSwapping = true;
             }
         }        

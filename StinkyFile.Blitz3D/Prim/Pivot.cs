@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StinkyFile.Primitive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace StinkyFile.Blitz3D.Prim
     /// </summary>
     public class Pivot : BlitzObject
     {
+        [EditorVisible()]
         public int Vertex { get; set; }
+        [EditorVisible()]
         public float Weight { get; set; }
     }
 }

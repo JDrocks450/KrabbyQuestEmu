@@ -1,21 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using UnityEngine.SceneManagement;
+﻿using Assets.Components.World;
 using StinkyFile;
-using System.IO;
-using System;
-using Assets;
-using B83.Image.BMP;
-using System.Xml.Linq;
-using System.Threading.Tasks;
-using UnityEngine.Audio;
-using System.Timers;
-using System.Diagnostics;
-using Assets.Components;
 using StinkyFile.Save;
-using Assets.Components.World;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
 public class LevelObjectManager : MonoBehaviour    
@@ -351,6 +342,7 @@ public class LevelObjectManager : MonoBehaviour
                 returnVal = Instantiate(prefab);
         }
         else if (block.GetParameterByName("ServiceObject", out _))
+        {
             switch (block.BlockLayer)
             {
                 case BlockLayers.Decoration:
@@ -360,6 +352,7 @@ public class LevelObjectManager : MonoBehaviour
                     returnVal = Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
                     break;
             }
+        }
         else if (block.Name?.Contains("THROWER") ?? false)
             returnVal = Instantiate(ResourceLoad("Objects/TentacleCannon"));
         else if (block.Name?.StartsWith("SPROUT") ?? false)
@@ -367,7 +360,7 @@ public class LevelObjectManager : MonoBehaviour
         else if (block.HasModel || block.GetParameterByName("ApplyTemplater", out _))
         {
             returnVal = Instantiate(ResourceLoad("Objects/EmptyObject"));
-            returnVal.AddComponent<ModelLoader>();
+            var loader = returnVal.AddComponent<ModelLoader>();
         }
         if (returnVal == null) return null;
         returnVal.name = block.Name;
@@ -389,14 +382,25 @@ public class LevelObjectManager : MonoBehaviour
             returnVal.SetActive(true);
             if (returnVal != null && isClonable)
             {
-                ClonableObjects.Add(block.GUID, returnVal);
-                if (returnVal.TryGetComponent<TextureLoader>(out var tloader))                
-                    Destroy(tloader);                
                 returnVal.SetActive(false);
+                if (returnVal.TryGetComponent<TextureLoader>(out var tloader))
+                    DestroyImmediate(tloader);
+                if (returnVal.TryGetComponent<ModelLoader>(out var mloader))
+                    DestroyImmediate(mloader);
+                ClonableObjects.Add(block.GUID, returnVal);
                 returnVal = Instantiate(returnVal);
             }
         }
-        else returnVal = Instantiate(returnVal);
+        else
+        {
+            returnVal = Instantiate(returnVal);
+            //var tLoader = returnVal.GetComponentInChildren<TextureLoader>();
+            //if (tLoader != null)
+            //   DestroyImmediate(tLoader);
+            var mLoader = returnVal.GetComponentInChildren<ModelLoader>();
+            if (mLoader != null)
+                DestroyImmediate(mLoader);
+        }
         if (returnVal == null)
             return returnVal;
         var Component = returnVal.GetComponent<DataBlockComponent>();
@@ -406,7 +410,7 @@ public class LevelObjectManager : MonoBehaviour
         Component.WorldTileX = X;
         Component.WorldTileY = Y;
         Component.Parent = returnVal;
-        returnVal.name = block.Name;
+        returnVal.name = block.Name;         
         returnVal.SetActive(true);
         returnVal.SetActiveRecursively(true); // SetActive for some reason doesn't work as it should -- i guess comment this out once it actually works as it says.
         if (!returnVal.TryGetComponent<AllowTileMovement>(out _))

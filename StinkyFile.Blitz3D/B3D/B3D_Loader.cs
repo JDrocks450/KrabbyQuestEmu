@@ -23,10 +23,10 @@ namespace StinkyFile.Blitz3D.B3D
 		List<long> chunk_stack = new List<long>();
 
 		public List<BlitzObject> LoadedObjects = new List<BlitzObject>();
+		public MeshLoader MeshLoader = new MeshLoader();
 
 		//static List<Texture> textures;
-		//static List<Brush> brushes;
-		List<BlitzObject> bones = new List<BlitzObject>();
+		//static List<Brush> brushes;		
 
 		bool collapse;
 		bool animonly;
@@ -41,7 +41,6 @@ namespace StinkyFile.Blitz3D.B3D
 		}
 
 		void clear() {
-			bones.Clear();
 			//brushes.Clear();
 			//textures.Clear();
 			chunk_stack.Clear();
@@ -143,7 +142,7 @@ namespace StinkyFile.Blitz3D.B3D
 					scl = readFloatArray(3);
 					anim.setScaleKey(frame, new Vector(scl[0], scl[1], scl[2]));
 				}
-				if ((flags & 3) != 0) {
+				if ((flags & 4) != 0) {
 					float[] rot;
 					rot = readFloatArray(4);
 					anim.setRotationKey(frame, new Quat(rot[0], new Vector(rot[1], rot[2], rot[3])));
@@ -155,7 +154,7 @@ namespace StinkyFile.Blitz3D.B3D
 		{
 			Pivot bone = new Pivot();
 
-			bones.Add(bone);
+			MeshLoader.AddBone(bone);
 
 			while (chunkSize() > 0)
 			{
@@ -185,8 +184,7 @@ namespace StinkyFile.Blitz3D.B3D
 			while (chunkSize() > 0) {
 				switch (readChunk()) {
 					case "MESH":
-						//MeshLoader::beginMesh();
-						obj = mesh = new MeshModel();
+						obj = mesh = MeshLoader.CreateMesh();
 						mesh_brush = readInt();
 						//mesh_flags=readMesh();
 						break;
@@ -223,11 +221,9 @@ namespace StinkyFile.Blitz3D.B3D
 				//if (mesh_brush != -1) mesh->setBrush(brushes[mesh_brush]);
 			}
 
-			if (mesh != null && bones.Any()) {
-				bones.Insert(0, mesh);
-				mesh.setAnimator(new Animator(bones, anim_len));
-				//mesh->createBones();
-				bones.Clear();
+			if (mesh != null && mesh.Bones.Any()) {
+				mesh.Bones.Insert(0, mesh);
+				mesh.setAnimator(new Animator(mesh.Bones, anim_len));
 			} else if (anim_len > 0) {
 				obj.setAnimator(new Animator(obj, anim_len));
 			}

@@ -1664,68 +1664,6 @@
     <Level>Decoration</Level>
     <AssetReferences />
   </O167815>
-  <O965789>
-    <Name>SPONGEBOB_SPAWN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>1</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,255,0,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>Spawnpoint</Name>
-        <Value>Spongebob</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Script</Name>
-        <Value>Spawnpoint</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ServiceObject</Name>
-        <Value>true</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ScaleModel</Name>
-        <Value>false</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A799725>Model</A799725>
-      <A425683>Texture</A425683>
-      <A613358>Texture</A613358>
-    </AssetReferences>
-  </O965789>
-  <O642030>
-    <Name>PATRICK_SPAWN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>2</ItemId>
-    <Dat2>0</Dat2>
-    <Color>255,20,147,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>Spawnpoint</Name>
-        <Value>Patrick</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Script</Name>
-        <Value>Spawnpoint</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ServiceObject</Name>
-        <Value>true</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A163459>Model</A163459>
-      <A258059>Texture</A258059>
-      <A368286>Texture</A368286>
-    </AssetReferences>
-  </O642030>
   <O497772>
     <Name>SIGN</Name>
     <Package>0</Package>
@@ -1849,6 +1787,26 @@
     <Level>Decoration</Level>
     <AssetReferences />
   </O952656>
+  <O556221>
+    <Name>JELLYFISH</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>46</ItemId>
+    <Dat2>0</Dat2>
+    <Color>186,85,211,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A736809>Model</A736809>
+      <A861361>Texture</A861361>
+    </AssetReferences>
+  </O556221>
   <O890634>
     <Name>KELP_VINE</Name>
     <Package>0</Package>
@@ -1869,30 +1827,6 @@
       <A562661>Texture</A562661>
     </AssetReferences>
   </O890634>
-  <O662324>
-    <Name>PINEAPPLE?</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>50</ItemId>
-    <Dat2>0</Dat2>
-    <Color>160,82,45,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>uScale</Name>
-        <Value>0.25</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ScaleX</Name>
-        <Value>-0.25</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A976564>Model</A976564>
-      <A984841>Texture</A984841>
-    </AssetReferences>
-  </O662324>
   <O279038>
     <Name>ROCK</Name>
     <Package>0</Package>
@@ -1913,58 +1847,6 @@
       <A140613>Texture</A140613>
     </AssetReferences>
   </O279038>
-  <O42472>
-    <Name>KRUSTY_KRAB?</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>53</ItemId>
-    <Dat2>0</Dat2>
-    <Color>37,235,245,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>uScale</Name>
-        <Value>0.3</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ScaleY</Name>
-        <Value>0.235</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A810060>Model</A810060>
-      <A93494>Texture</A93494>
-    </AssetReferences>
-  </O42472>
-  <O777235>
-    <Name>KK_SIGNPOST</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>54</ItemId>
-    <Dat2>0</Dat2>
-    <Color>211,119,249,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>ScaleX</Name>
-        <Value>-0.1</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ScaleY</Name>
-        <Value>0.1</Value>
-      </Parameter>
-      <Parameter>
-        <Name>ScaleZ</Name>
-        <Value>0.1</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A718991>Model</A718991>
-      <A585809>Texture</A585809>
-    </AssetReferences>
-  </O777235>
   <O359038>
     <Name>CONSTRUCTION_SIGN_S</Name>
     <Package>0</Package>
@@ -3108,28 +2990,144 @@
       <A122131>Sound</A122131>
     </AssetReferences>
   </O161677>
-  <O556221>
-    <Name>JELLYFISH</Name>
+  <O662324>
+    <Name>PINEAPPLE?</Name>
     <Package>0</Package>
     <PackId>0</PackId>
-    <ItemId>46</ItemId>
+    <ItemId>50</ItemId>
     <Dat2>0</Dat2>
-    <Color>186,85,211,255</Color>
+    <Color>160,82,45,255</Color>
     <Rotation>NORTH</Rotation>
     <Level>Decoration</Level>
     <Parameters>
       <Parameter>
-        <Name>TransparentColor</Name>
-        <Value>0,0,0</Value>
-      </Parameter>
-      <Parameter>
         <Name>uScale</Name>
-        <Value>.5</Value>
+        <Value>0.25</Value>
       </Parameter>
     </Parameters>
     <AssetReferences>
-      <A736809>Model</A736809>
-      <A861361>Texture</A861361>
+      <A976564>Model</A976564>
+      <A984841>Texture</A984841>
     </AssetReferences>
-  </O556221>
+  </O662324>
+  <O777235>
+    <Name>KK_SIGNPOST</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>54</ItemId>
+    <Dat2>0</Dat2>
+    <Color>211,119,249,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>ScaleX</Name>
+        <Value>0.1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleY</Name>
+        <Value>0.1</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleZ</Name>
+        <Value>0.1</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A718991>Model</A718991>
+      <A585809>Texture</A585809>
+    </AssetReferences>
+  </O777235>
+  <O42472>
+    <Name>KRUSTY_KRAB?</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>53</ItemId>
+    <Dat2>0</Dat2>
+    <Color>37,235,245,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>0.3</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleY</Name>
+        <Value>0.235</Value>
+      </Parameter>
+      <Parameter>
+        <Name>TransparentColor</Name>
+        <Value>0,0,0</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A810060>Model</A810060>
+      <A93494>Texture</A93494>
+    </AssetReferences>
+  </O42472>
+  <O965789>
+    <Name>SPONGEBOB_SPAWN</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>1</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,255,0,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Spawnpoint</Name>
+        <Value>Spongebob</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Script</Name>
+        <Value>Spawnpoint</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ScaleModel</Name>
+        <Value>false</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A799725>Model</A799725>
+      <A425683>Texture</A425683>
+      <A613358>Texture</A613358>
+      <A350254>Sound</A350254>
+    </AssetReferences>
+  </O965789>
+  <O642030>
+    <Name>PATRICK_SPAWN</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>2</ItemId>
+    <Dat2>0</Dat2>
+    <Color>255,20,147,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Spawnpoint</Name>
+        <Value>Patrick</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Script</Name>
+        <Value>Spawnpoint</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ServiceObject</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A163459>Model</A163459>
+      <A258059>Texture</A258059>
+      <A368286>Texture</A368286>
+      <A350254>Sound</A350254>
+    </AssetReferences>
+  </O642030>
 </root>

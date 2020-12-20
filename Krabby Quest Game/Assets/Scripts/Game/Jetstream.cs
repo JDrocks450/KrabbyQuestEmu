@@ -69,6 +69,7 @@ public class Jetstream : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!LevelObjectManager.IsDone) return;
         if (jetstreamMaterial == null)
             jetstreamMaterial = Render.GetComponent<Renderer>().material;
         jetstreamMaterial.SetTextureOffset("_MainTex", Vector2.Lerp(new Vector2(), new Vector2(0, -1), animTimeSeconds / totalTime));

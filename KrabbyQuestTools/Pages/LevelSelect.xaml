@@ -7,7 +7,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:KrabbyQuestTools.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="1400" d:DesignWidth="1000"
+      d:DesignHeight="1400" d:DesignWidth="1000" Foreground="White"
       Title="Editor Homepage" Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="Border" BasedOn="{StaticResource CardBorderStyle}"/>

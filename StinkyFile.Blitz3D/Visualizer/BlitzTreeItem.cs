@@ -16,6 +16,7 @@ namespace StinkyFile.Blitz3D.Visualizer
             {
                 get; private set;
             }
+            public bool HasAnimator => Focus.HasAnimator;
             public string Path => "";
 
             public BlitzTreeItem(IEnumerable<BlitzObject> Source, BlitzObject focusItem)
@@ -37,7 +38,7 @@ namespace StinkyFile.Blitz3D.Visualizer
 
             public IEnumerable<KeyValuePair<string, object>> GetPropertyValues()
             {
-                foreach (var param in typeof(BlitzObject).GetProperties(
+                foreach (var param in Focus.GetType().GetProperties(
                     System.Reflection.BindingFlags.Public |
                     System.Reflection.BindingFlags.Instance))
                 {

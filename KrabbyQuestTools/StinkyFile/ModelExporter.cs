@@ -72,7 +72,7 @@ namespace StinkyFile
                         return true;
                     OnProgressChanged?.Invoke(this, ("Converting " + file, current / (double)files.Length));
                     var name = Path.GetFileNameWithoutExtension(file);
-                    var destination = Path.Combine(ExportDirectory, name + ".obj").Replace("\\", "/");
+                    var destination = Path.Combine(ExportDirectory, name + ".glb").Replace("\\", "/");
                     int index = pythonEditor.Replace("filepath=", 0, file.Replace("\\", "/"));
                     index = pythonEditor.Replace("filepath=", index + file.Length + 5, destination);
                     pythonEditor.Save();
