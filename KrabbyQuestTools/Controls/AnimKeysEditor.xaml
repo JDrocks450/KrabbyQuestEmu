@@ -1,0 +1,54 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KrabbyQuestTools.Controls"
+        xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="KrabbyQuestTools.Controls.AnimKeysEditor"
+        mc:Ignorable="d"
+        Title="AnimKeysEditor" Height="355" Width="535" WindowStyle="None" Background="#FF252525" Foreground="White" AllowsTransparency="False" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource XButtonStyle}"/>
+    </Window.Resources>
+    <Border BorderThickness="1" BorderBrush="#FF0080FF">
+        <Grid>
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" FontSize="16" FontWeight="Bold" Margin="10,10,0,0"><Run Text="Blitz3D Animation Sequence Editor"/></TextBlock>
+                <TextBlock DockPanel.Dock="Top" x:Name="DescBlock" FontSize="12" Margin="10,0" Text="No animation selected"/>
+                <Grid Margin="0,10,0,0" DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Save" Margin="10,10,10,10" Padding="10,7" Background="#FF0051E0" Click="OK_Click">OK</Button>
+                    <Button x:Name="Cancel" Background="#FF003AA0" Padding="10,7" Margin="10" Grid.Column="1" Click="Close_Click">Cancel</Button>
+                </Grid>
+                <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" Orientation="Horizontal" DockPanel.Dock="Bottom">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0">Name:</TextBlock>
+                    <TextBox x:Name="NameBox" Height="20" VerticalContentAlignment="Center" Width="100"></TextBox>
+                    <TextBlock VerticalAlignment="Center" Margin="10,0,10,0">Start:</TextBlock>
+                    <TextBox x:Name="StartBox" Height="20" VerticalContentAlignment="Center" Width="50" TextChanged="StartBox_TextChanged"></TextBox>
+                    <TextBlock VerticalAlignment="Center" Margin="10,0,10,0">End:</TextBlock>
+                    <TextBox x:Name="EndBox" Height="20" VerticalContentAlignment="Center" Width="50" TextChanged="EndBox_TextChanged"></TextBox>
+                    <Button x:Name="FinishSeq" Margin="10,0,0,0" Background="#FF007BB4" Width="55" Click="FinishSeq_Click">Finish</Button>
+                    <Button x:Name="CancelSeq" Margin="5,0,0,0" Background="#FF001AC3" Click="CancelSeq_Click">X</Button>
+                </StackPanel>
+                <Border Style="{StaticResource CardBorderStyle}"  DockPanel.Dock="Bottom" Margin="0,0,0,10" HorizontalAlignment="Center" Padding="10,5" Background="#FF363636">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="PosButton" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Top" Background="#FF0E9500" Click="PosButton_Click">P</Button>
+                        <Button x:Name="RotButton" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Top" Content="R" Background="#FFFF8844" Click="RotButton_Click"/>
+                        <Button x:Name="SclButton" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Top" Content="S" Background="#FFAC0046" Click="SclButton_Click"/>
+                        <TextBlock x:Name="SelectedGraphLabel" HorizontalAlignment="Left" VerticalAlignment="Center">Position</TextBlock>
+                    </StackPanel>
+                </Border>
+                <Grid DockPanel.Dock="Top" Margin="0,5,0,0">
+                    <local:AnimKeyFrameGraph x:Name="DataChart" />
+                    <Canvas x:Name="KeySelector" Margin="35,10,7,37" Loaded="KeySelector_Loaded" MouseEnter="KeySelector_MouseEnter" MouseLeave="KeySelector_MouseLeave" MouseMove="KeySelector_MouseMove" MouseLeftButtonDown="KeySelector_MouseLeftButtonDown" Background="#02000000">
+
+                    </Canvas>
+                </Grid>
+            </DockPanel>
+            <Button x:Name="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" Padding="10,5" Background="Red" BorderBrush="#FFFF5151" Content="X" Click="Close_Click"/>
+        </Grid>
+    </Border>
+</Window>

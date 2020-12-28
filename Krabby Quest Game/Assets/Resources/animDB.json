@@ -1,0 +1,12 @@
+[
+  {
+    "B3DFilePath": "Graphics\\tentacle_both01.b3d",
+    "GLBFilePath": "Export\\tentacle_both01.glb",
+    "Name": "tentacle_both01"
+  },
+  {
+    "B3DFilePath": "Graphics\\bully01.b3d",
+    "GLBFilePath": "Export\\bully01.glb",
+    "Name": "bully01"
+  }
+]

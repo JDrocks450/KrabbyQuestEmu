@@ -11,7 +11,7 @@ namespace KrabbyQuestTools.Common
     {
         public static DialogResult BrowseForFile(ref string Path, string Title)
         {
-            var initialDir = System.IO.Path.GetDirectoryName(Path);
+            var initialDir = Path != "" ? System.IO.Path.GetDirectoryName(Path) : null;
             OpenFileDialog fBrowserdiag = new OpenFileDialog()
             {
                 InitialDirectory = initialDir == "" ? @"C:\Program Files" : initialDir,

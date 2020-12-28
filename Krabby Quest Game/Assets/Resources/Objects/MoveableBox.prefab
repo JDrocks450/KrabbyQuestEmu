@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c120536001316ff42beacbb3c930ff54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookIntoParent: 1
+  InheritParent: 1
   ForceTemplate: 0
 --- !u!1 &9056491995035275385
 GameObject:

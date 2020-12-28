@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c120536001316ff42beacbb3c930ff54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookIntoParent: 1
+  InheritParent: 1
   ForceTemplate: 0
 --- !u!1 &8470281956724991866
 GameObject:
@@ -154,6 +154,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -166,6 +170,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -175,14 +183,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2695315844159023131, guid: 70caeae94686db84fb5513ce7d837754, type: 3}

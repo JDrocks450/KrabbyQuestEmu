@@ -1,0 +1,20 @@
+﻿<Window x:Class="KrabbyQuestTools.Controls.LinkageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KrabbyQuestTools.Controls"
+        mc:Ignorable="d"
+        Title="Add New Linkage" Height="245.571" Width="352.143" Background="#FF292929">
+    <StackPanel Margin="10">
+        <TextBlock>Name:</TextBlock>
+        <TextBox x:Name="Name" Margin="0,0,0,5"/>
+        <TextBlock>B3D File Path:</TextBlock>
+        <TextBox x:Name="BPath"  Margin="0,0,0,5"/>
+        <TextBlock>GLB File Path:</TextBlock>
+        <TextBox x:Name="GPath"/>
+        <Button x:Name="Browse" Margin="0,0,0,10" BorderThickness="1,0,1,1" Click="Browse_Click">Browse...</Button>
+        <Button Margin="0,0,0,5" IsDefault="True" Click="Button_Click">OK</Button>
+        <Button IsCancel="True">Cancel</Button>
+    </StackPanel>
+</Window>

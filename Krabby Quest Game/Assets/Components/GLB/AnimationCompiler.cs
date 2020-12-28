@@ -27,72 +27,108 @@ namespace Assets.Components.GLB
 
         StinkyFile.Blitz3D.Animator currentAnimator;
         List<AnimationClip> loadedClips = new List<AnimationClip>();
+        List<StinkyFile.Blitz3D.Animator> animators = new List<StinkyFile.Blitz3D.Animator>();
 
         AnimatorController currentUnityAnimator;
         UnityEngine.Animator _currentAnimator;
+
+        string parentObjectName;
+        string B3DName;
+        string WorkspaceDirectory = "";
+        bool creatingController = false;
+        int currentIndex = 0;
+
+        string[] flag_NotCompile =
+        {
+            "Scene Root",
+            "B3DEXT_BGCOLOR",
+            "B3DEXT_AMBIENT"
+        };
+
+        List<AnimatorState> SequenceStates = new List<AnimatorState>();
+
+        /// <summary>
+        /// A globally-available animation compiler
+        /// </summary>
+        public static AnimationCompiler GlobalAnimationCompiler
+        {
+            get; set;
+        }
 
         public AnimationCompiler()
         {
 
         }
 
-        public GameObject CompileAnimations(string B3DPath, string GLBPath, string TexPath)
-        {            
-            Target = Importer.LoadFromFile(GLBPath);
-            var renderer = Target.GetComponentInChildren<SkinnedMeshRenderer>();
-            if (renderer != null)
-            {
-                TargetMesh = renderer.sharedMesh;
-                renderer.material = TextureLoader.RequestMaterialTexture(TexPath);
-            }
+        public void CompileAnimations(string WorkspaceDir, string B3DName, GameObject Target, out IEnumerable<StinkyFile.Blitz3D.Animator> animators)
+        {
+            this.animators.Clear();
+            this.B3DName = Path.GetFileNameWithoutExtension(B3DName);
+            string B3DPath = Path.Combine(WorkspaceDir, B3DName);
+            WorkspaceDirectory = WorkspaceDir;
             B3DLoader = new B3D_Loader();
             B3DLoader.LoadB3D(B3DPath);
             LoadObject(Target, "");
-            return Target;
-            //_currentAnimator.Rebind();
-            //_currentAnimator.Play("Bip01");            
-            //GLTFObject gltfObject = Exporter.CreateGLTFObject(Target.transform);
-			//File.WriteAllText(Path.Combine(Path.GetDirectoryName(GLBPath), "exportGLBanimc.glb"),
-             //   JsonConvert.SerializeObject(gltfObject, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }));
+            animators = this.animators;
         }
 
         private void LoadObject(GameObject target, string path)
         {
             string objName = target.name;
-            BlitzObject b3dObject = B3DLoader.LoadedObjects.FirstOrDefault(x => x.Name == objName);
+            BlitzObject b3dObject = B3DLoader.LoadedObjects.FirstOrDefault(x => x.Name == objName);            
             bool pathAppended = false;
-            if (b3dObject != null)
+            if (b3dObject != null && !flag_NotCompile.Contains(b3dObject.Name))
             {
                 if (b3dObject.HasAnimator)
                 {
                     currentAnimator = b3dObject.Animator;
-                    currentUnityAnimator = createController($"Compiled {objName} Controller");
-                    _currentAnimator = target.AddComponent<UnityEngine.Animator>(); 
+                    animators.Add(currentAnimator);
+                    try
+                    {
+                        //attempt to load sequences from file
+                        var animDir = Path.Combine(WorkspaceDirectory, "Animations");
+                        currentAnimator.LoadSequencesFromPath(animDir, b3dObject.Name, B3DName);
+                    }
+                    catch
+                    {
+
+                    }
+                    SequenceStates.Clear();
+                    currentIndex = 0;
+                    currentUnityAnimator = createController(objName, out creatingController);                   
+                    creatingController = !creatingController;
+                    _currentAnimator = target.AddComponent<UnityEngine.Animator>();
                     _currentAnimator.runtimeAnimatorController = currentUnityAnimator as RuntimeAnimatorController;
-                    path = "";                    
+                    parentObjectName = objName;
+                    path = "";
                 }
-                if (b3dObject is MeshModel && objName == TargetMesh.name)
+                /*if (b3dObject is MeshModel && objName == TargetMesh.name)
                 {
                     currentBlitzMesh = b3dObject as MeshModel;
                     var currentBoneWeights = TargetMesh.boneWeights;
                     BoneWeight1[] skinBones = new BoneWeight1[currentBoneWeights.Length];
-                    foreach(var bone in currentBlitzMesh.Bones)
+                    foreach (var bone in currentBlitzMesh.Bones)
                     {
-                        
+
                     }
-                }
+                }*/
                 if (currentAnimator != null)
                 {
                     var currentB3DObj = currentAnimator.Objects.FirstOrDefault(x => x.Name == objName);
                     if (currentB3DObj != null)
                     {
+                        if(creatingController)
+                            makeLayerForObject(currentB3DObj.Name, 1);
+                        currentIndex++;
                         int animIndex = currentAnimator.Objects.IndexOf(currentB3DObj);
                         var anim = currentAnimator.Animations.ElementAt(animIndex);
-                        var newClip = createClip(anim.keys[0], target.transform, path);
-                        newClip.name = currentB3DObj.Name;                        
-                        newClip.wrapMode = WrapMode.Loop;
-                        var state = makeStateFromMotion(newClip, newClip.name, currentB3DObj);                        
-                        state.speed = 14.0f;                                                
+                        foreach (var sequence in currentAnimator.Sequences)
+                        {
+                            var clip = createClip(sequence, anim.keys[sequence.ID], target.transform, path, $"Seq{sequence.ID} {currentB3DObj.Name}", out bool clipExisted);
+                            var rootLayer = currentUnityAnimator.layers[0];
+                            var animatorState = rootLayer.stateMachine.states[3 + sequence.ID];
+                            currentUnityAnimator.SetStateEffectiveMotion(animatorState.state, clip, currentIndex);                            
+                        }
                     }
                 }
             }
@@ -104,73 +140,105 @@ namespace Assets.Components.GLB
             }
         }
 
-        private AnimatorState makeStateFromMotion(AnimationClip motion, string name, BlitzObject current)
+        private AnimatorControllerLayer makeLayerForObject(string name, float weight)
         {
-            float weight = 1.0f;
-            //if (current is StinkyFile.Blitz3D.Prim.Pivot)
-             //   weight = ((StinkyFile.Blitz3D.Prim.Pivot)current).Weight;
             var controllerLayer = new AnimatorControllerLayer()
             {
                 name = name,
-                stateMachine = new AnimatorStateMachine() { name = name },   
+                //stateMachine = layer,  
+                syncedLayerAffectsTiming = true,
                 defaultWeight = weight,
-                blendingMode = AnimatorLayerBlendingMode.Additive
+                blendingMode = AnimatorLayerBlendingMode.Additive,
+                syncedLayerIndex = 0 // sync with base layer
             };
             currentUnityAnimator.AddLayer(controllerLayer);
-            var rootStateMachine = controllerLayer.stateMachine;
-            var state = rootStateMachine.AddState(name);
-            var loopState = rootStateMachine.AddState("Animation Completed");
-            var transition = state.AddTransition(loopState);
-            transition.hasExitTime = true;
-            transition = loopState.AddTransition(state);
-            transition.hasExitTime = true;
-            state.motion = motion;
-            return state;
+            return controllerLayer;
         }
 
-        private AnimatorController createController(string name)
+        private AnimatorController createController(string name, out bool existing)
         {
-            // Creates the controller
-            Directory.CreateDirectory($"Assets/Resources/Animations/{name}");
-            var controller = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath($"Assets/Resources/Animations/{name}/AnimatorController.controller");
+            existing = true;            
+            string rootPath = "Assets/Models/Animations";
+            if (!AssetDatabase.IsValidFolder(rootPath + "/" + name))
+                AssetDatabase.CreateFolder(rootPath, name);
+            string controllerPath = $"{rootPath}/{name}/AnimatorController.controller";
+
+            //load existing controller
+            if (File.Exists(controllerPath))
+                return AssetDatabase.LoadAssetAtPath<AnimatorController>(controllerPath);
+            existing = false;
+
+            //create new controller
+            var controller = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath($"Assets/Models/Animations/{name}/AnimatorController.controller");
             controller.name = name;
 
             // Add parameters
-            controller.AddParameter("Blend", AnimatorControllerParameterType.Float);                       
+            controller.AddParameter("CanPlay", AnimatorControllerParameterType.Bool);
+            controller.AddParameter("IsLooping", AnimatorControllerParameterType.Bool);
+            controller.AddParameter("Sequence", AnimatorControllerParameterType.Int);
 
-            // Add StateMachines
-            var rootStateMachine = controller.layers[0].stateMachine;
+            //Setup the controller for first time use
+            SetupController(controller);
 
-            //var defaultMachine = rootStateMachine.AddStateMachine("DefaultMachine");
-
-            /*var exitTransition = stateA1.AddExitTransition();
-            exitTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "TransitionNow");
-            exitTransition.duration = 0;
-
-            var resetTransition = rootStateMachine.AddAnyStateTransition(stateA1);
-            resetTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "Reset");
-            resetTransition.duration = 0;
-
-            var transitionB1 = stateMachineB.AddEntryTransition(stateB1);
-            transitionB1.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "GotoB1");
-            stateMachineB.AddEntryTransition(stateB2);
-            stateMachineC.defaultState = stateC2;
-            var exitTransitionC2 = stateC2.AddExitTransition();
-            exitTransitionC2.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "TransitionNow");
-            exitTransitionC2.duration = 0;
-
-            var stateMachineTransition = rootStateMachine.AddStateMachineTransition(stateMachineA, stateMachineC);
-            stateMachineTransition.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "GotoC");
-            rootStateMachine.AddStateMachineTransition(stateMachineA, stateMachineB);*/
             return controller;
         }
 
-        private AnimationClip createClip(StinkyFile.Blitz3D.Prim.Animation animation, Transform target, string path)
+        private void SetupController(AnimatorController controller)
         {
+            // Add StateMachines
+            var baseLayer = controller.layers[0];
+            var rootStateMachine = baseLayer.stateMachine;
+
+            //create base layer
+
+            //Animation enter state
+            var enterState = rootStateMachine.AddState("ANIM_ENTER");
+            //rootStateMachine.AddEntryTransition(enterState);
+
+            //Animation playing state
+            var animationState = rootStateMachine.AddState("ANIM_PLAY");
+            var enterToAnimPlay = enterState.AddTransition(animationState);
+            enterToAnimPlay.AddCondition(AnimatorConditionMode.If, 1, "CanPlay"); // will only start animation if CanPlay is set in Animator
+            enterToAnimPlay.duration = 0;
+
+            //For animation looping
+            var loopState = rootStateMachine.AddState("ANIM_LOOP");
+            var loopToEnter = loopState.AddTransition(enterState);
+            loopToEnter.AddCondition(AnimatorConditionMode.If, 1, "IsLooping"); //if is looping is set, loop back to playing state
+            loopToEnter.duration = 0;
+            loopState.AddExitTransition().AddCondition(AnimatorConditionMode.If, 0, "IsLooping"); // else exit the animator state            
+
+            //Add sequence states
+            foreach (var sequence in currentAnimator.Sequences)
+            {
+                var name = sequence.Name;
+                if (string.IsNullOrEmpty(name))
+                    name = "Seq" + sequence.ID;
+                var seqState = rootStateMachine.AddState(name);
+                animationState.AddTransition(seqState).AddCondition(AnimatorConditionMode.Equals, sequence.ID, "Sequence");
+                var seqToLoop = seqState.AddTransition(loopState);
+                seqToLoop.hasExitTime = true;
+                seqToLoop.duration = 0;
+            }            
+        }
+
+        private AnimationClip createClip(Seq BaseSequence, StinkyFile.Blitz3D.Prim.Animation animation, Transform target, string path, string name, out bool Existed)
+        {
+            string baseDir = $"Assets/Models/Animations/{parentObjectName}/{"Sequence " + BaseSequence.ID}/";
+            string destPath = baseDir + $"{name}.anim";
+            if (!Directory.Exists(baseDir))
+                Directory.CreateDirectory(baseDir);
+            if (File.Exists(destPath))
+            {
+                Existed = true;
+                return AssetDatabase.LoadAssetAtPath<AnimationClip>(destPath);
+            }
+            Existed = false;
             var clip = new AnimationClip()
             {
                 wrapMode = WrapMode.Default,
-                frameRate = 30
+                frameRate = 30,
+                name = name
             };
 
             //position
@@ -241,6 +309,7 @@ namespace Assets.Components.GLB
                 curve = new AnimationCurve(sclZKeys);
                 clip.SetCurve(path, target.GetType(), "localScale.z", curve);
             }
+            AssetDatabase.CreateAsset(clip, destPath);
             return clip;
         }                    
     }

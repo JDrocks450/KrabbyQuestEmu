@@ -594,11 +594,11 @@
     <AssetType>Texture</AssetType>
     <References>O107917</References>
   </A572195>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest Clean</WorkspaceDirectory>
   <A350254>
     <FilePath>sound\teleport.wav</FilePath>
     <Name>teleport</Name>
     <AssetType>Sound</AssetType>
     <References>O965789,O642030</References>
   </A350254>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
 </root>

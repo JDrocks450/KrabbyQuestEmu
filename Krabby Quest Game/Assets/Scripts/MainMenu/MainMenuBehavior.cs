@@ -21,10 +21,6 @@ public class MainMenuBehavior : MonoBehaviour
         var source = GameObject.Find("Music").GetComponent<AudioSource>();
         source.clip = ac;
         source.Play();
-
-        Assets.Components.GLB.AnimationCompiler compiler = new Assets.Components.GLB.AnimationCompiler();
-        compiler.CompileAnimations(@"D:\Projects\Krabby Quest\Workspace\Graphics\spongebob_anims01.b3d", 
-            @"D:\Projects\Krabby Quest Clean\Export\spongebob_anims01.glb", "Graphics\\spongebob01.png").transform.parent = GameObject.Find("ObjectHolder").transform;
     }
 
     public void CloseSaveSelect()

@@ -1,10 +1,13 @@
-﻿using LiveCharts;
+﻿using KrabbyQuestTools.Controls;
+using LiveCharts;
 using LiveCharts.Wpf;
+using StinkyFile;
 using StinkyFile.Blitz3D;
 using StinkyFile.Blitz3D.Prim;
 using StinkyFile.Blitz3D.Visualizer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +28,6 @@ namespace KrabbyQuestTools.Pages
     /// </summary>
     public partial class TreeVisualizer : Page
     {
-        public enum ChartData
-        {
-            None, Pos, Rot, Scl
-        }
-        ChartData AutoChart = ChartData.Pos;
-
         BlitzTreeVisualizer TreeHost;
         Color color1 = Colors.LightSkyBlue, color2 = Colors.DarkBlue;
         int maxColorDepth = 10;
@@ -39,19 +36,40 @@ namespace KrabbyQuestTools.Pages
         Anim selectedAnim;
         BlitzObject selectedObject;
         string Workspace;
+        string FileName;
+        string B3DPath;
 
         public TreeVisualizer(string Workspace)
         {
-            InitializeComponent();            
+            InitializeComponent();
+            LinkToGLB.Visibility = Visibility.Hidden;
             DataChart.Visibility = Visibility.Collapsed;
             DataGrid.Visibility = Visibility.Collapsed;
             this.Workspace = Workspace;
-            Load(System.IO.Path.Combine(Workspace, "Graphics", "jellyfish01.b3d"));
+            Load(System.IO.Path.Combine(Workspace, "Graphics", "tentacle_both01.b3d"));
         }        
 
         private void Load(string fileName)
         {
+            B3DPath = fileName;
             PathBlock.Text = fileName;
+            //setup link button
+            if (fileName.StartsWith(Workspace))
+            {
+                bool linked = AnimationDatabase.GetEntryByB3DPath(fileName.Remove(0, Workspace.Length+1)) != null;
+                if (linked)
+                {
+                    LinkToGLB.IsEnabled = false;
+                    LinkToGLB.Content = "Already Linked";
+                }
+                else
+                {
+                    LinkToGLB.IsEnabled = true;
+                    LinkToGLB.Content = "Link to GLB file";
+                }
+                LinkToGLB.Visibility = Visibility.Visible;
+            }
+            FileName = System.IO.Path.GetFileNameWithoutExtension(fileName);
             var obj = StinkyFile.Blitz3D.B3D.B3D_Loader.Load(fileName);
             TreeHost = new BlitzTreeVisualizer(obj.LoadedObjects, obj.RootObject);
             LoadedObjectsText.Text = "\nLoaded Objects: " + obj.LoadedObjects.Count;
@@ -63,6 +81,15 @@ namespace KrabbyQuestTools.Pages
             TreeViewerCanvas.Children.Clear();
             lastYCoordinate = marginTop;
             mostXCoordinate = 0;
+            AnimationStack.Children.Clear();
+            AnimationStack.Children.Add(
+                new TextBlock()
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = new Thickness(20),
+                    TextAlignment = TextAlignment.Center,
+                    Text = "An Animator is not selected. Select one from the tree on the left by finding an Object that is a [MeshModel] with an Animator set on it."
+                });
             DrawTreeItem(TreeHost.Tree.First().Value);
         }
 
@@ -138,17 +165,18 @@ namespace KrabbyQuestTools.Pages
             foreach (var child in Item.Children)
                 borders.Add(DrawTreeItem(TreeHost.Tree[child], depth + 1));
             Border last = borders.LastOrDefault();
-
+            double lineThickness = 3;
             foreach(var b in borders)
             {
                 double y = Canvas.GetTop(b) + b.DesiredSize.Height / 2;
                 TreeViewerCanvas.Children.Add(new Line()
                 {
-                    X1 = thisX + 10,
+                    X1 = thisX + 10 - (lineThickness / 2),
                     X2 = Canvas.GetLeft(b) - 10,
                     Y1 = y,
                     Y2 = y,
-                    Stroke = brush
+                    Stroke = brush,
+                    StrokeThickness = lineThickness
                 });
             }
 
@@ -159,7 +187,8 @@ namespace KrabbyQuestTools.Pages
                     X2 = thisX + 10,
                     Y1 = thisY + border.DesiredSize.Height,
                     Y2 = Canvas.GetTop(last) + last.DesiredSize.Height / 2,
-                    Stroke = brush
+                    Stroke = brush,
+                    StrokeThickness = lineThickness
                 });
 
             if (Item.HasAnimator)
@@ -174,7 +203,16 @@ namespace KrabbyQuestTools.Pages
         private void TreeItemPicked(object sender, MouseButtonEventArgs e)
         {
             AnimationStack.Children.Clear();
-            var blitzObject = selectedObject = (sender as Border).Tag as BlitzObject;
+            var blitzObject = selectedObject = (sender as Border).Tag as BlitzObject;          
+            try
+            {
+                var path = System.IO.Path.Combine(Workspace, "Animations");                
+                blitzObject.Animator.LoadSequencesFromPath(path, selectedObject.Name, FileName); //load animation sequences                
+            }
+            catch(Exception ex)
+            {
+
+            }                
             int index = 0;
             foreach(var anim in blitzObject.Animator.Animations)
             {
@@ -228,22 +266,11 @@ namespace KrabbyQuestTools.Pages
             PositionBlock.Text = posBuilder.ToString();
             RotationBlock.Text = rotBuilder.ToString();
             ScaleBlock.Text = sclBuilder.ToString();
-            switch (AutoChart)
-            {
-                case ChartData.Pos:
-                    PopulatePosition();
-                    break;
-                case ChartData.Rot:
-                    PopulateRotation();
-                    break;
-            }
+            ShowChart();
+            DataChart.DisplayAnimation(selectedAnim.keys[key]);
         }
 
-        private void ChartPos_Click(object sender, RoutedEventArgs e)
-        {
-            AutoChart = ChartData.Pos;
-            PopulatePosition();    
-        }
+        private void ChartPos_Click(object sender, RoutedEventArgs e) => DataChart.DisplayData(AnimKeyFrameGraph.GraphingData.Position);
 
         private void OpenNewButton_Click(object sender, RoutedEventArgs e)
         {
@@ -257,47 +284,35 @@ namespace KrabbyQuestTools.Pages
             LoadAnim(ObjectSwitcher.SelectedIndex);
         }
 
-        private void PopulatePosition()
-        {            
-            PopulateChart("Time", "Position",
-                ("X", selectedAnim.keys[0].AnimRep.pos_anim.Select(x => x.Value.V.X)),
-                ("Y", selectedAnim.keys[0].AnimRep.pos_anim.Select(x => x.Value.V.Y)),
-                ("Z", selectedAnim.keys[0].AnimRep.pos_anim.Select(x => x.Value.V.Z)));
-        }
+        private void ChartRot_Click(object sender, RoutedEventArgs e) => DataChart.DisplayData(AnimKeyFrameGraph.GraphingData.Rotation);
 
-        private void ChartRot_Click(object sender, RoutedEventArgs e)
-        {
-            AutoChart = ChartData.Rot;
-            PopulateRotation(); 
-        }
-
-        private void PopulateRotation()
-        {
-            PopulateChart("Time", "Rotation",
-                ("W", selectedAnim.keys[0].AnimRep.rot_anim.Select(x=> x.Value.W)),
-                ("X", selectedAnim.keys[0].AnimRep.rot_anim.Select(x => x.Value.V.X)),
-                ("Y", selectedAnim.keys[0].AnimRep.rot_anim.Select(x => x.Value.V.Y)),
-                ("Z", selectedAnim.keys[0].AnimRep.rot_anim.Select(x => x.Value.V.Z)));
-        }
-
-        private void PopulateChart(string AxisXTitle, string AxisYTitle, params (string title, IEnumerable<float> series)[] data)
+        private void ShowChart()
         {
             DataChart.Visibility = Visibility.Visible;
             DataChart.Height = (AnimationDockPanel.ActualHeight) / 3;
-            var axisX = DataChart.AxisX.First();
-            axisX.Title = AxisXTitle;
-            var axisY = DataChart.AxisY.First();
-            axisY.Title = AxisYTitle;
-            DataChart.Series.Clear();
-            foreach (var tuple in data) {
-                var creatingSeries = new ChartValues<float>();
-                creatingSeries.AddRange(tuple.series);
-                DataChart.Series.Add(new LineSeries
-                {
-                    Title = tuple.title,
-                    Values = creatingSeries
-                });
-            }
+        }
+
+        private void LinkToGLB_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new LinkageDialog(FileName, B3DPath, Workspace, Workspace);
+            dialog.ShowDialog();
+            if (dialog.DialogResult.Value)            
+                AnimationDatabase.AddLinkage(dialog.LinkageName, dialog.B3DPath, dialog.GLBPath);            
+        }
+
+        private void EditAnimKeys_Click(object sender, RoutedEventArgs e)
+        {
+            var editor = new AnimKeysEditor(selectedObject.Animator, selectedAnim.keys[0]);
+            if (editor.ShowDialog().Value)
+                Save();
+        }
+
+        void Save()
+        {
+            var path = System.IO.Path.Combine(Workspace, "Animations");
+            Directory.CreateDirectory(path);
+            using (var fs = File.CreateText(System.IO.Path.Combine(path, Animator.GetFormattedSerializedFileName(selectedObject.Name, FileName))))            
+                selectedObject.Animator.SerializeSequences(fs);            
         }
     }
 }

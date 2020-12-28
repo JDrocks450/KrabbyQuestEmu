@@ -50,17 +50,17 @@ namespace StinkyFile.Blitz3D.Prim
         /// <param name="last">The last frame in the range</param>
         public Animation(Animation from, int first, int last) : this()
         {
-            for (int i = first; i < last - first; i++)
+            for (int i = 0; i < last - first; i++)
             {
                 if (from.rep.pos_anim.Count <= i) break;
                 if (from.rep.rot_anim.Count <= i) break;
                 if (from.rep.scale_anim.Count <= i) break;
-                var keyFrame = from.rep.pos_anim.ElementAt(i);
-                rep.setKey(rep.pos_anim, keyFrame.Key, keyFrame.Value);
-                keyFrame = from.rep.rot_anim.ElementAt(i);
-                rep.setKey(rep.rot_anim, keyFrame.Key, keyFrame.Value);
-                keyFrame = from.rep.scale_anim.ElementAt(i);
-                rep.setKey(rep.scale_anim, keyFrame.Key, keyFrame.Value);
+                var keyFrame = from.rep.pos_anim.ElementAt(first + i);
+                rep.setKey(rep.pos_anim, i, keyFrame.Value);
+                keyFrame = from.rep.rot_anim.ElementAt(first + i);
+                rep.setKey(rep.rot_anim, i, keyFrame.Value);
+                keyFrame = from.rep.scale_anim.ElementAt(first + i);
+                rep.setKey(rep.scale_anim, i, keyFrame.Value);
             }
         }        
 

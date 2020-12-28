@@ -108,9 +108,18 @@
     <Compile Include="Controls\AnimationDisplay.xaml.cs">
       <DependentUpon>AnimationDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AnimKeyFrameGraph.xaml.cs">
+      <DependentUpon>AnimKeyFrameGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimKeysEditor.xaml.cs">
+      <DependentUpon>AnimKeysEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\KQTPage.cs" />
     <Compile Include="Controls\LevelEditorTile.xaml.cs">
       <DependentUpon>LevelEditorTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LinkageDialog.xaml.cs">
+      <DependentUpon>LinkageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SuggestionTextbox.xaml.cs">
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
@@ -131,11 +140,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\AnimKeyFrameGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AnimKeysEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Gallery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LevelEditorTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LinkageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +311,9 @@
     <Content Include="Resources\blockdb.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Editor\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\Editor\selection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

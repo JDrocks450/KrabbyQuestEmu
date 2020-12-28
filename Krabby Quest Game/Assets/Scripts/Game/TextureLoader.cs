@@ -21,12 +21,12 @@ public class TextureLoader : MonoBehaviour
         get; set;
     }
     bool Loaded = false;
-    public bool LookIntoParent = false;
+    public bool InheritParent = false;
     public bool ForceTemplate = false;
 
     private void Awake()
     {
-        if (!TryGetComponent(out TileComponent) && LookIntoParent && !ForceTemplate)
+        if (!TryGetComponent(out TileComponent) && InheritParent && !ForceTemplate)
             TileComponent = GetComponentInParent<DataBlockComponent>();
         if (TileComponent?.TextureLoaded ?? false && !ForceTemplate) 
             return;

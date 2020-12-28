@@ -368,6 +368,27 @@ public class LevelObjectManager : MonoBehaviour
         return returnVal;
     }
 
+    GameObject Copy(GameObject copyFrom)
+    {
+        var returnVal = copyFrom;
+        var oldAnimLoader = returnVal.GetComponent<AnimationLoader>();
+        if (oldAnimLoader == null)
+            oldAnimLoader = returnVal.GetComponentInChildren<AnimationLoader>();
+        returnVal = Instantiate(returnVal);
+        if (oldAnimLoader != null)
+        {
+            var newAnimLoader = returnVal.GetComponent<AnimationLoader>();
+            if (newAnimLoader == null)
+                newAnimLoader = returnVal.GetComponentInChildren<AnimationLoader>();
+            if (newAnimLoader != null)
+                newAnimLoader.Copy(oldAnimLoader);
+        }
+        var mLoader = returnVal.GetComponentInChildren<ModelLoader>();
+        if (mLoader != null)
+            DestroyImmediate(mLoader);
+        return returnVal;
+    }
+
     GameObject GetObjectByParameter(LevelDataBlock block)
     {        
         BlockParameter parameter = default;
@@ -380,26 +401,24 @@ public class LevelObjectManager : MonoBehaviour
             if (block.HasSound)
                 returnVal.AddComponent<SoundLoader>().LoadAll(block); // load all sound effects related to the object               
             returnVal.SetActive(true);
-            if (returnVal != null && isClonable)
+            if (isClonable)
             {
                 returnVal.SetActive(false);
                 if (returnVal.TryGetComponent<TextureLoader>(out var tloader))
                     DestroyImmediate(tloader);
-                if (returnVal.TryGetComponent<ModelLoader>(out var mloader))
-                    DestroyImmediate(mloader);
+                var modelLoader = returnVal.GetComponentInChildren<ModelLoader>();
+                if (modelLoader != null)
+                    DestroyImmediate(modelLoader);
                 ClonableObjects.Add(block.GUID, returnVal);
-                returnVal = Instantiate(returnVal);
+                returnVal = Copy(returnVal);
+                Debug.LogWarning($"{block.Name} object was loaded and cached");                               
             }
+            else Debug.LogWarning($"{block.Name} object was loaded and not cached");
         }
         else
         {
-            returnVal = Instantiate(returnVal);
-            //var tLoader = returnVal.GetComponentInChildren<TextureLoader>();
-            //if (tLoader != null)
-            //   DestroyImmediate(tLoader);
-            var mLoader = returnVal.GetComponentInChildren<ModelLoader>();
-            if (mLoader != null)
-                DestroyImmediate(mLoader);
+            returnVal = Copy(returnVal);
+            Debug.LogWarning($"{block.Name} object was loaded from cache");
         }
         if (returnVal == null)
             return returnVal;

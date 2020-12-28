@@ -126,12 +126,22 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\KrabbyQuestEmuBlack.png" />
+    <Resource Include="Images\KrabbyQuestEmuBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Installer.ico" />
-    <Resource Include="Images\Installer.png" />
-    <Resource Include="Images\KrabbyQuestEmu.png" />
-    <Content Include="Images\KrustyKrab.png" />
-    <Content Include="Images\MapScreen.png" />
+    <Resource Include="Images\Installer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\KrabbyQuestEmu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Images\KrustyKrab.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MapScreen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
