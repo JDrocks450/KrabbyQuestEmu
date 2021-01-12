@@ -8,5 +8,15 @@
     "B3DFilePath": "Graphics\\bully01.b3d",
     "GLBFilePath": "Export\\bully01.glb",
     "Name": "bully01"
+  },
+  {
+    "B3DFilePath": "Graphics\\patrick_anims01.b3d",
+    "GLBFilePath": "Export\\patrick_anims01.glb",
+    "Name": "patrick_anims01"
+  },
+  {
+    "B3DFilePath": "Graphics\\spongebob_anims01.b3d",
+    "GLBFilePath": "Export\\spongebob_anims01.glb",
+    "Name": "spongebob_anims01"
   }
 ]

@@ -125,6 +125,8 @@ namespace KrabbyQuestTools.Pages
         private void FilePathSubmit_Click(object sender, RoutedEventArgs e)
         {
             Workspace = WorkspacePath.Text;
+            Properties.Settings.Default.DestinationDir = Workspace;
+            Properties.Settings.Default.Save();
             GetLevels();
         }
 

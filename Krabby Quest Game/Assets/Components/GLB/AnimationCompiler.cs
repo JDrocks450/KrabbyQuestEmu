@@ -65,6 +65,7 @@ namespace Assets.Components.GLB
             this.animators.Clear();
             this.B3DName = Path.GetFileNameWithoutExtension(B3DName);
             string B3DPath = Path.Combine(WorkspaceDir, B3DName);
+            TargetMesh = Target.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh;
             WorkspaceDirectory = WorkspaceDir;
             B3DLoader = new B3D_Loader();
             B3DLoader.LoadB3D(B3DPath);
@@ -117,8 +118,13 @@ namespace Assets.Components.GLB
                     var currentB3DObj = currentAnimator.Objects.FirstOrDefault(x => x.Name == objName);
                     if (currentB3DObj != null)
                     {
-                        if(creatingController)
-                            makeLayerForObject(currentB3DObj.Name, 1);
+                        if (creatingController)
+                        {
+                            float weight = 1;
+                            if (currentB3DObj is StinkyFile.Blitz3D.Prim.Pivot)
+                                weight = (currentB3DObj as StinkyFile.Blitz3D.Prim.Pivot).Weight;
+                            makeLayerForObject(currentB3DObj.Name, weight);
+                        }
                         currentIndex++;
                         int animIndex = currentAnimator.Objects.IndexOf(currentB3DObj);
                         var anim = currentAnimator.Animations.ElementAt(animIndex);
@@ -146,7 +152,7 @@ namespace Assets.Components.GLB
             {
                 name = name,
                 //stateMachine = layer,  
-                syncedLayerAffectsTiming = true,
+                syncedLayerAffectsTiming = false,
                 defaultWeight = weight,
                 blendingMode = AnimatorLayerBlendingMode.Additive,
                 syncedLayerIndex = 0 // sync with base layer
@@ -273,7 +279,7 @@ namespace Assets.Components.GLB
                 {
                     var currentKey = animation.AnimRep.rot_anim[i];
                     Quaternion quat = new Quaternion(currentKey.V.X, currentKey.V.Y, currentKey.V.Z, currentKey.W);
-                    quat.Normalize();
+                    quat = Quaternion.Normalize(quat);
                     rotXKeys[i] = new Keyframe(i, quat.x);
                     rotYKeys[i] = new Keyframe(i, quat.y);
                     rotZKeys[i] = new Keyframe(i, quat.z);
