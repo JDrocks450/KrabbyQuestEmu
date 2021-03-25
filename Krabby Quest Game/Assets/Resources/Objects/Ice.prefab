@@ -76,6 +76,10 @@ PrefabInstance:
       value: GroundTileObject
       objectReference: {fileID: 0}
     - target: {fileID: 6924947382917251265, guid: e409e16309579b64c80238912d3a537a, type: 3}
+      propertyPath: InheritParent
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924947382917251265, guid: e409e16309579b64c80238912d3a537a, type: 3}
       propertyPath: LookIntoParent
       value: 1
       objectReference: {fileID: 0}

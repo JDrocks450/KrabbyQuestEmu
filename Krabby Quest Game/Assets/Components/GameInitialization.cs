@@ -23,7 +23,9 @@ internal static class GameInitialization
         MapWaypointParser.DBPath = "Assets/Resources/mapdb.xml";        
         XDocument doc = XDocument.Load(AssetDBEntry.AssetDatabasePath);
         TextureLoader.AssetDirectory = doc.Root.Element("WorkspaceDirectory").Value;
+#if UNITY_EDITOR
         AnimationCompiler.GlobalAnimationCompiler = new AnimationCompiler();
+#endif
         _ = FontCreator.KrabbyQuestFont;
         initialized = true;
     }

@@ -60,7 +60,7 @@ public class Pickup : MonoBehaviour
         {
             if (!(sender as TileMovingObjectScript).TryGetComponent<Player>(out _)) // is not a player
             {
-                e.BlockMotion = true;
+                e.BlockMotion = !Collected;
                 e.BlockMotionSender = gameObject.name;
             }
             else

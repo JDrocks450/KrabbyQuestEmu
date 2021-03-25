@@ -73,12 +73,14 @@ public class ModelLoader : MonoBehaviour
                 var entry = AnimationDatabase.GetEntryByGLBPath(fileName);
                 if (entry != null)
                 {
+#if UNITY_EDITOR
                     //compile animations if necessary -- this adds the necessary animator used by the AnimationLoader
-                    AnimationCompiler.GlobalAnimationCompiler.CompileAnimations(TextureLoader.AssetDirectory, entry.B3DFilePath, animTarget, out var animators);
+                    AnimationCompiler.GlobalAnimationCompiler.CompileAnimations(TextureLoader.AssetDirectory, entry.B3DFilePath, animTarget, out var animators);                    
+#endif                   
                     //activate animation capability
                     var loader = gameObject.AddComponent<AnimationLoader>();
                     //allow the AnimationLoader to use the animator
-                    loader.SetAnimator(animators.LastOrDefault());
+                    //loader.SetAnimator(animators.LastOrDefault());
                 }
             }
         }        

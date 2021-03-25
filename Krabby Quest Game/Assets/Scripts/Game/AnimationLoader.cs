@@ -40,9 +40,14 @@ public class AnimationLoader : MonoBehaviour
         if (animator == null) return;
         var child = transform.Find(animator.Objects[0].Name, true);
         UnityAnimator = child?.GetComponent<Animator>();
-        SequenceNames.Clear();        
+        SequenceNames.Clear();
         foreach (var seq in animator.Sequences)
-            if (string.IsNullOrWhiteSpace(seq.Name)) continue;
+            if (string.IsNullOrWhiteSpace(seq.Name) || SequenceNames.Keys.Contains(seq.Name))
+            {
+                Debug.LogWarning($"A sequence by the name of {seq.Name}, ID: {seq.ID} has error(s). The name is either blank or " +
+                    $"a duplicate and therefore was ignored from sequence database construction. Fix errors in Krabby Quest Tools and reload the level.");
+                continue;
+            }
             else SequenceNames.Add(seq.Name, seq.ID);               
     }
 

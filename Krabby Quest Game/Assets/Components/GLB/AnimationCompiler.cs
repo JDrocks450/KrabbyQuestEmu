@@ -9,7 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 namespace Assets.Components.GLB
@@ -19,6 +21,7 @@ namespace Assets.Components.GLB
     /// </summary>
     public class AnimationCompiler
     {
+#if UNITY_EDITOR
         GameObject Target;        
         B3D_Loader B3DLoader;
 
@@ -297,6 +300,7 @@ namespace Assets.Components.GLB
 
             //scale
             total = animation.numScaleKeys();
+            if (false)
             {
                 Keyframe[] sclXKeys = new Keyframe[total];
                 Keyframe[] sclYKeys = new Keyframe[total];
@@ -317,7 +321,8 @@ namespace Assets.Components.GLB
             }
             AssetDatabase.CreateAsset(clip, destPath);
             return clip;
-        }                    
+        }
+#endif
     }
 }
 

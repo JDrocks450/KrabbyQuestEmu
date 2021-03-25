@@ -1725,35 +1725,6 @@
       <A285245>Sound</A285245>
     </AssetReferences>
   </O985647>
-  <O632353>
-    <Name>BEACH_BALL</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>13</ItemId>
-    <Dat2>0</Dat2>
-    <Color>64,224,208,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>Prefab</Name>
-        <Value>Beachball</Value>
-      </Parameter>
-      <Parameter>
-        <Name>AllowMotion</Name>
-        <Value>true</Value>
-      </Parameter>
-      <Parameter>
-        <Name>CanFloat</Name>
-        <Value>true</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A650177>Sound</A650177>
-      <A426192>Texture</A426192>
-      <A890777>Sound</A890777>
-    </AssetReferences>
-  </O632353>
   <O353994>
     <Name>ICICLE</Name>
     <Package>0</Package>
@@ -3130,4 +3101,37 @@
       <A350254>Sound</A350254>
     </AssetReferences>
   </O642030>
+  <O632353>
+    <Name>BEACH_BALL</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>13</ItemId>
+    <Dat2>0</Dat2>
+    <Color>64,224,208,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Beachball</Value>
+      </Parameter>
+      <Parameter>
+        <Name>AllowMotion</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>CanFloat</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Material</Name>
+        <Value>BeachballMaterial</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A650177>Sound</A650177>
+      <A426192>Texture</A426192>
+      <A890777>Sound</A890777>
+    </AssetReferences>
+  </O632353>
 </root>
