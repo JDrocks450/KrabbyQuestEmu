@@ -23,6 +23,7 @@ public class SpikeBehavior : MonoBehaviour
         get; private set;
     } = true;
     Animator animator;
+    AnimationLoader animations;
     private DataBlockComponent block;
     /// <summary>
     /// the object standing on the current tile
@@ -32,7 +33,9 @@ public class SpikeBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();        
+        animations = GetComponentInChildren<AnimationLoader>();    
+        animations.PlayAnimationSequence("Spike");
         block = GetComponentInParent<DataBlockComponent>();
         TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
         TileMovingObjectScript.MoveableMoved += TileMovingObjectScript_MoveableMoved;
@@ -63,6 +66,7 @@ public class SpikeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!LevelObjectManager.IsDone) return;
         if (Up)
         {
             if (standingInside != null)
@@ -94,7 +98,7 @@ public class SpikeBehavior : MonoBehaviour
         if (standingInside.TryGetComponent<Player>(out var player)) // is player
         {
             Player.KillAllPlayers();
-            standingInside = null;
+            this.standingInside = null;
         }
         else if (standingInside.TryGetComponent<PushableScript>(out var box))
         {

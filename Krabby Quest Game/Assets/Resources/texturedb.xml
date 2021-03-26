@@ -25,7 +25,7 @@
     <References>O418897,O307691,O492444,O424919</References>
   </A368615>
   <A188045>
-    <FilePath>Export\krabbypattie01.obj</FilePath>
+    <FilePath>Export\krabbypattie01.glb</FilePath>
     <Name>Krabby Patty Model</Name>
     <AssetType>Model</AssetType>
     <References>O301686</References>
@@ -43,7 +43,7 @@
     <References>O31249</References>
   </A273556>
   <A690845>
-    <FilePath>Export\flower.obj</FilePath>
+    <FilePath>Export\flower.glb</FilePath>
     <Name>Flower Model</Name>
     <AssetType>Model</AssetType>
     <References>O31249</References>
@@ -55,7 +55,7 @@
     <References>O161677</References>
   </A816019>
   <A450690>
-    <FilePath>Export\kelptree01.obj</FilePath>
+    <FilePath>Export\kelptree01.glb</FilePath>
     <Name>KelpTree Model</Name>
     <AssetType>Model</AssetType>
     <References>O890634</References>
@@ -67,7 +67,7 @@
     <References>O890634</References>
   </A562661>
   <A59585>
-    <FilePath>Export\sign.obj</FilePath>
+    <FilePath>Export\sign.glb</FilePath>
     <Name>Sign Model</Name>
     <AssetType>Model</AssetType>
     <References>O497772</References>
@@ -79,7 +79,7 @@
     <References>O497772</References>
   </A138204>
   <A167974>
-    <FilePath>Export\rock.obj</FilePath>
+    <FilePath>Export\rock.glb</FilePath>
     <Name>Rock Model</Name>
     <AssetType>Model</AssetType>
     <References>O279038</References>
@@ -91,7 +91,7 @@
     <References>O279038</References>
   </A140613>
   <A718991>
-    <FilePath>Export\krustykrab_sign01.obj</FilePath>
+    <FilePath>Export\krustykrab_sign01.glb</FilePath>
     <Name>KKSign Model</Name>
     <AssetType>Model</AssetType>
     <References>O777235</References>
@@ -103,7 +103,7 @@
     <References>O777235</References>
   </A585809>
   <A644606>
-    <FilePath>Export\roadblock.obj</FilePath>
+    <FilePath>Export\roadblock.glb</FilePath>
     <Name>Roadblock Model</Name>
     <AssetType>Model</AssetType>
     <References>O359038,O621798</References>
@@ -115,7 +115,7 @@
     <References>O359038,O621798</References>
   </A344421>
   <A810060>
-    <FilePath>Export\krustykrab01.obj</FilePath>
+    <FilePath>Export\krustykrab01.glb</FilePath>
     <Name>KK Model</Name>
     <AssetType>Model</AssetType>
     <References>O42472</References>
@@ -133,7 +133,7 @@
     <References>O107917,O62616</References>
   </A79802>
   <A537039>
-    <FilePath>Export\seaweedgate.obj</FilePath>
+    <FilePath>Export\seaweedgate.glb</FilePath>
     <Name>Gate Model</Name>
     <AssetType>Model</AssetType>
     <References>O753210,O42421,O283463,O159161,O910101,O521016,O555624,O571112,O123245,O931189,O788048,O326900,O722153,O89268</References>
@@ -187,7 +187,7 @@
     <References>O866812</References>
   </A670315>
   <A976564>
-    <FilePath>Export\building_pineapple01.obj</FilePath>
+    <FilePath>Export\building_pineapple01.glb</FilePath>
     <Name>Pineapple Model</Name>
     <AssetType>Model</AssetType>
     <References>O662324</References>
@@ -199,7 +199,7 @@
     <References>O662324</References>
   </A984841>
   <A190480>
-    <FilePath>Export\patricksrock.obj</FilePath>
+    <FilePath>Export\patricksrock.glb</FilePath>
     <Name>Patrick House Model</Name>
     <AssetType>Model</AssetType>
     <References>O304277</References>
@@ -223,13 +223,13 @@
     <References>O524495</References>
   </A372507>
   <A197336>
-    <FilePath>Export\cactus.obj</FilePath>
+    <FilePath>Export\cactus.glb</FilePath>
     <Name>Coral Model</Name>
     <AssetType>Model</AssetType>
     <References>O204570</References>
   </A197336>
   <A799725>
-    <FilePath>Export\spongebob_anims01.obj</FilePath>
+    <FilePath>Export\spongebob_anims01.glb</FilePath>
     <Name>Spongebob Model</Name>
     <AssetType>Model</AssetType>
     <References>O965789</References>
@@ -247,7 +247,7 @@
     <References>O965789</References>
   </A613358>
   <A163459>
-    <FilePath>Export\patrick_anims01.obj</FilePath>
+    <FilePath>Export\patrick_anims01.glb</FilePath>
     <Name>Patrick Model</Name>
     <AssetType>Model</AssetType>
     <References>O642030</References>
@@ -307,7 +307,7 @@
     <References>O83202</References>
   </A675322>
   <A500911>
-    <FilePath>Export\bamboo.obj</FilePath>
+    <FilePath>Export\bamboo.glb</FilePath>
     <Name>Fence Model</Name>
     <AssetType>Model</AssetType>
     <References>O124554</References>
@@ -373,7 +373,7 @@
     <References>O632353</References>
   </A426192>
   <A360141>
-    <FilePath>Export\umbrella.obj</FilePath>
+    <FilePath>Export\umbrella.glb</FilePath>
     <Name>umbrella model</Name>
     <AssetType>Model</AssetType>
     <References>O901770</References>
@@ -427,7 +427,7 @@
     <References>O586289</References>
   </A582872>
   <A736809>
-    <FilePath>Export\jellyfish01.obj</FilePath>
+    <FilePath>Export\jellyfish01.glb</FilePath>
     <Name>jellyfish model</Name>
     <AssetType>Model</AssetType>
     <References>O556221</References>
@@ -439,8 +439,8 @@
     <References>O556221</References>
   </A861361>
   <A79677>
-    <FilePath>Graphics\floorgreendarkest.jpg</FilePath>
-    <Name>floorgreendarkest</Name>
+    <FilePath>Graphics\floorgreendark.jpg</FilePath>
+    <Name>floorgreendark</Name>
     <AssetType>Texture</AssetType>
     <References>O704805</References>
   </A79677>
@@ -475,19 +475,19 @@
     <References>O704805</References>
   </A77153>
   <A977911>
-    <FilePath>Export\house_basic01_blue.obj</FilePath>
+    <FilePath>Export\house_basic01_blue.glb</FilePath>
     <Name>Blue House</Name>
     <AssetType>Model</AssetType>
     <References>O885792</References>
   </A977911>
   <A461140>
-    <FilePath>Export\house_basic01_red.obj</FilePath>
+    <FilePath>Export\house_basic01_red.glb</FilePath>
     <Name>Red House</Name>
     <AssetType>Model</AssetType>
     <References>O790415</References>
   </A461140>
   <A530309>
-    <FilePath>Export\house_basic01_yellow.obj</FilePath>
+    <FilePath>Export\house_basic01_yellow.glb</FilePath>
     <Name>Yellow House</Name>
     <AssetType>Model</AssetType>
     <References>O11037</References>
@@ -529,7 +529,7 @@
     <References>O842172,O83202,O542113</References>
   </A25181>
   <A94528>
-    <FilePath>Export\tentacle_both01.obj</FilePath>
+    <FilePath>Export\tentacle_both01.glb</FilePath>
     <Name>Tentacle</Name>
     <AssetType>Model</AssetType>
     <References>O535007,O626792,O765532,O569598,O191464,O576020,O505340,O313190,O170254,O245554,O714060,O844664,O503264,O614014,O950193,O911855,O419663,O902073,O531040,O672115</References>
@@ -565,7 +565,7 @@
     <References>O881279,O427502,O441458,O744745,O302390</References>
   </A429073>
   <A301051>
-    <FilePath>Export\bully01.obj</FilePath>
+    <FilePath>Export\bully01.glb</FilePath>
     <Name>Bully</Name>
     <AssetType>Model</AssetType>
     <References>O441458,O881279,O302390,O427502,O744745</References>
@@ -594,5 +594,23 @@
     <AssetType>Texture</AssetType>
     <References>O107917</References>
   </A572195>
+  <A350254>
+    <FilePath>sound\teleport.wav</FilePath>
+    <Name>teleport</Name>
+    <AssetType>Sound</AssetType>
+    <References>O965789,O642030</References>
+  </A350254>
   <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
+  <A518111>
+    <FilePath>Graphics\floorgreendarker.jpg</FilePath>
+    <Name>floorgreendarker</Name>
+    <AssetType>Texture</AssetType>
+    <References>O866812</References>
+  </A518111>
+  <A558610>
+    <FilePath>Graphics\floorgreendarkest.jpg</FilePath>
+    <Name>floorgreendarkest</Name>
+    <AssetType>Texture</AssetType>
+    <References>O107917</References>
+  </A558610>
 </root>

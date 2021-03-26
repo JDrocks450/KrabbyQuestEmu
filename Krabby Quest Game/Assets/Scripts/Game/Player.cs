@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     public static PlayerEnum CurrentPlayer
     {
         get; set;
-    } = PlayerEnum.SPONGEBOB;
+    } = PlayerEnum.ANYONE;
     static bool playerSwapping = false;
     static PlayerEnum swappingPlayer;
 
@@ -60,22 +60,30 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
-        JumpToTile(TileX, TileY);
+    {                
         GameCam = GameObject.Find("Camera").GetComponent<Camera>();
-        Transform = transform;
-        TileMoveScript.MotionSpeed = 3.5f;
+        Transform = transform;             
+        TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
+        rotator = GetComponentInChildren<AngleRotator>();
+    }
+
+    public void Init(string Playername)
+    {
+        JumpToTile(TileX, TileY);
+        PlayerName = Playername;
+        TileMoveScript.MotionSpeed = 3.5f;   
         switch (PlayerName)
         {
             case "spongebob":
                 TileMoveScript.Player = PlayerEnum.SPONGEBOB;
+                CurrentPlayer = PlayerEnum.SPONGEBOB;
                 break;
             case "patrick":
                 TileMoveScript.Player = PlayerEnum.PATRICK;
+                if (CurrentPlayer == PlayerEnum.ANYONE)
+                    CurrentPlayer = PlayerEnum.PATRICK;
                 break;
         }        
-        TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
-        rotator = GetComponentInChildren<AngleRotator>();
     }
 
     private void TileMovingObjectScript_MoveableMoving(object sender, MoveEventArgs e)
@@ -170,7 +178,8 @@ public class Player : MonoBehaviour
                     case PlayerEnum.PATRICK:
                         CurrentPlayer = PlayerEnum.SPONGEBOB; // spongebob
                         break;
-                }                
+                }
+                SoundLoader.Play("teleport.wav", false);
                 playerSwapping = true;
             }
         }        

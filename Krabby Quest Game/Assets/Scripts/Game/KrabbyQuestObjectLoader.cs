@@ -24,7 +24,7 @@ public class KrabbyQuestObjectLoader : MonoBehaviour
     }
 
     private void Load()
-    {
+    {        
         GameInitialization.Initialize();
         LevelDataBlock block = default;
         switch (Mode)

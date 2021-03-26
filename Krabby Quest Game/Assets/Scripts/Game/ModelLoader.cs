@@ -1,4 +1,5 @@
-﻿using StinkyFile;
+﻿using Assets.Components.GLB;
+using StinkyFile;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ public class ModelLoader : MonoBehaviour
     LevelDataBlock Data;
     DataBlockComponent TileComponent;
     private static LevelDataBlock _floor;
-    bool Loaded = false;
+    public bool Loaded { get; set; }
 
     private void Awake()
     {
@@ -62,10 +63,29 @@ public class ModelLoader : MonoBehaviour
                 }
                 else return;
             }
-            else ImportMesh(fileName); // imports the mesh without templating
-        }
+            else
+            {
+                if (!GameInitialization.Initialized)
+                    GameInitialization.Initialize();
+                var animTarget = AddGLBObject(fileName); // imports the mesh without templating
+
+                //find the animation entry for this GLB model, if there is one
+                var entry = AnimationDatabase.GetEntryByGLBPath(fileName);
+                if (entry != null)
+                {
+#if UNITY_EDITOR
+                    //compile animations if necessary -- this adds the necessary animator used by the AnimationLoader
+                    AnimationCompiler.GlobalAnimationCompiler.CompileAnimations(TextureLoader.AssetDirectory, entry.B3DFilePath, animTarget, out var animators);                    
+#endif                   
+                    //activate animation capability
+                    var loader = gameObject.AddComponent<AnimationLoader>();
+                    //allow the AnimationLoader to use the animator
+                    //loader.SetAnimator(animators.LastOrDefault());
+                }
+            }
+        }        
         if (Data.HasTexture && !overrideTextureSetting)
-            gameObject.AddComponent<TextureLoader>().LookIntoParent = true; // adds the texture loader to apply a texture to the model
+            gameObject.AddComponent<TextureLoader>().InheritParent = true; // adds the texture loader to apply a texture to the model
         var localScale = transform.localScale;
         float scaleX = localScale.x, scaleY = localScale.y, scaleZ = localScale.z;
         if (Data.GetParameterByName("uScale", out var scaleParam))
@@ -102,6 +122,15 @@ public class ModelLoader : MonoBehaviour
         DestroyImmediate(this);
     }
 
+    GameObject AddGLBObject(string fileName)
+    {
+        var glb = Siccity.GLTFUtility.Importer.LoadFromFile(Path.Combine(AssetDirectory, fileName));        
+        glb.transform.parent = gameObject.transform;
+        glb.transform.position = new Vector3();
+        glb.transform.localScale = new Vector3(1,1,1);
+        return glb;
+    }
+
     void ImportMesh(string fileName)
     {
         if (!gameObject.TryGetComponent<MeshRenderer>(out _))
@@ -123,6 +152,19 @@ public class ModelLoader : MonoBehaviour
     }
 
     Mesh GetMesh(string fileName)
+    {
+        if (LoadedContent.TryGetValue(fileName, out var mesh))
+            return mesh;
+        Mesh holderMesh = null;
+        var gameObject = Siccity.GLTFUtility.Importer.LoadFromFile(Path.Combine(AssetDirectory, fileName));
+        holderMesh = gameObject.GetComponentInChildren<MeshFilter>().mesh;
+        if (holderMesh == null) throw new System.Exception("Model not loaded");
+        Destroy(gameObject);
+        LoadedContent.Add(fileName, holderMesh);
+        return holderMesh;
+    }
+
+    Mesh GetMeshOBJ(string fileName)
     {
         if (LoadedContent.TryGetValue(fileName, out var mesh))
             return mesh;

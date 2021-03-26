@@ -39,6 +39,12 @@
     <ApplicationIcon>KrabbyQuestTools.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="SixLabors.ImageSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.ImageSharp.1.0.2\lib\net472\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
@@ -61,6 +67,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,8 +83,20 @@
     <Reference Include="WPFHexaEditor, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFHexaEditor.2.1.1\lib\net47\WPFHexaEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +105,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BitmapSourceProvider.cs" />
+    <Compile Include="Controls\AnimationDisplay.xaml.cs">
+      <DependentUpon>AnimationDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimKeyFrameGraph.xaml.cs">
+      <DependentUpon>AnimKeyFrameGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimKeysEditor.xaml.cs">
+      <DependentUpon>AnimKeysEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\KQTPage.cs" />
     <Compile Include="Controls\LevelEditorTile.xaml.cs">
       <DependentUpon>LevelEditorTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LinkageDialog.xaml.cs">
+      <DependentUpon>LinkageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SuggestionTextbox.xaml.cs">
       <DependentUpon>SuggestionTextbox.xaml</DependentUpon>
@@ -105,11 +136,27 @@
     <Compile Include="Pages\SaveFileViewer.xaml.cs">
       <DependentUpon>SaveFileViewer.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AnimationDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AnimKeyFrameGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AnimKeysEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Gallery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LevelEditorTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LinkageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,6 +231,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\B3DPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\DatabaseOptions.xaml.cs">
@@ -206,6 +257,9 @@
     </Compile>
     <Compile Include="Pages\TextureToolPage.xaml.cs">
       <DependentUpon>TextureToolPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\B3DPage.xaml.cs">
+      <DependentUpon>B3DPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -243,6 +297,10 @@
       <Project>{8341C197-E693-42B9-80CC-5E214D136CFB}</Project>
       <Name>KrabbyQuestTools.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StinkyFile.Blitz3D\StinkyFile.Blitz3D.csproj">
+      <Project>{b8f9c474-a633-4ebe-bf67-4a9e23b7943d}</Project>
+      <Name>StinkyFile.Blitz3D</Name>
+    </ProjectReference>
     <ProjectReference Include="StinkyFile\StinkyFile.csproj">
       <Project>{1A2E0E3A-520F-4AD6-B635-2A6CEB574A16}</Project>
       <Name>StinkyFile</Name>
@@ -253,6 +311,9 @@
     <Content Include="Resources\blockdb.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Editor\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\Editor\selection.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

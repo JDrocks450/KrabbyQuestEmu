@@ -15,6 +15,13 @@
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsEnabled, 
+                    RelativeSource={RelativeSource AncestorType=ComboBox}}" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Color x:Key="ControlMouseOverColor">#FFFFFF</Color>
         <Style TargetType="Border" x:Key="CardBorderStyle">
@@ -29,6 +36,7 @@
         <Style TargetType="Button" x:Key="XButtonStyle">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">

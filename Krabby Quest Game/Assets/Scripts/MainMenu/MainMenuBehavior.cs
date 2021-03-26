@@ -23,6 +23,11 @@ public class MainMenuBehavior : MonoBehaviour
         source.Play();
     }
 
+    public void CloseBETAPrompt()
+    {
+        GameObject.Find("Canvas").transform.GetChild(3).gameObject.SetActive(false);
+    }
+
     public void CloseSaveSelect()
     {
         SoundLoader.Play("sb-type.wav", false).volume = .5f;
@@ -33,6 +38,11 @@ public class MainMenuBehavior : MonoBehaviour
     {
         SoundLoader.Play("sb-type.wav", false).volume = .5f;
         GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 
     public void GoToMapScreen(SaveFile Current)

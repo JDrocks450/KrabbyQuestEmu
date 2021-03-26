@@ -1,24 +1,14 @@
 ﻿using KrabbyQuestTools.Common;
 using KrabbyQuestTools.Controls;
 using StinkyFile;
+using StinkyFile.Blitz3D.Visualizer;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KrabbyQuestTools.Pages
 {
@@ -62,13 +52,13 @@ namespace KrabbyQuestTools.Pages
             }
             Title = "Editor Homepage";
             if (IsPromptHidden)
-                MessagePrompt.Visibility = Visibility.Collapsed;
+                MessagePrompt.Visibility = Visibility.Collapsed;            
         }
 
         private void GetLevels(string searchTerm = "")
         {
             LevelButtons.Children.Clear();
-            int number = 0;
+            int number = 0;            
             string levelDir = System.IO.Path.Combine(Workspace, "levels");
             DirectoryInfo dir = new DirectoryInfo(levelDir);
             if (!dir.Exists)
@@ -135,6 +125,8 @@ namespace KrabbyQuestTools.Pages
         private void FilePathSubmit_Click(object sender, RoutedEventArgs e)
         {
             Workspace = WorkspacePath.Text;
+            Properties.Settings.Default.DestinationDir = Workspace;
+            Properties.Settings.Default.Save();
             GetLevels();
         }
 
@@ -223,8 +215,10 @@ namespace KrabbyQuestTools.Pages
         {
             string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
             string assetDBpath1 = AssetDBEntry.AssetDatabasePath, assetDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml");
+            string animDBpath1 = AnimationDatabase.RelativeAnimationDatabasePath, animDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "animDB.json");
             File.Copy(blockDBpath1, blockDBpath2, true);
             File.Copy(assetDBpath1, assetDBpath2, true);
+            File.Copy(animDBpath1, animDBpath2, true);
             Properties.Settings.Default.GameResourcesPath = GamePathBox.Text;
             Properties.Settings.Default.Save();
             RefreshAllChanges();
@@ -262,6 +256,11 @@ namespace KrabbyQuestTools.Pages
         {
             string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
             NavigationService.Navigate(new DiffPage(blockDBpath2, blockDBpath1));
+        }
+
+        private void TreeVisualButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new TreeVisualizer(Workspace));
         }
 
         private void ExportModels_Click(object sender, RoutedEventArgs e)
@@ -321,8 +320,11 @@ namespace KrabbyQuestTools.Pages
                     Properties.Settings.Default.Save();
                 }
             }
+            string animDBpath1 = AnimationDatabase.RelativeAnimationDatabasePath, animDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "animDB.json");
             string blockDBpath1 = LevelDataBlock.BlockDatabasePath, blockDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "blockdb.xml");
             string assetDBpath1 = AssetDBEntry.AssetDatabasePath, assetDBpath2 = System.IO.Path.Combine(GamePathBox.Text, "texturedb.xml");
+
+            //Block DB
             FileInfo info1 = new FileInfo(blockDBpath1), info2 = new FileInfo(blockDBpath2);
             if (info1.Exists && info2.Exists)
             {
@@ -351,6 +353,7 @@ namespace KrabbyQuestTools.Pages
                         }));
                 }
             }
+            //asset DB
             FileInfo ainfo1 = new FileInfo(assetDBpath1), ainfo2 = new FileInfo(assetDBpath2);
             if (ainfo1.Exists && ainfo2.Exists)
             {
@@ -375,6 +378,36 @@ namespace KrabbyQuestTools.Pages
                         delegate
                         {
                             Revert(ainfo2, assetDBpath1);
+                            RefreshAllChanges();
+                        }));
+                }
+            }
+            //animation DB
+            info1 = new FileInfo(animDBpath1);
+            info2 = new FileInfo(animDBpath2);
+            if (info1.Exists && info2.Exists)
+            {
+                if (info1.LastWriteTime.ToFileTime() != info2.LastWriteTime.ToFileTime()) // one is modified
+                {
+                    changes = true;
+                    string time = info1.LastWriteTime.ToShortDateString() + " " + info1.LastWriteTime.ToShortTimeString();
+                    EditorStack.Children.Add(
+                        getEditorRow("Animation Database",
+                        time,
+                        info1.Length - info2.Length,
+                        delegate
+                        {
+                            Push(info1, animDBpath2);
+                            RefreshAllChanges();
+                        }));
+                    time = info2.LastWriteTime.ToShortDateString() + " " + info2.LastWriteTime.ToShortTimeString();
+                    GameStack.Children.Add(
+                        getGameRow("Animation Database",
+                        time,
+                        info2.Length - info1.Length,
+                        delegate
+                        {
+                            Revert(info2, animDBpath1);
                             RefreshAllChanges();
                         }));
                 }

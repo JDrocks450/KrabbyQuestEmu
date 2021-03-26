@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StinkyFile.Primitive
 {
-    internal static class FileTools
+    public static class FileTools
     {
         /// <summary>
         /// Reads an 32 bit signed integer, at the index
@@ -19,6 +20,17 @@ namespace StinkyFile.Primitive
         {
             nPosition = Position + 4;
             return BitConverter.ToInt32(fileData, Position);
+        }
+        /// <summary>
+        /// Reads an 32 bit signed integer, at the filestream position
+        /// </summary>
+        /// <param name="fileData">The file data</param>
+        /// <returns></returns>
+        public static Int32 ReadInt(FileStream fileData)
+        {
+            byte[] buffer = new byte[4];
+            fileData.Read(buffer, 0, 4);
+            return ReadInt(buffer, 0, out _);
         }
 
         /// <summary>
@@ -34,6 +46,23 @@ namespace StinkyFile.Primitive
             nPosition = Position + strLen;
             return Encoding.ASCII.GetString(fileData, Position, strLen); 
         }
+        public static String ReadString(FileStream fileData, int length)
+        {            
+            byte[] buffer = new byte[length];
+            fileData.Read(buffer, 0, length);
+            return Encoding.ASCII.GetString(buffer);
+        }
 
+        /// <summary>
+        /// Reads a Single at the filestream position
+        /// </summary>
+        /// <param name="fileData"></param>
+        /// <returns></returns>
+        public static float ReadFloat(FileStream fileData)
+        {
+            byte[] buffer = new byte[4];
+            fileData.Read(buffer, 0, 4);
+            return BitConverter.ToSingle(buffer, 0);
+        }
     }
 }

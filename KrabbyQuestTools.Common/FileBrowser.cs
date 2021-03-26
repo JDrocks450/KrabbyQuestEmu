@@ -9,13 +9,15 @@ namespace KrabbyQuestTools.Common
 {
     public class FileBrowser
     {
-        public static DialogResult BrowseForFile(ref string Path)
+        public static DialogResult BrowseForFile(ref string Path, string Title)
         {
+            var initialDir = Path != "" ? System.IO.Path.GetDirectoryName(Path) : null;
             OpenFileDialog fBrowserdiag = new OpenFileDialog()
             {
-                InitialDirectory = @"C:\Program Files",
-                Title = "Find Blender.exe on your PC",
+                InitialDirectory = initialDir == "" ? @"C:\Program Files" : initialDir,
+                Title = Title,
                 FileName = Path,
+                RestoreDirectory = true,                
                 Multiselect = false,
                 AutoUpgradeEnabled = true,
                 AddExtension = true,

@@ -1,21 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using UnityEngine.SceneManagement;
+﻿using Assets.Components.World;
 using StinkyFile;
-using System.IO;
-using System;
-using Assets;
-using B83.Image.BMP;
-using System.Xml.Linq;
-using System.Threading.Tasks;
-using UnityEngine.Audio;
-using System.Timers;
-using System.Diagnostics;
-using Assets.Components;
 using StinkyFile.Save;
-using Assets.Components.World;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
 public class LevelObjectManager : MonoBehaviour    
@@ -145,6 +136,7 @@ public class LevelObjectManager : MonoBehaviour
             int timeRemaining = World.Current.Level.LevelTime; // set the time remaining for the level
             levelTime = TimeSpan.FromSeconds(timeRemaining);
             World.Current.LoadSave(completionInfo); // load save information for the current world
+            Player.CurrentPlayer = Assets.Scripts.Game.PlayerEnum.ANYONE;
             LoadNext();
         }
     }
@@ -227,7 +219,9 @@ public class LevelObjectManager : MonoBehaviour
             if (CurrentWorld.AllPattiesCollected)
                 SignalLevelCompleted(true);   
             CurrentWorld.UpdateTimeRemaining((int)levelTime.TotalSeconds);   
-            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);                  
+            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);
+            if (levelTime < TimeSpan.Zero)
+                Player.KillAllPlayers();
         }
     }
 
@@ -351,6 +345,7 @@ public class LevelObjectManager : MonoBehaviour
                 returnVal = Instantiate(prefab);
         }
         else if (block.GetParameterByName("ServiceObject", out _))
+        {
             switch (block.BlockLayer)
             {
                 case BlockLayers.Decoration:
@@ -360,6 +355,7 @@ public class LevelObjectManager : MonoBehaviour
                     returnVal = Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
                     break;
             }
+        }
         else if (block.Name?.Contains("THROWER") ?? false)
             returnVal = Instantiate(ResourceLoad("Objects/TentacleCannon"));
         else if (block.Name?.StartsWith("SPROUT") ?? false)
@@ -367,11 +363,32 @@ public class LevelObjectManager : MonoBehaviour
         else if (block.HasModel || block.GetParameterByName("ApplyTemplater", out _))
         {
             returnVal = Instantiate(ResourceLoad("Objects/EmptyObject"));
-            returnVal.AddComponent<ModelLoader>();
+            var loader = returnVal.AddComponent<ModelLoader>();
         }
         if (returnVal == null) return null;
         returnVal.name = block.Name;
         applyLevelBlock(returnVal);
+        return returnVal;
+    }
+
+    GameObject Copy(GameObject copyFrom)
+    {
+        var returnVal = copyFrom;
+        var oldAnimLoader = returnVal.GetComponent<AnimationLoader>();
+        if (oldAnimLoader == null)
+            oldAnimLoader = returnVal.GetComponentInChildren<AnimationLoader>();
+        returnVal = Instantiate(returnVal);
+        if (oldAnimLoader != null)
+        {
+            var newAnimLoader = returnVal.GetComponent<AnimationLoader>();
+            if (newAnimLoader == null)
+                newAnimLoader = returnVal.GetComponentInChildren<AnimationLoader>();
+            if (newAnimLoader != null)
+                newAnimLoader.Copy(oldAnimLoader);
+        }
+        var mLoader = returnVal.GetComponentInChildren<ModelLoader>();
+        if (mLoader != null)
+            DestroyImmediate(mLoader);
         return returnVal;
     }
 
@@ -387,16 +404,25 @@ public class LevelObjectManager : MonoBehaviour
             if (block.HasSound)
                 returnVal.AddComponent<SoundLoader>().LoadAll(block); // load all sound effects related to the object               
             returnVal.SetActive(true);
-            if (returnVal != null && isClonable)
+            if (isClonable)
             {
-                ClonableObjects.Add(block.GUID, returnVal);
-                if (returnVal.TryGetComponent<TextureLoader>(out var tloader))                
-                    Destroy(tloader);                
                 returnVal.SetActive(false);
-                returnVal = Instantiate(returnVal);
+                if (returnVal.TryGetComponent<TextureLoader>(out var tloader))
+                    DestroyImmediate(tloader);
+                var modelLoader = returnVal.GetComponentInChildren<ModelLoader>();
+                if (modelLoader != null)
+                    DestroyImmediate(modelLoader);
+                ClonableObjects.Add(block.GUID, returnVal);
+                returnVal = Copy(returnVal);
+                Debug.LogWarning($"{block.Name} object was loaded and cached");                               
             }
+            else Debug.LogWarning($"{block.Name} object was loaded and not cached");
         }
-        else returnVal = Instantiate(returnVal);
+        else
+        {
+            returnVal = Copy(returnVal);
+            Debug.LogWarning($"{block.Name} object was loaded from cache");
+        }
         if (returnVal == null)
             return returnVal;
         var Component = returnVal.GetComponent<DataBlockComponent>();
@@ -406,7 +432,7 @@ public class LevelObjectManager : MonoBehaviour
         Component.WorldTileX = X;
         Component.WorldTileY = Y;
         Component.Parent = returnVal;
-        returnVal.name = block.Name;
+        returnVal.name = block.Name;         
         returnVal.SetActive(true);
         returnVal.SetActiveRecursively(true); // SetActive for some reason doesn't work as it should -- i guess comment this out once it actually works as it says.
         if (!returnVal.TryGetComponent<AllowTileMovement>(out _))

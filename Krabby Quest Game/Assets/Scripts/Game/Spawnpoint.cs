@@ -35,17 +35,18 @@ public class Spawnpoint : MonoBehaviour
         {
             Debug.LogWarning($"Multiple {player}s have been spawned in the map. This may have not been intended.");
         }
-        var Spongebob = GameObject.Find(player).GetComponent<Player>();
+        var playerObj = GameObject.Find(player);        
+        var Spongebob = playerObj.AddComponent<Player>();
         if (Spongebob == null)
         {
             Debug.LogWarning($"Player: {player} was not found... creating player now");
             Spongebob = ((GameObject)Instantiate(Resources.Load("Objects/Spongebob"))).GetComponent<Player>();
-        }
-        Spongebob.PlayerName = player.ToLower();
+        }        
         var data = Spongebob.gameObject.AddComponent<DataBlockComponent>();
         data.DataBlock = BlockComponent.DataBlock;
         Spongebob.transform.GetChild(1).gameObject.AddComponent<ModelLoader>();
         LoadedPlayers[playerIndex] = true;
+        Spongebob.Init(player.ToLower());
         return Spongebob;
     }
 
