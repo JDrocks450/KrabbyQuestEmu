@@ -2425,6 +2425,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.048
       objectReference: {fileID: 0}
+    - target: {fileID: 2589212400632948427, guid: 6884f5d5294c5344baf879a39b72cc78, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3255385493321769195, guid: 6884f5d5294c5344baf879a39b72cc78, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.19
@@ -2440,6 +2444,10 @@ PrefabInstance:
     - target: {fileID: 3525494565120226644, guid: 6884f5d5294c5344baf879a39b72cc78, type: 3}
       propertyPath: m_Name
       value: Spongebob
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525494565120226644, guid: 6884f5d5294c5344baf879a39b72cc78, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5822806976256822550, guid: 6884f5d5294c5344baf879a39b72cc78, type: 3}
       propertyPath: m_ReceiveShadows
@@ -2954,6 +2962,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3936980684995763449, guid: c586215b06e48224fbaa293b0f7b9425, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7291892831071647988, guid: c586215b06e48224fbaa293b0f7b9425, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2961,6 +2973,10 @@ PrefabInstance:
     - target: {fileID: 7775940846047820119, guid: c586215b06e48224fbaa293b0f7b9425, type: 3}
       propertyPath: m_Name
       value: Patrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775940846047820119, guid: c586215b06e48224fbaa293b0f7b9425, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c586215b06e48224fbaa293b0f7b9425, type: 3}

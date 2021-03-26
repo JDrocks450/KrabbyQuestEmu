@@ -136,6 +136,7 @@ public class LevelObjectManager : MonoBehaviour
             int timeRemaining = World.Current.Level.LevelTime; // set the time remaining for the level
             levelTime = TimeSpan.FromSeconds(timeRemaining);
             World.Current.LoadSave(completionInfo); // load save information for the current world
+            Player.CurrentPlayer = Assets.Scripts.Game.PlayerEnum.ANYONE;
             LoadNext();
         }
     }
@@ -218,7 +219,9 @@ public class LevelObjectManager : MonoBehaviour
             if (CurrentWorld.AllPattiesCollected)
                 SignalLevelCompleted(true);   
             CurrentWorld.UpdateTimeRemaining((int)levelTime.TotalSeconds);   
-            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);                  
+            levelTime -= TimeSpan.FromSeconds(Time.deltaTime);
+            if (levelTime < TimeSpan.Zero)
+                Player.KillAllPlayers();
         }
     }
 

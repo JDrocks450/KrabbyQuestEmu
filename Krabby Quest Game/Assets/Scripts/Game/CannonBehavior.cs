@@ -27,6 +27,7 @@ public class CannonBehavior : MonoBehaviour
     void Update()
     {
         if (!LevelObjectManager.IsDone) return;
+#if KQT_ANIMS
         if (!animating)
         {
             Animations.PlayAnimationSequence("CannonIdle");
@@ -34,6 +35,7 @@ public class CannonBehavior : MonoBehaviour
         }
         if (timeSinceLastThrow > throwTime-.9f)
             Animations.PlayAnimationSequence("CannonThrow"); // throwing animation is offset by about a second
+#endif
         if (timeSinceLastThrow > throwTime)
         { // throw goober
             Throw();

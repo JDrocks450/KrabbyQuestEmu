@@ -463,26 +463,6 @@
       <A77153>Texture</A77153>
     </AssetReferences>
   </O704805>
-  <O866812>
-    <Name>ROAD_SQUARE</Name>
-    <Package>101</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>37,30,43,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>FLOOR</Name>
-        <Value>true</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A670315>Texture</A670315>
-      <A193353>Texture</A193353>
-    </AssetReferences>
-  </O866812>
   <O62616>
     <Name>RESERVED</Name>
     <Package>104</Package>
@@ -2631,31 +2611,6 @@
       <A988552>Texture</A988552>
     </AssetReferences>
   </O586289>
-  <O107917>
-    <Name>ROAD_REG</Name>
-    <Package>102</Package>
-    <PackId>0</PackId>
-    <ItemId>0</ItemId>
-    <Dat2>0</Dat2>
-    <Color>112,128,144,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Integral</Level>
-    <Parameters>
-      <Parameter>
-        <Name>FLOOR</Name>
-        <Value>true</Value>
-      </Parameter>
-      <Parameter>
-        <Name>Tex_Context_4</Name>
-        <Value>2</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A79802>Texture</A79802>
-      <A742152>Texture</A742152>
-      <A572195>Texture</A572195>
-    </AssetReferences>
-  </O107917>
   <O881279>
     <Name>BULLY_W</Name>
     <Package>0</Package>
@@ -3134,4 +3089,51 @@
       <A890777>Sound</A890777>
     </AssetReferences>
   </O632353>
+  <O866812>
+    <Name>ROAD_SQUARE</Name>
+    <Package>101</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>37,30,43,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A670315>Texture</A670315>
+      <A193353>Texture</A193353>
+      <A518111>Texture</A518111>
+    </AssetReferences>
+  </O866812>
+  <O107917>
+    <Name>ROAD_REG</Name>
+    <Package>102</Package>
+    <PackId>0</PackId>
+    <ItemId>0</ItemId>
+    <Dat2>0</Dat2>
+    <Color>112,128,144,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Integral</Level>
+    <Parameters>
+      <Parameter>
+        <Name>FLOOR</Name>
+        <Value>true</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Tex_Context_4</Name>
+        <Value>2</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A79802>Texture</A79802>
+      <A742152>Texture</A742152>
+      <A572195>Texture</A572195>
+      <A558610>Texture</A558610>
+    </AssetReferences>
+  </O107917>
 </root>
