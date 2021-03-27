@@ -103,8 +103,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 318919778432161424}
-  - component: {fileID: 3936980684995763449}
   - component: {fileID: 4901181674343801038}
+  - component: {fileID: 755356284392495742}
   m_Layer: 0
   m_Name: Patrick
   m_TagString: Untagged
@@ -128,7 +128,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3936980684995763449
+--- !u!114 &4901181674343801038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7775940846047820119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d59c888e2971e4c9655dc87a92d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanMoveOverWorldReservedTiles: 1
+  SpecialObjectIgnore: 0
+--- !u!114 &755356284392495742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,15 +156,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameCam: {fileID: 0}
   Transform: {fileID: 0}
---- !u!114 &4901181674343801038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7775940846047820119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89d59c888e2971e4c9655dc87a92d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

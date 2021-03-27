@@ -136,14 +136,15 @@ public class WaterBehavior : MonoBehaviour
         if (Moveable.Target.TryGetComponent<PushableScript>(out var box)) // is a box?
         {
             var animator = box.GetComponentInChildren<Animator>();
-            if ((box.CanFloat && !IsBoxFloating) || (!box.CanFloat && IsBoxSunken && !IsBoxFloating))
+            if ((box.CanFloat && !IsBoxFloating)  // if this box can float (wooden) and there isn't already one floating...
+                || (!box.CanFloat && IsBoxSunken && !IsBoxFloating)) // OR the box cannot float (steel) and there is already a sunken box in the water and there isn't already a box floating...
             {
                 animator.Play("Floating");
                 IsBoxFloating = true;
                 box.MovementAllowed = false;
                 GetComponent<SoundLoader>().Play(0);                
             }
-            else if (!box.CanFloat && !IsBoxSunken)
+            else if (!box.CanFloat && !IsBoxSunken && !IsBoxFloating)
             {
                 IsBoxSunken = true;
                 box.MovementAllowed = false;                

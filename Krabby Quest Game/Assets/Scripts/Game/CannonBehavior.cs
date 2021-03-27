@@ -48,7 +48,7 @@ public class CannonBehavior : MonoBehaviour
         var position = new Vector2Int(BlockComponent.WorldTileX, BlockComponent.WorldTileY);
         var goober = (GameObject)Instantiate(GooberPrefab);
         goober.GetComponent<GooberBehavior>().StartProjectile(position, BlockComponent.DataBlock.Rotation);        
-        Animations.EnqueueSequence("CannonIdle");
+        //Animations.EnqueueSequence("CannonIdle");
         timeSinceLastThrow = 0f;
     }
 }

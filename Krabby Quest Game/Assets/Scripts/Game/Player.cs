@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
             if (_tileScript == null)
             {
                 _tileScript = GetComponent<TileMovingObjectScript>();
+                if (_tileScript == null) return null; // ???
                 _tileScript.TilePositionChanged += (object s, MoveEventArgs e) => PlayerPositionChanged?.Invoke(s, e);
                 _tileScript.TilePositionChanging += (object s, MoveEventArgs e) => PlayerPositionChanging?.Invoke(s, e);
                 _tileScript.Target = gameObject;
@@ -71,7 +72,8 @@ public class Player : MonoBehaviour
     {
         JumpToTile(TileX, TileY);
         PlayerName = Playername;
-        TileMoveScript.MotionSpeed = 3.5f;   
+        if (TileMoveScript != null)
+            TileMoveScript.MotionSpeed = 3.5f;   
         switch (PlayerName)
         {
             case "spongebob":
@@ -106,12 +108,20 @@ public class Player : MonoBehaviour
 
     public static void KillAllPlayers()
     {
-        var animator = GameObject.Find("Spongebob").GetComponentInChildren<Animator>();
-        animator.enabled = true;
-        animator.Play("Die");
-        animator = GameObject.Find("Patrick").GetComponentInChildren<Animator>();
-        animator.enabled = true;
-        animator.Play("Die");
+        var targetPlayer = GameObject.Find("Spongebob");
+        if (targetPlayer != null)
+        {
+            var animator = targetPlayer.GetComponentInChildren<Animator>();
+            animator.enabled = true;
+            animator.Play("Die");
+        }
+        targetPlayer = GameObject.Find("Patrick");
+        if (targetPlayer != null)
+        {
+            var animator = targetPlayer.GetComponentInChildren<Animator>();
+            animator.enabled = true;
+            animator.Play("Die");
+        }
         SoundLoader.Play("sb-death.wav", true);
         dying = true;
     }
