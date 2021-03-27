@@ -34,8 +34,8 @@ public class SpikeBehavior : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();        
-        animations = GetComponentInChildren<AnimationLoader>();    
-        animations.PlayAnimationSequence("Spike");
+        //animations = GetComponentInChildren<AnimationLoader>();    
+        //animations.PlayAnimationSequence("Spike");
         block = GetComponentInParent<DataBlockComponent>();
         TileMovingObjectScript.MoveableMoving += TileMovingObjectScript_MoveableMoving;
         TileMovingObjectScript.MoveableMoved += TileMovingObjectScript_MoveableMoved;

@@ -103,8 +103,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6875207148740369043}
-  - component: {fileID: 2589212400632948427}
   - component: {fileID: 4256193289014211780}
+  - component: {fileID: 7390874954234223053}
   m_Layer: 0
   m_Name: Spongebob
   m_TagString: Untagged
@@ -128,20 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2589212400632948427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3525494565120226644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2448f10b85078a34aa82f3141ed94610, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameCam: {fileID: 0}
-  Transform: {fileID: 0}
 --- !u!114 &4256193289014211780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +142,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanMoveOverWorldReservedTiles: 1
   SpecialObjectIgnore: 0
+--- !u!114 &7390874954234223053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525494565120226644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2448f10b85078a34aa82f3141ed94610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameCam: {fileID: 0}
+  Transform: {fileID: 0}
