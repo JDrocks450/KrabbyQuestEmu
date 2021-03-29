@@ -13,6 +13,16 @@ A project aiming to restore Spongebob: Krabby Quest by emulating the original ga
 A discord server where you can chat with me and others about the project can be found here: 
 https://discord.gg/wvFPYSrGRu
 
+## BETA Test Releases
+KrabbyQuestEmu BETA has started! The game is entirely available for you to play, explore, customize, and most importantly, offer feedback! In order to get involved, it is highly recommended you join the discord for support, and to offer your opinions directly to me. 
+
+### To install beta releases
+Simply navigate to the GitHub releases section, and find the latest Installer release. There you will find instructions on how to use the automated installer to get setup with KrabbyQuestEmu.
+
+*YOU MUST HAVE A COPY OF THE GAME (Trial version is compatible)**
+
+*You must also have Blender (free) for the automated installer to extract models used by the game.*
+
 ## How does it work?
 The original game came with seven .DAT files that stored all of the content that the game engine would use to display levels. 
 ### File Summary
@@ -34,7 +44,7 @@ to these blocks since all this information was hardcoded in the original game.
   > You can edit this by clicking: "Edit AssetDB for Selected Directory" in the Krabby Quest Tools program.
 
 ## Why is this important?
-Because media preservation is something that is important in my eyes. Under no circumstances is this project ever intended to be profitable.
+Because media preservation is important! Under no circumstances is this project ever intended to be profitable.
 This game is from my childhood and it is important that it can run on modern systems for people who might remember this game to enjoy once again.
 
 ## What is completed?
@@ -67,13 +77,11 @@ Below is a roadmap:
     > Level time limit (disabled during BETA stage), Goobers, Boxes, Bullies are all ways Spongebob can get hurt, forcing you restart the level for a little challenge. When has challenge been a bad thing?
   - Save Files
     > Highscores, completed levels, perfected levels, time completed are all tracked in your save file. Multiple save files can be used at a time.
+  - Launcher/Installer
+    > Two-in-one launcher for KrabbyQuestEmu that take your original Spongebob: Krabby Quest game files (which you must obtain on your own!) and extracts them to allow for customization and to play KrabbyQuestEmu. Ordinarily, you would need to do this yourself. *Check Releases for installer updates*
 #### Under Development:
 - Animations
-  > Requires restoration of .B3D animation keyframes and conversion to glTF animations for use in the Game. 
-- Launcher/Installer
-  > Two-in-one launcher for KrabbyQuestEmu that take your original Spongebob: Krabby Quest game files (which you must obtain on your own!) and extracts them to allow for customization and to play KrabbyQuestEmu. Ordinarily, you would need to do this yourself. *Check Releases for installer updates*
-- Setup Procedure
-  - Make automated setup procedure (~80% complete)
+  > Requires restoration of .B3D animation keyframes and conversion to glTF animations for use in the Game.
 - Game
   - Reimplementing Objects (~83% complete)  
   - Custom Content (See below)
@@ -90,10 +98,7 @@ This means that you will able to create full adventures through the editor in th
 This is not supported yet. In future it is on my to-do list but as of now the editor is not able to officially edit
 levels at all - only view them. 
 
-## How Do I Play?
-Right now, the setup is difficult as this project is still incomplete. However, it is possible.
-
-  >*! See Completed - Launcher/Installer above for latest news !*
+## Legacy - Manual Installation
 
 *You must have Blender installed!*
  
