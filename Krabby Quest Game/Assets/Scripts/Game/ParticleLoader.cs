@@ -12,10 +12,11 @@ public class ParticleLoader : MonoBehaviour
         var BlockComponent = GetComponent<DataBlockComponent>();
         if (LookIntoParent)
             BlockComponent = transform.parent.gameObject.GetComponent<DataBlockComponent>();
-        if (BlockComponent == default) return;
+        if (BlockComponent == null) return;
         var particleObject = gameObject;
         Target = particleObject.GetComponent<ParticleSystem>();
-        var tBurst = Target.emission.GetBurst(0);        
+        var tBurst = Target.emission.GetBurst(0);
+        if (BlockComponent.DataBlock == null) return;
         if (BlockComponent.DataBlock.GetParameterByName("ParticleMaterial", out var param))
         {
             var material = particleObject.GetComponent<ParticleSystemRenderer>().material;

@@ -74,6 +74,7 @@ public class PushableScript : MonoBehaviour
 
     public void Destroy()
     {
+        MovementScript.FacadeJumpToTile(-1, -1);
         if (TryGetComponent<BeachBallBehavior>(out var bhav))
         {
             bhav.Destroy();
@@ -131,7 +132,7 @@ public class PushableScript : MonoBehaviour
 
     void DoPush(MoveEventArgs e)
     {
-        var args = new MoveEventArgs()
+        var args = new MoveEventArgs(MovementScript)
         {
             FromTile = new Vector2Int(MovementScript.TileX, MovementScript.TileY),
             ToTile = MovementScript.GetTileFromDirection(e.Direction)

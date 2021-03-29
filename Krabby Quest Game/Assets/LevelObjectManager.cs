@@ -14,7 +14,7 @@ public class LevelObjectManager : MonoBehaviour
     public static Vector2 Grid_Size = new Vector2(2,2);
     IEnumerable<AssetDBEntry> textures;
     static string AssetDirectory => TextureLoader.AssetDirectory;
-    static Dictionary<string, GameObject> LoadedPrefabs = new Dictionary<string, GameObject>();
+    
     /// <summary>
     /// Every tile thats loaded is cached here to make cloning them less time consuming
     /// </summary>
@@ -278,7 +278,7 @@ public class LevelObjectManager : MonoBehaviour
     {
         if (TryGetByParameter(Data, out var byParameter))
             return byParameter; // try getting by parameter
-        var obj = ResourceLoad("Objects/UnknownObject");
+        var obj = KrabbyQuestObjectLoader.ResourceLoad("Objects/UnknownObject");
         if (obj != null)
         {
             var retVal = Instantiate(obj);
@@ -286,90 +286,7 @@ public class LevelObjectManager : MonoBehaviour
             return retVal;
         }
         return null;
-    }
-
-    static GameObject ResourceLoad(string Name)
-    {
-        if (LoadedPrefabs.TryGetValue(Name, out var resource))
-            return resource;
-        try
-        {
-            var obj = Resources.Load(Name) as GameObject;
-            obj.SetActive(false);
-            LoadedPrefabs.Add(Name, obj);
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning("Error loading Object: " + Name + ". Object was not Defined in Resources/Objects, yet references a Prefab using Parameters.");
-            return null;
-        }        
-        return LoadedPrefabs[Name];
-    }
-
-    /// <summary>
-    /// Creates the object without any additional scripts from the given block info
-    /// </summary>
-    /// <param name="block"></param>
-    /// <returns></returns>
-    public static GameObject CreateKrabbyQuestObject(LevelDataBlock block,int X = 0, int Y = 0)
-    {
-        void applyLevelBlock(GameObject obj)
-        {            
-            var blockComponent = obj.AddComponent<DataBlockComponent>();
-            blockComponent.DataBlock = block;
-            blockComponent.WorldTileX = X;
-            blockComponent.WorldTileY = Y;
-            blockComponent.Parent = obj;
-        }
-        GameObject returnVal = default;
-        BlockParameter parameter = default;
-        if (block.GetParameterByName("FLOOR", out parameter))
-            returnVal = Instantiate(ResourceLoad("Objects/GroundTileObject")); // create a floor
-        else if (block.GetParameterByName("WALL", out parameter))
-            switch (parameter.Value)
-            {
-                case "Low":
-                    returnVal = Instantiate(ResourceLoad("Objects/LowWallObject"));
-                    break;
-                case "Medium":
-                    returnVal = Instantiate(ResourceLoad("Objects/MidWallObject"));
-                    break;
-                case "High":
-                    returnVal = Instantiate(ResourceLoad("Objects/HighWallObject"));
-                    break;
-            }
-        else if (block.GetParameterByName("Prefab", out parameter))
-        {
-            var prefab = ResourceLoad("Objects/" + parameter.Value);
-            if (prefab != null)
-                returnVal = Instantiate(prefab);
-        }
-        else if (block.GetParameterByName("ServiceObject", out _))
-        {
-            switch (block.BlockLayer)
-            {
-                case BlockLayers.Decoration:
-                    returnVal = Instantiate(ResourceLoad("Objects/AnonymousObject"));
-                    break;
-                case BlockLayers.Integral:
-                    returnVal = Instantiate(ResourceLoad("Objects/AnonymousIntegralObject"));
-                    break;
-            }
-        }
-        else if (block.Name?.Contains("THROWER") ?? false)
-            returnVal = Instantiate(ResourceLoad("Objects/TentacleCannon"));
-        else if (block.Name?.StartsWith("SPROUT") ?? false)
-            returnVal = Instantiate(ResourceLoad("Objects/TentacleSpike"));
-        else if (block.HasModel || block.GetParameterByName("ApplyTemplater", out _))
-        {
-            returnVal = Instantiate(ResourceLoad("Objects/EmptyObject"));
-            var loader = returnVal.AddComponent<ModelLoader>();
-        }
-        if (returnVal == null) return null;
-        returnVal.name = block.Name;
-        applyLevelBlock(returnVal);
-        return returnVal;
-    }
+    }        
 
     GameObject Copy(GameObject copyFrom)
     {
@@ -398,7 +315,7 @@ public class LevelObjectManager : MonoBehaviour
         if (!ClonableObjects.TryGetValue(block.GUID, out GameObject returnVal))
         {
             bool isClonable = true;
-            returnVal = CreateKrabbyQuestObject(block);
+            returnVal = KrabbyQuestObjectLoader.CreateKrabbyQuestObject(block);
             if (returnVal == null)
                 return returnVal;
             if (block.HasSound)

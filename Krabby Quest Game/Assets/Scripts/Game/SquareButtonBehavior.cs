@@ -26,6 +26,7 @@ public class SquareButtonBehavior : MonoBehaviour
     void Start()
     {
         BlockComponent = GetComponent<DataBlockComponent>();
+        TileMovingObjectScript.MoveableMoved += Spongebob_PlayerPositionChanging;
         TileMovingObjectScript.MoveableMoving += Spongebob_PlayerPositionChanging;
         TileMovingObjectScript.OnObjectMotionCanceled += OnMotionBlocked;
         if (gameObject.name.Contains("CIRCLE"))
@@ -59,23 +60,30 @@ public class SquareButtonBehavior : MonoBehaviour
 
     private void Spongebob_PlayerPositionChanging(object sender, MoveEventArgs e)
     {
+        TileMovingObjectScript otherObject = null;
         if (sender is TileMovingObjectScript)
+        {
             if ((sender as TileMovingObjectScript).SpecialObjectIgnore)
                 return;
+            otherObject = sender as TileMovingObjectScript;
+        }
         if (e.ToTile.x == BlockComponent.WorldTileX && e.ToTile.y == BlockComponent.WorldTileY)
         {
-            Press(sender, e);
+            if (!Pushed)
+                Press(sender, e);
+            e.SetRaisedTerrainFlag(.2f);
         }
         else if (Pushed && CanUnpush && pressingButton.Equals(sender))
-        {
             Unpress(sender, e);
-        }        
     }
 
     void OnMotionBlocked(object sender, MoveEventArgs e)
     {
         if (e.FromTile == BlockComponent.WorldTilePosition)
         {
+            if (sender is TileMovingObjectScript)
+                if ((sender as TileMovingObjectScript).SpecialObjectIgnore)
+                    return;
             Pushed = true; // ignore the last press as the motion was blocked
             pressingButton = lastMotionPressSender;
             Press(sender, e);
@@ -99,7 +107,9 @@ public class SquareButtonBehavior : MonoBehaviour
                 animator.Play("Pushed"); // play press anim
                 GetComponentInChildren<Light>().enabled = false; // turn off the light
             }
-            GetComponent<SoundLoader>().Play(0);
+            var sound = GetComponent<SoundLoader>();
+            sound.ExclusiveSoundMode = true;
+            sound.Play(0);
         } 
         lastMotionPushState = Pushed;
     }

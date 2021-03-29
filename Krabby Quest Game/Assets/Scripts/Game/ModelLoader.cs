@@ -16,16 +16,46 @@ public class ModelLoader : MonoBehaviour
     DataBlockComponent TileComponent;
     private static LevelDataBlock _floor;
     public bool Loaded { get; set; }
+    /// <summary>
+    /// Manually tells this model loader script to ignore the datablock model settings and load one from the disk at this path.
+    /// </summary>
+    public string ModelFilePath;
+    /// <summary>
+    /// If true, this will not check if the object has a datablock component to get texture information from.
+    /// </summary>
+    public bool LoadFromPath_IgnoreDatablock = true;
+    public Material ApplyMaterial;
+
+    public void ForceApply()
+    {
+        Awake();
+    }
 
     private void Awake()
     {
         if (Loaded) return;
+        if (!string.IsNullOrWhiteSpace(ModelFilePath) && LoadFromPath_IgnoreDatablock) // manually load from path IGNORING DATABLOCK
+        {
+            Loaded = true;
+            ApplyFromPath(ModelFilePath);
+            return;
+        }
         if (!TryGetComponent(out TileComponent))
-            TileComponent = GetComponentInParent<DataBlockComponent>();
-        if (TileComponent?.ModelLoaded ?? false) return;
+            TileComponent = GetComponentInParent<DataBlockComponent>();        
         Data = TileComponent?.DataBlock;
         if (Data == null)
+            return;        
+        if (!string.IsNullOrWhiteSpace(ModelFilePath)) // manually load from path TAKING TEXTURE FROM DATABLOCK
+        {
+            Loaded = true;
+            ApplyFromPath(ModelFilePath);
+            if (ApplyMaterial != default)
+                gameObject.GetComponentInChildren<Renderer>().material = ApplyMaterial;
+            else if (Data.HasTexture)
+                gameObject.AddComponent<TextureLoader>().InheritParent = true; // adds the texture loader to apply a texture to the model
             return;
+        }
+        if (TileComponent.ModelLoaded) return;
         bool overrideTextureSetting = false;
         if (Data.GetParameterByName("Primitive", out var param))
         {
@@ -63,28 +93,11 @@ public class ModelLoader : MonoBehaviour
                 }
                 else return;
             }
-            else
-            {
-                if (!GameInitialization.Initialized)
-                    GameInitialization.Initialize();
-                var animTarget = AddGLBObject(fileName); // imports the mesh without templating
-
-                //find the animation entry for this GLB model, if there is one
-                var entry = AnimationDatabase.GetEntryByGLBPath(fileName);
-                if (entry != null)
-                {
-#if UNITY_EDITOR
-                    //compile animations if necessary -- this adds the necessary animator used by the AnimationLoader
-                    AnimationCompiler.GlobalAnimationCompiler.CompileAnimations(TextureLoader.AssetDirectory, entry.B3DFilePath, animTarget, out var animators);                    
-#endif                   
-                    //activate animation capability
-                    var loader = gameObject.AddComponent<AnimationLoader>();
-                    //allow the AnimationLoader to use the animator
-                    //loader.SetAnimator(animators.LastOrDefault());
-                }
-            }
+            else ApplyFromPath(fileName);
         }        
-        if (Data.HasTexture && !overrideTextureSetting)
+        if (ApplyMaterial != default)        
+            gameObject.GetComponentInChildren<Renderer>().material = ApplyMaterial;        
+        else if (Data.HasTexture && !overrideTextureSetting)
             gameObject.AddComponent<TextureLoader>().InheritParent = true; // adds the texture loader to apply a texture to the model
         var localScale = transform.localScale;
         float scaleX = localScale.x, scaleY = localScale.y, scaleZ = localScale.z;
@@ -118,8 +131,29 @@ public class ModelLoader : MonoBehaviour
     void Start()
     {
         if (!Loaded)
-            Awake(); // in case you know?
+            ForceApply(); // in case you know?
         DestroyImmediate(this);
+    }
+
+    private void ApplyFromPath(string fileName)
+    {
+        if (!GameInitialization.Initialized)
+            GameInitialization.Initialize();
+        var animTarget = AddGLBObject(fileName); // imports the mesh without templating
+
+        //find the animation entry for this GLB model, if there is one
+        var entry = AnimationDatabase.GetEntryByGLBPath(fileName);
+        if (entry != null)
+        {
+#if UNITY_EDITOR
+            //compile animations if necessary -- this adds the necessary animator used by the AnimationLoader
+            //AnimationCompiler.GlobalAnimationCompiler.CompileAnimations(TextureLoader.AssetDirectory, entry.B3DFilePath, animTarget, out var animators);                    
+#endif
+            //activate animation capability
+            var loader = gameObject.AddComponent<AnimationLoader>();
+            //allow the AnimationLoader to use the animator
+            //loader.SetAnimator(animators.LastOrDefault());
+        }
     }
 
     GameObject AddGLBObject(string fileName)

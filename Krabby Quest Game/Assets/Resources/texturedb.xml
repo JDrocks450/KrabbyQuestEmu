@@ -600,7 +600,7 @@
     <AssetType>Sound</AssetType>
     <References>O965789,O642030</References>
   </A350254>
-  <WorkspaceDirectory>D:\Projects\Krabby Quest Clean</WorkspaceDirectory>
+  <WorkspaceDirectory>D:\Projects\Krabby Quest\Workspace</WorkspaceDirectory>
   <A518111>
     <FilePath>Graphics\floorgreendarker.jpg</FilePath>
     <Name>floorgreendarker</Name>

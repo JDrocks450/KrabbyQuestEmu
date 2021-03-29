@@ -28,8 +28,8 @@ public class TextureLoader : MonoBehaviour
     {
         if (!TryGetComponent(out TileComponent) && InheritParent && !ForceTemplate)
             TileComponent = GetComponentInParent<DataBlockComponent>();
-        if (TileComponent?.TextureLoaded ?? false && !ForceTemplate) 
-            return;
+       // if (TileComponent?.TextureLoaded ?? false && !ForceTemplate) 
+         //   return;
         Data = TileComponent?.DataBlock;
         if (DefaultMaterial == null)
             DefaultMaterial = (Material)Instantiate(Resources.Load("Materials/Object Material"));

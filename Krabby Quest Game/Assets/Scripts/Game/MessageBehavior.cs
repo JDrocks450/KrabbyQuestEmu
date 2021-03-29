@@ -24,10 +24,15 @@ public class MessageBehavior : MonoBehaviour
         bool isPlayer = (sender as TileMovingObjectScript).TryGetComponent<Player>(out _);
         if (!isPlayer)
             return;
-        if (messageShown && e.ToTile.x != blockComponent.WorldTileX && e.ToTile.y != blockComponent.WorldTileY)
+        if (e.ToTile.x == blockComponent.WorldTileX && e.ToTile.y == blockComponent.WorldTileY)
         {
+            SignOverlayBehavior.ShowSignMessage(this, MessageText);
+            messageShown = true;
+        }
+        else if (messageShown)
+        {
+            SignOverlayBehavior.CloseSignMessage(this);
             messageShown = false;
-            MessagePromptBehavior.HideMessage();
         }
     }
 
@@ -38,13 +43,13 @@ public class MessageBehavior : MonoBehaviour
             return;
         if (e.ToTile.x == blockComponent.WorldTileX && e.ToTile.y == blockComponent.WorldTileY)
         {
-            MessagePromptBehavior.ShowMessage(MessageText);
+            SignOverlayBehavior.ShowSignMessage(this, MessageText);
             messageShown = true;
         }
         else if (messageShown)
         {
+            SignOverlayBehavior.CloseSignMessage(this);
             messageShown = false;
-            MessagePromptBehavior.HideMessage();
         }
     }
 

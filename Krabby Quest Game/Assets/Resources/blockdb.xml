@@ -1644,30 +1644,6 @@
     <Level>Decoration</Level>
     <AssetReferences />
   </O167815>
-  <O497772>
-    <Name>SIGN</Name>
-    <Package>0</Package>
-    <PackId>0</PackId>
-    <ItemId>52</ItemId>
-    <Dat2>0</Dat2>
-    <Color>160,82,45,255</Color>
-    <Rotation>NORTH</Rotation>
-    <Level>Decoration</Level>
-    <Parameters>
-      <Parameter>
-        <Name>Animation</Name>
-        <Value>SignIdle</Value>
-      </Parameter>
-      <Parameter>
-        <Name>uScale</Name>
-        <Value>2</Value>
-      </Parameter>
-    </Parameters>
-    <AssetReferences>
-      <A59585>Model</A59585>
-      <A138204>Texture</A138204>
-    </AssetReferences>
-  </O497772>
   <O985647>
     <Name>STEEL_BOX</Name>
     <Package>0</Package>
@@ -3136,4 +3112,28 @@
       <A558610>Texture</A558610>
     </AssetReferences>
   </O107917>
+  <O497772>
+    <Name>SIGN</Name>
+    <Package>0</Package>
+    <PackId>0</PackId>
+    <ItemId>52</ItemId>
+    <Dat2>0</Dat2>
+    <Color>160,82,45,255</Color>
+    <Rotation>NORTH</Rotation>
+    <Level>Decoration</Level>
+    <Parameters>
+      <Parameter>
+        <Name>uScale</Name>
+        <Value>2</Value>
+      </Parameter>
+      <Parameter>
+        <Name>Prefab</Name>
+        <Value>Signpost</Value>
+      </Parameter>
+    </Parameters>
+    <AssetReferences>
+      <A59585>Model</A59585>
+      <A138204>Texture</A138204>
+    </AssetReferences>
+  </O497772>
 </root>

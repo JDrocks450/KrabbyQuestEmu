@@ -40,6 +40,13 @@ public class TileMovingObjectScript : MonoBehaviour
     }
 
     /// <summary>
+    /// <see cref="MoveEventArgs.SetRaisedTerrainFlag(float)"/>
+    /// </summary>
+    private bool _raisedTerrainFlagActivated;
+    private float _raiseAmount;
+    private float _originalYValue;
+
+    /// <summary>
     /// The speed of the movement in units/sec
     /// </summary>
     public float MotionSpeed
@@ -118,7 +125,27 @@ public class TileMovingObjectScript : MonoBehaviour
         TileX = x;
         TileY = y;
         transform.position = getDestination(x, y);
-        var args = new MoveEventArgs()
+        ClearRaisedTerrainFlag();
+        var args = new MoveEventArgs(this)
+        {
+            FromTile = new Vector2Int(0,0),
+            ToTile = new Vector2Int(x, y)
+        };
+        TilePositionChanged?.Invoke(this, args);
+        MoveableMoved?.Invoke(this, args);
+    }
+
+    /// <summary>
+    /// A special function that allows the object to jump to the destination tile, leaving the visible portion behind as a facade.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    public void FacadeJumpToTile(int x, int y)
+    {
+        TileX = x;
+        TileY = y;
+        ClearRaisedTerrainFlag();
+        var args = new MoveEventArgs(this)
         {
             FromTile = new Vector2Int(0,0),
             ToTile = new Vector2Int(x, y)
@@ -149,7 +176,8 @@ public class TileMovingObjectScript : MonoBehaviour
         walkTileY = y;
         IsMoving = true;
         temporaryMotionSpeed = overrideMotionSpeed;
-        var args = new MoveEventArgs()
+        ClearRaisedTerrainFlag();
+        var args = new MoveEventArgs(this)
         {
             FromTile = new Vector2Int(TileX, TileY),
             ToTile = new Vector2Int(walkTileX, walkTileY),
@@ -224,8 +252,7 @@ public class TileMovingObjectScript : MonoBehaviour
         var destination = GetTileFromDirection(Direction, Tiles);
         return WalkToTile(destination.x, destination.y, overrideMotionSpeed);
     }
-
-    // Start is called before the first frame update
+    
     void Awake()
     {
         if (Target == null)
@@ -236,7 +263,12 @@ public class TileMovingObjectScript : MonoBehaviour
                 MotionSpeed = data.Value;
             if (component.DataBlock.GetParameterByName<float>("MotionCooldown", out data))
                 MotionCooldown = data.Value;
-        }
+        }        
+    }
+
+    private void Start()
+    {
+        _originalYValue = transform.position.y;
     }
 
     // Update is called once per frame
@@ -244,8 +276,8 @@ public class TileMovingObjectScript : MonoBehaviour
     {
         if (isWalking)
         {
-            transform.position = Vector3.Lerp(walkStartLocation, walkEndLocation, walkingPercentage);
             walkingPercentage += MotionSpeed * Time.deltaTime;
+            transform.position = Vector3.Lerp(walkStartLocation, walkEndLocation, walkingPercentage);
             if (walkingPercentage >= .5f) // 50% complete walking
             {
                 if (TileX != walkTileX || TileY != walkTileY)
@@ -264,11 +296,12 @@ public class TileMovingObjectScript : MonoBehaviour
                 var from = new Vector2Int(TileX, TileY);
                 TileX = walkTileX;
                 TileY = walkTileY;
-                var args = new MoveEventArgs()
+                var args = new MoveEventArgs(this)
                 {
                     FromTile = from,
                     ToTile = new Vector2Int(walkTileX, walkTileY)
                 };
+                transform.position = walkEndLocation;
                 TilePositionChanged?.Invoke(this, args);
                 MoveableMoved?.Invoke(this, args);
                 World.Current.CollisionMapUpdate(gameObject, true, TileX, TileY); // unreserve tile halfway through walking
@@ -300,5 +333,22 @@ public class TileMovingObjectScript : MonoBehaviour
                 return SRotation.SOUTH;
         }
         return SRotation.EAST;    
+    }
+
+    /// <summary>
+    /// <see cref="MoveEventArgs.SetRaisedTerrainFlag(float)"/>
+    /// </summary>
+    /// <param name="raiseAmount"></param>
+    internal void SetRaisedTerrainFlag(float raiseAmount)
+    {
+        _raisedTerrainFlagActivated = true;
+        _raiseAmount = raiseAmount;        
+        walkEndLocation = walkEndLocation + new Vector3(0, raiseAmount, 0);
+    }
+
+    private void ClearRaisedTerrainFlag()
+    {
+        _raisedTerrainFlagActivated = false;
+        walkEndLocation.y = _originalYValue;
     }
 }

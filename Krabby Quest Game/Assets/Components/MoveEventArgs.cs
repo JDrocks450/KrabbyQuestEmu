@@ -12,6 +12,12 @@ using UnityEngine;
 /// </summary>
 public class MoveEventArgs
 {
+    private TileMovingObjectScript parent;
+    internal MoveEventArgs(TileMovingObjectScript creator)
+    {
+        parent = creator;
+    }
+
     /// <summary>
     /// Cancel the motion
     /// </summary>
@@ -44,5 +50,17 @@ public class MoveEventArgs
                 return SRotation.SOUTH;
             else return SRotation.NORTH;
         }
+    }
+
+    /// <summary>
+    /// If called during a PositionChanging event, this will invoke the TileMovingObjectScript
+    /// to be made aware that the tile being walked onto is raised off the ground by the parameter's value in units.
+    /// <para>
+    /// Note that this flag is automatically cleared the next time <see cref="TileMovingObjectScript.WalkToTile(int, int, float)"/> or <see cref="TileMovingObjectScript.JumpToTile(int, int)"/> are called.
+    /// </para>    
+    /// </summary>
+    public void SetRaisedTerrainFlag(float raiseAmount)
+    {
+        parent.SetRaisedTerrainFlag(raiseAmount);
     }
 }
