@@ -9,6 +9,11 @@
 # KrabbyQuestEmu
 A project aiming to restore Spongebob: Krabby Quest by emulating the original game engine using the original game files.
 
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/781637575516749834/825990515673268224/unknown.png" width="400">
+  <img src="https://media.discordapp.net/attachments/636003770697777173/782882166644146186/unknown.png" width="500">
+</p>
+
 ## Community
 A discord server where you can chat with me and others about the project can be found here: 
 https://discord.gg/wvFPYSrGRu
@@ -22,6 +27,13 @@ Simply navigate to the GitHub releases section, and find the latest Installer re
 *YOU MUST HAVE A COPY OF THE GAME (Trial version is compatible)**
 
 *You must also have Blender (free) for the automated installer to extract models used by the game.*
+
+## The KrabbyQuestTools IDE
+<p align="center">
+  <img src="https://media.discordapp.net/attachments/781637988709826631/783595151884025886/unknown.png" width="400">
+  <img src="https://media.discordapp.net/attachments/781637988709826631/790351233759969320/unknown.png" width="400">
+</p>
+The KQTEditor allows you to view levels, extract game assets, build .b3d animations and link them to the game, and more.
 
 ## How does it work?
 The original game came with seven .DAT files that stored all of the content that the game engine would use to display levels. 
